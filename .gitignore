@@ -63,4 +63,7 @@ buck-out/
 /ios/Pods/
 
 #project IDs and credentials
-credentials/
+credentials/*.json
+credentials/*.ts
+credentials/*.js
+!credentials/package.json
