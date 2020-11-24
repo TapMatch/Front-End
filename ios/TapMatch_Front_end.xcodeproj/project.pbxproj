@@ -161,7 +161,6 @@
 				1F5C1A642FD7171AE636D68E /* Pods-TapMatch_Front_end-tvOSTests.debug.xcconfig */,
 				76BBBF5859C4B9399258D254 /* Pods-TapMatch_Front_end-tvOSTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
