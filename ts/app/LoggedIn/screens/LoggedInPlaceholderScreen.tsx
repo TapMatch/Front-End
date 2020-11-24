@@ -8,6 +8,8 @@ import {
   ScrollView,
 } from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {RFValue} from 'react-native-responsive-fontsize';
+import {WebView} from 'react-native-webview';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 interface LoggedInPlaceholderScreenProps {}
 
@@ -31,6 +33,11 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
         <View style={{flex: 1, backgroundColor: 'red'}}>
           <Button title={'Log Out'} onPress={() => LoggedIn[1](false)} />
         </View>
+        <Text style={{fontSize: RFValue(24, 580)}}>0101010101</Text>
+        <WebView
+          source={{uri: 'https://blender.org'}}
+          style={{marginTop: 20, height: 200, width: '100%'}}
+        />
       </ScrollView>
     </SafeAreaView>
   );
@@ -41,7 +48,7 @@ export default LoggedInPlaceholderScreen;
 const styles = StyleSheet.create({
   container: {
     // ...StyleSheet.absoluteFillObject,
-    height: 400,
+    height: 200,
     width: 400,
     justifyContent: 'flex-end',
     alignItems: 'center',

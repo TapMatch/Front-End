@@ -33,7 +33,7 @@ import {View, StyleSheet} from 'react-native';
 export default class SvgExample extends React.Component {
   render() {
     return (
-      <Svg height="50%" width="50%" viewBox="0 0 100 100">
+      <Svg height="20%" width="20%" viewBox="0 0 100 100">
         <Circle
           cx="50"
           cy="50"
