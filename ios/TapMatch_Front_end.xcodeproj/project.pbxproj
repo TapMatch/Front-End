@@ -20,6 +20,14 @@
 		9D2CAF413B19B9EFBBF6013C /* libPods-TapMatch_Front_end-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2DCD4F95110A644AA63317 /* libPods-TapMatch_Front_end-tvOSTests.a */; };
 		F74C7DC89D9911830A3B845A /* libPods-TapMatch_Front_end-TapMatch_Front_endTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2D38204182DAE36C040B355 /* libPods-TapMatch_Front_end-TapMatch_Front_endTests.a */; };
 		F9E8679B13E90E2102730A57 /* libPods-TapMatch_Front_end-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1570A7B2D43C5F7D9D7B08E3 /* libPods-TapMatch_Front_end-tvOS.a */; };
+		EC63605FD65F4E3BA6583386 /* D-DIN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B7C6F2355C494AEA96A47D5B /* D-DIN-Bold.otf */; };
+		099C553D853C444BB268A3F9 /* D-DIN-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 1B4579D9FF5746829279B84B /* D-DIN-Italic.otf */; };
+		919D2F944F5B46D1B12C745C /* D-DIN.otf in Resources */ = {isa = PBXBuildFile; fileRef = 486561C4CA7B4C9982946032 /* D-DIN.otf */; };
+		84324D1B3AB047F6AA74353F /* D-DINCondensed-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6079F4B830EF4112BD08DBC8 /* D-DINCondensed-Bold.otf */; };
+		5E794A9B5C25422890A1DC5E /* D-DINCondensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6889CAD9C90247AC988B967F /* D-DINCondensed.otf */; };
+		C7A5AE231C044D1986F0D33F /* D-DINExp-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 16DA8028A118484EA38626EB /* D-DINExp-Bold.otf */; };
+		0995F8C2336D4C8CB61E9D87 /* D-DINExp-Italic.otf in Resources */ = {isa = PBXBuildFile; fileRef = D8EB49F4647C4F1F8B37ACC8 /* D-DINExp-Italic.otf */; };
+		B48CE7E180D642EC982E9A41 /* D-DINExp.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6A19ECBBE1345CDB31CD47F /* D-DINExp.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,6 +75,14 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F21130450D1796A9539037D9 /* Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end-TapMatch_Front_endTests/Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig"; sourceTree = "<group>"; };
 		FC2DCD4F95110A644AA63317 /* libPods-TapMatch_Front_end-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TapMatch_Front_end-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		B7C6F2355C494AEA96A47D5B /* D-DIN-Bold.otf */ = {isa = PBXFileReference; name = "D-DIN-Bold.otf"; path = "../assets/fonts/D-DIN-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		1B4579D9FF5746829279B84B /* D-DIN-Italic.otf */ = {isa = PBXFileReference; name = "D-DIN-Italic.otf"; path = "../assets/fonts/D-DIN-Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		486561C4CA7B4C9982946032 /* D-DIN.otf */ = {isa = PBXFileReference; name = "D-DIN.otf"; path = "../assets/fonts/D-DIN.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6079F4B830EF4112BD08DBC8 /* D-DINCondensed-Bold.otf */ = {isa = PBXFileReference; name = "D-DINCondensed-Bold.otf"; path = "../assets/fonts/D-DINCondensed-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		6889CAD9C90247AC988B967F /* D-DINCondensed.otf */ = {isa = PBXFileReference; name = "D-DINCondensed.otf"; path = "../assets/fonts/D-DINCondensed.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		16DA8028A118484EA38626EB /* D-DINExp-Bold.otf */ = {isa = PBXFileReference; name = "D-DINExp-Bold.otf"; path = "../assets/fonts/D-DINExp-Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		D8EB49F4647C4F1F8B37ACC8 /* D-DINExp-Italic.otf */ = {isa = PBXFileReference; name = "D-DINExp-Italic.otf"; path = "../assets/fonts/D-DINExp-Italic.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		E6A19ECBBE1345CDB31CD47F /* D-DINExp.otf */ = {isa = PBXFileReference; name = "D-DINExp.otf"; path = "../assets/fonts/D-DINExp.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,6 +196,7 @@
 				83CBBA001A601CBA00E9B192 /* Products */,
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				3A23DC279B80E1E84C25B45D /* Pods */,
+				87A55EA7CAEB45BBB7831DFC /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -196,6 +213,22 @@
 			);
 			name = Products;
 			sourceTree = "<group>";
+		};
+		87A55EA7CAEB45BBB7831DFC /* Resources */ = {
+			isa = "PBXGroup";
+			children = (
+				B7C6F2355C494AEA96A47D5B /* D-DIN-Bold.otf */,
+				1B4579D9FF5746829279B84B /* D-DIN-Italic.otf */,
+				486561C4CA7B4C9982946032 /* D-DIN.otf */,
+				6079F4B830EF4112BD08DBC8 /* D-DINCondensed-Bold.otf */,
+				6889CAD9C90247AC988B967F /* D-DINCondensed.otf */,
+				16DA8028A118484EA38626EB /* D-DINExp-Bold.otf */,
+				D8EB49F4647C4F1F8B37ACC8 /* D-DINExp-Italic.otf */,
+				E6A19ECBBE1345CDB31CD47F /* D-DINExp.otf */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+			path = "";
 		};
 /* End PBXGroup section */
 
@@ -341,6 +374,14 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				EC63605FD65F4E3BA6583386 /* D-DIN-Bold.otf in Resources */,
+				099C553D853C444BB268A3F9 /* D-DIN-Italic.otf in Resources */,
+				919D2F944F5B46D1B12C745C /* D-DIN.otf in Resources */,
+				84324D1B3AB047F6AA74353F /* D-DINCondensed-Bold.otf in Resources */,
+				5E794A9B5C25422890A1DC5E /* D-DINCondensed.otf in Resources */,
+				C7A5AE231C044D1986F0D33F /* D-DINExp-Bold.otf in Resources */,
+				0995F8C2336D4C8CB61E9D87 /* D-DINExp-Italic.otf in Resources */,
+				B48CE7E180D642EC982E9A41 /* D-DINExp.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
