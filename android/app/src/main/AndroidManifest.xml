@@ -15,6 +15,7 @@
         android:value="AIzaSyDFaUgVps-c5tUyWCyQuod4wQs4OWw-zGQ"/>
       <activity
         android:name=".MainActivity"
+        android:screenOrientation="portrait"
         android:label="@string/app_name"
         android:configChanges="keyboard|keyboardHidden|orientation|screenSize|uiMode"
         android:launchMode="singleTask"
