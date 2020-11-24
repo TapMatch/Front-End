@@ -67,3 +67,6 @@ credentials/*.json
 credentials/*.ts
 credentials/*.js
 !credentials/package.json
+
+# android SDK location
+android/local.properties

@@ -5,8 +5,9 @@ import {Text} from 'react-native';
 import extendDevSettingsAndMenu from './tools/DevSettings';
 
 // if (DEV_MODE === 'true') {
-//   extendDevSettingsAndMenu();
-// }
+if (1) {
+  extendDevSettingsAndMenu();
+}
 
 export default function TopAppWrapper() {
   Text.defaultProps = Text.defaultProps || {};
