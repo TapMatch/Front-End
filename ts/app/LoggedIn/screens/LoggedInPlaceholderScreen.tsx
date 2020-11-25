@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {
   Text,
   View,
@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   ScrollView,
 } from 'react-native';
+import Geolocation from 'react-native-geolocation-service';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {WebView} from 'react-native-webview';
@@ -15,6 +16,20 @@ interface LoggedInPlaceholderScreenProps {}
 
 const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
   const {LoggedIn} = useContext(TapMatchContext);
+  useEffect(() => {
+    Geolocation.requestAuthorization('always').then(() => {
+      Geolocation.getCurrentPosition(
+        (position) => {
+          console.log(position);
+        },
+        (error) => {
+          // See error code charts below.
+          console.log(error.code, error.message);
+        },
+        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      );
+    });
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>

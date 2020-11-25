@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "320810146229",
+    "firebase_url": "https://tapmatch-56529.firebaseio.com",
+    "project_id": "tapmatch-56529",
+    "storage_bucket": "tapmatch-56529.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320810146229:android:48920cae560eb7eb9fe1fc",
+        "android_client_info": {
+          "package_name": "com.tapmatch_front_end"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320810146229-aqbnqqdn80ploqd6e12j2jib3i1v36p4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFaUgVps-c5tUyWCyQuod4wQs4OWw-zGQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320810146229-aqbnqqdn80ploqd6e12j2jib3i1v36p4.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "320810146229-d0a98a7ts08e1aufgeu96vm8s5jdv33g.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.reactjs.native.TapMatchApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
