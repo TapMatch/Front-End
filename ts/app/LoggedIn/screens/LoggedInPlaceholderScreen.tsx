@@ -6,8 +6,10 @@ import {
   Button,
   SafeAreaView,
   ScrollView,
+  Platform,
 } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import {request, PERMISSIONS} from 'react-native-permissions';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {WebView} from 'react-native-webview';
@@ -17,17 +19,23 @@ interface LoggedInPlaceholderScreenProps {}
 const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
   const {LoggedIn} = useContext(TapMatchContext);
   useEffect(() => {
-    Geolocation.requestAuthorization('always').then(() => {
-      Geolocation.getCurrentPosition(
-        (position) => {
-          console.log(position);
-        },
-        (error) => {
-          // See error code charts below.
-          console.log(error.code, error.message);
-        },
-        {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-      );
+    const location =
+      Platform.OS === 'ios'
+        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+    request(location).then((x) => {
+      if (x === 'granted') {
+        Geolocation.getCurrentPosition(
+          (position) => {
+            console.log(position);
+          },
+          (error) => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+          },
+          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+        );
+      }
     });
   }, []);
   return (
