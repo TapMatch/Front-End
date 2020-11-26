@@ -19,6 +19,7 @@
 		2DCD954D1E0B4F2C00145EB5 /* TapMatch_Front_endTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* TapMatch_Front_endTests.m */; };
 		4EB73958256E74C200269156 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4EB73957256E74C200269156 /* GoogleService-Info.plist */; };
 		4EB73A14256E9ADF00269156 /* NativeFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4EB73A13256E9ADF00269156 /* NativeFunctions.swift */; };
+		4EE58AA2256EF0B60051DF25 /* DINRegularAlternate.otf in Resources */ = {isa = PBXBuildFile; fileRef = 857C936BD1264A2284EA2ED6 /* DINRegularAlternate.otf */; };
 		5E794A9B5C25422890A1DC5E /* D-DINCondensed.otf in Resources */ = {isa = PBXBuildFile; fileRef = 6889CAD9C90247AC988B967F /* D-DINCondensed.otf */; };
 		72F749D7A76AEBEC3A40D0AE /* libPods-TapMatch_Front_end.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D9A2A1CEABEED89B9D8AC1FF /* libPods-TapMatch_Front_end.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
@@ -30,6 +31,7 @@
 		EC63605FD65F4E3BA6583386 /* D-DIN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B7C6F2355C494AEA96A47D5B /* D-DIN-Bold.otf */; };
 		F74C7DC89D9911830A3B845A /* libPods-TapMatch_Front_end-TapMatch_Front_endTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2D38204182DAE36C040B355 /* libPods-TapMatch_Front_end-TapMatch_Front_endTests.a */; };
 		F9E8679B13E90E2102730A57 /* libPods-TapMatch_Front_end-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1570A7B2D43C5F7D9D7B08E3 /* libPods-TapMatch_Front_end-tvOS.a */; };
+		C525AA01FB4A468F90A1EB39 /* DIN Alternate Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,7 @@
 		6889CAD9C90247AC988B967F /* D-DINCondensed.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "D-DINCondensed.otf"; path = "../assets/fonts/D-DINCondensed.otf"; sourceTree = "<group>"; };
 		76BBBF5859C4B9399258D254 /* Pods-TapMatch_Front_end-tvOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end-tvOSTests.release.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end-tvOSTests/Pods-TapMatch_Front_end-tvOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = TapMatch_Front_end/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		857C936BD1264A2284EA2ED6 /* DINRegularAlternate.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = DINRegularAlternate.otf; path = ../assets/fonts/DINRegularAlternate.otf; sourceTree = "<group>"; };
 		93AC7546221FBD98802B7E4F /* Pods-TapMatch_Front_end.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end.release.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end/Pods-TapMatch_Front_end.release.xcconfig"; sourceTree = "<group>"; };
 		A4799BAB8DDF2B92B62AB469 /* Pods-TapMatch_Front_end.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end.debug.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end/Pods-TapMatch_Front_end.debug.xcconfig"; sourceTree = "<group>"; };
 		AF3F1DF18ADCB1DA10C2448A /* Pods-TapMatch_Front_end-TapMatch_Front_endTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end-TapMatch_Front_endTests.debug.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end-TapMatch_Front_endTests/Pods-TapMatch_Front_end-TapMatch_Front_endTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F21130450D1796A9539037D9 /* Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end-TapMatch_Front_endTests/Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig"; sourceTree = "<group>"; };
 		FC2DCD4F95110A644AA63317 /* libPods-TapMatch_Front_end-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TapMatch_Front_end-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */ = {isa = PBXFileReference; name = "DIN Alternate Bold.otf"; path = "../assets/fonts/DIN Alternate Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,6 +237,8 @@
 				16DA8028A118484EA38626EB /* D-DINExp-Bold.otf */,
 				D8EB49F4647C4F1F8B37ACC8 /* D-DINExp-Italic.otf */,
 				E6A19ECBBE1345CDB31CD47F /* D-DINExp.otf */,
+				857C936BD1264A2284EA2ED6 /* DINRegularAlternate.otf */,
+				084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -382,6 +388,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4EE58AA2256EF0B60051DF25 /* DINRegularAlternate.otf in Resources */,
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				EC63605FD65F4E3BA6583386 /* D-DIN-Bold.otf in Resources */,
@@ -393,6 +400,7 @@
 				4EB73958256E74C200269156 /* GoogleService-Info.plist in Resources */,
 				0995F8C2336D4C8CB61E9D87 /* D-DINExp-Italic.otf in Resources */,
 				B48CE7E180D642EC982E9A41 /* D-DINExp.otf in Resources */,
+				C525AA01FB4A468F90A1EB39 /* DIN Alternate Bold.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -448,7 +456,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh";
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
 		0252609572A91FF4115643DD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;

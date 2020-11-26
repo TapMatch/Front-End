@@ -23,7 +23,7 @@ import Svg, {
 } from 'react-native-svg';
 
 /* Use this if you are using Expo
-import * as Svg from 'react-native-svg';
+import Svg from 'react-native-svg';
 const { Circle, Rect } = Svg;
 */
 

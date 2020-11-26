@@ -1,4 +1,5 @@
-export const fonts = {
+export const _f = {
+  // font names
   bold: 'D-DIN-Bold',
   italic: 'D-DIN-Italic',
   regular: 'D-DIN',
@@ -7,4 +8,6 @@ export const fonts = {
   eBold: 'D-DINExp-Bold',
   eItalic: 'D-DINExp-Italic',
   eRegular: 'D-DINExp',
+  regularAlt: 'DIN-RegularAlternate',
+  regularAltBold: 'DIN-BoldAlternate',
 };

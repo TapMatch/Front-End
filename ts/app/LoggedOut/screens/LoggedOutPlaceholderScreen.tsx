@@ -8,12 +8,13 @@ import {
   Share,
   Alert,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import SvgTest from 'ts/app/common/components/SvgTest';
 import TapMatchLogoRed from 'assets/svg/TapMatchLogo-red.svg';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {fonts as _f} from 'ts/UIConfig/fonts';
+import {_f} from 'ts/UIConfig/fonts';
 interface LoggedOutPlaceholderScreenProps {}
 import {s} from 'react-native-size-matters';
 const LoggedOutPlaceholderScreen = (props: LoggedOutPlaceholderScreenProps) => {
@@ -40,6 +41,11 @@ const LoggedOutPlaceholderScreen = (props: LoggedOutPlaceholderScreenProps) => {
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'blue'}}>
+      <StatusBar
+        animated={true}
+        backgroundColor={'transparent'}
+        barStyle={'light-content'}
+      />
       <ScrollView contentContainerStyle={{paddingBottom: '5%'}}>
         <View>
           <Text style={_s.txt}>LoggedOutPlaceholderScreen</Text>
