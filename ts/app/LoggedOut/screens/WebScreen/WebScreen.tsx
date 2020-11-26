@@ -2,8 +2,8 @@ import React, {useState} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
-import {_c} from 'ts/uiConfig/colors';
-import {_fs} from 'ts/uiConfig/fontSizes';
+import {_c} from 'ts/UIConfig/colors';
+import {_fs} from 'ts/UIConfig/fontSizes';
 import CloseButton from './components/CloseButton';
 import WebLoader from './components/WebLoader';
 
