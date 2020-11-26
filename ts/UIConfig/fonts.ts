@@ -10,6 +10,6 @@ export const _f = {
   eBold: isAndroid ? 'D-DINExp-Bold' : 'D-DINExp-Bold',
   eItalic: isAndroid ? 'D-DINExp-Italic' : 'D-DINExp-Italic',
   eRegular: isAndroid ? 'D-DINExp' : 'D-DINExp',
-  regularAltBold: isAndroid ? 'DIN Alternate Bold' : 'DIN Alternate Bold',
-  regularAlt: isAndroid ? 'DINRegularAlternate' : 'DIN-BoldAlternate',
+  regularAlt: isAndroid ? 'DIN Alternate Bold' : 'DIN Alternate Bold',
+  regularAltBold: isAndroid ? 'DINRegularAlternate' : 'DIN-BoldAlternate',
 };

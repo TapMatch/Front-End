@@ -32,7 +32,7 @@ const _s = StyleSheet.create({
   },
   txt: {
     fontFamily: _f.regularAlt,
-    fontSize: _fs.l,
+    fontSize: _fs.xl,
     color: _c.black,
     textAlign: 'center',
     textAlignVertical: 'center',

@@ -6,6 +6,6 @@ export const _fs = {
   s: '',
   m: RFValue(14),
   l: RFValue(18),
-  xl: '',
+  xl: RFValue(20),
   xxl: '',
 };

@@ -17,7 +17,7 @@ interface StartScreenProps {}
 const StartScreen = (props: StartScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
-  const logoSize = width * 0.55;
+  const logoSize = width * 0.6;
   return (
     <View style={[_s.container, {paddingBottom: bottom, paddingTop: top}]}>
       <StatusBar
