@@ -3,11 +3,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {TapMatchContext} from './contexts/TapMatchContext';
 import LoggedInStack from './LoggedIn/LoggedInStack';
 import LoggedOutStack from './LoggedOut/LoggedOutStack';
+import NoNetworkModal from './common/NoNetworkModal';
 
 const TapMatch = () => {
   const LoggedIn = useState(false);
   return (
     <TapMatchContext.Provider value={{LoggedIn}}>
+      <NoNetworkModal />
       <NavigationContainer children={createRootNavigation(LoggedIn[0])} />
     </TapMatchContext.Provider>
   );
