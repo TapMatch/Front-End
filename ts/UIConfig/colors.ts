@@ -1,6 +1,6 @@
 export const _c = {
   //colors
-  tapMatchRed: '#EA5734',
+  main_red: '#EA5734',
   black: '#000',
   white: '#fff',
   linkBlue: '#4E88F5',

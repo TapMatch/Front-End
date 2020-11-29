@@ -1,7 +1,23 @@
 {
     "tapToContinue":"Tap to Continue",
-
+    
     "pleaseWait":"Please wait...",
+
+    "verifyYouAreNotAnAlien":"Verify you’re not an 👽",
+    "weWillSendYourCodeTo":"We will send your code to",
+    "yourPhonePleaseEnterItHere":"Your Phone. Please Enter it here.",
+    "swipeLeftToGoBack":"Swipe Left to go back",
+    "didntReceiveCode":"Didn’t Receive Code?",
+    "reSend":"Re-Send",
+
+    "whatsYourName":"What’s your name?",
+    "everyoneInYourCommunity":"Everyone in your community",
+    "willSeeYourName":"Will see your name",
+
+    "done":"Done",
+    "welcomeToTapMatch":"Welcome to TapMatch",
+    "enterYourPhoneNumber":"Enter your Phone Number",
+    "toVerifyYourIdentity":"To Verify your Identity",
 
     "termsAndConditionsParagraph1":"By continuing you agree to TapMatch\n",
     "termsOfUse":"Terms of Use",

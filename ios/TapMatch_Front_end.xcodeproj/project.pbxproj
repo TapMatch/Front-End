@@ -27,11 +27,11 @@
 		919D2F944F5B46D1B12C745C /* D-DIN.otf in Resources */ = {isa = PBXBuildFile; fileRef = 486561C4CA7B4C9982946032 /* D-DIN.otf */; };
 		9D2CAF413B19B9EFBBF6013C /* libPods-TapMatch_Front_end-tvOSTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FC2DCD4F95110A644AA63317 /* libPods-TapMatch_Front_end-tvOSTests.a */; };
 		B48CE7E180D642EC982E9A41 /* D-DINExp.otf in Resources */ = {isa = PBXBuildFile; fileRef = E6A19ECBBE1345CDB31CD47F /* D-DINExp.otf */; };
+		C525AA01FB4A468F90A1EB39 /* DIN Alternate Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */; };
 		C7A5AE231C044D1986F0D33F /* D-DINExp-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 16DA8028A118484EA38626EB /* D-DINExp-Bold.otf */; };
 		EC63605FD65F4E3BA6583386 /* D-DIN-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = B7C6F2355C494AEA96A47D5B /* D-DIN-Bold.otf */; };
 		F74C7DC89D9911830A3B845A /* libPods-TapMatch_Front_end-TapMatch_Front_endTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C2D38204182DAE36C040B355 /* libPods-TapMatch_Front_end-TapMatch_Front_endTests.a */; };
 		F9E8679B13E90E2102730A57 /* libPods-TapMatch_Front_end-tvOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1570A7B2D43C5F7D9D7B08E3 /* libPods-TapMatch_Front_end-tvOS.a */; };
-		C525AA01FB4A468F90A1EB39 /* DIN Alternate Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +56,7 @@
 		00E356EE1AD99517003FC87E /* TapMatch_Front_endTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TapMatch_Front_endTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* TapMatch_Front_endTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TapMatch_Front_endTests.m; sourceTree = "<group>"; };
+		084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "DIN Alternate Bold.otf"; path = "../assets/fonts/DIN Alternate Bold.otf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* TapMatch_Front_end.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TapMatch_Front_end.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = TapMatch_Front_end/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = TapMatch_Front_end/AppDelegate.m; sourceTree = "<group>"; };
@@ -91,7 +92,6 @@
 		ED2971642150620600B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = Platforms/AppleTVOS.platform/Developer/SDKs/AppleTVOS12.0.sdk/System/Library/Frameworks/JavaScriptCore.framework; sourceTree = DEVELOPER_DIR; };
 		F21130450D1796A9539037D9 /* Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig"; path = "Target Support Files/Pods-TapMatch_Front_end-TapMatch_Front_endTests/Pods-TapMatch_Front_end-TapMatch_Front_endTests.release.xcconfig"; sourceTree = "<group>"; };
 		FC2DCD4F95110A644AA63317 /* libPods-TapMatch_Front_end-tvOSTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TapMatch_Front_end-tvOSTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		084AA496868A4D3BBF085508 /* DIN Alternate Bold.otf */ = {isa = PBXFileReference; name = "DIN Alternate Bold.otf"; path = "../assets/fonts/DIN Alternate Bold.otf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */

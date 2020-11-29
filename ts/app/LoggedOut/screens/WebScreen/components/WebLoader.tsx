@@ -20,7 +20,7 @@ export default WebLoader;
 
 const _s = StyleSheet.create({
   txt: {
-    color: _c.tapMatchRed,
+    color: _c.main_red,
     fontSize: _fs.l,
   },
   loader: {

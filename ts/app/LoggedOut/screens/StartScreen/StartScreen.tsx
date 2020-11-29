@@ -3,6 +3,7 @@ import {
   View,
   StyleSheet,
   // Image,
+  TouchableOpacity,
   StatusBar,
   useWindowDimensions,
 } from 'react-native';
@@ -11,13 +12,17 @@ import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomButton from './components/BottomButton';
 import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';
+import {useNavigation} from '@react-navigation/native';
+import {_c} from 'ts/UIConfig/colors';
 
 interface StartScreenProps {}
 
 const StartScreen = (props: StartScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
+  const {navigate} = useNavigation();
   const logoSize = width * 0.6;
+
   return (
     <View style={[_s.container, {paddingBottom: bottom, paddingTop: top}]}>
       <StatusBar
@@ -25,7 +30,10 @@ const StartScreen = (props: StartScreenProps) => {
         backgroundColor={'transparent'}
         barStyle={'dark-content'}
       />
-      <View style={_s.middle}>
+      <TouchableOpacity
+        activeOpacity={1}
+        onPress={() => navigate('PhoneInput')}
+        style={_s.middle}>
         <TapMatchBetaLogo height={logoSize} width={logoSize} />
         {/* <Image
           width={30}
@@ -33,7 +41,7 @@ const StartScreen = (props: StartScreenProps) => {
           style={{width: 300, height: 500}}
           source={require('assets/png/holding-hands.png')}
         /> */}
-      </View>
+      </TouchableOpacity>
       <TermsAndConditionsParagraph />
       <BottomButton />
     </View>
@@ -47,6 +55,7 @@ const _s = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: _c.white,
   },
   middle: {
     width: '100%',

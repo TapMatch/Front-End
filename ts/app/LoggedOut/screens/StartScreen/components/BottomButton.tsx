@@ -12,7 +12,8 @@ const BottomButton = () => {
   const txt = useLocalizedTxt();
   return (
     <TouchableOpacity
-      onPress={() => navigate('LoggedOutPlaceholderScreen')}
+      activeOpacity={1}
+      onPress={() => navigate('PhoneInput')}
       style={_s.container}>
       <Text style={_s.txt}>{txt.tapToContinue}</Text>
     </TouchableOpacity>
@@ -24,7 +25,6 @@ export default BottomButton;
 const _s = StyleSheet.create({
   container: {
     backgroundColor: _c.transparentBtn,
-    // backgroundColor: 'red',
     minWidth: '100%',
     height: vs(60),
     justifyContent: 'center',

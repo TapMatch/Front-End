@@ -24,7 +24,7 @@ export default CloseButton;
 const _s = StyleSheet.create({
   iconBtnStyle: {
     borderRadius: 100,
-    borderColor: _c.tapMatchRed,
+    borderColor: _c.main_red,
     borderWidth: StyleSheet.hairlineWidth,
     position: 'absolute',
     padding: 10,
