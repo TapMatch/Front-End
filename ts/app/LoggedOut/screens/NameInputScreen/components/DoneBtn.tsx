@@ -32,7 +32,7 @@ const DoneBtn = ({disabled}: DoneBtnProps) => {
         disabled={disabled}
         activeOpacity={1}
         onPress={() => {
-          navigate('OTPInput');
+          navigate('MapDemo');
           Keyboard.dismiss();
         }}
         style={_s.container}>

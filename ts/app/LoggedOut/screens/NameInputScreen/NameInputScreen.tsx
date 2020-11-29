@@ -1,3 +1,4 @@
+import {useBackHandler} from '@react-native-community/hooks';
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {vs} from 'react-native-size-matters';
@@ -12,7 +13,14 @@ interface NameInputScreenProps {}
 const NameInputScreen = (props: NameInputScreenProps) => {
   const name = useState<string>('');
   const doneBtnDisabled = !name[0].length;
-
+  useBackHandler(() => {
+    if (false) {
+      // handle it
+      return true;
+    }
+    // let the default thing happen
+    return false;
+  });
   return (
     <View style={_s.container}>
       <View style={_s.content}>

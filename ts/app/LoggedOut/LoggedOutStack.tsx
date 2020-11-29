@@ -8,17 +8,21 @@ import {_c} from 'ts/UIConfig/colors';
 import PhoneInputScreen from './screens/PhoneInputScreen/PhoneInputScreen';
 import OTPInputScreen from './screens/OTPInputScreen/OTPInputScreen';
 import NameInputScreen from './screens/NameInputScreen/NameInputScreen';
+import AvatarCameraScreen from './screens/AvatarCameraScreen/AvatarCameraScreen';
+import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
+import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
 
 export default function LoggedOutStack() {
+  const Stack = createStackNavigator();
+  const {Navigator, Screen} = Stack;
   const transitions =
     Platform.OS === 'ios'
       ? TransitionPresets.DefaultTransition
       : TransitionPresets.FadeFromBottomAndroid;
-  const Stack = createStackNavigator();
-  const {Navigator, Screen} = Stack;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
   return (
     <Navigator
+      gestureEnabled={true}
       screenOptions={{
         headerTitleAllowFontScaling: false,
         headerBackAllowFontScaling: false,
@@ -54,6 +58,7 @@ export default function LoggedOutStack() {
           return {
             headerTitle: '',
             headerLeft: () => null,
+            headerRight: () => null,
           };
         }}
       />
@@ -64,6 +69,18 @@ export default function LoggedOutStack() {
           return {
             headerTitle: '',
             headerLeft: () => null,
+            headerRight: () => null,
+          };
+        }}
+      />
+      <Screen
+        name="AvatarCamera"
+        component={AvatarCameraScreen}
+        options={() => {
+          return {
+            headerTitle: '',
+            headerLeft: () => null,
+            headerRight: () => null,
           };
         }}
       />
@@ -74,6 +91,7 @@ export default function LoggedOutStack() {
           return {
             headerTitle: '',
             headerLeft: () => null,
+            headerRight: () => null,
           };
         }}
       />
@@ -85,6 +103,26 @@ export default function LoggedOutStack() {
           };
         }}
         component={WebScreen}
+      />
+      <Screen
+        name="AllSet"
+        component={AllSetScreen}
+        options={() => {
+          return {
+            headerTitle: '',
+            headerLeft: () => null,
+            headerRight: () => null,
+          };
+        }}
+      />
+      <Screen
+        name="MapDemo"
+        component={MapDemoScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
       />
       <Screen
         name="LoggedOutPlaceholderScreen"

@@ -32,12 +32,12 @@ const ReSendCode = ({hidden, onPress}: ReSendCodeProps) => {
         <View style={_s.container}>
           <Text numberOfLines={1} style={_s.txt}>
             {txt.didntReceiveCode}
-            <TouchableOpacity onPress={onPress}>
-              <Text numberOfLines={1} style={[_s.txt, _s.underline]}>
-                {txt.reSend}
-              </Text>
-            </TouchableOpacity>
           </Text>
+          <TouchableOpacity onPress={onPress} style={_s.btn}>
+            <Text numberOfLines={1} style={[_s.txt, _s.underline]}>
+              {txt.reSend}
+            </Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     );
@@ -51,6 +51,7 @@ const _s = StyleSheet.create({
     minWidth: '100%',
     height: vs(60),
     justifyContent: 'center',
+    flexDirection: 'row',
     alignItems: 'center',
   },
   txt: {
@@ -60,4 +61,9 @@ const _s = StyleSheet.create({
     textAlignVertical: 'center',
   },
   underline: {textDecorationLine: 'underline'},
+  btn: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 'auto',
+  },
 });

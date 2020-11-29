@@ -10,6 +10,7 @@ import {
   ScrollView,
   StatusBar,
 } from 'react-native';
+import {getUniqueId, getManufacturer} from 'react-native-device-info';
 import SvgTest from 'ts/app/common/components/SvgTest';
 import TapMatchLogoRed from 'assets/svg/TapMatchLogo-red.svg';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
@@ -17,9 +18,11 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {_f} from 'ts/UIConfig/fonts';
 interface LoggedOutPlaceholderScreenProps {}
 import {s} from 'react-native-size-matters';
-const LoggedOutPlaceholderScreen = (props: LoggedOutPlaceholderScreenProps) => {
+const LoggedOutPlaceholderScreen = ({
+  navigation,
+}: LoggedOutPlaceholderScreenProps) => {
   const {LoggedIn} = useContext(TapMatchContext);
-
+  console.log(getUniqueId(), 'JJJJJJJJJJJJJJJJJ');
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -50,6 +53,10 @@ const LoggedOutPlaceholderScreen = (props: LoggedOutPlaceholderScreenProps) => {
         <View>
           <Text style={_s.txt}>LoggedOutPlaceholderScreen</Text>
           <Button title={'Log In'} onPress={() => LoggedIn[1](true)} />
+          <Button
+            title={'Camera'}
+            onPress={() => navigation.navigate('AvatarCamera')}
+          />
           <SvgTest />
           <TapMatchLogoRed width={90} height={90} />
           <Button title={'Share'} onPress={onShare} />

@@ -13,18 +13,15 @@ const NameInput = ({name}: NameInputProps) => {
   return (
     <View style={_s.container}>
       <View style={_s.inputContainer}>
-        {/* <NameInputView
+        <TextInput
+          autoCompleteType={'off'}
+          autoCorrect={false}
+          autoFocus={false}
+          maxLength={40}
           style={_s.NameInputView}
-          pinCount={4}
-          code={name[0]}
-          onCodeChanged={name[1]}
-          autoFocusOnLoad={true}
-          codeInputFieldStyle={_s.underlineStyleBase}
-          codeInputHighlightStyle={_s.underlineStyleHighLighted}
-          onCodeFilled={(code: string) => {
-            console.log(`SENDING CODE TO BACKEND andStart timer`);
-          }}
-        /> */}
+          value={name[0]}
+          onChangeText={name[1]}
+        />
       </View>
     </View>
   );
@@ -47,19 +44,6 @@ const _s = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'flex-start',
     marginHorizontal: '10%',
-  },
-  underlineStyleBase: {
-    minWidth: '20%',
-    height: '100%',
-    borderWidth: 0,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderColor: _c.grey,
-    color: _c.black,
-    fontFamily: _f.eRegular,
-    fontSize: _fs.xxl,
-  },
-  underlineStyleHighLighted: {
-    borderColor: _c.grey,
   },
   NameInputView: {
     height: '70%',

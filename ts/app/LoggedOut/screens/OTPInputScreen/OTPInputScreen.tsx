@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
-import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import OTPInput from './components/OTPInput';
 import Subtitle from './components/Subtitle';
@@ -8,12 +7,21 @@ import SwipeBackGuide from './components/SwipeBackGuide';
 import Title from './components/Title';
 import ReSendCode from './components/ReSendCode';
 import {useNavigation} from '@react-navigation/native';
+import {useBackHandler} from '@react-native-community/hooks';
 
 interface OTPInputScreenProps {}
 
 const OTPInputScreen = (props: OTPInputScreenProps) => {
   const OTP = useState<string>('');
   const {navigate} = useNavigation();
+  useBackHandler(() => {
+    if (false) {
+      // handle it
+      return true;
+    }
+    // let the default thing happen
+    return false;
+  });
   return (
     <View style={_s.container}>
       <View style={_s.content}>
