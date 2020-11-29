@@ -53,10 +53,10 @@ const LoggedOutPlaceholderScreen = ({
         <View>
           <Text style={_s.txt}>LoggedOutPlaceholderScreen</Text>
           <Button title={'Log In'} onPress={() => LoggedIn[1](true)} />
-          <Button
+          {/* <Button
             title={'Camera'}
             onPress={() => navigation.navigate('AvatarCamera')}
-          />
+          /> */}
           <SvgTest />
           <TapMatchLogoRed width={90} height={90} />
           <Button title={'Share'} onPress={onShare} />
