@@ -4,23 +4,34 @@ import {Marker, LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
 interface PeopleMarkerProps {
   coordinate: LatLng;
 }
+// TODO
+//* wrap avatar image in View with style {overflow: 'hidden'} and apply borderRadius to that not Image itself
+//* android does not support image view border radius
+//* investigate alyout jumps onLeyboardUp on android
+
+//! to remove text without losing layout
+//! comment out .topTxtContainer with children
+//! set .container height to 200 - [.topTxtContainer height (current is 47)]
 
 const PeopleMarker = ({coordinate}: PeopleMarkerProps) => {
+  const txt = useLocalizedTxt();
   return (
     <Marker coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>
           <Text numberOfLines={1} style={_s.topTxt}>
-            This is how people will
+            {txt.thisIsHowPeopleWill}
           </Text>
           <Text numberOfLines={1} style={_s.topTxt}>
-            see you on the app
+            {txt.seeYouOnTheApp}
           </Text>
         </View>
+
         <View style={_s.main}>
           <Image
             resizeMode={'stretch'}
@@ -78,19 +89,21 @@ const PeopleMarker = ({coordinate}: PeopleMarkerProps) => {
             source={require('assets/png/PlaceholderPeopleImages/3.png')}
           />
 
-          <Image
-            resizeMode={'stretch'}
-            style={[_s.avatar, _s.shadow]}
-            source={{
-              uri:
-                'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
-            }}
-          />
+          <View style={[_s.avatarContainer, , _s.shadow]}>
+            <Image
+              resizeMode={'stretch'}
+              style={_s.avatar}
+              source={{
+                uri:
+                  'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
+              }}
+            />
+          </View>
 
           <View style={_s.oval} />
           <View style={_s.labelContainer}>
             <View style={[_s.whiteBox, _s.shadow]}>
-              <Text style={_s.whiteBoxTxt}>Baseball</Text>
+              <Text style={_s.whiteBoxTxt}>{txt.baseball}</Text>
             </View>
             <View style={_s.triangle} />
           </View>
@@ -106,6 +119,7 @@ const _s = StyleSheet.create({
   container: {
     width: 200,
     height: 200,
+    // borderWidth: 2,
   },
   triangle: {
     width: 0,
@@ -119,7 +133,7 @@ const _s = StyleSheet.create({
     borderBottomColor: _c.white,
     transform: [{rotate: `180deg`}],
   },
-  avatar: {
+  avatarContainer: {
     top: 72,
     left: 73,
     position: 'absolute',
@@ -127,6 +141,13 @@ const _s = StyleSheet.create({
     borderWidth: 5,
     borderColor: _c.main_red,
     zIndex: 100,
+    height: 50,
+    width: 50,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  avatar: {
     height: 50,
     width: 50,
   },
@@ -138,7 +159,7 @@ const _s = StyleSheet.create({
     textAlignVertical: 'center',
   },
   topTxtContainer: {
-    height: 'auto',
+    height: 47,
     justifyContent: 'center',
     alignItems: 'center',
   },

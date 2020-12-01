@@ -54,7 +54,12 @@ const TapMatch = () => {
       (error) => {
         console.log(error.code, error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+      {
+        forceRequestLocation: true,
+        showLocationDialog: true,
+        enableHighAccuracy: false,
+        timeout: 150000,
+      },
     );
   };
 
