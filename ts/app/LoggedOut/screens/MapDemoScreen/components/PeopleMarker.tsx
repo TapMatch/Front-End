@@ -175,7 +175,6 @@ const _s = StyleSheet.create({
     width: 85,
     height: 63,
     borderRadius: 50,
-    // backgroundColor: 'red',
     transform: [{scaleX: 2}],
   },
   placeholderImg: {
