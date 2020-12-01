@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
@@ -7,7 +7,8 @@ import {Marker} from 'react-native-maps';
 import SwipeBackGuide from './components/SwipeBackGuide';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
-
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import PeopleMarker from './components/PeopleMarker';
 interface MapDemoScreenProps {
   navigation: any;
 }
@@ -15,34 +16,25 @@ interface MapDemoScreenProps {
 const MapDemoScreen = ({navigation}: MapDemoScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const isFocused = useIsFocused();
-
+  const {userLocation} = useContext(TapMatchContext);
+  const coordinates = userLocation[0];
   if (isFocused) {
     return (
       <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
         <SwipeBackGuide />
         <MapView
           provider={PROVIDER_GOOGLE}
-          zoomEnabled={false}
+          // zoomEnabled={false}
           style={_s.map}
-          pitchEnabled={false}
-          rotateEnabled={false}
-          scrollEnabled={false}
+          // pitchEnabled={false}
+          // rotateEnabled={false}
+          // scrollEnabled={false}
           region={{
-            latitude: 37.78825,
-            longitude: -122.4324,
+            ...coordinates,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
-          {[{latlng: {latitude: 37.78825, longitude: -122.4324}}].map(
-            (marker, index) => (
-              <Marker
-                key={index}
-                coordinate={marker.latlng}
-                title={'location'}
-                description={'something interesting'}
-              />
-            ),
-          )}
+          <PeopleMarker coordinate={coordinates} />
         </MapView>
         <ContinueBtn />
       </View>
