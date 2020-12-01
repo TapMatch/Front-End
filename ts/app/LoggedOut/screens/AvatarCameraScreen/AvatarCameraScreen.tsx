@@ -1,29 +1,26 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import SwipeBackGuide from './components/SwipeBackGuide';
-import {RNCamera} from 'react-native-camera';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
-interface AvatarCameraScreenProps {}
+import RedCircleBtn from './components/RedCircleBtn';
+import Camera from './components/Camera';
 
-const AvatarCameraScreen = (props: AvatarCameraScreenProps) => {
+interface AvatarCameraScreenProps {
+  navigation: any;
+}
+
+const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
   return (
     <View style={_s.container}>
-      <SwipeBackGuide />
-      <Title />
-      <Subtitle />
-      <RNCamera
-        style={_s.camera}
-        type={RNCamera.Constants.Type.back}
-        flashMode={RNCamera.Constants.FlashMode.on}
-        androidCameraPermissionOptions={{
-          title: 'Permission to use camera',
-          message: 'We need your permission to use your camera',
-          buttonPositive: 'Ok',
-          buttonNegative: 'Cancel',
-        }}
-      />
+      <View style={_s.top}>
+        <SwipeBackGuide />
+        <Title />
+        <Subtitle />
+      </View>
+      <Camera />
+      <RedCircleBtn onPress={() => navigation.navigate('MapDemo')} />
     </View>
   );
 };
@@ -35,5 +32,8 @@ const _s = StyleSheet.create({
     flex: 1,
     backgroundColor: _c.white,
   },
-  camera: {height: '50%', width: '100%'},
+  top: {
+    width: '100%',
+    height: '25%',
+  },
 });

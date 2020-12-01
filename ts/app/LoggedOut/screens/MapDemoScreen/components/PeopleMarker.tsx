@@ -6,17 +6,13 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
-interface PeopleMarkerProps {
-  coordinate: LatLng;
-}
-// TODO
-//* wrap avatar image in View with style {overflow: 'hidden'} and apply borderRadius to that not Image itself
-//* android does not support image view border radius
-//* investigate alyout jumps onLeyboardUp on android
-
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
 //! set .container height to 200 - [.topTxtContainer height (current is 47)]
+
+interface PeopleMarkerProps {
+  coordinate: LatLng;
+}
 
 const PeopleMarker = ({coordinate}: PeopleMarkerProps) => {
   const txt = useLocalizedTxt();
@@ -211,7 +207,7 @@ const _s = StyleSheet.create({
     zIndex: 20,
   },
   shadow: {
-    shadowColor: '#000',
+    shadowColor: _c.black,
     shadowOffset: {
       width: 0,
       height: 2,

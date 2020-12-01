@@ -2,7 +2,7 @@ import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
-import constants from 'ts/constants/constants.json';
+import {constants} from 'ts/constants/constants';
 import {useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';

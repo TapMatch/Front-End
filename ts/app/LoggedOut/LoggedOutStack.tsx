@@ -22,7 +22,6 @@ export default function LoggedOutStack() {
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
   return (
     <Navigator
-      gestureEnabled={true}
       screenOptions={{
         headerTitleAllowFontScaling: false,
         headerBackAllowFontScaling: false,
@@ -34,6 +33,7 @@ export default function LoggedOutStack() {
           shadowRadius: 0,
           shadowOffset: {
             height: 0,
+            width: 0,
           },
         },
         // headerTitleStyle: {

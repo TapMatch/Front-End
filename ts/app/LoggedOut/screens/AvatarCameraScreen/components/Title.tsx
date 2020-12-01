@@ -12,7 +12,7 @@ const Title = (props: TitleProps) => {
   return (
     <View style={_s.container}>
       <Text numberOfLines={1} style={_s.txt}>
-        {txt.verifyYouAreNotAnAlien}
+        {txt.smileForTheCamera}
       </Text>
     </View>
   );
@@ -22,7 +22,8 @@ export default Title;
 
 const _s = StyleSheet.create({
   container: {
-    flex: 0.2,
+    flex: 0.1,
+    minHeight: '10%',
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingHorizontal: '5%',
@@ -32,6 +33,6 @@ const _s = StyleSheet.create({
     textAlignVertical: 'center',
     color: _c.black,
     fontFamily: _f.eRegular,
-    fontSize: _fs.xxl * 1.5,
+    fontSize: _fs.xxl * 1.1,
   },
 });

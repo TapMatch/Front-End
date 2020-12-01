@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import TapMatch from './app/TapMatch';
 import SplashScreen from 'react-native-splash-screen';
 import {Text} from 'react-native';
-import extendDevSettingsAndMenu from './tools/DevSettings';
+import extendDevSettingsAndMenu from 'ts/tools/DevSettings';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 
-const DEV_MODE = false;
 if (DEV_MODE) {
   extendDevSettingsAndMenu();
 }

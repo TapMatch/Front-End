@@ -12,10 +12,7 @@ const Subtitle = (props: SubtitleProps) => {
   return (
     <View style={_s.container}>
       <Text numberOfLines={1} style={_s.txt}>
-        {txt.weWillSendYourCodeTo}
-      </Text>
-      <Text numberOfLines={1} style={_s.txt}>
-        {txt.yourPhonePleaseEnterItHere}
+        {txt.thisWillBeYourProfilePicture}
       </Text>
     </View>
   );
@@ -25,10 +22,10 @@ export default Subtitle;
 
 const _s = StyleSheet.create({
   container: {
-    flex: 0.2,
+    flex: 0.1,
+    minHeight: '5%',
     justifyContent: 'center',
     alignItems: 'center',
-    paddingTop: '1.5%',
   },
   txt: {
     textAlign: 'center',

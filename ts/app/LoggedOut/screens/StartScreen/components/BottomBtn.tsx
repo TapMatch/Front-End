@@ -7,7 +7,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 
-const BottomButton = () => {
+const BottomBtn = () => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   return (
@@ -20,7 +20,7 @@ const BottomButton = () => {
   );
 };
 
-export default BottomButton;
+export default BottomBtn;
 
 const _s = StyleSheet.create({
   container: {

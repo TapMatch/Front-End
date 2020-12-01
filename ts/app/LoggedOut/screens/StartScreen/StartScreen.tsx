@@ -10,7 +10,7 @@ import {
 import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 // import HoldingHands from 'assets/svg/holding-hands.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import BottomButton from './components/BottomButton';
+import BottomBtn from './components/BottomBtn';
 import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';
 import {useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
@@ -43,7 +43,7 @@ const StartScreen = (props: StartScreenProps) => {
         /> */}
       </TouchableOpacity>
       <TermsAndConditionsParagraph />
-      <BottomButton />
+      <BottomBtn />
     </View>
   );
 };
