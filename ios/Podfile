@@ -36,6 +36,8 @@ target 'TapMatch_Front_end' do
   use_react_native!(:path => config["reactNativePath"])
 
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'TapMatch_Front_endTests' do
     inherit! :complete
     # Pods for testing

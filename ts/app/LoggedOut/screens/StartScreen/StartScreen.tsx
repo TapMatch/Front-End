@@ -24,7 +24,7 @@ const StartScreen = (props: StartScreenProps) => {
   const logoSize = width * 0.6;
 
   return (
-    <View style={[_s.container, {paddingBottom: bottom, paddingTop: top}]}>
+    <View style={[_s.container, {paddingTop: top}]}>
       <StatusBar
         animated={true}
         backgroundColor={'transparent'}

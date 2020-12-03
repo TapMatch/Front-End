@@ -22,8 +22,7 @@ export default Title;
 
 const _s = StyleSheet.create({
   container: {
-    flex: 0.1,
-    minHeight: '10%',
+    flex: 1,
     justifyContent: 'flex-end',
     alignItems: 'center',
     paddingHorizontal: '5%',

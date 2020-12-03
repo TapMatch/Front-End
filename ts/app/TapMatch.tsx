@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {NavigationContainer} from '@react-navigation/native';
 import {TapMatchContext} from './contexts/TapMatchContext';
-import LoggedInStack from './LoggedIn/LoggedInStack';
+import LoggedInStack from './LoggedIn/MainStack/LoggedInStack';
 import LoggedOutStack from './LoggedOut/LoggedOutStack';
 import NoNetworkModal from './common/NoNetworkModal';
 import Geolocation from 'react-native-geolocation-service';

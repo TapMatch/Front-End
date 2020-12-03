@@ -19,7 +19,7 @@ const ContinueBtn = (props: ContinueBtnProps) => {
     <TouchableOpacity
       activeOpacity={1}
       onPress={() => navigate('AllSet')}
-      style={[_s.container, {bottom}]}>
+      style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToContinue}</Text>
     </TouchableOpacity>
   );
@@ -31,9 +31,9 @@ const _s = StyleSheet.create({
   container: {
     position: 'absolute',
     left: 0,
+    bottom: 0,
     backgroundColor: _c.transparentBtn,
     minWidth: '100%',
-    height: vs(60),
     justifyContent: 'center',
     alignItems: 'center',
   },

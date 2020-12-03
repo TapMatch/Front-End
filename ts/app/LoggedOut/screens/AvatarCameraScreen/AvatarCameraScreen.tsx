@@ -4,23 +4,26 @@ import {_c} from 'ts/UIConfig/colors';
 import SwipeBackGuide from './components/SwipeBackGuide';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
-import RedCircleBtn from './components/RedCircleBtn';
-import Camera from './components/Camera';
+import Camera from './components/Camera/Camera';
+import {useIsFocused} from '@react-navigation/native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface AvatarCameraScreenProps {
   navigation: any;
 }
 
 const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
+  const isFocused = useIsFocused();
+  const {bottom} = useSafeAreaInsets();
+
   return (
-    <View style={_s.container}>
+    <View style={[_s.container, {paddingBottom: bottom}]}>
       <View style={_s.top}>
         <SwipeBackGuide />
         <Title />
         <Subtitle />
       </View>
-      <Camera />
-      <RedCircleBtn onPress={() => navigation.navigate('MapDemo')} />
+      {isFocused && <Camera />}
     </View>
   );
 };

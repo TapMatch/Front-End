@@ -6,18 +6,20 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface StartBtnProps {}
 
 const StartBtn = (props: StartBtnProps) => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
+  const {bottom} = useSafeAreaInsets();
 
   return (
     <TouchableOpacity
       activeOpacity={1}
       onPress={() => navigate('LoggedOutPlaceholderScreen')}
-      style={_s.container}>
+      style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToStartThe}</Text>
       <Text style={_s.txt}>{txt.tapMatchExperience}</Text>
     </TouchableOpacity>
@@ -30,7 +32,6 @@ const _s = StyleSheet.create({
   container: {
     backgroundColor: _c.transparentBtn,
     minWidth: '100%',
-    height: vs(65),
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

@@ -12,6 +12,7 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface ReSendCodeProps {
   hidden: boolean;
@@ -21,6 +22,7 @@ interface ReSendCodeProps {
 const ReSendCode = ({hidden, onPress}: ReSendCodeProps) => {
   const txt = useLocalizedTxt();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
+  const {bottom} = useSafeAreaInsets();
 
   if (hidden) {
     return <View style={_s.container} />;
@@ -29,7 +31,7 @@ const ReSendCode = ({hidden, onPress}: ReSendCodeProps) => {
       <KeyboardAvoidingView
         behavior={KAVBehaviorObj}
         keyboardVerticalOffset={vs(70)}>
-        <View style={_s.container}>
+        <View style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
           <Text numberOfLines={1} style={_s.txt}>
             {txt.didntReceiveCode}
           </Text>
@@ -49,7 +51,6 @@ export default ReSendCode;
 const _s = StyleSheet.create({
   container: {
     minWidth: '100%',
-    height: vs(60),
     justifyContent: 'center',
     flexDirection: 'row',
     alignItems: 'center',

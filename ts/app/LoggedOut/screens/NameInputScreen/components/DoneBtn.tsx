@@ -13,6 +13,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface DoneBtnProps {
   disabled: boolean;
@@ -23,6 +24,7 @@ const DoneBtn = ({disabled}: DoneBtnProps) => {
   const txt = useLocalizedTxt();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
+  const {bottom} = useSafeAreaInsets();
 
   return (
     <KeyboardAvoidingView
@@ -35,7 +37,7 @@ const DoneBtn = ({disabled}: DoneBtnProps) => {
           navigate('AvatarCamera');
           Keyboard.dismiss();
         }}
-        style={_s.container}>
+        style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
         <Text style={[_s.txt, {color: doneTxtColor}]}>{txt.done}</Text>
       </TouchableOpacity>
     </KeyboardAvoidingView>
