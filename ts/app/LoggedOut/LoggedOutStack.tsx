@@ -43,11 +43,6 @@ export default function LoggedOutStack() {
         ...insets,
       }}>
       <Screen
-        name="LoggedOutPlaceholderScreen"
-        options={{title: 'LoggedOutPlaceholderScreen'}}
-        component={LoggedOutPlaceholderScreen}
-      />
-      <Screen
         name="Start"
         component={StartScreen}
         options={() => {
@@ -128,6 +123,11 @@ export default function LoggedOutStack() {
             headerShown: false,
           };
         }}
+      />
+      <Screen
+        name="LoggedOutPlaceholderScreen"
+        options={{title: 'LoggedOutPlaceholderScreen'}}
+        component={LoggedOutPlaceholderScreen}
       />
     </Navigator>
   );
