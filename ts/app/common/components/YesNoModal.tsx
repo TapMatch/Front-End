@@ -5,6 +5,7 @@ import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
 interface YesNoModalProps {
   modalVisible: [boolean, (x: boolean) => void];
@@ -20,6 +21,7 @@ const YesNoModal = ({
   onYesPress,
   onNoPress,
 }: YesNoModalProps) => {
+  const txt = useLocalizedTxt();
   const renderSubtitle = () => {
     if (subtitle) {
       return (
@@ -57,12 +59,12 @@ const YesNoModal = ({
         <View style={_s.bottom}>
           <TouchableOpacity onPress={handleYes} style={[_s.btn, _s.yesBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.yesBtnTxt]}>
-              Yes
+              {txt.yes}
             </Text>
           </TouchableOpacity>
           <TouchableOpacity onPress={handleNo} style={[_s.btn, _s.noBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.noBtnTxt]}>
-              No, Stay
+              {txt.noStay}
             </Text>
           </TouchableOpacity>
         </View>

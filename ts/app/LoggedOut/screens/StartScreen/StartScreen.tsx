@@ -1,15 +1,13 @@
-import React, {Fragment} from 'react';
+import React from 'react';
 import {
   View,
   StyleSheet,
-  Image,
   TouchableOpacity,
   StatusBar,
   useWindowDimensions,
   ImageBackground,
 } from 'react-native';
 import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
-// import HoldingHands from 'assets/svg/holding-hands.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomBtn from './components/BottomBtn';
 import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';

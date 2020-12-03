@@ -18,7 +18,7 @@ const StartBtn = (props: StartBtnProps) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => navigate('LoggedOutPlaceholderScreen')}
+      onPress={() => navigate('Communities')}
       style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToStartThe}</Text>
       <Text style={_s.txt}>{txt.tapMatchExperience}</Text>

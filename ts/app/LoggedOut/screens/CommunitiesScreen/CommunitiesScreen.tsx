@@ -8,6 +8,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import PeopleMarker from './components/PeopleMarker';
+import Title from './components/Title';
 interface CommunitiesScreenProps {
   navigation: any;
   route: any;
@@ -20,7 +21,12 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
   const coordinates = userLocation[0];
   if (isFocused) {
     return (
-      <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
+      <View style={[_s.container]}>
+        <View style={_s.content}>
+          <Title />
+          <View style={_s.middle}></View>
+          <View style={_s.bottom}></View>
+        </View>
         <MapView
           provider={PROVIDER_GOOGLE}
           zoomEnabled={true}
@@ -33,7 +39,6 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}></MapView>
-        <ContinueBtn />
       </View>
     );
   } else {
@@ -45,10 +50,30 @@ export default CommunitiesScreen;
 
 const _s = StyleSheet.create({
   container: {
-    paddingTop: 60,
     position: 'relative',
     height: '100%',
     width: '100%',
+  },
+
+  middle: {
+    flex: 0.7,
+    backgroundColor: 'indigo',
+  },
+  bottom: {
+    flex: 0.2,
+    backgroundColor: 'blue',
+  },
+  content: {
+    paddingTop: 60,
+    position: 'absolute',
+    backgroundColor: _c.modalbackground,
+    left: 0,
+    bottom: 0,
+    zIndex: 100,
+    height: '100%',
+    width: '100%',
+    justifyContent: 'center',
+    alignItems: 'flex-start',
   },
   map: {
     ...StyleSheet.absoluteFillObject,
