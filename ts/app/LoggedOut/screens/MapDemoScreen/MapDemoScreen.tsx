@@ -11,9 +11,11 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import PeopleMarker from './components/PeopleMarker';
 interface MapDemoScreenProps {
   navigation: any;
+  route: any;
 }
 
-const MapDemoScreen = ({navigation}: MapDemoScreenProps) => {
+const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
+  const {pictureURI} = route.params;
   const {top, bottom} = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
@@ -34,7 +36,7 @@ const MapDemoScreen = ({navigation}: MapDemoScreenProps) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
-          <PeopleMarker coordinate={coordinates} />
+          <PeopleMarker coordinate={coordinates} pictureURI={pictureURI} />
         </MapView>
         <ContinueBtn />
       </View>

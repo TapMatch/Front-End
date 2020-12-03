@@ -1,5 +1,11 @@
 import React, {Fragment, useState, useRef, useEffect} from 'react';
-import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {RNCamera} from 'react-native-camera';
 import SwitchCameraWhileAlpha from 'assets/svg/switch-camera-white-alpha.svg';
@@ -24,7 +30,8 @@ const Camera = (props: CameraProps) => {
       try {
         if (RNCameraRef.current) {
           const {uri} = await RNCameraRef.current.takePictureAsync({
-            quality: 0.4,
+            quality: 0.3,
+            width: 300,
             mirrorImage: false,
             orientation: 'portrait',
           });
@@ -39,7 +46,7 @@ const Camera = (props: CameraProps) => {
   useEffect(() => {
     (async () => {
       const base64 = await getBase64(pictureURI[0]);
-      await navigate('MapDemo');
+      await navigate('MapDemo', {pictureURI: base64});
     })();
   }, [uploadToServerTrigger[0]]);
 
@@ -72,7 +79,7 @@ const Camera = (props: CameraProps) => {
             <View style={_s.circle} />
           </View>
           <RNCamera
-            zoom={0.00005}
+            zoom={0.000005}
             ref={RNCameraRef}
             style={_s.camera}
             type={RNCamera.Constants.Type[cameraTypeBool[0] ? 'back' : 'front']}
@@ -105,6 +112,7 @@ const Camera = (props: CameraProps) => {
 
 export default Camera;
 
+const circleRadius = Dimensions.get('screen').width * 0.65;
 const _s = StyleSheet.create({
   container: {
     position: 'relative',
@@ -137,7 +145,7 @@ const _s = StyleSheet.create({
     borderWidth: 1,
     borderColor: _c.white,
     borderRadius: 400,
-    width: 220,
-    height: 220,
+    width: circleRadius,
+    height: circleRadius,
   },
 });

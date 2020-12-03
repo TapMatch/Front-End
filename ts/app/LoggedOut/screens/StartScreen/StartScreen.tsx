@@ -1,11 +1,12 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {
   View,
   StyleSheet,
-  // Image,
+  Image,
   TouchableOpacity,
   StatusBar,
   useWindowDimensions,
+  ImageBackground,
 } from 'react-native';
 import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 // import HoldingHands from 'assets/svg/holding-hands.svg';
@@ -25,25 +26,24 @@ const StartScreen = (props: StartScreenProps) => {
 
   return (
     <View style={[_s.container, {paddingTop: top}]}>
-      <StatusBar
-        animated={true}
-        backgroundColor={'transparent'}
-        barStyle={'dark-content'}
-      />
-      <TouchableOpacity
-        activeOpacity={1}
-        onPress={() => navigate('PhoneInput')}
-        style={_s.middle}>
-        <TapMatchBetaLogo height={logoSize} width={logoSize} />
-        {/* <Image
-          width={30}
-          height={50}
-          style={{width: 300, height: 500}}
-          source={require('assets/png/holding-hands.png')}
-        /> */}
-      </TouchableOpacity>
-      <TermsAndConditionsParagraph />
-      <BottomBtn />
+      <ImageBackground
+        resizeMode={'cover'}
+        style={_s.container}
+        source={require('assets/png/holding-hands.png')}>
+        <StatusBar
+          animated={true}
+          backgroundColor={'transparent'}
+          barStyle={'dark-content'}
+        />
+        <TouchableOpacity
+          activeOpacity={1}
+          onPress={() => navigate('PhoneInput')}
+          style={_s.middle}>
+          <TapMatchBetaLogo height={logoSize} width={logoSize} />
+        </TouchableOpacity>
+        <TermsAndConditionsParagraph />
+        <BottomBtn />
+      </ImageBackground>
     </View>
   );
 };
@@ -55,6 +55,10 @@ const _s = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: _c.white,
+  },
+  imageBackground: {
+    flex: 1,
     backgroundColor: _c.white,
   },
   middle: {
