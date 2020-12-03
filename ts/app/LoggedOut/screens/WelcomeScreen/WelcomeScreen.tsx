@@ -12,13 +12,13 @@ import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 // import HoldingHands from 'assets/svg/holding-hands.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomBtn from './components/BottomBtn';
-import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';
+import SloganParagraph from './components/SloganParagraph';
 import {useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 
-interface StartScreenProps {}
+interface WelcomeScreenProps {}
 
-const StartScreen = (props: StartScreenProps) => {
+const WelcomeScreen = (props: WelcomeScreenProps) => {
   const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
   const {navigate} = useNavigation();
@@ -41,14 +41,14 @@ const StartScreen = (props: StartScreenProps) => {
           style={_s.middle}>
           <TapMatchBetaLogo height={logoSize} width={logoSize} />
         </TouchableOpacity>
-        <TermsAndConditionsParagraph />
+        <SloganParagraph />
         <BottomBtn />
       </ImageBackground>
     </View>
   );
 };
 
-export default StartScreen;
+export default WelcomeScreen;
 
 const _s = StyleSheet.create({
   container: {

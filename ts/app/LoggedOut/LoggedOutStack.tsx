@@ -1,8 +1,5 @@
 import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
-import StartScreen from './screens/StartScreen/StartScreen';
-import WebScreen from './screens/WebScreen/WebScreen';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import PhoneInputScreen from './screens/PhoneInputScreen/PhoneInputScreen';
@@ -11,6 +8,11 @@ import NameInputScreen from './screens/NameInputScreen/NameInputScreen';
 import AvatarCameraScreen from './screens/AvatarCameraScreen/AvatarCameraScreen';
 import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
 import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
+import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
+import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
+import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
+import StartScreen from './screens/StartScreen/StartScreen';
+import WebScreen from './screens/WebScreen/WebScreen';
 
 export default function LoggedOutStack() {
   const Stack = createStackNavigator();
@@ -43,11 +45,22 @@ export default function LoggedOutStack() {
         ...insets,
       }}>
       <Screen
+        name="Welcome"
+        component={WelcomeScreen}
+        options={() => {
+          return {
+            headerTitle: '',
+          };
+        }}
+      />
+      <Screen
         name="Start"
         component={StartScreen}
         options={() => {
           return {
             headerTitle: '',
+            headerLeft: () => null,
+            headerRight: () => null,
           };
         }}
       />
@@ -118,6 +131,15 @@ export default function LoggedOutStack() {
       <Screen
         name="MapDemo"
         component={MapDemoScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+      <Screen
+        name="Communities"
+        component={CommunitiesScreen}
         options={() => {
           return {
             headerShown: false,

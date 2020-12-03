@@ -8,13 +8,12 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import PeopleMarker from './components/PeopleMarker';
-interface MapDemoScreenProps {
+interface CommunitiesScreenProps {
   navigation: any;
   route: any;
 }
 
-const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
-  const {pictureURI} = route.params;
+const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
@@ -22,10 +21,9 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
   if (isFocused) {
     return (
       <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
-        <SwipeBackGuide />
         <MapView
           provider={PROVIDER_GOOGLE}
-          // zoomEnabled={false}
+          zoomEnabled={true}
           style={_s.map}
           // pitchEnabled={false}
           // rotateEnabled={false}
@@ -34,9 +32,7 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
             ...coordinates,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
-          }}>
-          <PeopleMarker coordinate={coordinates} pictureURI={pictureURI} />
-        </MapView>
+          }}></MapView>
         <ContinueBtn />
       </View>
     );
@@ -45,7 +41,7 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
   }
 };
 
-export default MapDemoScreen;
+export default CommunitiesScreen;
 
 const _s = StyleSheet.create({
   container: {

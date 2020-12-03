@@ -47,7 +47,6 @@ export default TermsAndConditionsParagraph;
 
 const _s = StyleSheet.create({
   container: {
-    // backgroundColor: 'indigo',
     paddingVertical: '10%',
     width: '100%',
     flex: 0.3,
