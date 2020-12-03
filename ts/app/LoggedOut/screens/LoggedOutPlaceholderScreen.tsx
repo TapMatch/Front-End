@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {
   Text,
   View,
@@ -16,12 +16,13 @@ import TapMatchLogoRed from 'assets/svg/TapMatchLogo-red.svg';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {_f} from 'ts/UIConfig/fonts';
-interface LoggedOutPlaceholderScreenProps {}
+
 import {s} from 'react-native-size-matters';
-const LoggedOutPlaceholderScreen = ({
-  navigation,
-}: LoggedOutPlaceholderScreenProps) => {
+import YesNoModal from '../../common/components/YesNoModal';
+
+const LoggedOutPlaceholderScreen = ({navigation}: any) => {
   const {LoggedIn} = useContext(TapMatchContext);
+  const modalVisible = useState<boolean>(false);
   console.log(getUniqueId(), 'JJJJJJJJJJJJJJJJJ');
   const onShare = async () => {
     try {
@@ -44,6 +45,13 @@ const LoggedOutPlaceholderScreen = ({
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'blue'}}>
+      <YesNoModal
+        onYesPress={() => console.log('onYesPress----onYesPress')}
+        onNoPress={() => console.log('onNoPress-------onNoPress')}
+        modalVisible={modalVisible}
+        subtitle={'Note that If you quit,\nno draft Will be saved'}
+        title={'Are you sure\nYou want to\nleave create?'}
+      />
       <StatusBar
         animated={true}
         backgroundColor={'transparent'}
@@ -53,6 +61,7 @@ const LoggedOutPlaceholderScreen = ({
         <View>
           <Text style={_s.txt}>LoggedOutPlaceholderScreen</Text>
           <Button title={'Log In'} onPress={() => LoggedIn[1](true)} />
+          <Button title={'modal'} onPress={() => modalVisible[1](true)} />
           <Button
             title={'Camera'}
             onPress={() => navigation.navigate('AvatarCamera')}

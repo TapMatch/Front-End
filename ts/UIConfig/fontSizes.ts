@@ -9,4 +9,5 @@ export const _fs = {
   l: RFValue(18),
   xl: RFValue(20),
   xxl: RFValue(22),
+  xxxl: RFValue(24),
 };

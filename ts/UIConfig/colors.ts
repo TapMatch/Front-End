@@ -6,5 +6,7 @@ export const _c = {
   linkBlue: '#4E88F5',
   greyLight: 'rgba(0,0,0,0.1)',
   grey: 'rgba(0,0,0,0.4)',
+  modalbackground: 'rgba(112, 112, 112, 0.55)',
+  noBtnBackground: 'rgba(159, 159, 159, 0.35)',
   transparentBtn: 'rgba(159, 159, 159, 0.04)',
 };
