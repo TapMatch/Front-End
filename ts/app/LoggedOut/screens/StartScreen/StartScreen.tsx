@@ -19,7 +19,7 @@ import {_c} from 'ts/UIConfig/colors';
 interface StartScreenProps {}
 
 const StartScreen = (props: StartScreenProps) => {
-  const {top, bottom} = useSafeAreaInsets();
+  const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
   const {navigate} = useNavigation();
   const logoSize = width * 0.6;
