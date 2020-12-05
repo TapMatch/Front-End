@@ -58,12 +58,12 @@ const _s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: _fs.xxxxxl,
+    fontSize: _fs.xxxxxl * 1.3,
     color: _c.black,
     marginBottom: 2,
   },
   city: {
-    fontSize: _fs.xxl,
+    fontSize: _fs.xxl * 1.1,
     color: _c.grey,
   },
 });
