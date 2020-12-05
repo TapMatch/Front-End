@@ -118,6 +118,7 @@ const _s = StyleSheet.create({
     position: 'relative',
     width: '100%',
     height: '45%',
+    overflow: 'hidden',
     backgroundColor: _c.greyLight,
   },
   camera: {

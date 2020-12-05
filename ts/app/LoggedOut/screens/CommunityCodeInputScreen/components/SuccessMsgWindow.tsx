@@ -6,20 +6,18 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {vs} from 'react-native-size-matters';
 
-interface TitleProps {}
+interface SuccessMsgWindowProps {}
 
-const Title = (props: TitleProps) => {
+const SuccessMsgWindow = (props: SuccessMsgWindowProps) => {
   const txt = useLocalizedTxt();
   return (
     <View style={_s.container}>
-      <Text numberOfLines={1} style={_s.txt}>
-        {txt.communities}
-      </Text>
+      <Text>You are now part of</Text>
     </View>
   );
 };
 
-export default Title;
+export default SuccessMsgWindow;
 
 const _s = StyleSheet.create({
   container: {

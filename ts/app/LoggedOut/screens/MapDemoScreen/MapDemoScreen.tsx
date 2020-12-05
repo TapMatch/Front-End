@@ -21,7 +21,8 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
   const coordinates = userLocation[0];
   if (isFocused) {
     return (
-      <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
+      <View
+        style={[_s.container, {paddingTop: 60 + top, paddingBottom: bottom}]}>
         <SwipeBackGuide />
         <MapView
           provider={PROVIDER_GOOGLE}
@@ -49,7 +50,6 @@ export default MapDemoScreen;
 
 const _s = StyleSheet.create({
   container: {
-    paddingTop: 60,
     position: 'relative',
     height: '100%',
     width: '100%',

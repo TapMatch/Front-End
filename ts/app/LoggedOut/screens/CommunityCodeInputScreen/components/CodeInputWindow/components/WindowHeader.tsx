@@ -8,26 +8,31 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {useNavigation} from '@react-navigation/native';
 
-interface SwipeBackGuideProps {}
+interface WindowHeaderProps {}
 
-const iconSize = _fs.xxl * 1.8;
+const iconSize = _fs.xxl * 1.4;
 
-const SwipeBackGuide = (props: SwipeBackGuideProps) => {
+const WindowHeader = (props: WindowHeaderProps) => {
   const txt = useLocalizedTxt();
   const {goBack} = useNavigation();
   return (
-    <TouchableOpacity activeOpacity={1} onPress={goBack} style={_s.container}>
-      <ChevronLeftBlack height={iconSize} width={iconSize} />
+    <View style={_s.container}>
+      <TouchableOpacity style={_s.iconContainerBtn} onPress={goBack}>
+        <ChevronLeftBlack height={iconSize} width={iconSize} />
+      </TouchableOpacity>
       <View style={_s.txtContainer}>
         <Text style={_s.txt} numberOfLines={1}>
-          {txt.swipeLeftToGoBack}
+          {txt.enterCodeTo}
+        </Text>
+        <Text style={_s.txt} numberOfLines={1}>
+          {txt.gainAccessTo}
         </Text>
       </View>
-    </TouchableOpacity>
+    </View>
   );
 };
 
-export default SwipeBackGuide;
+export default WindowHeader;
 
 const _s = StyleSheet.create({
   container: {
@@ -35,7 +40,6 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: '5%',
   },
   txtContainer: {
     paddingRight: iconSize,
@@ -43,9 +47,13 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  iconContainerBtn: {
+    justifyContent: 'center',
+    alignItems: 'flex-start',
+  },
   txt: {
-    color: _c.grey,
-    fontFamily: _f.eRegular,
+    color: _c.main_red,
+    fontFamily: _f.regularAltBold,
     fontSize: _fs.m,
   },
 });

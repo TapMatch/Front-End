@@ -9,8 +9,14 @@
 
     "communities":"Communities",
 
+    "enterCodeTo":"Enter Code to ",
+    "gainAccessTo":"Gain Access to",
+
     "yes":"yes",
     "noStay":"No, Stay",
+
+    "giveUsYourFeedback":"Give us your feedback",
+    "requestACommunity":"Request a Community",
 
     "verifyYouAreNotAnAlien":"Verify you’re not an 👽",
     "weWillSendYourCodeTo":"We will send your code to",

@@ -8,9 +8,11 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {useNavigation} from '@react-navigation/native';
 
-interface componentNameProps {}
+interface SwipeBackGuideProps {}
+
 const iconSize = _fs.xxl * 1.8;
-const SwipeBackGuide = (props: componentNameProps) => {
+
+const SwipeBackGuide = (props: SwipeBackGuideProps) => {
   const txt = useLocalizedTxt();
   const {goBack} = useNavigation();
   return (

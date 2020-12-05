@@ -9,4 +9,5 @@ export const _c = {
   modalbackground: 'rgba(112, 112, 112, 0.55)',
   noBtnBackground: 'rgba(159, 159, 159, 0.35)',
   transparentBtn: 'rgba(159, 159, 159, 0.04)',
+  unlockedCommunityBtn: 'rgba(255, 255, 255, 0.4)',
 };

@@ -13,6 +13,7 @@ import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
 import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
 import StartScreen from './screens/StartScreen/StartScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
+import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 
 export default function LoggedOutStack() {
   const Stack = createStackNavigator();
@@ -140,6 +141,15 @@ export default function LoggedOutStack() {
       <Screen
         name="Communities"
         component={CommunitiesScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+      <Screen
+        name="CommunityCodeInput"
+        component={CommunityCodeInputScreen}
         options={() => {
           return {
             headerShown: false,

@@ -27,7 +27,7 @@ const StartScreen = (props: StartScreenProps) => {
       <ImageBackground
         resizeMode={'cover'}
         style={_s.container}
-        source={require('assets/png/holding-hands.png')}>
+        source={require('assets/png/holding-hands2.png')}>
         <StatusBar
           animated={true}
           backgroundColor={'transparent'}
