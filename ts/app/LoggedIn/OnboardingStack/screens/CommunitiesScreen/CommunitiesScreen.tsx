@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
@@ -11,6 +11,7 @@ import FeedbackBtn from './components/FeedbackBtn';
 import {useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
+import {getAllCommunities} from './api/getAllCommunities';
 
 interface CommunitiesScreenProps {
   navigation: any;
@@ -21,8 +22,16 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const isFocused = useIsFocused();
-  const {userLocation} = useContext(TapMatchContext);
+  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const communities = useState<any>([]);
   const coordinates = userLocation[0];
+
+  useEffect(() => {
+    getAllCommunities({
+      userToken: userToken[0],
+      communities,
+    });
+  }, []);
 
   if (isFocused) {
     return (
@@ -34,7 +43,7 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
               contentContainerStyle={{paddingHorizontal: '7%'}}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
-              data={[0, 1, 2, 3, 5, 6, 7, 8, 9]}
+              data={communities[0]}
               renderItem={({item, index, separators}) =>
                 index % 2 === 0 ? <ListItemLocked /> : <ListItemUnlocked />
               }

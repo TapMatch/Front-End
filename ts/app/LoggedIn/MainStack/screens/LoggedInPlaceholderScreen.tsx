@@ -8,8 +8,8 @@ import {
   ScrollView,
   Platform,
 } from 'react-native';
-import Geolocation from 'react-native-geolocation-service';
-import {request, PERMISSIONS} from 'react-native-permissions';
+// import Geolocation from 'react-native-geolocation-service';
+// import {request, PERMISSIONS} from 'react-native-permissions';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {WebView} from 'react-native-webview';

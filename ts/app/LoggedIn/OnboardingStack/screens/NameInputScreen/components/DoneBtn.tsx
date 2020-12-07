@@ -1,11 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   TouchableOpacity,
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
 } from 'react-native';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
@@ -14,17 +13,21 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {postUserName} from '../api/postUserName';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface DoneBtnProps {
   disabled: boolean;
+  name: string;
 }
 
-const DoneBtn = ({disabled}: DoneBtnProps) => {
+const DoneBtn = ({disabled, name}: DoneBtnProps) => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
   const {bottom} = useSafeAreaInsets();
+  const {userProfile, userToken} = useContext(TapMatchContext);
 
   return (
     <KeyboardAvoidingView
@@ -34,8 +37,8 @@ const DoneBtn = ({disabled}: DoneBtnProps) => {
         disabled={disabled}
         activeOpacity={1}
         onPress={() => {
+          // postUserName({name, userProfile, userToken: userToken[0]});
           navigate('AvatarCamera');
-          Keyboard.dismiss();
         }}
         style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
         <Text style={[_s.txt, {color: doneTxtColor}]}>{txt.done}</Text>
