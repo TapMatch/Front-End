@@ -8,7 +8,7 @@ const btns = [
 ];
 
 export default function callAlert(
-  title: string,
+  title: string = 'Tap Match',
   txt: string,
   buttons: Array<{}> = btns,
   cancelable: boolean = false,

@@ -32,7 +32,7 @@ const Camera = (props: CameraProps) => {
           const {uri} = await RNCameraRef.current.takePictureAsync({
             quality: 0.3,
             width: 300,
-            mirrorImage: false,
+            mirrorImage: true,
             orientation: 'portrait',
           });
           await pictureURI[1](uri);
@@ -83,8 +83,8 @@ const Camera = (props: CameraProps) => {
             ref={RNCameraRef}
             style={_s.camera}
             type={RNCamera.Constants.Type[cameraTypeBool[0] ? 'back' : 'front']}
-            captureAudio={false}
-            flashMode={RNCamera.Constants.FlashMode.on}
+            captureAudio={false} // no permissions added for this in recat-native-camera package setup
+            flashMode={RNCamera.Constants.FlashMode.off}
             androidCameraPermissionOptions={{
               title: 'Permission to use camera',
               message: 'We need your permission to use your camera',

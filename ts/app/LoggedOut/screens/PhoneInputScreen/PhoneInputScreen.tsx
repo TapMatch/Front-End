@@ -15,6 +15,7 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
   const callingCode = useState<string>('376');
   const countryCode = useState<CountryCode>('AD');
   const phoneNumber = useState<string>('');
+  console.log(callingCode[0], '-------------callingCode---------------');
   const doneBtnDisabled =
     !validatePhoneNumber(`+${callingCode[0]}${phoneNumber[0]}`) ||
     phoneNumber[0].length === 0;
@@ -29,7 +30,11 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
           phoneNumber={phoneNumber}
         />
       </View>
-      <DoneBtn disabled={doneBtnDisabled} />
+      <DoneBtn
+        disabled={doneBtnDisabled}
+        callingCode={callingCode}
+        phoneNumber={phoneNumber}
+      />
     </View>
   );
 };

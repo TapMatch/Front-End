@@ -2,14 +2,12 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
-import PhoneInputScreen from './screens/PhoneInputScreen/PhoneInputScreen';
-import OTPInputScreen from './screens/OTPInputScreen/OTPInputScreen';
-import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
 // import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
-import StartScreen from './screens/StartScreen/StartScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
+import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
+import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 
-export default function LoggedOutStack() {
+export default function MainStack() {
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
   const transitions =
@@ -40,25 +38,28 @@ export default function LoggedOutStack() {
         ...insets,
       }}>
       <Screen
-        name="Welcome"
-        component={WelcomeScreen}
+        name="Communities"
+        component={CommunitiesScreen}
         options={() => {
           return {
-            headerTitle: '',
+            headerShown: false,
           };
         }}
       />
       <Screen
-        name="Start"
-        component={StartScreen}
+        name="CommunityCodeInput"
+        component={CommunityCodeInputScreen}
         options={() => {
           return {
-            headerTitle: '',
-            headerLeft: () => null,
-            headerRight: () => null,
+            headerShown: false,
           };
         }}
       />
+      {/* <Screen
+        name="LoggedInPlaceholderScreen"
+        options={{title: 'LoggedInPlaceholderScreen'}}
+        component={LoggedInPlaceholderScreen}
+      /> */}
       <Screen
         name="WebScreen"
         options={() => {
@@ -68,33 +69,6 @@ export default function LoggedOutStack() {
         }}
         component={WebScreen}
       />
-      <Screen
-        name="PhoneInput"
-        component={PhoneInputScreen}
-        options={() => {
-          return {
-            headerTitle: '',
-            headerLeft: () => null,
-            headerRight: () => null,
-          };
-        }}
-      />
-      <Screen
-        name="OTPInput"
-        component={OTPInputScreen}
-        options={() => {
-          return {
-            headerTitle: '',
-            headerLeft: () => null,
-            headerRight: () => null,
-          };
-        }}
-      />
-      {/* <Screen
-        name="LoggedOutPlaceholderScreen"
-        options={{title: 'LoggedOutPlaceholderScreen'}}
-        component={LoggedOutPlaceholderScreen}
-      /> */}
     </Navigator>
   );
 }

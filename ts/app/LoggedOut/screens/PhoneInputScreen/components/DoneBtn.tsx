@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   TouchableOpacity,
@@ -14,13 +14,18 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {requestOTP} from '../api/requestOTP';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface DoneBtnProps {
   disabled: boolean;
+  callingCode: [string, (x: string) => void];
+  phoneNumber: [string, (x: string) => void];
 }
 
-const DoneBtn = ({disabled}: DoneBtnProps) => {
+const DoneBtn = ({disabled, callingCode, phoneNumber}: DoneBtnProps) => {
   const {navigate} = useNavigation();
+  const {LoggedIn} = useContext(TapMatchContext);
   const txt = useLocalizedTxt();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
@@ -34,8 +39,13 @@ const DoneBtn = ({disabled}: DoneBtnProps) => {
         disabled={disabled}
         activeOpacity={1}
         onPress={() => {
-          navigate('OTPInput');
           Keyboard.dismiss();
+          navigate('OTPInput');
+          requestOTP({
+            callingCode: callingCode[0],
+            phoneNumber: phoneNumber[0],
+            LoggedIn,
+          });
         }}
         style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
         <Text style={[_s.txt, {color: doneTxtColor}]}>{txt.done}</Text>
