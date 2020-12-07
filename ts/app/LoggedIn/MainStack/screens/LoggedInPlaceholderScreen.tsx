@@ -18,27 +18,33 @@ import deleteUserToken from 'ts/tools/extensions/deleteUserToken';
 interface LoggedInPlaceholderScreenProps {}
 
 const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
-  const {LoggedIn} = useContext(TapMatchContext);
-  useEffect(() => {
-    const location =
-      Platform.OS === 'ios'
-        ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-        : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-    request(location).then((x) => {
-      if (x === 'granted') {
-        Geolocation.getCurrentPosition(
-          (position) => {
-            console.log(position);
-          },
-          (error) => {
-            // See error code charts below.
-            console.log(error.code, error.message);
-          },
-          {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
-        );
-      }
-    });
-  }, []);
+  const {LoggedIn, userProfile, userToken} = useContext(TapMatchContext);
+  console.log(
+    '-----------------------',
+    userProfile[0],
+    userToken[0],
+    '============================================',
+  );
+  // useEffect(() => {
+  //   const location =
+  //     Platform.OS === 'ios'
+  //       ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+  //       : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+  //   request(location).then((x) => {
+  //     if (x === 'granted') {
+  //       Geolocation.getCurrentPosition(
+  //         (position) => {
+  //           console.log(position);
+  //         },
+  //         (error) => {
+  //           // See error code charts below.
+  //           console.log(error.code, error.message);
+  //         },
+  //         {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+  //       );
+  //     }
+  //   });
+  // }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>

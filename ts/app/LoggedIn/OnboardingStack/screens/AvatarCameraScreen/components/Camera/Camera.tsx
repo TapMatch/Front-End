@@ -13,7 +13,6 @@ import {vs} from 'react-native-size-matters';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
-import callAlert from 'ts/utils/callAlert';
 
 interface CameraProps {}
 
@@ -40,7 +39,6 @@ const Camera = (props: CameraProps) => {
         }
       } catch (error) {
         console.error(error);
-        callAlert(undefined, error);
       }
     })();
   }, [cameraShutterState[0]]);

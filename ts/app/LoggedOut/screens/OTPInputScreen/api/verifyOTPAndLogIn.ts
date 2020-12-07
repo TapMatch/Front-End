@@ -2,14 +2,23 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 
-interface IverifyOTP {
+interface IverifyOTPAndLogIn {
   PHPSESSID: string;
   OTP: string;
   LoggedIn: [boolean, (x: boolean) => void];
+  userProfile: [any, (x: any) => void];
+  userToken: [string, (x: string) => void];
 }
 
-export async function verifyOTP({PHPSESSID, OTP, LoggedIn}: IverifyOTP) {
+export async function verifyOTPAndLogIn({
+  PHPSESSID,
+  OTP,
+  LoggedIn,
+  userProfile,
+  userToken,
+}: IverifyOTPAndLogIn) {
   try {
     const options: AxiosRequestConfig = {
       method: 'POST',
@@ -25,16 +34,19 @@ export async function verifyOTP({PHPSESSID, OTP, LoggedIn}: IverifyOTP) {
 
     axios
       .request(options)
-      .then(({data}) => {
+      .then(({data}: any) => {
+        userToken[1](data);
         AsyncStorage.setItem('@user_token', data);
-        LoggedIn[1](true);
+        return data;
       })
+      .then((data: string) => getUserProfile({userProfile, userToken: data}))
+      .then(() => LoggedIn[1](true))
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error);
+        callAlert(undefined, error.toString());
       });
   } catch (error) {
-    console.error(`${error} ::: verifyOTP`);
-    callAlert(undefined, error);
+    console.error(`${error} ::: verifyOTPAndLogIn`);
+    callAlert(undefined, error.toString());
   }
 }

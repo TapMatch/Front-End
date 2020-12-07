@@ -42,8 +42,8 @@ export default function OnboardingStack() {
         ...insets,
       }}>
       <Screen
-        name="AvatarCamera"
-        component={AvatarCameraScreen}
+        name="NameInput"
+        component={NameInputScreen}
         options={() => {
           return {
             headerTitle: '',
@@ -53,8 +53,8 @@ export default function OnboardingStack() {
         }}
       />
       <Screen
-        name="NameInput"
-        component={NameInputScreen}
+        name="AvatarCamera"
+        component={AvatarCameraScreen}
         options={() => {
           return {
             headerTitle: '',
@@ -101,7 +101,6 @@ export default function OnboardingStack() {
           };
         }}
       />
-
       <Screen
         name="WebScreen"
         options={() => {

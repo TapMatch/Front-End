@@ -21,7 +21,10 @@
     "verifyYouAreNotAnAlien":"Verify you’re not an 👽",
     "weWillSendYourCodeTo":"We will send your code to",
     "yourPhonePleaseEnterItHere":"Your Phone. Please Enter it here.",
+
     "swipeLeftToGoBack":"Swipe Left to go back",
+    "pressBackToReturn":"{Press Back ro return",
+
     "didntReceiveCode":"Didn’t Receive Code?",
     "reSend":"Re-Send",
 

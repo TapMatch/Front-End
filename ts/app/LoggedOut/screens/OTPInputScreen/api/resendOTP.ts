@@ -24,10 +24,10 @@ export async function resendOTP({PHPSESSID}: IresendOTP) {
       })
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error);
+        callAlert(undefined, error.toString());
       });
   } catch (error) {
     console.error(`${error} ::: resendOTP`);
-    callAlert(undefined, error);
+    callAlert(undefined, error.toString());
   }
 }

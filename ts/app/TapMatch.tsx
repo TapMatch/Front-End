@@ -11,9 +11,13 @@ import {LatLng} from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import callAlert from 'ts/utils/callAlert';
 import OnboardingStack from './LoggedIn/OnboardingStack/OnboardingStack';
+import {getUserProfile} from './common/api/getUserProfile';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
+  const user_has_passed_onboarding = useState<boolean>(false);
+  const userProfile = useState<any>(null);
+  const userToken = useState<string>('');
   const PHPSESSID = useState<string>('');
   const userLocation = useState<LatLng>({
     latitude: 37.78825,
@@ -30,11 +34,24 @@ const TapMatch = () => {
       .then((value) => {
         if (typeof value === 'string') {
           LoggedIn[1](true);
+          userToken[1](value);
+          getUserProfile({userProfile, userToken: value});
         }
       })
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error);
+        callAlert(undefined, error.toString());
+      });
+
+    AsyncStorage.getItem('@user_has_passed_onboarding')
+      .then((value) => {
+        if (typeof value === 'string') {
+          user_has_passed_onboarding[1](true);
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+        callAlert(undefined, error.toString());
       });
   }, []);
 
@@ -80,9 +97,12 @@ const TapMatch = () => {
     );
   };
 
-  const createRootNavigation = (LoggedIn: boolean) => {
+  const createRootNavigation = (
+    LoggedIn: boolean,
+    user_has_passed_onboarding: boolean,
+  ) => {
     if (LoggedIn) {
-      if (true) {
+      if (user_has_passed_onboarding) {
         return <MainStack />;
       } else {
         return <OnboardingStack />;
@@ -93,9 +113,22 @@ const TapMatch = () => {
   };
 
   return (
-    <TapMatchContext.Provider value={{LoggedIn, userLocation, PHPSESSID}}>
+    <TapMatchContext.Provider
+      value={{
+        LoggedIn,
+        userLocation,
+        PHPSESSID,
+        userProfile,
+        userToken,
+        user_has_passed_onboarding,
+      }}>
       <NoNetworkModal />
-      <NavigationContainer children={createRootNavigation(LoggedIn[0])} />
+      <NavigationContainer
+        children={createRootNavigation(
+          LoggedIn[0],
+          user_has_passed_onboarding[0],
+        )}
+      />
     </TapMatchContext.Provider>
   );
 };

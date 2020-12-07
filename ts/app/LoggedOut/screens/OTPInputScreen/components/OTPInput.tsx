@@ -5,7 +5,7 @@ import {vs} from 'react-native-size-matters';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import {verifyOTP} from '../api/verifyOTP';
+import {verifyOTPAndLogIn} from '../api/verifyOTPAndLogIn';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface OTPInputProps {
@@ -13,7 +13,9 @@ interface OTPInputProps {
 }
 
 const OTPInput = ({OTP}: OTPInputProps) => {
-  const {PHPSESSID, LoggedIn} = useContext(TapMatchContext);
+  const {PHPSESSID, LoggedIn, userProfile, userToken} = useContext(
+    TapMatchContext,
+  );
   return (
     <View style={_s.container}>
       <View style={_s.inputContainer}>
@@ -26,10 +28,12 @@ const OTPInput = ({OTP}: OTPInputProps) => {
           codeInputFieldStyle={_s.underlineStyleBase}
           codeInputHighlightStyle={_s.underlineStyleHighLighted}
           onCodeFilled={(code: string) => {
-            verifyOTP({
+            verifyOTPAndLogIn({
               OTP: code,
               PHPSESSID,
               LoggedIn,
+              userProfile,
+              userToken,
             });
           }}
         />

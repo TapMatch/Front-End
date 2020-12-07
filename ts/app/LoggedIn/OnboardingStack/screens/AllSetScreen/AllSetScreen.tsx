@@ -1,5 +1,4 @@
 import React from 'react';
-import {useBackHandler} from '@react-native-community/hooks';
 import {View, StyleSheet, useWindowDimensions, Text} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import CheckCircleRed from 'assets/svg/check-circle-red.svg';
@@ -14,15 +13,6 @@ const AllSetScreen = (props: AllSetScreenProps) => {
   const {width} = useWindowDimensions();
   const CheckCircleSize = width * 0.16;
   const txt = useLocalizedTxt();
-
-  useBackHandler(() => {
-    if (false) {
-      // handle it
-      return true;
-    }
-    // let the default thing happen
-    return false;
-  });
 
   return (
     <View style={_s.container}>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
@@ -20,7 +20,9 @@ const SwipeBackGuide = (props: SwipeBackGuideProps) => {
       <ChevronLeftBlack height={iconSize} width={iconSize} />
       <View style={_s.txtContainer}>
         <Text style={_s.txt} numberOfLines={1}>
-          {txt.swipeLeftToGoBack}
+          {Platform.OS === 'ios'
+            ? txt.swipeLeftToGoBack
+            : txt.pressBackToReturn}
         </Text>
       </View>
     </TouchableOpacity>

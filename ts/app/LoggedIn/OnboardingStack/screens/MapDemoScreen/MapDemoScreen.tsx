@@ -3,7 +3,7 @@ import {View, StyleSheet} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import ContinueBtn from './components/ContinueBtn';
-import SwipeBackGuide from './components/SwipeBackGuide';
+import BackBtn from './components/BackBtn';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
@@ -23,7 +23,7 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
     return (
       <View
         style={[_s.container, {paddingTop: 60 + top, paddingBottom: bottom}]}>
-        <SwipeBackGuide />
+        <BackBtn />
         <MapView
           provider={PROVIDER_GOOGLE}
           // zoomEnabled={false}

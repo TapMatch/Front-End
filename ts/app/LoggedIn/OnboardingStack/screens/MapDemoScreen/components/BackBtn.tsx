@@ -8,11 +8,11 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-interface SwipeBackGuideProps {}
+interface BackBtnProps {}
 
 const iconSize = _fs.xxl * 1.8;
 
-const SwipeBackGuide = (props: SwipeBackGuideProps) => {
+const BackBtn = (props: BackBtnProps) => {
   const {top} = useSafeAreaInsets();
   const {goBack} = useNavigation();
 
@@ -25,7 +25,7 @@ const SwipeBackGuide = (props: SwipeBackGuideProps) => {
   );
 };
 
-export default SwipeBackGuide;
+export default BackBtn;
 
 const _s = StyleSheet.create({
   container: {
