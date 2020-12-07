@@ -5,7 +5,6 @@ import {
   StyleSheet,
   KeyboardAvoidingView,
   Platform,
-  Keyboard,
 } from 'react-native';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
@@ -25,7 +24,7 @@ interface DoneBtnProps {
 
 const DoneBtn = ({disabled, callingCode, phoneNumber}: DoneBtnProps) => {
   const {navigate} = useNavigation();
-  const {LoggedIn} = useContext(TapMatchContext);
+  const {PHPSESSID} = useContext(TapMatchContext);
   const txt = useLocalizedTxt();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
@@ -39,12 +38,11 @@ const DoneBtn = ({disabled, callingCode, phoneNumber}: DoneBtnProps) => {
         disabled={disabled}
         activeOpacity={1}
         onPress={() => {
-          Keyboard.dismiss();
           navigate('OTPInput');
           requestOTP({
             callingCode: callingCode[0],
             phoneNumber: phoneNumber[0],
-            LoggedIn,
+            PHPSESSID,
           });
         }}
         style={[_s.container, {height: vs(60) + bottom * 0.5}]}>

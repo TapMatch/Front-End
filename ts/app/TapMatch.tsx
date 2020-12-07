@@ -9,9 +9,12 @@ import {request, PERMISSIONS, check} from 'react-native-permissions';
 import {AppState, Platform} from 'react-native';
 import {LatLng} from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import callAlert from 'ts/utils/callAlert';
+import OnboardingStack from './LoggedIn/OnboardingStack/OnboardingStack';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
+  const PHPSESSID = useState<string>('');
   const userLocation = useState<LatLng>({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -31,8 +34,9 @@ const TapMatch = () => {
       })
       .catch((error) => {
         console.error(error);
+        callAlert(undefined, error);
       });
-  }, [LoggedIn[0]]);
+  }, []);
 
   useEffect(() => {
     getUserLocation();
@@ -78,14 +82,18 @@ const TapMatch = () => {
 
   const createRootNavigation = (LoggedIn: boolean) => {
     if (LoggedIn) {
-      return <MainStack />;
+      if (true) {
+        return <MainStack />;
+      } else {
+        return <OnboardingStack />;
+      }
     } else {
       return <LoggedOutStack />;
     }
   };
 
   return (
-    <TapMatchContext.Provider value={{LoggedIn, userLocation}}>
+    <TapMatchContext.Provider value={{LoggedIn, userLocation, PHPSESSID}}>
       <NoNetworkModal />
       <NavigationContainer children={createRootNavigation(LoggedIn[0])} />
     </TapMatchContext.Provider>

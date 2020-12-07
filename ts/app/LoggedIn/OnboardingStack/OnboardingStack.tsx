@@ -7,6 +7,9 @@ import AvatarCameraScreen from './screens/AvatarCameraScreen/AvatarCameraScreen'
 import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
 import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
 // import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
+import WebScreen from './screens/WebScreen/WebScreen';
+import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
+import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 
 export default function OnboardingStack() {
   const Stack = createStackNavigator();
@@ -79,6 +82,34 @@ export default function OnboardingStack() {
             headerRight: () => null,
           };
         }}
+      />
+      <Screen
+        name="Communities"
+        component={CommunitiesScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+      <Screen
+        name="CommunityCodeInput"
+        component={CommunityCodeInputScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+
+      <Screen
+        name="WebScreen"
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+        component={WebScreen}
       />
     </Navigator>
   );

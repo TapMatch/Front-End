@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet, TextInput, Platform} from 'react-native';
 import CountryPicker, {CountryCode} from 'react-native-country-picker-modal';
 import PhoneIcon from 'assets/svg/phone-black.svg';
@@ -59,6 +59,13 @@ const PhoneInput = ({
           <ChevronDownBlack height={s(20)} width={s(10)} />
         </View>
         <TextInput
+          textContentType={'none'}
+          importantForAutofill={'no'}
+          autoCapitalize={'none'}
+          autoCompleteType={'off'}
+          autoCorrect={false}
+          autoFocus={true}
+          contextMenuHidden={true}
           keyboardType={'number-pad'}
           onChangeText={phoneNumber[1]}
           maxLength={16}

@@ -15,35 +15,39 @@ import {_c} from 'ts/UIConfig/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 interface ReSendCodeProps {
-  hidden: boolean;
   onPress: () => void;
+  disabled: boolean;
 }
 
-const ReSendCode = ({hidden, onPress}: ReSendCodeProps) => {
+const ReSendCode = ({onPress, disabled}: ReSendCodeProps) => {
   const txt = useLocalizedTxt();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const {bottom} = useSafeAreaInsets();
 
-  if (hidden) {
-    return <View style={_s.container} />;
-  } else {
-    return (
-      <KeyboardAvoidingView
-        behavior={KAVBehaviorObj}
-        keyboardVerticalOffset={vs(70)}>
-        <View style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
-          <Text numberOfLines={1} style={_s.txt}>
-            {txt.didntReceiveCode}
+  return (
+    <KeyboardAvoidingView
+      behavior={KAVBehaviorObj}
+      keyboardVerticalOffset={vs(70)}>
+      <View
+        pointerEvents={disabled ? 'none' : 'auto'}
+        style={[
+          _s.container,
+          {
+            height: vs(60) + bottom * 0.5,
+            opacity: disabled ? 0 : 1,
+          },
+        ]}>
+        <Text numberOfLines={1} style={_s.txt}>
+          {txt.didntReceiveCode}
+        </Text>
+        <TouchableOpacity disabled={disabled} onPress={onPress} style={_s.btn}>
+          <Text numberOfLines={1} style={[_s.txt, _s.underline]}>
+            {txt.reSend}
           </Text>
-          <TouchableOpacity onPress={onPress} style={_s.btn}>
-            <Text numberOfLines={1} style={[_s.txt, _s.underline]}>
-              {txt.reSend}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </KeyboardAvoidingView>
-    );
-  }
+        </TouchableOpacity>
+      </View>
+    </KeyboardAvoidingView>
+  );
 };
 
 export default ReSendCode;

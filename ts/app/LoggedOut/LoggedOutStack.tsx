@@ -5,7 +5,6 @@ import {_c} from 'ts/UIConfig/colors';
 import PhoneInputScreen from './screens/PhoneInputScreen/PhoneInputScreen';
 import OTPInputScreen from './screens/OTPInputScreen/OTPInputScreen';
 import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
-// import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
 import StartScreen from './screens/StartScreen/StartScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 
@@ -73,6 +72,7 @@ export default function LoggedOutStack() {
         component={PhoneInputScreen}
         options={() => {
           return {
+            keyboardHandlingEnabled: false,
             headerTitle: '',
             headerLeft: () => null,
             headerRight: () => null,
@@ -90,11 +90,6 @@ export default function LoggedOutStack() {
           };
         }}
       />
-      {/* <Screen
-        name="LoggedOutPlaceholderScreen"
-        options={{title: 'LoggedOutPlaceholderScreen'}}
-        component={LoggedOutPlaceholderScreen}
-      /> */}
     </Navigator>
   );
 }

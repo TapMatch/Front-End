@@ -14,6 +14,7 @@ import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {RFValue} from 'react-native-responsive-fontsize';
 import {WebView} from 'react-native-webview';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import deleteUserToken from 'ts/tools/extensions/deleteUserToken';
 interface LoggedInPlaceholderScreenProps {}
 
 const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
@@ -53,8 +54,14 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
               longitudeDelta: 0.0121,
             }}></MapView>
         </View>
-        <View style={{flex: 1, backgroundColor: 'red'}}>
-          <Button title={'Log Out'} onPress={() => LoggedIn[1](false)} />
+        <View style={{flex: 1, backgroundColor: 'red', marginVertical: 50}}>
+          <Button
+            title={'Log Out'}
+            onPress={() => {
+              deleteUserToken();
+              LoggedIn[1](false);
+            }}
+          />
         </View>
         <Text style={{fontSize: RFValue(24, 580)}}>0101010101</Text>
         <WebView

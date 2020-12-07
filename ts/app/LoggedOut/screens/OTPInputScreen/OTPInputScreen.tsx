@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import OTPInput from './components/OTPInput';
@@ -6,22 +6,24 @@ import Subtitle from './components/Subtitle';
 import SwipeBackGuide from './components/SwipeBackGuide';
 import Title from './components/Title';
 import ReSendCode from './components/ReSendCode';
-import {useNavigation} from '@react-navigation/native';
-import {useBackHandler} from '@react-native-community/hooks';
+import {resendOTP} from './api/resendOTP';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface OTPInputScreenProps {}
 
 const OTPInputScreen = (props: OTPInputScreenProps) => {
   const OTP = useState<string>('');
-  const {navigate} = useNavigation();
-  useBackHandler(() => {
-    if (false) {
-      // handle it
-      return true;
-    }
-    // let the default thing happen
-    return false;
-  });
+  const ReSendCodeDisabled = useState<boolean>(true);
+  const resendTimerTrigger = useState<boolean>(true);
+  const {PHPSESSID} = useContext(TapMatchContext);
+
+  useEffect(() => {
+    const resendTimer = setTimeout(() => {
+      ReSendCodeDisabled[1](false);
+    }, 18000);
+    return () => clearTimeout(resendTimer);
+  }, [resendTimerTrigger[0]]);
+
   return (
     <View style={_s.container}>
       <View style={_s.content}>
@@ -31,10 +33,11 @@ const OTPInputScreen = (props: OTPInputScreenProps) => {
         <OTPInput OTP={OTP} />
       </View>
       <ReSendCode
-        hidden={false}
+        disabled={ReSendCodeDisabled[0]}
         onPress={() => {
-          OTP[1]('');
-          navigate('NameInput');
+          ReSendCodeDisabled[1](true);
+          resendTimerTrigger[1](!resendTimerTrigger[0]);
+          resendOTP(PHPSESSID);
         }}
       />
     </View>
