@@ -1,55 +1,45 @@
 {
-    "tapToContinue":"Tap to Continue",
-    
-    "pleaseWait":"Please wait...",
-
-    "atTapMatchOurMain":"At TapMatch our main" ,
-    "focusIsBringingPeople":"Focus is bringing people",
-    "together":"Together",
-
-    "communities":"Communities",
-
-    "enterCodeTo":"Enter Code to ",
-    "gainAccessTo":"Gain Access to",
-
-    "yes":"yes",
-    "noStay":"No, Stay",
-
-    "giveUsYourFeedback":"Give us your feedback",
-    "requestACommunity":"Request a Community",
-
-    "verifyYouAreNotAnAlien":"Verify you’re not an 👽",
-    "weWillSendYourCodeTo":"We will send your code to",
-    "yourPhonePleaseEnterItHere":"Your Phone. Please Enter it here.",
-
-    "swipeLeftToGoBack":"Swipe Left to go back",
-    "pressBackToReturn":"{Press Back ro return",
-
-    "didntReceiveCode":"Didn’t Receive Code?",
-    "reSend":"Re-Send",
-
-    "smileForTheCamera":"Smile for the Camera!",
-    "thisWillBeYourProfilePicture":"This will be your profile picture",
-
-    "baseball":"Baseball",
-    "thisIsHowPeopleWill":"This is how people will",
-    "seeYouOnTheApp":"see you on the app",
-
-    "whatsYourName":"What’s your name?",
-    "everyoneInYourCommunity":"Everyone in your community",
-    "willSeeYourName":"Will see your name",
-
-    "youAreAllSet":"You're all Set!",
-    "tapToStartThe":"Tap to Start the",
-    "tapMatchExperience":"TapMatch Experience",
-
-    "done":"Done",
-    "welcomeToTapMatch":"Welcome to TapMatch",
-    "enterYourPhoneNumber":"Enter your Phone Number",
-    "toVerifyYourIdentity":"To Verify your Identity",
-
-    "termsAndConditionsParagraph1":"By continuing you agree to TapMatch\n",
-    "termsOfUse":"Terms of Use",
-    "termsAndConditionsParagraph2":"and Confirm that you\nHave read our",
-    "privacyPolicy":"Privacy Policy"
+    "tapToContinue": "Tap to Continue",
+    "pleaseWait": "Please wait...",
+    "atTapMatchOurMain": "At TapMatch our main",
+    "focusIsBringingPeople": "Focus is bringing people",
+    "together": "Together",
+    "communities": "Communities",
+    "enterCodeTo": "Enter Code to ",
+    "gainAccessTo": "Gain Access to",
+    "yes": "yes",
+    "errorWrongCode": "Error: Wrong Code",
+    "noStay": "No, Stay",
+    "giveUsYourFeedback": "Give us your feedback",
+    "youAreNowAPartOf": "You are now a part of",
+    "requestACommunity": "Request a Community",
+    "verifyYouAreNotAnAlien": "Verify you’re not an 👽",
+    "weWillSendYourCodeTo": "We will send your code to",
+    "yourPhonePleaseEnterItHere": "Your Phone. Please Enter it here.",
+    "swipeLeftToGoBack": "Swipe Left to go back",
+    "pressBackToReturn": "Press Back ro return",
+    "accessCode": "Access Code",
+    "users": "Users",
+    "user": "User",
+    "didntReceiveCode": "Didn’t Receive Code?",
+    "reSend": "Re-Send",
+    "smileForTheCamera": "Smile for the Camera!",
+    "thisWillBeYourProfilePicture": "This will be your profile picture",
+    "baseball": "Baseball",
+    "thisIsHowPeopleWill": "This is how people will",
+    "seeYouOnTheApp": "see you on the app",
+    "whatsYourName": "What’s your name?",
+    "everyoneInYourCommunity": "Everyone in your community",
+    "willSeeYourName": "Will see your name",
+    "youAreAllSet": "You're all Set!",
+    "tapToStartThe": "Tap to Start the",
+    "tapMatchExperience": "TapMatch Experience",
+    "done": "Done",
+    "welcomeToTapMatch": "Welcome to TapMatch",
+    "enterYourPhoneNumber": "Enter your Phone Number",
+    "toVerifyYourIdentity": "To Verify your Identity",
+    "termsAndConditionsParagraph1": "By continuing you agree to TapMatch\n",
+    "termsOfUse": "Terms of Use",
+    "termsAndConditionsParagraph2": "and Confirm that you\nHave read our",
+    "privacyPolicy": "Privacy Policy"
 }

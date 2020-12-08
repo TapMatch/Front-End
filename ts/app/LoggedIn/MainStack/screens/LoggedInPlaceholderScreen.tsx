@@ -15,16 +15,11 @@ import {RFValue} from 'react-native-responsive-fontsize';
 import {WebView} from 'react-native-webview';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import deleteUserToken from 'ts/tools/extensions/deleteUserToken';
+import {restartApp} from 'ts/tools/extensions/restartApp';
 interface LoggedInPlaceholderScreenProps {}
 
 const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
   const {LoggedIn, userProfile, userToken} = useContext(TapMatchContext);
-  console.log(
-    '-----------------------',
-    userProfile[0],
-    userToken[0],
-    '============================================',
-  );
   // useEffect(() => {
   //   const location =
   //     Platform.OS === 'ios'
@@ -48,7 +43,7 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
   return (
     <SafeAreaView style={{flex: 1}}>
       <ScrollView>
-        <View style={styles.container}>
+        {/* <View style={styles.container}>
           <MapView
             provider={PROVIDER_GOOGLE}
             zoomEnabled={true}
@@ -59,21 +54,21 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
               latitudeDelta: 0.015,
               longitudeDelta: 0.0121,
             }}></MapView>
-        </View>
-        <View style={{flex: 1, backgroundColor: 'red', marginVertical: 50}}>
+        </View> */}
+        <View style={{flex: 1, backgroundColor: 'red', marginVertical: 150}}>
           <Button
-            title={'Log Out'}
+            title={'Log Out and reset app'}
             onPress={() => {
-              deleteUserToken();
+              restartApp({userProfile});
               LoggedIn[1](false);
             }}
           />
         </View>
-        <Text style={{fontSize: RFValue(24, 580)}}>0101010101</Text>
+        {/* <Text style={{fontSize: RFValue(24, 580)}}>0101010101</Text>
         <WebView
           source={{uri: 'https://blender.org'}}
           style={{marginTop: 20, height: 200, width: '100%'}}
-        />
+        /> */}
       </ScrollView>
     </SafeAreaView>
   );

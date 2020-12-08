@@ -84,24 +84,6 @@ export default function OnboardingStack() {
         }}
       />
       <Screen
-        name="Communities"
-        component={CommunitiesScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      />
-      <Screen
-        name="CommunityCodeInput"
-        component={CommunityCodeInputScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      />
-      <Screen
         name="WebScreen"
         options={() => {
           return {

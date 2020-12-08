@@ -14,7 +14,7 @@ interface MapDemoScreenProps {
 }
 
 const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
-  const {pictureURI} = route.params;
+  const {base64} = route.params;
   const {top, bottom} = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
@@ -36,7 +36,7 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
-          <PeopleMarker coordinate={coordinates} pictureURI={pictureURI} />
+          <PeopleMarker coordinate={coordinates} base64={base64} />
         </MapView>
         <ContinueBtn />
       </View>

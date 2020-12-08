@@ -9,27 +9,33 @@ import {useNavigation} from '@react-navigation/native';
 import ChevronRightBlack from 'assets/svg/chevron-right-black.svg'; //
 import LockClosedBlack from 'assets/svg/lock-closed-black.svg';
 
-interface ListItemProps {}
+interface ListItemProps {
+  item: any;
+}
 
-const ListItem = (props: ListItemProps) => {
+const ListItem = ({item}: ListItemProps) => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
-
+  const {name, members, city} = item;
   return (
     <TouchableOpacity
-      onPress={() => navigate('CommunityCodeInput', {community: 'LALALALALA'})}
+      onPress={() => navigate('CommunityCodeInput', {community: item})}
       style={_s.container}>
       <View style={_s.left}>
         <LockClosedBlack height={iconSize} width={iconSize} />
       </View>
       <View style={_s.middle}>
         <View style={_s.middle_top}>
-          <Text style={[_s.title, _s.txt]}>Harvard</Text>
-          <Text style={[_s.city, _s.txt]}>Boston</Text>
+          <Text style={[_s.title, _s.txt]}>{name}</Text>
+          <Text style={[_s.city, _s.txt]}>{city}</Text>
         </View>
         <View style={_s.middle_bottom}>
-          <Text style={[_s.users_num, _s.txt]}>1.909 Users</Text>
+          <Text
+            style={[
+              _s.users_num,
+              _s.txt,
+            ]}>{`${members.length} ${txt.users}`}</Text>
         </View>
       </View>
       <View style={_s.right}>

@@ -12,10 +12,10 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
 interface PeopleMarkerProps {
   coordinate: LatLng;
-  pictureURI: string;
+  base64: string;
 }
 
-const PeopleMarker = ({coordinate, pictureURI}: PeopleMarkerProps) => {
+const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
   const txt = useLocalizedTxt();
   return (
     <Marker coordinate={coordinate}>
@@ -91,7 +91,7 @@ const PeopleMarker = ({coordinate, pictureURI}: PeopleMarkerProps) => {
               resizeMode={'cover'}
               style={_s.avatar}
               source={{
-                uri: pictureURI,
+                uri: base64,
                 // 'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
               }}
             />

@@ -45,7 +45,14 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
               showsVerticalScrollIndicator={false}
               data={communities[0]}
               renderItem={({item, index, separators}) =>
-                index % 2 === 0 ? <ListItemLocked /> : <ListItemUnlocked />
+                userProfile[0].communities.findIndex((el: any) => {
+                  console.log(el.id, '-=-=-', item.id);
+                  return el.id === item.id;
+                }) > -1 ? (
+                  <ListItemUnlocked item={item} />
+                ) : (
+                  <ListItemLocked item={item} />
+                )
               }
             />
           </View>
@@ -65,9 +72,9 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
           provider={PROVIDER_GOOGLE}
           zoomEnabled={true}
           style={_s.map}
-          // pitchEnabled={false}
-          // rotateEnabled={false}
-          // scrollEnabled={false}
+          pitchEnabled={false}
+          rotateEnabled={false}
+          scrollEnabled={false}
           region={{
             ...coordinates,
             latitudeDelta: 0.015,

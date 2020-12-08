@@ -37,7 +37,7 @@ const DoneBtn = ({disabled, name}: DoneBtnProps) => {
         disabled={disabled}
         activeOpacity={1}
         onPress={() => {
-          // postUserName({name, userProfile, userToken: userToken[0]});
+          postUserName({name, userProfile, userToken: userToken[0]});
           navigate('AvatarCamera');
         }}
         style={[_s.container, {height: vs(60) + bottom * 0.5}]}>

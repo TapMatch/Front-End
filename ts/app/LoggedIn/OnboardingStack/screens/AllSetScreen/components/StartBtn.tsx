@@ -5,27 +5,26 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
-import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {postUserFinishedOnboarding} from '../api/postUserFinishedOnboarding';
 
 interface StartBtnProps {}
 
 const StartBtn = (props: StartBtnProps) => {
-  const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const {bottom} = useSafeAreaInsets();
-  const {user_has_passed_onboarding} = useContext(TapMatchContext);
+  const {user_has_passed_onboarding, userProfile, userToken} = useContext(
+    TapMatchContext,
+  );
 
   return (
     <TouchableOpacity
       activeOpacity={1}
-      // onPress={() => {
-      //   AsyncStorage.setItem('@user_has_passed_onboarding', `${true}`);
-      //   user_has_passed_onboarding[1](true);
-      // }}
-      onPress={() => navigate('Communities')}
+      onPress={() => {
+        user_has_passed_onboarding[1](true);
+        postUserFinishedOnboarding({userProfile, userToken: userToken[0]});
+      }}
       style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToStartThe}</Text>
       <Text style={_s.txt}>{txt.tapMatchExperience}</Text>

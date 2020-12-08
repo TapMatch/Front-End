@@ -14,6 +14,7 @@ const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
 
   return (
     <TouchableOpacity
+      onLongPress={() => navigate('LoggedInPlaceholderScreen')}
       onPress={() => navigate('WebScreen', {url: 'https://vradov.space/'})}
       style={_s.container}>
       <View style={_s.circle} />

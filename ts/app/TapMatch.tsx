@@ -12,6 +12,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import callAlert from 'ts/utils/callAlert';
 import OnboardingStack from './LoggedIn/OnboardingStack/OnboardingStack';
 import {getUserProfile} from './common/api/getUserProfile';
+import PlaceholderStack from './LoggedIn/PlaceholderStack/PlaceholderStack';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
@@ -40,7 +41,7 @@ const TapMatch = () => {
       })
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error.toString());
+        callAlert(undefined, `${error.toString()} @user_token`);
       });
 
     AsyncStorage.getItem('@user_has_passed_onboarding')
@@ -51,7 +52,7 @@ const TapMatch = () => {
       })
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error.toString());
+        callAlert(undefined, `${error.toString()} @user_has_passed_onboarding`);
       });
   }, []);
 
@@ -100,12 +101,17 @@ const TapMatch = () => {
   const createRootNavigation = (
     LoggedIn: boolean,
     user_has_passed_onboarding: boolean,
+    userProfile: any,
   ) => {
     if (LoggedIn) {
-      if (user_has_passed_onboarding) {
-        return <MainStack />;
+      if (userProfile !== null) {
+        if (user_has_passed_onboarding) {
+          return <MainStack />;
+        } else {
+          return <OnboardingStack />;
+        }
       } else {
-        return <OnboardingStack />;
+        <PlaceholderStack />;
       }
     } else {
       return <LoggedOutStack />;
@@ -127,6 +133,7 @@ const TapMatch = () => {
         children={createRootNavigation(
           LoggedIn[0],
           user_has_passed_onboarding[0],
+          userProfile[0],
         )}
       />
     </TapMatchContext.Provider>

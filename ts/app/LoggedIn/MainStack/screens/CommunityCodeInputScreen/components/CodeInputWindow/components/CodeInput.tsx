@@ -1,29 +1,49 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {vs} from 'react-native-size-matters';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
+import {joinCommunity} from '../../../api/joinCommunity';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
 
 interface CodeInputProps {
   code: [string, (x: string) => void];
+  communityId: number;
+  errorState: [boolean, (x: boolean) => void];
 }
 
-const CodeInput = ({code}: CodeInputProps) => {
+const CodeInput = ({code, communityId, errorState}: CodeInputProps) => {
+  const {userProfile, userToken} = useContext(TapMatchContext);
+  const {windowState} = useContext(CommunityCodeInputScreenContext);
+
   return (
     <View style={_s.container}>
       <View style={_s.inputContainer}>
         <OTPInputView
           style={_s.CodeInputView}
-          pinCount={5}
+          pinCount={6}
           code={code[0]}
-          onCodeChanged={code[1]}
+          onCodeChanged={(txt) => {
+            code[1](txt);
+            if (errorState[0]) {
+              errorState[1](false);
+            }
+          }}
           autoFocusOnLoad={true}
           codeInputFieldStyle={_s.underlineStyleBase}
           codeInputHighlightStyle={_s.underlineStyleHighLighted}
           onCodeFilled={(code: string) => {
-            console.log(`SENDING CODE TO BACKEND andStart timer`);
+            joinCommunity({
+              errorState,
+              code,
+              userProfile,
+              communityId,
+              userToken: userToken[0],
+              windowState,
+            });
           }}
         />
       </View>
@@ -44,8 +64,8 @@ const _s = StyleSheet.create({
     height: vs(55),
     alignItems: 'center',
     justifyContent: 'flex-start',
-    marginHorizontal: _fs.xs,
-    paddingHorizontal: '3%',
+    // marginHorizontal: _fs.xs,
+    // paddingHorizontal: '3%',
   },
   underlineStyleBase: {
     height: '100%',

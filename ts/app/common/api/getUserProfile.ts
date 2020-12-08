@@ -31,10 +31,10 @@ export async function getUserProfile({
       })
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error.toString());
+        callAlert(undefined, `${error.toString()} ::: getUserProfile`);
       });
   } catch (error) {
     console.error(`${error} ::: getUserProfile`);
-    callAlert(undefined, error.toString());
+    callAlert(undefined, `${error.toString()} ::: getUserProfile`);
   }
 }

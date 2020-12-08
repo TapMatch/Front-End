@@ -32,10 +32,10 @@ export async function requestOTP({
       })
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error.toString());
+        callAlert(undefined, `${error.toString()} ::: requestOTP`);
       });
   } catch (error) {
     console.error(`${error} ::: requestOTP`);
-    callAlert(undefined, error.toString());
+    callAlert(undefined, `${error.toString()} ::: requestOTP`);
   }
 }

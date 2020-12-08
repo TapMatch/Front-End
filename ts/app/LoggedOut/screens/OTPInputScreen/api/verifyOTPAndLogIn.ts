@@ -43,10 +43,10 @@ export async function verifyOTPAndLogIn({
       .then(() => LoggedIn[1](true))
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error.toString());
+        callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
       });
   } catch (error) {
     console.error(`${error} ::: verifyOTPAndLogIn`);
-    callAlert(undefined, error.toString());
+    callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
   }
 }

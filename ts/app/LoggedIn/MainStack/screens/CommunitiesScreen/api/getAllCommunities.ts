@@ -22,16 +22,13 @@ export async function getAllCommunities({
     };
     axios
       .request(options)
-      .then(({data}: any) => {
-        console.log(data, 'OIOIOIOIOIOIOIOIOIOIOI');
-        communities[1](data);
-      })
+      .then(({data}: any) => communities[1](data))
       .catch((error) => {
         console.error(error);
-        callAlert(undefined, error.toString());
+        callAlert(undefined, `${error.toString()} ::: getAllCommunities`);
       });
   } catch (error) {
     console.error(`${error} ::: getAllCommunities`);
-    callAlert(undefined, error.toString());
+    callAlert(undefined, `${error.toString()} ::: getAllCommunities`);
   }
 }

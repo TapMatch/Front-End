@@ -1,27 +1,34 @@
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
-import {vs} from 'react-native-size-matters';
 import WindowHeader from './components/WindowHeader';
 import CodeInput from './components/CodeInput';
+import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
-interface CodeInputWindowProps {}
+interface CodeInputWindowProps {
+  community: any;
+}
 
-const CodeInputWindow = (props: CodeInputWindowProps) => {
+const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const code = useState<string>('');
+  const errorState = useState<boolean>(false);
   const txt = useLocalizedTxt();
+  const {city, name, id} = community;
+
   return (
     <View style={_s.container}>
       <WindowHeader />
       <View style={_s.content}>
         <View style={_s.txtContainer}>
-          <Text style={[_s.txt, _s.title]}>UvA</Text>
-          <Text style={[_s.txt, _s.city]}>Amsterdam</Text>
+          <Text style={[_s.txt, _s.title]}>{name}</Text>
+          <Text style={[_s.txt, _s.city]}>{city}</Text>
         </View>
-        <CodeInput code={code} />
+        <Text style={[_s.txt, _s.errorState, {opacity: errorState[0] ? 1 : 0}]}>
+          {txt.errorWrongCode}
+        </Text>
+        <CodeInput code={code} communityId={id} errorState={errorState} />
       </View>
     </View>
   );
@@ -38,6 +45,11 @@ const _s = StyleSheet.create({
     backgroundColor: _c.white,
     width: '80%',
     borderRadius: 20,
+  },
+  errorState: {
+    marginBottom: 10,
+    fontSize: _fs.m,
+    color: _c.main_red,
   },
   txt: {
     textAlign: 'center',

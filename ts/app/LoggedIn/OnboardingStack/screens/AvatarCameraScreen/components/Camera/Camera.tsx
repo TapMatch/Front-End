@@ -1,4 +1,4 @@
-import React, {Fragment, useState, useRef, useEffect} from 'react';
+import React, {Fragment, useState, useRef, useEffect, useContext} from 'react';
 import {
   View,
   StyleSheet,
@@ -13,6 +13,8 @@ import {vs} from 'react-native-size-matters';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
+import {postAvatar} from '../../api/postAvatar';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface CameraProps {}
 
@@ -22,6 +24,7 @@ const Camera = (props: CameraProps) => {
   const uploadToServerTrigger = useState<boolean>(false);
   const pictureURI = useState<string>('');
   const {navigate} = useNavigation();
+  const {userToken} = useContext(TapMatchContext);
 
   let RNCameraRef = useRef<RNCamera | null>(null);
 
@@ -30,7 +33,7 @@ const Camera = (props: CameraProps) => {
       try {
         if (RNCameraRef.current) {
           const {uri} = await RNCameraRef.current.takePictureAsync({
-            quality: 0.3,
+            quality: 0.2,
             width: 300,
             mirrorImage: true,
             orientation: 'portrait',
@@ -46,7 +49,8 @@ const Camera = (props: CameraProps) => {
   useEffect(() => {
     (async () => {
       const base64 = await getBase64(pictureURI[0]);
-      await navigate('MapDemo', {pictureURI: base64});
+      postAvatar({userToken: userToken[0], base64, pictureURI: pictureURI[0]});
+      await navigate('MapDemo', {base64});
     })();
   }, [uploadToServerTrigger[0]]);
 

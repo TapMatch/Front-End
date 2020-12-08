@@ -6,30 +6,33 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
-import ChevronRightBlack from 'assets/svg/chevron-right-black.svg'; //
 import LockOpenBlack from 'assets/svg/lock-open-black.svg'; //
 
-interface ListItemProps {}
+interface ListItemProps {
+  item: any;
+}
 
-const ListItemUnlocked = (props: ListItemProps) => {
+const ListItemUnlocked = ({item}: ListItemProps) => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
+  const {name, id, city} = item;
 
   return (
     <TouchableOpacity
-      onPress={() => navigate('CommunityCodeInput', {community: 'LALALALALA'})}
+      // onPress={() => navigate('CommunityCodeInput', {communityId: id})}
+      disabled={true}
       style={_s.container}>
       <View style={_s.left}>
         <LockOpenBlack height={iconSize} width={iconSize} />
       </View>
       <View style={_s.middle}>
         <View style={_s.middle_top}>
-          <Text style={[_s.title, _s.txt]}>Harvard</Text>
-          <Text style={[_s.city, _s.txt]}>Boston</Text>
+          <Text style={[_s.title, _s.txt]}>{name}</Text>
+          <Text style={[_s.city, _s.txt]}>{city}</Text>
         </View>
         <View style={_s.middle_bottom}>
-          <Text style={[_s.users_num, _s.txt]}>Access Code</Text>
+          <Text style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
           <Text style={[_s.users_num, _s.txt, _s.code]}>00007</Text>
         </View>
       </View>

@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -7,25 +7,37 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {vs} from 'react-native-size-matters';
 import CheckCircleRed from 'assets/svg/check-circle-red.svg';
 import LockOpenWhite from 'assets/svg/lock-open-white.svg';
+import {useNavigation} from '@react-navigation/native';
+import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
 
-interface CodeInputWindowProps {}
+interface CodeInputWindowProps {
+  community: any;
+}
 
-const CodeInputWindow = (props: CodeInputWindowProps) => {
-  const code = useState<string>('');
+const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const txt = useLocalizedTxt();
+  const {windowState} = useContext(CommunityCodeInputScreenContext);
+  const {goBack} = useNavigation();
   const circleCheckRedSize = vs(70);
   const lockOpenWhiteSize = vs(55);
+  const {name, city} = community;
 
   return (
-    <View style={_s.container}>
+    <TouchableOpacity
+      onPress={() => {
+        // navigate('Communities');
+        goBack();
+        windowState[1](false);
+      }}
+      style={_s.container}>
       <CheckCircleRed height={circleCheckRedSize} width={circleCheckRedSize} />
-      <Text style={[_s.txt, _s.msg]}>You are now a part of</Text>
+      <Text style={[_s.txt, _s.msg]}>{txt.youAreNowAPartOf}</Text>
       <View style={_s.txtContainer}>
-        <Text style={[_s.txt, _s.title]}>UvA</Text>
-        <Text style={[_s.txt, _s.city]}>Amsterdam</Text>
+        <Text style={[_s.txt, _s.title]}>{name}</Text>
+        <Text style={[_s.txt, _s.city]}>{city}</Text>
       </View>
       <LockOpenWhite height={lockOpenWhiteSize} width={lockOpenWhiteSize} />
-    </View>
+    </TouchableOpacity>
   );
 };
 

@@ -2,12 +2,9 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
-import LoggedInPlaceholderScreen from './screens/LoggedInPlaceholderScreen';
-import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
-import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
-import WebScreen from './screens/WebScreen/WebScreen';
+import PlaceholderScreen from './screens/PlaceholderScreen';
 
-export default function MainStack() {
+export default function PlaceholderStack() {
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
   const transitions =
@@ -38,36 +35,13 @@ export default function MainStack() {
         ...insets,
       }}>
       <Screen
-        name="Communities"
-        component={CommunitiesScreen}
+        name="Placeholder"
         options={() => {
           return {
             headerShown: false,
           };
         }}
-      />
-      <Screen
-        name="CommunityCodeInput"
-        component={CommunityCodeInputScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      />
-      <Screen
-        name="WebScreen"
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-        component={WebScreen}
-      />
-      <Screen
-        name="LoggedInPlaceholderScreen"
-        options={{title: 'LoggedInPlaceholderScreen'}}
-        component={LoggedInPlaceholderScreen}
+        component={PlaceholderScreen}
       />
     </Navigator>
   );
