@@ -19,7 +19,12 @@ import {restartApp} from 'ts/tools/extensions/restartApp';
 interface LoggedInPlaceholderScreenProps {}
 
 const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
-  const {LoggedIn, userProfile, userToken} = useContext(TapMatchContext);
+  const {
+    LoggedIn,
+    userProfile,
+    userToken,
+    user_has_passed_onboarding,
+  } = useContext(TapMatchContext);
   // useEffect(() => {
   //   const location =
   //     Platform.OS === 'ios'
@@ -59,8 +64,12 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
           <Button
             title={'Log Out and reset app'}
             onPress={() => {
-              restartApp({userProfile});
-              LoggedIn[1](false);
+              restartApp({
+                userProfile,
+                userToken: userToken[0],
+                LoggedIn,
+                user_has_passed_onboarding,
+              });
             }}
           />
         </View>

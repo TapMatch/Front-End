@@ -1,4 +1,5 @@
 import axios, {AxiosRequestConfig} from 'axios';
+import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 
@@ -34,7 +35,6 @@ export async function joinCommunity({
     axios
       .request(options)
       .then(({data}: any) => {
-        console.log(data, 'UUUUUUUUUUUIIIOHGFDRQQQQEEEEEEEEEEEEE');
         if (data.error === 'incorrect code') {
           errorState[1](true);
         } else {
@@ -43,6 +43,7 @@ export async function joinCommunity({
         // userProfile[1]({...userProfile[0], name});
         // userProfile[1](data.data);
       })
+      .then(() => getUserProfile({userProfile, userToken}))
       .catch((error) => {
         console.error(error);
         callAlert(undefined, `${error.toString()} ::: joinCommunity`);

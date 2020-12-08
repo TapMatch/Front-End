@@ -5,4 +5,5 @@ export const constants = {
   privacyPolicy_EN: ' https://www.blender.org/ ',
 };
 
-export const tapMatchServerUrl = DEV_MODE ? 'http://194.147.32.47/' : '';
+// export const tapMatchServerUrl = DEV_MODE ? 'http://194.147.32.47/' : '';
+export const tapMatchServerUrl = 'http://194.147.32.47/';

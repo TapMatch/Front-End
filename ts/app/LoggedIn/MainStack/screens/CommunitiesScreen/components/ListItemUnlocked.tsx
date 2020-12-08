@@ -16,7 +16,7 @@ const ListItemUnlocked = ({item}: ListItemProps) => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
-  const {name, id, city} = item;
+  const {name, id, city, access} = item;
 
   return (
     <TouchableOpacity
@@ -33,7 +33,7 @@ const ListItemUnlocked = ({item}: ListItemProps) => {
         </View>
         <View style={_s.middle_bottom}>
           <Text style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
-          <Text style={[_s.users_num, _s.txt, _s.code]}>00007</Text>
+          <Text style={[_s.users_num, _s.txt, _s.code]}>{access}</Text>
         </View>
       </View>
       <View style={_s.right} />

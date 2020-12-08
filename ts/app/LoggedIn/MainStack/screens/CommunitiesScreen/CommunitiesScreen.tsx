@@ -33,6 +33,16 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
     });
   }, []);
 
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getAllCommunities({
+        userToken: userToken[0],
+        communities,
+      });
+    });
+    return unsubscribe;
+  }, []);
+
   if (isFocused) {
     return (
       <View style={[_s.container]}>
@@ -44,16 +54,16 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
               data={communities[0]}
-              renderItem={({item, index, separators}) =>
-                userProfile[0].communities.findIndex((el: any) => {
-                  console.log(el.id, '-=-=-', item.id);
+              renderItem={({item, index, separators}) => {
+                const c = userProfile[0].communities.find((el: any) => {
                   return el.id === item.id;
-                }) > -1 ? (
-                  <ListItemUnlocked item={item} />
+                });
+                return c ? (
+                  <ListItemUnlocked item={{...item, access: c.access}} />
                 ) : (
                   <ListItemLocked item={item} />
-                )
-              }
+                );
+              }}
             />
           </View>
           <View
