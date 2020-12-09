@@ -3,16 +3,17 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 
 interface IresendOTP {
-  PHPSESSID: string;
+  PHPSESSID: [string, (x: string) => void];
 }
 
 export async function resendOTP({PHPSESSID}: IresendOTP) {
   try {
+    console.log(PHPSESSID, 'PHPSESSID-----PHPSESSID');
     const options: AxiosRequestConfig = {
       method: 'POST',
       url: `${tapMatchServerUrl}verify/resend`,
       headers: {
-        Cookie: PHPSESSID,
+        Cookie: PHPSESSID[0],
         'Content-Type': 'application/json',
       },
     };

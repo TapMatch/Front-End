@@ -37,7 +37,7 @@ const OTPInputScreen = (props: OTPInputScreenProps) => {
         onPress={() => {
           ReSendCodeDisabled[1](true);
           resendTimerTrigger[1](!resendTimerTrigger[0]);
-          resendOTP(PHPSESSID);
+          resendOTP({PHPSESSID});
         }}
       />
     </View>

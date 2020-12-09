@@ -23,6 +23,7 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
     LoggedIn,
     userProfile,
     userToken,
+    PHPSESSID,
     user_has_passed_onboarding,
   } = useContext(TapMatchContext);
   // useEffect(() => {
@@ -65,6 +66,7 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
             title={'Log Out and reset app'}
             onPress={() => {
               restartApp({
+                PHPSESSID,
                 userProfile,
                 userToken: userToken[0],
                 LoggedIn,

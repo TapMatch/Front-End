@@ -9,6 +9,7 @@ export async function restartApp({
   userProfile,
   userToken,
   LoggedIn,
+  PHPSESSID,
   user_has_passed_onboarding,
 }: any) {
   try {
@@ -29,6 +30,7 @@ export async function restartApp({
       .then(({data}: any) => {
         AsyncStorage.removeItem('@user_has_passed_onboarding');
         userProfile[1](null);
+        PHPSESSID[1]('');
         user_has_passed_onboarding[1](false);
       })
       .then(() => {
