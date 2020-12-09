@@ -35,7 +35,7 @@ const Camera = (props: CameraProps) => {
           const {uri} = await RNCameraRef.current.takePictureAsync({
             quality: 0.2,
             width: 300,
-            mirrorImage: true,
+            mirrorImage: !cameraTypeBool[0],
             orientation: 'portrait',
           });
           await pictureURI[1](uri);
