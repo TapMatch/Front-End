@@ -10,9 +10,10 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface OTPInputProps {
   OTP: [string, (x: string) => void];
+  ReSendCodeDisabled: [boolean, (x: boolean) => void];
 }
 
-const OTPInput = ({OTP}: OTPInputProps) => {
+const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
   const {PHPSESSID, LoggedIn, userProfile, userToken} = useContext(
     TapMatchContext,
   );
@@ -29,6 +30,7 @@ const OTPInput = ({OTP}: OTPInputProps) => {
           codeInputHighlightStyle={_s.underlineStyleHighLighted}
           onCodeFilled={(code: string) => {
             verifyOTPAndLogIn({
+              ReSendCodeDisabled,
               OTP: code,
               PHPSESSID,
               LoggedIn,

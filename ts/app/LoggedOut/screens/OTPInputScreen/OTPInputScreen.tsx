@@ -30,7 +30,7 @@ const OTPInputScreen = (props: OTPInputScreenProps) => {
         <SwipeBackGuide />
         <Title />
         <Subtitle />
-        <OTPInput OTP={OTP} />
+        <OTPInput OTP={OTP} ReSendCodeDisabled={ReSendCodeDisabled} />
       </View>
       <ReSendCode
         disabled={ReSendCodeDisabled[0]}

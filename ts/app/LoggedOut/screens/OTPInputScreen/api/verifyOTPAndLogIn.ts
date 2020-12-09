@@ -10,9 +10,11 @@ interface IverifyOTPAndLogIn {
   LoggedIn: [boolean, (x: boolean) => void];
   userProfile: [any, (x: any) => void];
   userToken: [string, (x: string) => void];
+  ReSendCodeDisabled: [boolean, (x: boolean) => void];
 }
 
 export async function verifyOTPAndLogIn({
+  ReSendCodeDisabled,
   PHPSESSID,
   OTP,
   LoggedIn,
@@ -35,15 +37,31 @@ export async function verifyOTPAndLogIn({
     axios
       .request(options)
       .then(({data}: any) => {
-        userToken[1](data);
-        AsyncStorage.setItem('@user_token', data);
-        return data;
+        if (typeof data === 'string') {
+          userToken[1](data);
+          AsyncStorage.setItem('@user_token', data);
+          return data;
+        } else {
+          return 'Token is invalid';
+        }
       })
-      .then((data: string) => getUserProfile({userProfile, userToken: data}))
+      .then((data: string) => {
+        if (data === 'Token is invalid') {
+          throw new Error('Token is invalid');
+        } else {
+          getUserProfile({userProfile, userToken: data});
+        }
+      })
       .then(() => LoggedIn[1](true))
       .catch((error) => {
-        console.error(error);
-        callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
+        if (error.toString().includes('Token is invalid')) {
+          ReSendCodeDisabled[1](false);
+          console.error(error);
+          callAlert(undefined, `Token is invalid.`);
+        } else {
+          console.error(error);
+          callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
+        }
       });
   } catch (error) {
     console.error(`${error} ::: verifyOTPAndLogIn`);
