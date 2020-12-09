@@ -32,11 +32,11 @@ export async function postUserName({
         userProfile[1](data.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: postUserName`);
       });
   } catch (error) {
-    console.error(`${error} ::: postUserName`);
+    console.log(`${error} ::: postUserName`);
     callAlert(undefined, `${error.toString()} ::: postUserName`);
   }
 }

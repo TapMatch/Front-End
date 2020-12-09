@@ -25,6 +25,7 @@ export default Subtitle;
 
 const _s = StyleSheet.create({
   container: {
+    minHeight: _fs.l,
     flex: 0.2,
     justifyContent: 'center',
     alignItems: 'center',

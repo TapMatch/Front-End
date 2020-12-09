@@ -6,6 +6,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import WindowHeader from './components/WindowHeader';
 import CodeInput from './components/CodeInput';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {useDimensions} from '@react-native-community/hooks';
 
 interface CodeInputWindowProps {
   community: any;
@@ -15,10 +16,11 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const code = useState<string>('');
   const errorState = useState<boolean>(false);
   const txt = useLocalizedTxt();
+  const {height} = useDimensions().screen;
   const {city, name, id} = community;
 
   return (
-    <View style={_s.container}>
+    <View style={[_s.container, {maxHeight: height * 0.52}]}>
       <WindowHeader />
       <View style={_s.content}>
         <View style={_s.txtContainer}>
@@ -40,8 +42,7 @@ const _s = StyleSheet.create({
   container: {
     paddingVertical: _fs.m,
     paddingHorizontal: _fs.xs,
-    flex: 0.6,
-    maxHeight: '60%',
+    flex: 1,
     backgroundColor: _c.white,
     width: '80%',
     borderRadius: 20,
@@ -70,7 +71,7 @@ const _s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: _fs.xxxxxl * 1.3,
+    fontSize: _fs.x5l * 1.3,
     color: _c.black,
     marginBottom: 2,
   },

@@ -24,11 +24,11 @@ export async function getAllCommunities({
       .request(options)
       .then(({data}: any) => communities[1](data))
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: getAllCommunities`);
       });
   } catch (error) {
-    console.error(`${error} ::: getAllCommunities`);
+    console.log(`${error} ::: getAllCommunities`);
     callAlert(undefined, `${error.toString()} ::: getAllCommunities`);
   }
 }

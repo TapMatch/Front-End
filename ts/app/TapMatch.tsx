@@ -40,7 +40,7 @@ const TapMatch = () => {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} @user_token`);
       });
 
@@ -51,7 +51,7 @@ const TapMatch = () => {
         }
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} @user_has_passed_onboarding`);
       });
   }, []);

@@ -95,7 +95,7 @@ const _s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: _fs.xxxl,
+    fontSize: _fs.x3l,
     fontFamily: _f.regularAltBold,
     lineHeight: _fs.xxl * 1.3,
     textAlign: 'center',

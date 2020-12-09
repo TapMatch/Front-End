@@ -45,11 +45,11 @@ export async function joinCommunity({
       })
       .then(() => getUserProfile({userProfile, userToken}))
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: joinCommunity`);
       });
   } catch (error) {
-    console.error(`${error} ::: joinCommunity`);
+    console.log(`${error} ::: joinCommunity`);
     callAlert(undefined, `${error.toString()} ::: joinCommunity`);
   }
 }

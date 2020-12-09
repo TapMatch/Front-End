@@ -41,7 +41,7 @@ const Camera = (props: CameraProps) => {
           await pictureURI[1](uri);
         }
       } catch (error) {
-        console.error(error);
+        console.log(error);
       }
     })();
   }, [cameraShutterState[0]]);

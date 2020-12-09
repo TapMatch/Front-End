@@ -33,6 +33,6 @@ const _s = StyleSheet.create({
     textAlignVertical: 'center',
     color: _c.white,
     fontFamily: _f.regularAlt,
-    fontSize: _fs.xxxl,
+    fontSize: _fs.x3l,
   },
 });

@@ -37,6 +37,7 @@ const _s = StyleSheet.create({
     alignItems: 'center',
   },
   txt: {
+    color: _c.black,
     marginLeft: 5,
     fontFamily: _f.regularAlt,
     fontSize: _fs.m,

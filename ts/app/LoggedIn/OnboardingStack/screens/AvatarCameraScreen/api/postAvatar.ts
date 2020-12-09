@@ -35,11 +35,11 @@ export async function postAvatar({base64, userToken, pictureURI}: IpostAvatar) {
         console.log('SUCCESS!!!');
       })
       .catch(function (error) {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: postAvatar`);
       });
   } catch (error) {
-    console.error(`${error} ::: postAvatar`);
+    console.log(`${error} ::: postAvatar`);
     callAlert(undefined, `${error.toString()} ::: postAvatar`);
   }
 }

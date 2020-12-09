@@ -31,11 +31,11 @@ export async function requestOTP({
         PHPSESSID[1](data.Cookie);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: requestOTP`);
       });
   } catch (error) {
-    console.error(`${error} ::: requestOTP`);
+    console.log(`${error} ::: requestOTP`);
     callAlert(undefined, `${error.toString()} ::: requestOTP`);
   }
 }

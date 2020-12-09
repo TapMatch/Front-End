@@ -37,14 +37,14 @@ export async function restartApp({
       })
       .catch((error) => {
         deleteUserToken();
-        console.error(error);
+        console.log(error);
         // callAlert(
         //   undefined,
         //   `${error.toString()} ::: restartApp_TESTING_AND_DEV_TOOL`,
         // );
       });
   } catch (error) {
-    console.error(`${error} ::: restartApp_TESTING_AND_DEV_TOOL`);
+    console.log(`${error} ::: restartApp_TESTING_AND_DEV_TOOL`);
     // callAlert(
     //   undefined,
     //   `${error.toString()} ::: restartApp_TESTING_AND_DEV_TOOL`,

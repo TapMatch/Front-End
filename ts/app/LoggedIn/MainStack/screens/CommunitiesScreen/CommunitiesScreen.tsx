@@ -25,7 +25,6 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const communities = useState<any>([]);
   const coordinates = userLocation[0];
-
   useEffect(() => {
     getAllCommunities({
       userToken: userToken[0],

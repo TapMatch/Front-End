@@ -30,11 +30,11 @@ export async function getUserProfile({
         AsyncStorage.setItem('@user_profile', user_profile);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: getUserProfile`);
       });
   } catch (error) {
-    console.error(`${error} ::: getUserProfile`);
+    console.log(`${error} ::: getUserProfile`);
     callAlert(undefined, `${error.toString()} ::: getUserProfile`);
   }
 }

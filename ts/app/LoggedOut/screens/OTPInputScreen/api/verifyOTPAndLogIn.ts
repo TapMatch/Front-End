@@ -56,15 +56,15 @@ export async function verifyOTPAndLogIn({
       .catch((error) => {
         if (error.toString().includes('Token is invalid')) {
           ReSendCodeDisabled[1](false);
-          console.error(error);
-          callAlert(undefined, `Token is invalid.`);
+          console.log(error);
+          callAlert(undefined, `Code is invalid.`);
         } else {
-          console.error(error);
+          console.log(error);
           callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
         }
       });
   } catch (error) {
-    console.error(`${error} ::: verifyOTPAndLogIn`);
+    console.log(`${error} ::: verifyOTPAndLogIn`);
     callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
   }
 }

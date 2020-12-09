@@ -23,11 +23,11 @@ export async function resendOTP({PHPSESSID}: IresendOTP) {
         console.log('Code re-send!');
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(undefined, `${error.toString()} ::: resendOTP`);
       });
   } catch (error) {
-    console.error(`${error} ::: resendOTP`);
+    console.log(`${error} ::: resendOTP`);
     callAlert(undefined, `${error.toString()} ::: resendOTP`);
   }
 }

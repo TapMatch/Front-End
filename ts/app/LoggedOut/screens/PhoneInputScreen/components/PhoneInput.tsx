@@ -95,8 +95,12 @@ const _s = StyleSheet.create({
     marginHorizontal: '10%',
   },
   input: {
+    overflow: 'visible',
     paddingLeft: 5,
     height: '60%',
+    minHeight: '60%',
+    textAlign: 'left',
+    textAlignVertical: 'center',
     flex: 1,
   },
   countryPickerTrigger: {

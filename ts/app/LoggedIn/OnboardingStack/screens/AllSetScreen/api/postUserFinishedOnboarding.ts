@@ -32,14 +32,14 @@ export async function postUserFinishedOnboarding({
         userProfile[1](data.data);
       })
       .catch((error) => {
-        console.error(error);
+        console.log(error);
         callAlert(
           undefined,
           `${error.toString()} ::: postUserFinishedOnboarding`,
         );
       });
   } catch (error) {
-    console.error(`${error} ::: postUserFinishedOnboarding`);
+    console.log(`${error} ::: postUserFinishedOnboarding`);
     callAlert(undefined, `${error.toString()} ::: postUserFinishedOnboarding`);
   }
 }

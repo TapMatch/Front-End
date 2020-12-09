@@ -9,6 +9,7 @@ import CheckCircleRed from 'assets/svg/check-circle-red.svg';
 import LockOpenWhite from 'assets/svg/lock-open-white.svg';
 import {useNavigation} from '@react-navigation/native';
 import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
+import {useDimensions} from '@react-native-community/hooks';
 
 interface CodeInputWindowProps {
   community: any;
@@ -20,6 +21,7 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const {goBack} = useNavigation();
   const circleCheckRedSize = vs(70);
   const lockOpenWhiteSize = vs(55);
+  const {height} = useDimensions().screen;
   const {name, city} = community;
 
   return (
@@ -29,7 +31,7 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
         goBack();
         windowState[1](false);
       }}
-      style={_s.container}>
+      style={[_s.container, {maxHeight: height * 0.52}]}>
       <CheckCircleRed height={circleCheckRedSize} width={circleCheckRedSize} />
       <Text style={[_s.txt, _s.msg]}>{txt.youAreNowAPartOf}</Text>
       <View style={_s.txtContainer}>
@@ -49,8 +51,7 @@ const _s = StyleSheet.create({
     paddingHorizontal: _fs.xs,
     justifyContent: 'space-between',
     alignItems: 'center',
-    flex: 0.6,
-    maxHeight: '60%',
+    flex: 1,
     backgroundColor: _c.unlockedCommunityBtn,
     width: '80%',
     borderRadius: 20,
@@ -72,7 +73,7 @@ const _s = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: _fs.xxxxxl * 1.3,
+    fontSize: _fs.x5l * 1.3,
     color: _c.main_red,
     marginBottom: 2,
   },

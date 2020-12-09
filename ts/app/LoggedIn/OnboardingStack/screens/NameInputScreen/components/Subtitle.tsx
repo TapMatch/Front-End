@@ -25,12 +25,14 @@ export default Subtitle;
 
 const _s = StyleSheet.create({
   container: {
+    minHeight: _fs.l,
     flex: 0.2,
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: '1.5%',
   },
   txt: {
+    overflow: 'visible',
     textAlign: 'center',
     textAlignVertical: 'center',
     color: _c.main_red,
