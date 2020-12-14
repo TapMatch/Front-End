@@ -8,6 +8,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 import ChevronRightBlack from 'assets/svg/chevron-right-black.svg'; //
 import LockClosedBlack from 'assets/svg/lock-closed-black.svg';
+import LockOpenBlack from 'assets/svg/lock-open-black.svg';
 
 interface ListItemProps {
   item: any;
@@ -18,13 +19,19 @@ const ListItem = ({item}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
   const {name, members, city} = item;
+  const renderIcon = () => {
+    if (item?.is_open) {
+      return <LockOpenBlack height={iconSize} width={iconSize} />;
+    } else {
+      return <LockClosedBlack height={iconSize} width={iconSize} />;
+    }
+  };
+
   return (
     <TouchableOpacity
       onPress={() => navigate('CommunityCodeInput', {community: item})}
       style={_s.container}>
-      <View style={_s.left}>
-        <LockClosedBlack height={iconSize} width={iconSize} />
-      </View>
+      <View style={_s.left}>{renderIcon()}</View>
       <View style={_s.middle}>
         <View style={_s.middle_top}>
           <Text style={[_s.title, _s.txt]}>{name}</Text>

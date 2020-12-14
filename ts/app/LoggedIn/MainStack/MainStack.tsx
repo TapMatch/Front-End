@@ -6,6 +6,9 @@ import LoggedInPlaceholderScreen from './screens/LoggedInPlaceholderScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
 import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
+import HomeScreen from './screens/HomeScreen/HomeScreen';
+import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
+import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
 
 export default function MainStack() {
   const Stack = createStackNavigator();
@@ -17,6 +20,7 @@ export default function MainStack() {
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
   return (
     <Navigator
+      mode={'modal'}
       screenOptions={{
         headerTitleAllowFontScaling: false,
         headerBackAllowFontScaling: false,
@@ -38,6 +42,36 @@ export default function MainStack() {
         ...insets,
       }}>
       <Screen
+        name="Home"
+        component={HomeScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+
+      <Screen
+        name="FeedbackRequest"
+        component={FeedbackRequestScreen}
+        options={() => {
+          return {
+            headerTitle: '',
+          };
+        }}
+      />
+
+      {/* <Screen
+        name="CreateEvent"
+        component={CreateEventScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      /> */}
+
+      {/* <Screen
         name="Communities"
         component={CommunitiesScreen}
         options={() => {
@@ -45,8 +79,8 @@ export default function MainStack() {
             headerShown: false,
           };
         }}
-      />
-      <Screen
+      /> */}
+      {/* <Screen
         name="CommunityCodeInput"
         component={CommunityCodeInputScreen}
         options={() => {
@@ -63,12 +97,12 @@ export default function MainStack() {
           };
         }}
         component={WebScreen}
-      />
-      <Screen
+      /> */}
+      {/* <Screen
         name="LoggedInPlaceholderScreen"
         options={{title: 'LoggedInPlaceholderScreen'}}
         component={LoggedInPlaceholderScreen}
-      />
+      /> */}
     </Navigator>
   );
 }

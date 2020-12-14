@@ -48,7 +48,8 @@ const CommunityCodeInputScreen = ({
               ...coordinates,
               latitudeDelta: 0.015,
               longitudeDelta: 0.0121,
-            }}></MapView>
+            }}
+          />
         </View>
       </CommunityCodeInputScreenContext.Provider>
     );
