@@ -7,9 +7,9 @@ interface IjoinCommunity {
   userProfile: [any, (x: any) => void];
   userToken: string;
   communityId: number;
-  code: string;
+  code?: string;
   windowState: [boolean, (x: boolean) => void];
-  errorState: [boolean, (x: boolean) => void];
+  errorState?: [boolean, (x: boolean) => void];
 }
 
 export async function joinCommunity({
@@ -28,20 +28,24 @@ export async function joinCommunity({
         'X-Auth-Token': userToken,
         'Content-Type': 'application/json',
       },
-      data: {
-        access: code,
-      },
+      data: code
+        ? {
+            access: code,
+          }
+        : undefined,
     };
     axios
       .request(options)
       .then(({data}: any) => {
         if (data.error === 'incorrect code') {
-          errorState[1](true);
+          if (errorState) {
+            errorState[1](true);
+          } else {
+            console.log('!!!!!!!!!!!!-----incorrect code----!!!!!!!!!!', data);
+          }
         } else {
           windowState[1](false);
         }
-        // userProfile[1]({...userProfile[0], name});
-        // userProfile[1](data.data);
       })
       .then(() => getUserProfile({userProfile, userToken}))
       .catch((error) => {

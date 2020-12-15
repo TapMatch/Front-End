@@ -21,7 +21,10 @@ const UpcomingEvents = ({listIsOpen}: UpcomingEventsProps) => {
       return (
         <View style={_s.listContainer}>
           {[0, 1, 2, 3, 4].map((el, ind, arr) => (
-            <ListItem isLast={ind === arr.length - 1} />
+            <ListItem
+              key={`${ind}-addIDHereLater`}
+              isLast={ind === arr.length - 1}
+            />
           ))}
         </View>
       );

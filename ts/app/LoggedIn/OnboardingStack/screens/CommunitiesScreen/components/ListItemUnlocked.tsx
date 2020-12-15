@@ -6,61 +6,57 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
-import ChevronRightBlack from 'assets/svg/chevron-right-black.svg'; //
-import LockClosedBlack from 'assets/svg/lock-closed-black.svg';
-import LockOpenBlack from 'assets/svg/lock-open-black.svg';
+import LockOpenBlack from 'assets/svg/lock-open-black.svg'; //
 
 interface ListItemProps {
   item: any;
 }
 
-const ListItem = ({item}: ListItemProps) => {
+const ListItemUnlocked = ({item}: ListItemProps) => {
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
-  const {name, members, city} = item;
-  const renderIcon = () => {
-    if (item?.is_open) {
-      return <LockOpenBlack height={iconSize} width={iconSize} />;
-    } else {
-      return <LockClosedBlack height={iconSize} width={iconSize} />;
-    }
-  };
+  const {name, id, city, access} = item;
 
   return (
     <TouchableOpacity
-      onPress={() => navigate('CommunityCodeInput', {community: item})}
+      // onPress={() =>
+      //   navigate('CommunityCodeInput', {
+      //     community: item,
+      //     is_open: !!item?.is_open,
+      //   })
+      // }
+      disabled={true}
       style={_s.container}>
-      <View style={_s.left}>{renderIcon()}</View>
+      <View style={_s.left}>
+        <LockOpenBlack height={iconSize} width={iconSize} />
+      </View>
       <View style={_s.middle}>
         <View style={_s.middle_top}>
           <Text style={[_s.title, _s.txt]}>{name}</Text>
           <Text style={[_s.city, _s.txt]}>{city}</Text>
         </View>
         <View style={_s.middle_bottom}>
-          <Text
-            style={[
-              _s.users_num,
-              _s.txt,
-            ]}>{`${members.length} ${txt.users}`}</Text>
+          <Text style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
+          <Text style={[_s.users_num, _s.txt, _s.code]}>{access}</Text>
         </View>
       </View>
-      <View style={_s.right}>
-        <ChevronRightBlack height={iconSize} width={iconSize} />
-      </View>
+      <View style={_s.right} />
     </TouchableOpacity>
   );
 };
 
-export default ListItem;
+export default ListItemUnlocked;
 
 const _s = StyleSheet.create({
   container: {
     borderRadius: 20,
+    borderWidth: 3,
+    borderColor: _c.main_red,
     marginVertical: 10,
     height: vs(110),
     flexDirection: 'row',
-    backgroundColor: _c.white,
+    backgroundColor: _c.unlockedCommunityBtn,
     minWidth: '55%',
     justifyContent: 'center',
     alignItems: 'center',
@@ -77,7 +73,6 @@ const _s = StyleSheet.create({
     minHeight: '100%',
     flex: 0.3,
     maxWidth: '30%',
-    paddingLeft: '10%',
   },
   middle: {
     paddingVertical: vs(12),
@@ -93,8 +88,10 @@ const _s = StyleSheet.create({
   },
   middle_bottom: {
     flex: 0.3,
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    minWidth: '100%',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   title: {
     fontSize: _fs.xl,
@@ -110,5 +107,9 @@ const _s = StyleSheet.create({
     color: _c.black,
     textAlign: 'center',
     textAlignVertical: 'center',
+  },
+  code: {
+    color: _c.main_red,
+    marginLeft: 8,
   },
 });

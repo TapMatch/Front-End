@@ -1,27 +1,23 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
-import AvatarBtn from './components/AvatarBtn';
-import CommunityBtn from './components/CommunityBtn';
-import AddEventBtn from './components/AddEventBtn';
+import TitleAndReturn from './components/TitleAndReturn';
+import SearchInput from './components/SearchInput';
 
 interface HeaderProps {}
 
 const Header = (props: HeaderProps) => {
   const {top} = useSafeAreaInsets();
-
+  const searchString = useState<string>('');
   return (
     <View style={[_s.container, _s.shadow, {paddingTop: top}]}>
-      <View style={_s.left}>
-        <AvatarBtn />
+      <View style={_s.half}>
+        <TitleAndReturn />
       </View>
-      <View style={_s.middle}>
-        <CommunityBtn />
-      </View>
-      <View style={_s.right}>
-        <AddEventBtn />
+      <View style={_s.half}>
+        <SearchInput searchString={searchString} />
       </View>
     </View>
   );
@@ -36,26 +32,12 @@ const _s = StyleSheet.create({
     position: 'absolute',
     left: 0,
     top: 0,
-    flexDirection: 'row',
     zIndex: 100,
-    height: vs(120),
+    height: vs(150),
     minWidth: '100%',
   },
-  left: {
+  half: {
     flex: 1,
-    maxWidth: '15%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  middle: {
-    flex: 1,
-    maxWidth: '70%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  right: {
-    flex: 1,
-    maxWidth: '15%',
     justifyContent: 'center',
     alignItems: 'center',
   },

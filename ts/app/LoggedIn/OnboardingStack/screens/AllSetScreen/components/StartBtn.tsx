@@ -6,25 +6,19 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
-import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {postUserFinishedOnboarding} from '../api/postUserFinishedOnboarding';
+import {useNavigation} from '@react-navigation/native';
 
 interface StartBtnProps {}
 
 const StartBtn = (props: StartBtnProps) => {
   const txt = useLocalizedTxt();
   const {bottom} = useSafeAreaInsets();
-  const {user_has_passed_onboarding, userProfile, userToken} = useContext(
-    TapMatchContext,
-  );
+  const {navigate} = useNavigation();
 
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => {
-        user_has_passed_onboarding[1](true);
-        postUserFinishedOnboarding({userProfile, userToken: userToken[0]});
-      }}
+      onPress={() => navigate('Communities')}
       style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToStartThe}</Text>
       <Text style={_s.txt}>{txt.tapMatchExperience}</Text>

@@ -3,9 +3,8 @@ import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
-import AvatarBtn from './components/AvatarBtn';
-import CommunityBtn from './components/CommunityBtn';
-import AddEventBtn from './components/AddEventBtn';
+import Title from './components/Title';
+import AddEventBtn from './components/CloseBtn';
 
 interface HeaderProps {}
 
@@ -14,11 +13,8 @@ const Header = (props: HeaderProps) => {
 
   return (
     <View style={[_s.container, _s.shadow, {paddingTop: top}]}>
-      <View style={_s.left}>
-        <AvatarBtn />
-      </View>
       <View style={_s.middle}>
-        <CommunityBtn />
+        <Title />
       </View>
       <View style={_s.right}>
         <AddEventBtn />
@@ -41,15 +37,10 @@ const _s = StyleSheet.create({
     height: vs(120),
     minWidth: '100%',
   },
-  left: {
-    flex: 1,
-    maxWidth: '15%',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   middle: {
     flex: 1,
     maxWidth: '70%',
+    marginLeft: '15%',
     justifyContent: 'center',
     alignItems: 'center',
   },

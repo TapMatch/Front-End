@@ -8,6 +8,7 @@ import Title from './components/Title';
 import ReSendCode from './components/ReSendCode';
 import {resendOTP} from './api/resendOTP';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {useIsFocused} from '@react-navigation/native';
 
 interface OTPInputScreenProps {}
 
@@ -16,12 +17,17 @@ const OTPInputScreen = (props: OTPInputScreenProps) => {
   const ReSendCodeDisabled = useState<boolean>(true);
   const resendTimerTrigger = useState<boolean>(true);
   const {PHPSESSID} = useContext(TapMatchContext);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
-    const resendTimer = setTimeout(() => {
-      ReSendCodeDisabled[1](false);
+    const resendTimer = setInterval(() => {
+      if (isFocused) {
+        if (PHPSESSID[0].length) {
+          ReSendCodeDisabled[1](false);
+        }
+      }
     }, 18000);
-    return () => clearTimeout(resendTimer);
+    return () => clearInterval(resendTimer);
   }, [resendTimerTrigger[0]]);
 
   return (

@@ -29,12 +29,8 @@ export default AvatarBtn;
 
 const _s = StyleSheet.create({
   container: {
-    borderRadius: 300,
-    borderWidth: 5,
-    borderColor: _c.white,
     height: 50,
     width: 50,
-    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -49,6 +45,8 @@ const _s = StyleSheet.create({
   },
   avatar: {
     borderRadius: 300,
+    borderWidth: 5,
+    borderColor: _c.white,
     height: 50,
     width: 50,
   },

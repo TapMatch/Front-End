@@ -10,6 +10,8 @@ import LockOpenWhite from 'assets/svg/lock-open-white.svg';
 import {useNavigation} from '@react-navigation/native';
 import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
 import {useDimensions} from '@react-native-community/hooks';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {postUserFinishedOnboarding} from '../api/postUserFinishedOnboarding';
 
 interface CodeInputWindowProps {
   community: any;
@@ -18,17 +20,22 @@ interface CodeInputWindowProps {
 const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const txt = useLocalizedTxt();
   const {windowState} = useContext(CommunityCodeInputScreenContext);
-  const {goBack} = useNavigation();
+  const {navigate} = useNavigation();
   const circleCheckRedSize = vs(70);
   const lockOpenWhiteSize = vs(55);
   const {height} = useDimensions().screen;
   const {name, city} = community;
-
+  const {user_has_passed_onboarding, userProfile, userToken} = useContext(
+    TapMatchContext,
+  );
   return (
     <TouchableOpacity
       onPress={() => {
-        // navigate('Communities');
-        goBack();
+        user_has_passed_onboarding[1](true);
+        postUserFinishedOnboarding({
+          userProfile,
+          userToken: userToken[0],
+        });
         windowState[1](false);
       }}
       style={[_s.container, {maxHeight: height * 0.52}]}>

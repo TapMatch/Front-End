@@ -3,20 +3,19 @@ import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import LoggedInPlaceholderScreen from './screens/LoggedInPlaceholderScreen';
-import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
-import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
 import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
+import LocationPickerScreen from './screens/LocationPickerScreen/LocationPickerScreen';
 
 export default function MainStack() {
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
-  const transitions =
-    Platform.OS === 'ios'
-      ? TransitionPresets.DefaultTransition
-      : TransitionPresets.FadeFromBottomAndroid;
+  // const transitions =
+  //   Platform.OS === 'ios'
+  //     ? TransitionPresets.DefaultTransition
+  //     : TransitionPresets.FadeFromBottomAndroid;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
   return (
     <Navigator
@@ -35,10 +34,7 @@ export default function MainStack() {
             width: 0,
           },
         },
-        // headerTitleStyle: {
-        //   fontSize: fs * 1.2,
-        // },
-        ...transitions,
+        // ...transitions,
         ...insets,
       }}>
       <Screen
@@ -61,7 +57,7 @@ export default function MainStack() {
         }}
       />
 
-      {/* <Screen
+      <Screen
         name="CreateEvent"
         component={CreateEventScreen}
         options={() => {
@@ -69,26 +65,18 @@ export default function MainStack() {
             headerShown: false,
           };
         }}
-      /> */}
+      />
 
-      {/* <Screen
-        name="Communities"
-        component={CommunitiesScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      /> */}
-      {/* <Screen
-        name="CommunityCodeInput"
-        component={CommunityCodeInputScreen}
+      <Screen
+        name="LocationPicker"
+        component={LocationPickerScreen}
         options={() => {
           return {
             headerShown: false,
           };
         }}
       />
+
       <Screen
         name="WebScreen"
         options={() => {
@@ -97,12 +85,13 @@ export default function MainStack() {
           };
         }}
         component={WebScreen}
-      /> */}
-      {/* <Screen
+      />
+
+      <Screen
         name="LoggedInPlaceholderScreen"
         options={{title: 'LoggedInPlaceholderScreen'}}
         component={LoggedInPlaceholderScreen}
-      /> */}
+      />
     </Navigator>
   );
 }

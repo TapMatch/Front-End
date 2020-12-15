@@ -4,11 +4,16 @@ import {_c} from 'ts/UIConfig/colors';
 import ChevronDownRed from 'assets/svg/chevron-down-red.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
+import {useNavigation} from '@react-navigation/native';
+
 interface CommunityBtnProps {}
 
 const CommunityBtn = (props: CommunityBtnProps) => {
+  const {navigate} = useNavigation();
   return (
-    <TouchableOpacity style={[_s.container, _s.shadow]}>
+    <TouchableOpacity
+      onLongPress={() => navigate('LoggedInPlaceholderScreen')}
+      style={[_s.container, _s.shadow]}>
       <View style={_s.txtContainer}>
         <View style={_s.titleContainer}>
           <Text style={[_s.txt, _s.title]}>UvA</Text>

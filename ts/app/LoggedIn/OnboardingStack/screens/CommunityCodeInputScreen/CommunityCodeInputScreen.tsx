@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
@@ -8,6 +8,7 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import CodeInputWindow from './components/CodeInputWindow/CodeInputWindow';
 import SuccessMsgWindow from './components/SuccessMsgWindow';
 import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
+import {joinCommunity} from './api/joinCommunity';
 
 interface CommunitiesScreenProps {
   navigation: any;
@@ -21,8 +22,24 @@ const CommunityCodeInputScreen = ({
   const {top} = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
-  const windowState = useState<boolean>(true);
+  const windowState = useState<boolean>(!route.params.is_open);
   const coordinates = userLocation[0];
+  const {userProfile, userToken} = useContext(TapMatchContext);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      if (route.params.is_open) {
+        joinCommunity({
+          userProfile,
+          communityId: route.params.community.id,
+          userToken: userToken[0],
+          windowState,
+        });
+      }
+    });
+    return unsubscribe;
+  }, []);
+
   const renderWindow = () => {
     return windowState[0] ? (
       <CodeInputWindow community={route.params.community} />
