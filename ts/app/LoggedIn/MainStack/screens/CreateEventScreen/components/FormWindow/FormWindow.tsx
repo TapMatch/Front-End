@@ -1,3 +1,4 @@
+import {useKeyboard} from '@react-native-community/hooks';
 import React, {useState} from 'react';
 import {
   Text,
@@ -7,6 +8,7 @@ import {
   ScrollView,
   KeyboardAvoidingViewBase,
   Slider,
+  Platform,
 } from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {vs} from 'react-native-size-matters';
@@ -23,18 +25,23 @@ const FormWindow = (props: FormWindowProps) => {
   const description = useState<string>('');
   const joinLimit = useState<number>(1);
   const dateTime = useState<Date>(new Date());
+  const {keyboardHeight, keyboardShown} = useKeyboard();
+
   return (
     <View style={_s.container}>
       <View style={_s.window}>
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={_s.scrollView}>
+          contentContainerStyle={{
+            paddingBottom:
+              keyboardShown && Platform.OS == 'ios' ? keyboardHeight : 50,
+          }}>
           <View style={_s.content}>
             <Title />
             <DescriptionInput description={description} />
-            <LimitSlider joinLimit={joinLimit} />
             <LocationPickerBtn />
+            <LimitSlider joinLimit={joinLimit} />
             <DateTimeInput dateTime={dateTime} />
           </View>
         </KeyboardAwareScrollView>
@@ -45,19 +52,17 @@ const FormWindow = (props: FormWindowProps) => {
 
 export default FormWindow;
 
+const q = Platform.OS === 'ios' ? 2 : 2.5;
 const _s = StyleSheet.create({
   container: {
     position: 'absolute',
     top: vs(120),
     left: 0,
-    height: Dimensions.get('screen').height - vs(120) * 2,
+    height: Dimensions.get('screen').height - vs(120) * q,
     minWidth: '100%',
     zIndex: 100,
     justifyContent: 'flex-end',
     alignItems: 'center',
-  },
-  scrollView: {
-    paddingBottom: 50,
   },
   window: {
     height: '95%',

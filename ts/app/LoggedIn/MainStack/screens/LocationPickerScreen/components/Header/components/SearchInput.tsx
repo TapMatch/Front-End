@@ -49,7 +49,7 @@ const _s = StyleSheet.create({
   input: {
     overflow: 'visible',
     paddingLeft: 5,
-    height: '60%',
+    height: '100%',
     minHeight: '60%',
     textAlign: 'left',
     textAlignVertical: 'center',

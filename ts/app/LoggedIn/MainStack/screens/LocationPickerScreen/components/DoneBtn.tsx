@@ -13,6 +13,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
+import {Dimensions} from 'react-native';
 
 interface DoneBtnProps {}
 
@@ -24,8 +25,8 @@ const DoneBtn = (props: DoneBtnProps) => {
   return (
     <KeyboardAvoidingView
       behavior={KAVBehaviorObj}
-      contentContainerStyle={_s.kav}
-      style={[_s.container, {bottom}]}
+      contentContainerStyle={[_s.container, {bottom: bottom + 15}]}
+      style={[_s.container, {bottom: bottom + 15}]}
       keyboardVerticalOffset={vs(15)}>
       <View style={_s.btnContainer}>
         <TouchableOpacity onPress={goBack} style={[_s.btn, _s.center]}>
@@ -43,12 +44,10 @@ const _s = StyleSheet.create({
     position: 'absolute',
     left: 0,
     zIndex: 1000,
-  },
-  kav: {
-    minWidth: '100%',
+    minWidth: Dimensions.get('screen').width,
+    height: 60,
     justifyContent: 'center',
     alignItems: 'center',
-    height: 60,
   },
   btnContainer: {
     height: '100%',

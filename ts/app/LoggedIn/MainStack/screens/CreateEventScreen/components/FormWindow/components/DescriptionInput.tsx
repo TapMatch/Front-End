@@ -1,5 +1,11 @@
-import React from 'react';
-import {Text, View, StyleSheet, TextInput} from 'react-native';
+import React, {MutableRefObject, useRef} from 'react';
+import {
+  Text,
+  View,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
@@ -9,10 +15,19 @@ interface DescriptionInputProps {
 }
 
 const DescriptionInput = ({description}: DescriptionInputProps) => {
+  let input = useRef<any>(null);
   return (
     <View style={[_s.container]}>
-      <Text style={_s.title}>Description</Text>
+      <TouchableOpacity
+        style={_s.focusBtn}
+        activeOpacity={1}
+        onPress={() => input.focus()}>
+        <Text style={_s.title}>Description</Text>
+      </TouchableOpacity>
       <TextInput
+        ref={(x) => {
+          input = x;
+        }}
         value={description[0]}
         textContentType={'none'}
         importantForAutofill={'no'}
@@ -42,6 +57,10 @@ const _s = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     paddingHorizontal: '6%',
     paddingVertical: '4%',
+  },
+  focusBtn: {
+    width: '100%',
+    alignItems: 'flex-start',
   },
   input: {
     marginTop: 4,

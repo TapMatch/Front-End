@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
+import {Text, View, StyleSheet, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
@@ -11,12 +11,12 @@ interface LimitSliderProps {
 }
 
 const LimitSlider = ({joinLimit}: LimitSliderProps) => {
+  const extraProps = Platform.OS === 'ios' ? {} : {thumbTintColor: _c.main_red};
   return (
     <View style={[_s.container]}>
       <Text style={[_s.txt, {alignSelf: 'flex-start'}]}>Set Join Limit</Text>
       <Slider
-        disabled={false}
-        value={joinLimit[0]}
+        {...extraProps}
         onValueChange={joinLimit[1]}
         style={_s.slider}
         minimumValue={1}

@@ -10,6 +10,7 @@ const AvatarBtn = (props: AvatarBtnProps) => {
   return (
     <View style={[_s.container, _s.shadow]}>
       <TouchableOpacity
+        activeOpacity={0.9}
         onPress={() => modalVisible[1](!modalVisible[0])}
         style={_s.btn}>
         <Image
@@ -29,15 +30,17 @@ export default AvatarBtn;
 
 const _s = StyleSheet.create({
   container: {
+    borderRadius: 300,
+    borderWidth: 5,
+    borderColor: _c.white,
     height: 50,
     width: 50,
+    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
   },
   btn: {
     backgroundColor: _c.white,
-    borderColor: _c.white,
-    borderRadius: 300,
     height: '100%',
     width: '100%',
     justifyContent: 'center',

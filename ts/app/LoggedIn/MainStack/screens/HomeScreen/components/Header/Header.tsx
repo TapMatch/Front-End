@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import {View, StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
@@ -6,6 +6,7 @@ import {_c} from 'ts/UIConfig/colors';
 import AvatarBtn from './components/AvatarBtn';
 import CommunityBtn from './components/CommunityBtn';
 import AddEventBtn from './components/AddEventBtn';
+import BlackGradient from 'ts/app/common/components/BlackGradient';
 
 interface HeaderProps {}
 
@@ -13,17 +14,22 @@ const Header = (props: HeaderProps) => {
   const {top} = useSafeAreaInsets();
 
   return (
-    <View style={[_s.container, _s.shadow, {paddingTop: top}]}>
-      <View style={_s.left}>
-        <AvatarBtn />
+    <Fragment>
+      <View style={[_s.container, {paddingTop: top}]}>
+        <View style={_s.left}>
+          <AvatarBtn />
+        </View>
+        <View style={_s.middle}>
+          <CommunityBtn />
+        </View>
+        <View style={_s.right}>
+          <AddEventBtn />
+        </View>
       </View>
-      <View style={_s.middle}>
-        <CommunityBtn />
+      <View pointerEvents={'none'} style={[_s.shadowContainer]}>
+        <BlackGradient />
       </View>
-      <View style={_s.right}>
-        <AddEventBtn />
-      </View>
-    </View>
+    </Fragment>
   );
 };
 
@@ -39,6 +45,14 @@ const _s = StyleSheet.create({
     flexDirection: 'row',
     zIndex: 100,
     height: vs(120),
+    minWidth: '100%',
+  },
+  shadowContainer: {
+    position: 'absolute',
+    left: 0,
+    top: vs(120),
+    zIndex: 80,
+    height: 60,
     minWidth: '100%',
   },
   left: {
@@ -59,14 +73,14 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  shadow: {
-    shadowColor: _c.black,
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.1,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
+  // shadow: {
+  //   shadowColor: _c.black,
+  //   shadowOffset: {
+  //     width: 0,
+  //     height: 2,
+  //   },
+  //   shadowOpacity: 0.1,
+  //   shadowRadius: 3.84,
+  //   elevation: 5,
+  // },
 });

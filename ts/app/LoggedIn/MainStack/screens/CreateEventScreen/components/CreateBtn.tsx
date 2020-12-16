@@ -5,6 +5,7 @@ import {
   StyleSheet,
   TouchableOpacity,
   Dimensions,
+  KeyboardAvoidingView,
 } from 'react-native';
 import {vs} from 'react-native-size-matters';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -12,21 +13,27 @@ import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
+import {useKeyboard} from '@react-native-community/hooks';
 
 interface CreateBtnProps {}
 
 const CreateBtn = (props: CreateBtnProps) => {
   const {bottom} = useSafeAreaInsets();
   const {goBack} = useNavigation();
-  return (
-    <View style={[_s.container, _s.center, {paddingBottom: bottom}]}>
-      <View style={_s.btnContainer}>
-        <TouchableOpacity onPress={goBack} style={[_s.btn, _s.center]}>
-          <Text style={_s.btnTxt}>Create</Text>
-        </TouchableOpacity>
+  const {keyboardShown} = useKeyboard();
+  if (!keyboardShown) {
+    return (
+      <View style={[_s.container, _s.center, {paddingBottom: bottom}]}>
+        <View style={_s.btnContainer}>
+          <TouchableOpacity onPress={goBack} style={[_s.btn, _s.center]}>
+            <Text style={_s.btnTxt}>Create</Text>
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return <View pointerEvents={'none'} style={_s.container} />;
+  }
 };
 
 export default CreateBtn;
