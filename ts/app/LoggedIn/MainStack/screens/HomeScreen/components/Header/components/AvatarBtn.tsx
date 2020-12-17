@@ -6,12 +6,12 @@ import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 interface AvatarBtnProps {}
 
 const AvatarBtn = (props: AvatarBtnProps) => {
-  const {modalVisible} = useContext(HomeScreenContext);
+  const {profileModalVisible} = useContext(HomeScreenContext);
   return (
     <View style={[_s.container, _s.shadow]}>
       <TouchableOpacity
         activeOpacity={0.9}
-        onPress={() => modalVisible[1](!modalVisible[0])}
+        onPress={() => profileModalVisible[1](!profileModalVisible[0])}
         style={_s.btn}>
         <Image
           resizeMode={'contain'}

@@ -1,15 +1,6 @@
 import {useKeyboard} from '@react-native-community/hooks';
 import React, {useState} from 'react';
-import {
-  Text,
-  View,
-  StyleSheet,
-  Dimensions,
-  ScrollView,
-  KeyboardAvoidingViewBase,
-  Slider,
-  Platform,
-} from 'react-native';
+import {View, StyleSheet, Dimensions, Platform} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -25,7 +16,8 @@ const FormWindow = (props: FormWindowProps) => {
   const description = useState<string>('');
   const joinLimit = useState<number>(1);
   const dateTime = useState<Date>(new Date());
-  const {keyboardHeight, keyboardShown} = useKeyboard();
+  const k = useKeyboard();
+  const pb = definePaddingBottom(k);
 
   return (
     <View style={_s.container}>
@@ -33,10 +25,7 @@ const FormWindow = (props: FormWindowProps) => {
         <KeyboardAwareScrollView
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
-          contentContainerStyle={{
-            paddingBottom:
-              keyboardShown && Platform.OS == 'ios' ? keyboardHeight : 50,
-          }}>
+          contentContainerStyle={{paddingBottom: pb}}>
           <View style={_s.content}>
             <Title />
             <DescriptionInput description={description} />
@@ -49,7 +38,17 @@ const FormWindow = (props: FormWindowProps) => {
     </View>
   );
 };
-
+function definePaddingBottom({keyboardHeight, keyboardShown}: any) {
+  if (Platform.OS === 'ios') {
+    if (keyboardShown) {
+      return keyboardHeight;
+    } else {
+      return 50;
+    }
+  } else {
+    return keyboardHeight;
+  }
+}
 export default FormWindow;
 
 const q = Platform.OS === 'ios' ? 2 : 2.5;

@@ -12,7 +12,7 @@ const CommunityBtn = (props: CommunityBtnProps) => {
   const {navigate} = useNavigation();
   return (
     <TouchableOpacity
-      onLongPress={() => navigate('LoggedInPlaceholderScreen')}
+      onLongPress={() => navigate('SecretScreen')}
       style={[_s.container, _s.shadow]}>
       <View style={_s.txtContainer}>
         <View style={_s.titleContainer}>

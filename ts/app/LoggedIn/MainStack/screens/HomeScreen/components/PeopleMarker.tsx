@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {Marker, LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
@@ -12,20 +13,27 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
 interface PeopleMarkerProps {
   coordinate: LatLng;
-  base64: string;
+  eventDetailsModalVisible: [boolean, (x: boolean) => void];
 }
 
-const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
+const PeopleMarker = ({
+  coordinate,
+  eventDetailsModalVisible,
+}: PeopleMarkerProps) => {
+  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  console.log(userProfile, 'AAAAAA');
   const txt = useLocalizedTxt();
   return (
-    <Marker coordinate={coordinate}>
+    <Marker
+      onPress={() => eventDetailsModalVisible[1](true)}
+      coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>
           <Text numberOfLines={1} style={_s.topTxt}>
-            {txt.thisIsHowPeopleWill}
+            🔥
           </Text>
           <Text numberOfLines={1} style={_s.topTxt}>
-            {txt.seeYouOnTheApp}
+            Almost Full
           </Text>
         </View>
 
@@ -91,8 +99,8 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
               resizeMode={'cover'}
               style={_s.avatar}
               source={{
-                uri: base64,
-                // 'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
+                uri:
+                  'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
               }}
             />
           </View>
@@ -150,7 +158,7 @@ const _s = StyleSheet.create({
   },
   topTxt: {
     fontFamily: _f.regularAlt,
-    color: _c.main_red,
+    color: _c.black,
     fontSize: 20,
     textAlign: 'center',
     textAlignVertical: 'center',

@@ -2,7 +2,7 @@ import React from 'react';
 import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
-import LoggedInPlaceholderScreen from './screens/LoggedInPlaceholderScreen';
+import SecretScreen from './screens/SecretScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
@@ -88,9 +88,9 @@ export default function MainStack() {
       />
 
       <Screen
-        name="LoggedInPlaceholderScreen"
-        options={{title: 'LoggedInPlaceholderScreen'}}
-        component={LoggedInPlaceholderScreen}
+        name="SecretScreen"
+        options={{title: 'SecretScreen'}}
+        component={SecretScreen}
       />
     </Navigator>
   );

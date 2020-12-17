@@ -1,8 +1,7 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
-import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import {_c} from 'ts/UIConfig/colors';
 import AvatarImg from './components/AvatarImg';
 
@@ -10,7 +9,6 @@ interface ModalHeaderProps {}
 
 const ModalHeader = (props: ModalHeaderProps) => {
   const {top} = useSafeAreaInsets();
-  const {modalVisible} = useContext(HomeScreenContext);
 
   return (
     <View style={[_s.container, {paddingTop: top}]}>

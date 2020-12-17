@@ -16,9 +16,9 @@ import {WebView} from 'react-native-webview';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import deleteUserToken from 'ts/tools/extensions/deleteUserToken';
 import {restartApp} from 'ts/tools/extensions/restartApp';
-interface LoggedInPlaceholderScreenProps {}
+interface SecretScreenProps {}
 
-const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
+const SecretScreen = (props: SecretScreenProps) => {
   const {
     LoggedIn,
     userProfile,
@@ -85,7 +85,7 @@ const LoggedInPlaceholderScreen = (props: LoggedInPlaceholderScreenProps) => {
   );
 };
 
-export default LoggedInPlaceholderScreen;
+export default SecretScreen;
 
 const styles = StyleSheet.create({
   container: {

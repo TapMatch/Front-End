@@ -9,6 +9,8 @@ import UpcomingEvents from './components/UpcomingEvents/UpcomingEvents';
 import ProfileModal from './components/ProfileModal/ProfileModal';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import EventReminder from './components/EventReminder';
+import EventDetailsModal from './components/EventDetailsModal/EventDetailsModal';
+import PeopleMarker from './components/PeopleMarker';
 
 interface HomeScreenProps {
   navigation: any;
@@ -18,13 +20,15 @@ interface HomeScreenProps {
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const isFocused = useIsFocused();
   const listIsOpen = useState<boolean>(false);
-  const modalVisible = useState<boolean>(false);
+  const profileModalVisible = useState<boolean>(false);
+  const eventDetailsModalVisible = useState<boolean>(true);
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const coordinates = userLocation[0];
 
   if (isFocused) {
     return (
-      <HomeScreenContext.Provider value={{modalVisible}}>
+      <HomeScreenContext.Provider
+        value={{profileModalVisible, eventDetailsModalVisible}}>
         <View style={[_s.container]}>
           <StatusBar
             animated={true}
@@ -34,8 +38,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           <Header />
           <UpcomingEvents listIsOpen={listIsOpen} />
           {/* <EventReminder /> */}
-
-          {/* <View style={[_s.content, {paddingTop: 60 + top}]}></View> */}
           <MapView
             provider={PROVIDER_GOOGLE}
             zoomEnabled={true}
@@ -47,9 +49,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
               ...coordinates,
               latitudeDelta: 0.015,
               longitudeDelta: 0.0121,
-            }}
-          />
-          <ProfileModal modalVisible={modalVisible} />
+            }}>
+            <PeopleMarker
+              coordinate={coordinates}
+              eventDetailsModalVisible={eventDetailsModalVisible}
+            />
+          </MapView>
+          <ProfileModal modalVisible={profileModalVisible} />
+          <EventDetailsModal modalVisible={eventDetailsModalVisible} />
         </View>
       </HomeScreenContext.Provider>
     );

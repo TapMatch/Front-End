@@ -10,6 +10,7 @@ import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
 import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
+import SecretScreen from '../MainStack/screens/SecretScreen';
 
 export default function OnboardingStack() {
   const Stack = createStackNavigator();
@@ -111,6 +112,12 @@ export default function OnboardingStack() {
             headerShown: false,
           };
         }}
+      />
+
+      <Screen
+        name="SecretScreen"
+        options={{title: 'SecretScreen'}}
+        component={SecretScreen}
       />
     </Navigator>
   );
