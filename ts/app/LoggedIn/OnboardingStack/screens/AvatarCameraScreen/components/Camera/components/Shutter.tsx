@@ -40,6 +40,7 @@ const _s = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     flexDirection: 'row',
+    backgroundColor: _c.white,
     alignItems: 'center',
   },
   shutterBtn: {

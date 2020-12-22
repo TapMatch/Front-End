@@ -11,6 +11,7 @@ import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import EventReminder from './components/EventReminder';
 import EventDetailsModal from './components/EventDetailsModal/EventDetailsModal';
 import TapMatchMap from './components/TapMatchMap/TapMatchMap';
+import EventManagementModal from './components/EventManagementModal/EventManagementModal';
 
 interface HomeScreenProps {
   navigation: any;
@@ -28,20 +29,26 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const isFocused = useIsFocused();
   const profileModalVisible = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
+  const eventManagementModalVisible = useState<boolean>(false);
   const mapCoordinates = useState<LatLng>(startingPoint);
 
   useEffect(() => {
     if (profileModalVisible[0]) {
-      eventDetailsModalVisible[1](false)
+      if (eventDetailsModalVisible[0]) {
+        eventDetailsModalVisible[1](false)
+      }
+      if (eventManagementModalVisible[0]) {
+        eventManagementModalVisible[1](false)
+      }
     }
-  }, [profileModalVisible, eventDetailsModalVisible])
+  }, [profileModalVisible, eventDetailsModalVisible, eventManagementModalVisible])
 
   const set_mapRef = (x: any) => _mapRef = x
 
   if (isFocused) {
     return (
       <HomeScreenContext.Provider
-        value={{profileModalVisible, eventDetailsModalVisible, mapCoordinates}}>
+        value={{profileModalVisible, eventDetailsModalVisible, eventManagementModalVisible, mapCoordinates}}>
         <View style={[_s.container]}>
           <StatusBar
             animated={true}
@@ -58,10 +65,12 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           <TapMatchMap
             mapCoordinates={mapCoordinates}
             eventDetailsModalVisible={eventDetailsModalVisible}
+            eventManagementModalVisible={eventManagementModalVisible}
             set_mapRef={set_mapRef}
           />
           <ProfileModal modalVisible={profileModalVisible} />
           <EventDetailsModal modalVisible={eventDetailsModalVisible} />
+          <EventManagementModal modalVisible={eventManagementModalVisible} />
         </View>
       </HomeScreenContext.Provider>
     );

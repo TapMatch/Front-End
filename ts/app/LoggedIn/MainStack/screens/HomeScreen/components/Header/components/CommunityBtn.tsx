@@ -6,13 +6,14 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
 
-interface CommunityBtnProps {}
+interface CommunityBtnProps { }
 
 const CommunityBtn = (props: CommunityBtnProps) => {
   const {navigate} = useNavigation();
   return (
     <TouchableOpacity
       onLongPress={() => navigate('SecretScreen')}
+      onPress={() => navigate('Communities')}
       style={[_s.container, _s.shadow]}>
       <View style={_s.txtContainer}>
         <View style={_s.titleContainer}>

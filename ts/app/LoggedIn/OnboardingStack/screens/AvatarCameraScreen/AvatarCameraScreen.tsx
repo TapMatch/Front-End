@@ -1,5 +1,5 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, StatusBar} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import SwipeBackGuide from './components/SwipeBackGuide';
 import Title from './components/Title';
@@ -18,6 +18,11 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
 
   return (
     <View style={[_s.container, {paddingBottom: bottom}]}>
+      <StatusBar
+        animated={true}
+        backgroundColor={'transparent'}
+        barStyle={'dark-content'}
+      />
       <View style={_s.top}>
         <SwipeBackGuide />
         <Title />

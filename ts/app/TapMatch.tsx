@@ -103,19 +103,19 @@ const TapMatch = () => {
     user_has_passed_onboarding: boolean,
     userProfile: any,
   ) => {
-    // if (LoggedIn) {
-    //   if (userProfile !== null) {
-    //     if (user_has_passed_onboarding) {
-    return <MainStack />;
-    //     } else {
-    //       return <OnboardingStack />;
-    //     }
-    //   } else {
-    //     <PlaceholderStack />;
-    //   }
-    // } else {
-    //   return <LoggedOutStack />;
-    // }
+    if (LoggedIn) {
+      if (userProfile !== null) {
+        if (user_has_passed_onboarding) {
+          return <MainStack />;
+        } else {
+          return <OnboardingStack />;
+        }
+      } else {
+        <PlaceholderStack />;
+      }
+    } else {
+      return <LoggedOutStack />;
+    }
   };
 
   return (

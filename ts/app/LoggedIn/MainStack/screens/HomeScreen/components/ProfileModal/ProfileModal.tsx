@@ -10,6 +10,7 @@ import ProfileBubble from './components/ProfileBubble';
 interface ProfileModalProps {
   modalVisible: [boolean, (x: boolean) => void];
 }
+
 const ProfileModal = ({modalVisible}: ProfileModalProps) => {
   return (
     <Modal

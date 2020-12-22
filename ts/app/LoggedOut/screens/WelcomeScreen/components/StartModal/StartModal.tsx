@@ -3,10 +3,7 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  StatusBar,
-  useWindowDimensions,
 } from 'react-native';
-import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomBtn from './components/BottomBtn';
 import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';
@@ -21,9 +18,7 @@ interface StartModalProps {
 
 const StartModal = ({modalVisible}: StartModalProps) => {
   const {top} = useSafeAreaInsets();
-  const {width} = useWindowDimensions();
   const {navigate} = useNavigation();
-  const logoSize = width * 0.6;
   const headerHeight = useHeaderHeight();
   const moveOn = () => {
     modalVisible[1](false)
@@ -43,18 +38,11 @@ const StartModal = ({modalVisible}: StartModalProps) => {
         <View
           style={_s.container}
         >
-          <StatusBar
-            animated={true}
-            backgroundColor={'transparent'}
-            barStyle={'dark-content'}
-          />
           <TouchableOpacity
             activeOpacity={1}
             onPress={moveOn}
-            style={_s.middle}>
-            <TapMatchBetaLogo height={logoSize} width={logoSize} />
-          </TouchableOpacity>
-          <TermsAndConditionsParagraph />
+            style={_s.middle} />
+          <TermsAndConditionsParagraph modalVisible={modalVisible} />
           <BottomBtn moveOn={moveOn} />
         </View>
       </View>

@@ -15,13 +15,13 @@ import People from './components/People';
 import PlaceAndTime from './components/PlaceAndTime';
 import WindowHeader from './components/WindowHeader';
 
-interface EventDetailsModalProps {
+interface EventManagementModalProps {
   modalVisible: [boolean, (x: boolean) => void];
 }
 
 const wh = Dimensions.get('screen');
 
-const EventDetailsModal = ({modalVisible}: EventDetailsModalProps) => {
+const EventManagementModal = ({modalVisible}: EventManagementModalProps) => {
   const {bottom} = useSafeAreaInsets()
   if (modalVisible[0]) {
     return (
@@ -40,7 +40,7 @@ const EventDetailsModal = ({modalVisible}: EventDetailsModalProps) => {
   }
 };
 
-export default EventDetailsModal;
+export default EventManagementModal;
 
 const _s = StyleSheet.create({
   container: {
@@ -52,8 +52,7 @@ const _s = StyleSheet.create({
   },
   content: {
     borderRadius: 30,
-    // backgroundColor: _c.smoke,
-    backgroundColor: _c.main_red,
+    backgroundColor: _c.smoke,
     position: 'absolute',
     left: wh.width * 0.025,
     width: wh.width * 0.95,

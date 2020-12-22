@@ -1,5 +1,5 @@
 import React from 'react';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import SecretScreen from './screens/SecretScreen';
@@ -8,14 +8,13 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
 import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
 import LocationPickerScreen from './screens/LocationPickerScreen/LocationPickerScreen';
+import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
+import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 
 export default function MainStack() {
+  console.log('HUHHHUJFURTDIYFUGIH:NULYKTJREYDTUFYGUHIJO')
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
-  // const transitions =
-  //   Platform.OS === 'ios'
-  //     ? TransitionPresets.DefaultTransition
-  //     : TransitionPresets.FadeFromBottomAndroid;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
   return (
     <Navigator
@@ -79,19 +78,40 @@ export default function MainStack() {
 
       <Screen
         name="WebScreen"
+        component={WebScreen}
         options={() => {
           return {
             headerShown: false,
           };
         }}
-        component={WebScreen}
+      />
+
+      <Screen
+        name="Communities"
+        component={CommunitiesScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+
+      <Screen
+        name="CommunityCodeInput"
+        component={CommunityCodeInputScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
       />
 
       <Screen
         name="SecretScreen"
-        options={{title: 'SecretScreen'}}
         component={SecretScreen}
+        options={{title: 'SecretScreen'}}
       />
+
     </Navigator>
   );
 }

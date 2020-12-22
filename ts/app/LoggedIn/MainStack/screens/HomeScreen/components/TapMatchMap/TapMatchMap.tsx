@@ -13,11 +13,11 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 interface TapMatchMapProps {
     set_mapRef: any;
     mapCoordinates: [LatLng, (x: LatLng) => void];
-    eventDetailsModalVisible: [boolean, (x: boolean) => void]
-
+    eventDetailsModalVisible: [boolean, (x: boolean) => void];
+    eventManagementModalVisible: [boolean, (x: boolean) => void]
 }
 
-const TapMatchMap = ({set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
+const TapMatchMap = ({set_mapRef, eventManagementModalVisible, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
     // const {} = useContext(HomeScreenContext);
 
@@ -32,6 +32,9 @@ const TapMatchMap = ({set_mapRef, mapCoordinates, eventDetailsModalVisible}: Tap
                 if (eventDetailsModalVisible[0]) {
                     eventDetailsModalVisible[1](false)
                 }
+                if (eventManagementModalVisible[0]) {
+                    eventManagementModalVisible[1](false)
+                }
             }}
             provider={PROVIDER_GOOGLE}
             customMapStyle={googleMapStyle}
@@ -45,11 +48,11 @@ const TapMatchMap = ({set_mapRef, mapCoordinates, eventDetailsModalVisible}: Tap
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}>
-            {/* <PeopleMarker
+            <PeopleMarker
                 coordinate={mapCoordinates[0]}
                 eventDetailsModalVisible={eventDetailsModalVisible}
-            /> */}
-            <UserLocationMarker coordinate={userLocation[0]} />
+            />
+            {/* <UserLocationMarker coordinate={userLocation[0]} /> */}
         </MapView>
 
     );

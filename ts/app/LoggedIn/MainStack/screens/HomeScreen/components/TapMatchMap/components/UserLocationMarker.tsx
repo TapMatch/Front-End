@@ -8,10 +8,12 @@ interface UserLocationMarkerProps {
 }
 
 const UserLocationMarker = ({coordinate}: UserLocationMarkerProps) => {
-    return (<Marker style={_s.container}
-        coordinate={coordinate}>
-        <View style={_s.container} />
-    </Marker>)
+    return (
+        <Marker
+            coordinate={coordinate}>
+            <View style={_s.container} />
+        </Marker>
+    )
 }
 
 

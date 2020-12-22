@@ -3,19 +3,21 @@ import {Text, View, StyleSheet} from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {constants} from 'ts/constants/constants';
-import {useNavigation} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 
-interface TermsAndConditionsParagraphProps {}
+interface TermsAndConditionsParagraphProps {
+  modalVisible: [boolean, (x: boolean) => void]
+}
 
 const TermsAndConditionsParagraph = (
-  props: TermsAndConditionsParagraphProps,
+  {modalVisible}: TermsAndConditionsParagraphProps,
 ) => {
   const txt = useLocalizedTxt();
   const {navigate} = useNavigation();
-
+  const isFocused = useIsFocused()
   const formatLinks = (url: string) => {
     switch (url) {
       case constants.termsOfUseUrl_EN.trim():
@@ -28,10 +30,13 @@ const TermsAndConditionsParagraph = (
   };
 
   return (
-    <View style={_s.container}>
+    <View style={[_s.container, {opacity: isFocused ? 1 : 0}]}>
       <Hyperlink
         linkStyle={_s.linkStyle}
-        onPress={(url) => navigate('WebScreen', {url})}
+        onPress={(url) => {
+          modalVisible[1](false)
+          navigate('WebScreen', {url})
+        }}
         linkText={(url) => formatLinks(url)}>
         <Text
           numberOfLines={3}

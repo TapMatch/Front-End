@@ -1,3 +1,4 @@
+import {useIsFocused} from '@react-navigation/native';
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
@@ -11,10 +12,11 @@ interface SloganParagraphProps {
 
 const SloganParagraph = ({startModalVisible}: SloganParagraphProps) => {
   const txt = useLocalizedTxt();
+  const isFocused = useIsFocused()
 
   return (
     <View style={[_s.container, {
-      opacity: startModalVisible[0] ? 0 : 1
+      opacity: startModalVisible[0] || !isFocused ? 0 : 1
     }]}>
       <Text numberOfLines={1} style={_s.paragraphTxt}>
         {txt.atTapMatchOurMain}
