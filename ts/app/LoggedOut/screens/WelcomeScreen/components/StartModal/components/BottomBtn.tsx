@@ -5,18 +5,20 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
-import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-const BottomBtn = () => {
-  const {navigate} = useNavigation();
+interface BottomBtnProps {
+  moveOn: () => void;
+}
+
+const BottomBtn = ({moveOn}: BottomBtnProps) => {
   const txt = useLocalizedTxt();
   const {bottom} = useSafeAreaInsets();
 
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => navigate('PhoneInput')}
+      onPress={moveOn}
       style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToContinue}</Text>
     </TouchableOpacity>

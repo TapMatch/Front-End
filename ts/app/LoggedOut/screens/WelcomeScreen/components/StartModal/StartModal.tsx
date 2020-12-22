@@ -1,0 +1,82 @@
+import React from 'react';
+import {
+  View,
+  StyleSheet,
+  TouchableOpacity,
+  StatusBar,
+  useWindowDimensions,
+} from 'react-native';
+import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import BottomBtn from './components/BottomBtn';
+import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';
+import {useNavigation} from '@react-navigation/native';
+import Modal from 'react-native-modal';
+import {_c} from 'ts/UIConfig/colors';
+import {useHeaderHeight} from '@react-navigation/stack';
+
+interface StartModalProps {
+  modalVisible: [boolean, (x: boolean) => void];
+}
+
+const StartModal = ({modalVisible}: StartModalProps) => {
+  const {top} = useSafeAreaInsets();
+  const {width} = useWindowDimensions();
+  const {navigate} = useNavigation();
+  const logoSize = width * 0.6;
+  const headerHeight = useHeaderHeight();
+  const moveOn = () => {
+    modalVisible[1](false)
+    navigate('PhoneInput')
+  }
+  return (
+    <Modal
+      animationIn={'fadeIn'}
+      useNativeDriver={true}
+      hasBackdrop={false}
+      animationInTiming={600}
+      animationOut={'slideOutLeft'}
+      animationOutTiming={500}
+      isVisible={modalVisible[0]}
+      style={_s.modal}>
+      <View style={[_s.container, {paddingTop: top + headerHeight}]}>
+        <View
+          style={_s.container}
+        >
+          <StatusBar
+            animated={true}
+            backgroundColor={'transparent'}
+            barStyle={'dark-content'}
+          />
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={moveOn}
+            style={_s.middle}>
+            <TapMatchBetaLogo height={logoSize} width={logoSize} />
+          </TouchableOpacity>
+          <TermsAndConditionsParagraph />
+          <BottomBtn moveOn={moveOn} />
+        </View>
+      </View>
+    </Modal>
+  );
+};
+
+export default StartModal;
+
+const _s = StyleSheet.create({
+  modal: {margin: 0},
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: _c.invisible,
+  },
+  middle: {
+    width: '100%',
+    flex: 0.7,
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    paddingBottom: '5%',
+  },
+});

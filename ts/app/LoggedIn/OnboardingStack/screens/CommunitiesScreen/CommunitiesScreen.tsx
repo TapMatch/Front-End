@@ -12,6 +12,7 @@ import {useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from './api/getAllCommunities';
+import googleMapStyle from "ts/constants/googleMapStyle.json";
 
 interface CommunitiesScreenProps {
   navigation: any;
@@ -60,8 +61,8 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
                 return c ? (
                   <ListItemUnlocked item={{...item, access: c.access}} />
                 ) : (
-                  <ListItemLocked item={item} />
-                );
+                    <ListItemLocked item={item} />
+                  );
               }}
             />
           </View>
@@ -79,6 +80,7 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
         </View>
         <MapView
           provider={PROVIDER_GOOGLE}
+          customMapStyle={googleMapStyle}
           zoomEnabled={true}
           style={_s.map}
           pitchEnabled={false}

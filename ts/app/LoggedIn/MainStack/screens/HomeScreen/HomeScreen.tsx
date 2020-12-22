@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import {LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
@@ -10,7 +10,7 @@ import ProfileModal from './components/ProfileModal/ProfileModal';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import EventReminder from './components/EventReminder';
 import EventDetailsModal from './components/EventDetailsModal/EventDetailsModal';
-import PeopleMarker from './components/PeopleMarker';
+import TapMatchMap from './components/TapMatchMap/TapMatchMap';
 
 interface HomeScreenProps {
   navigation: any;
@@ -18,17 +18,30 @@ interface HomeScreenProps {
 }
 
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
-  const isFocused = useIsFocused();
-  const listIsOpen = useState<boolean>(false);
-  const profileModalVisible = useState<boolean>(false);
-  const eventDetailsModalVisible = useState<boolean>(true);
+  let _mapRef = useRef<any>()
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const coordinates = userLocation[0];
+  const startingPoint: LatLng = {
+    ...userLocation[0],
+    latitudeDelta: 0.015,
+    longitudeDelta: 0.0121,
+  }
+  const isFocused = useIsFocused();
+  const profileModalVisible = useState<boolean>(false);
+  const eventDetailsModalVisible = useState<boolean>(false);
+  const mapCoordinates = useState<LatLng>(startingPoint);
+
+  useEffect(() => {
+    if (profileModalVisible[0]) {
+      eventDetailsModalVisible[1](false)
+    }
+  }, [profileModalVisible, eventDetailsModalVisible])
+
+  const set_mapRef = (x: any) => _mapRef = x
 
   if (isFocused) {
     return (
       <HomeScreenContext.Provider
-        value={{profileModalVisible, eventDetailsModalVisible}}>
+        value={{profileModalVisible, eventDetailsModalVisible, mapCoordinates}}>
         <View style={[_s.container]}>
           <StatusBar
             animated={true}
@@ -36,25 +49,17 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             barStyle={'dark-content'}
           />
           <Header />
-          <UpcomingEvents listIsOpen={listIsOpen} />
-          {/* <EventReminder /> */}
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            zoomEnabled={true}
-            style={_s.map}
-            pitchEnabled={true}
-            rotateEnabled={true}
-            scrollEnabled={true}
-            region={{
-              ...coordinates,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121,
-            }}>
-            <PeopleMarker
-              coordinate={coordinates}
-              eventDetailsModalVisible={eventDetailsModalVisible}
-            />
-          </MapView>
+          {!eventDetailsModalVisible[0] && <Fragment>
+            <UpcomingEvents resetMap={() =>
+              _mapRef?.animateToRegion(startingPoint)
+            } />
+            { /* <EventReminder /> */}
+          </Fragment>}
+          <TapMatchMap
+            mapCoordinates={mapCoordinates}
+            eventDetailsModalVisible={eventDetailsModalVisible}
+            set_mapRef={set_mapRef}
+          />
           <ProfileModal modalVisible={profileModalVisible} />
           <EventDetailsModal modalVisible={eventDetailsModalVisible} />
         </View>
@@ -86,7 +91,5 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
+
 });

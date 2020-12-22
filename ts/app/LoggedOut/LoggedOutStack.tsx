@@ -5,7 +5,6 @@ import {_c} from 'ts/UIConfig/colors';
 import PhoneInputScreen from './screens/PhoneInputScreen/PhoneInputScreen';
 import OTPInputScreen from './screens/OTPInputScreen/OTPInputScreen';
 import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
-import StartScreen from './screens/StartScreen/StartScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 
 export default function LoggedOutStack() {
@@ -41,15 +40,6 @@ export default function LoggedOutStack() {
       <Screen
         name="Welcome"
         component={WelcomeScreen}
-        options={() => {
-          return {
-            headerTitle: '',
-          };
-        }}
-      />
-      <Screen
-        name="Start"
-        component={StartScreen}
         options={() => {
           return {
             headerTitle: '',

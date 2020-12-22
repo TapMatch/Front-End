@@ -1,20 +1,22 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import RefreshCircleRed from 'assets/svg/refresh-circle-red.svg';
+import TargetWhite from 'assets/svg/target-white.svg';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import ListItem from './components/ListItem';
 
 interface UpcomingEventsProps {
-  listIsOpen: [boolean, (x: boolean) => void];
+  resetMap: () => void
 }
 
 const iconSize = '75%';
 
-const UpcomingEvents = ({listIsOpen}: UpcomingEventsProps) => {
+const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
+  const listIsOpen = useState<boolean>(false);
   const txt = useLocalizedTxt();
   const renderList = () => {
     if (listIsOpen[0]) {
@@ -37,7 +39,12 @@ const UpcomingEvents = ({listIsOpen}: UpcomingEventsProps) => {
     : _s.eventListOpenerBorderClosed;
   return (
     <View pointerEvents={'box-none'} style={_s.container}>
-      <View style={_s.side} pointerEvents={'none'} />
+      <TouchableOpacity onPress={resetMap} style={_s.side}>
+        <TargetWhite
+          height={iconSize}
+          width={iconSize}
+        />
+      </TouchableOpacity>
       <View style={[_s.middle, {height: listIsOpen[0] ? 'auto' : vs(60)}]}>
         <View style={_s.shadow}>
           <TouchableOpacity

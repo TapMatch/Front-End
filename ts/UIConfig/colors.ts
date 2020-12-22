@@ -11,6 +11,6 @@ export const _c = {
   noBtnBackground: 'rgba(159, 159, 159, 0.35)',
   transparentBtn: 'rgba(159, 159, 159, 0.04)',
   invisible: 'rgba(0, 0, 0, 0)',
-  smoke: 'rgba(255,255,255,0.7)',
+  smoke: 'rgba(255,255,255,0.85)',
   unlockedCommunityBtn: 'rgba(255, 255, 255, 0.4)',
 };

@@ -9,6 +9,7 @@ import CodeInputWindow from './components/CodeInputWindow/CodeInputWindow';
 import SuccessMsgWindow from './components/SuccessMsgWindow';
 import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
 import {joinCommunity} from './api/joinCommunity';
+import googleMapStyle from "ts/constants/googleMapStyle.json";
 
 interface CommunitiesScreenProps {
   navigation: any;
@@ -44,8 +45,8 @@ const CommunityCodeInputScreen = ({
     return windowState[0] ? (
       <CodeInputWindow community={route.params.community} />
     ) : (
-      <SuccessMsgWindow community={route.params.community} />
-    );
+        <SuccessMsgWindow community={route.params.community} />
+      );
   };
   if (isFocused) {
     return (
@@ -56,6 +57,7 @@ const CommunityCodeInputScreen = ({
           </View>
           <MapView
             provider={PROVIDER_GOOGLE}
+            customMapStyle={googleMapStyle}
             zoomEnabled={false}
             style={_s.map}
             pitchEnabled={false}

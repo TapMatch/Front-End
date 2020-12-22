@@ -5,13 +5,17 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 
-interface SloganParagraphProps {}
+interface SloganParagraphProps {
+  startModalVisible: [boolean, (x: boolean) => void]
+}
 
-const SloganParagraph = (props: SloganParagraphProps) => {
+const SloganParagraph = ({startModalVisible}: SloganParagraphProps) => {
   const txt = useLocalizedTxt();
 
   return (
-    <View style={_s.container}>
+    <View style={[_s.container, {
+      opacity: startModalVisible[0] ? 0 : 1
+    }]}>
       <Text numberOfLines={1} style={_s.paragraphTxt}>
         {txt.atTapMatchOurMain}
       </Text>
@@ -21,7 +25,7 @@ const SloganParagraph = (props: SloganParagraphProps) => {
       <Text numberOfLines={1} style={[_s.paragraphTxt, _s.linkStyle]}>
         {txt.together}
       </Text>
-    </View>
+    </View >
   );
 };
 

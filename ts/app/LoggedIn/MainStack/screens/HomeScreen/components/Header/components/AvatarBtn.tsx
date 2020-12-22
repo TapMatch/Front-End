@@ -3,7 +3,7 @@ import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
-interface AvatarBtnProps {}
+interface AvatarBtnProps { }
 
 const AvatarBtn = (props: AvatarBtnProps) => {
   const {profileModalVisible} = useContext(HomeScreenContext);
@@ -35,7 +35,6 @@ const _s = StyleSheet.create({
     borderColor: _c.white,
     height: 50,
     width: 50,
-    overflow: 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
   },

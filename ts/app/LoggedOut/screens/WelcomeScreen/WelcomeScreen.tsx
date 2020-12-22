@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -11,15 +11,15 @@ import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomBtn from './components/BottomBtn';
 import SloganParagraph from './components/SloganParagraph';
-import {useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
+import StartModal from './components/StartModal/StartModal';
 
-interface WelcomeScreenProps {}
+interface WelcomeScreenProps { }
 
 const WelcomeScreen = (props: WelcomeScreenProps) => {
   const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
-  const {navigate} = useNavigation();
+  const startModalVisible = useState<boolean>(false)
   const logoSize = width * 0.6;
 
   return (
@@ -35,13 +35,14 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         />
         <TouchableOpacity
           activeOpacity={1}
-          onPress={() => navigate('PhoneInput')}
+          onPress={() => startModalVisible[1](true)}
           style={_s.middle}>
           <TapMatchBetaLogo height={logoSize} width={logoSize} />
         </TouchableOpacity>
-        <SloganParagraph />
-        <BottomBtn />
+        <SloganParagraph startModalVisible={startModalVisible} />
+        <BottomBtn startModalVisible={startModalVisible} />
       </ImageBackground>
+      <StartModal modalVisible={startModalVisible} />
     </View>
   );
 };

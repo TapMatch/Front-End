@@ -2,49 +2,47 @@ import React from 'react';
 import {
   View,
   StyleSheet,
-  Text,
-  TouchableOpacity,
   Dimensions,
 } from 'react-native';
-import Modal from 'react-native-modal';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import Header from '../Header/Header';
+import JoinSection from './components/JoinSection';
+import Paragraph from './components/Paragraph';
+import People from './components/People';
+import PlaceAndTime from './components/PlaceAndTime';
+import WindowHeader from './components/WindowHeader';
 
 interface EventDetailsModalProps {
   modalVisible: [boolean, (x: boolean) => void];
 }
+
+const wh = Dimensions.get('screen');
+
 const EventDetailsModal = ({modalVisible}: EventDetailsModalProps) => {
-  return (
-    <Modal
-      animationIn={'fadeIn'}
-      animationInTiming={500}
-      animationOut={'fadeOut'}
-      backdropColor={'transparent'}
-      animationOutTiming={500}
-      isVisible={modalVisible[0]}
-      style={_s.modal}>
-      <View style={_s.container}>
-        <Header />
-        <TouchableOpacity
-          activeOpacity={0}
-          onPress={() => modalVisible[1](false)}
-          style={_s.closeArea}
-        />
-        <View style={_s.content}></View>
+  const {bottom} = useSafeAreaInsets()
+  if (modalVisible[0]) {
+    return (
+      <View style={[_s.content, {bottom: (wh.width * 0.025) + (bottom * 0.75)}]}>
+        <WindowHeader />
+        <View style={_s.modalMainContent}>
+          <Paragraph />
+          <PlaceAndTime joinState={'join'} />
+          <JoinSection joinState={'full'} />
+        </View>
+        <People />
       </View>
-    </Modal>
-  );
+    );
+  } else {
+    return null;
+  }
 };
 
 export default EventDetailsModal;
-const wh = Dimensions.get('screen');
+
 const _s = StyleSheet.create({
-  modal: {
-    margin: 0,
-  },
   container: {
     flex: 1,
     position: 'relative',
@@ -53,13 +51,17 @@ const _s = StyleSheet.create({
     flex: 1,
   },
   content: {
-    borderRadius: 20,
-    backgroundColor: _c.white,
+    borderRadius: 30,
+    backgroundColor: _c.smoke,
     position: 'absolute',
-    bottom: wh.width * 0.05,
-    left: wh.width * 0.05,
-    minWidth: wh.width * 0.9,
-    height: (wh.height - vs(120)) * 0.5,
-    // height: (wh.height - vs(120)) * 0.55,
+    left: wh.width * 0.025,
+    width: wh.width * 0.95,
+    overflow: 'hidden',
+    height: (wh.height - vs(120)) * 0.54,
+    // height: (wh.height - vs(120)) * 0.56,
   },
+  modalMainContent: {
+    flex: 1,
+    alignItems: 'center'
+  }
 });

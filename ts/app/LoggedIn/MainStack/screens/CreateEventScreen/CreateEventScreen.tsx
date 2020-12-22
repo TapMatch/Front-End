@@ -7,6 +7,7 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import FormWindow from './components/FormWindow/FormWindow';
 import CreateBtn from './components/CreateBtn';
+import googleMapStyle from "ts/constants/googleMapStyle.json";
 
 interface CreateEventScreenProps {
   navigation: any;
@@ -31,6 +32,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
         <CreateBtn />
         <MapView
           provider={PROVIDER_GOOGLE}
+          customMapStyle={googleMapStyle}
           zoomEnabled={true}
           style={_s.map}
           pitchEnabled={true}

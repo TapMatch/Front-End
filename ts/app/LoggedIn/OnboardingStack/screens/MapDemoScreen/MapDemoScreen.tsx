@@ -8,6 +8,9 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import PeopleMarker from './components/PeopleMarker';
+import googleMapStyle from "ts/constants/googleMapStyle.json";
+
+
 interface MapDemoScreenProps {
   navigation: any;
   route: any;
@@ -26,6 +29,7 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
         <BackBtn />
         <MapView
           provider={PROVIDER_GOOGLE}
+          customMapStyle={googleMapStyle}
           // zoomEnabled={false}
           style={_s.map}
           // pitchEnabled={false}

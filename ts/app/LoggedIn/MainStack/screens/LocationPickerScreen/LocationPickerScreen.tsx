@@ -6,6 +6,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import DoneBtn from './components/DoneBtn';
+import googleMapStyle from "ts/constants/googleMapStyle.json";
 
 interface LocationPickerScreenProps {
   navigation: any;
@@ -32,6 +33,7 @@ const LocationPickerScreen = ({
         <DoneBtn />
         <MapView
           provider={PROVIDER_GOOGLE}
+          customMapStyle={googleMapStyle}
           zoomEnabled={true}
           style={_s.map}
           pitchEnabled={true}
