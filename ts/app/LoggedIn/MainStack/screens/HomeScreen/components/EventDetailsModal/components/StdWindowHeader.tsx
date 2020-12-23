@@ -5,9 +5,11 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import callAlert from 'ts/utils/callAlert';
 
-interface HeaderProps { }
+interface HeaderProps {
+    eventJoinState: 'join' | 'full' | 'joined';
+}
 
-const Header = (props: HeaderProps) => {
+const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
     const shareContent = async () => {
         try {
             const result = await Share.share({
@@ -46,7 +48,7 @@ const Header = (props: HeaderProps) => {
     );
 };
 
-export default Header;
+export default StdWindowHeader;
 
 const _s = StyleSheet.create({
     container: {
@@ -81,7 +83,7 @@ const _s = StyleSheet.create({
     },
     title: {
         fontSize: _fs.x3l,
-        fontFamily: _f.regularAlt,
+        fontFamily: _f.eRegular,
         lineHeight: _fs.xxl * 1.3,
         textAlign: 'center',
         textAlignVertical: 'center',

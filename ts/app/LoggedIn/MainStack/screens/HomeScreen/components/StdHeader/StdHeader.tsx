@@ -8,9 +8,9 @@ import CommunityBtn from './components/CommunityBtn';
 import AddEventBtn from './components/AddEventBtn';
 import BlackGradient from 'ts/app/common/components/BlackGradient';
 
-interface HeaderProps {}
+interface StdHeaderProps { }
 
-const Header = (props: HeaderProps) => {
+const StdHeader = (props: StdHeaderProps) => {
   const {top} = useSafeAreaInsets();
 
   return (
@@ -33,7 +33,7 @@ const Header = (props: HeaderProps) => {
   );
 };
 
-export default Header;
+export default StdHeader;
 
 const _s = StyleSheet.create({
   container: {

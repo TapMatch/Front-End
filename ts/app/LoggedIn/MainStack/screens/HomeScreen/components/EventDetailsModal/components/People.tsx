@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, StyleSheet, Image} from 'react-native';
+import {Text, View, StyleSheet, Image, Platform} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
@@ -10,15 +10,17 @@ const People = (props: PeopleProps) => {
     return (
         <View style={_s.container}>
             {[0, 1, 2, 3, 4].map((el) => <View key={`people-${el}`}
-                style={[_s.avatarContainer, _s.shadow]}>
-                <Image
-                    resizeMode={'contain'}
-                    style={_s.avatar}
-                    source={{
-                        uri:
-                            'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
-                    }}
-                />
+                style={_s.personContainer}>
+                <View style={[_s.avatarContainer, _s.shadow]}>
+                    <Image
+                        resizeMode={'contain'}
+                        style={_s.avatar}
+                        source={{
+                            uri:
+                                'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+                        }}
+                    />
+                </View>
                 <Text numberOfLines={1} style={_s.txt}>Human {el}</Text>
             </View>)}
         </View>
@@ -33,21 +35,30 @@ const _s = StyleSheet.create({
         height: 85,
         minWidth: '100%',
         flexDirection: 'row',
+        backgroundColor: _c.invisible,
         justifyContent: 'space-evenly',
     },
-    avatarContainer: {
+    personContainer: {
         height: '100%',
-        maxWidth: 50,
-        borderRadius: 5,
+        maxWidth: 60,
         alignItems: 'center',
         backgroundColor: _c.invisible
     },
-    avatar: {
-        borderRadius: 300,
-        borderWidth: 5,
-        borderColor: _c.white,
+    avatarContainer: {
+        alignItems: 'center',
+        justifyContent: 'center',
         height: 50,
         width: 50,
+        borderRadius: 300,
+        overflow: Platform.OS === 'ios' ? 'visible' : 'hidden',
+        backgroundColor: _c.invisible,
+        borderWidth: 5,
+        borderColor: _c.white,
+    },
+    avatar: {
+        borderRadius: 300,
+        height: 40,
+        width: 40,
     },
     txt: {
         maxWidth: '100%',
@@ -66,7 +77,7 @@ const _s = StyleSheet.create({
         },
         shadowOpacity: 0.1,
         shadowRadius: 3.84,
-        elevation: 5,
+        elevation: 4,// 5
     },
 
 });

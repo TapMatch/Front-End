@@ -5,9 +5,11 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import callAlert from 'ts/utils/callAlert';
 
-interface HeaderProps { }
+interface HeaderProps {
+    // eventJoinState: 'join' | 'full' | 'joined';
+}
 
-const Header = (props: HeaderProps) => {
+const JoinedWindowHeader = (props: HeaderProps) => {
     const shareContent = async () => {
         try {
             const result = await Share.share({
@@ -29,30 +31,43 @@ const Header = (props: HeaderProps) => {
 
     return (
         <View style={_s.container}>
-            <View style={[_s.side]} />
-            <View style={[_s.middle, _s.center]}>
-                <Text numberOfLines={1} style={_s.title}>Ball Time</Text>
-            </View>
-            <View style={[_s.side, _s.center, _s.right]}>
-                <TouchableOpacity onPress={shareContent} style={[_s.btn, _s.shadow, _s.center]}>
+            <TouchableOpacity onPress={shareContent} style={_s.btn}>
+                <View style={[_s.side]} />
+                <View style={[_s.middle, _s.center]}>
+                    <Text numberOfLines={1} style={_s.title}>Share</Text>
+                    <Text numberOfLines={1} style={_s.title}>Ball Time</Text>
+                </View>
+                <View style={[_s.side, _s.center, _s.right]}>
                     <Image
                         style={_s.img}
                         resizeMode={'contain'}
                         source={require('assets/png/forward-black.png')}
                     />
-                </TouchableOpacity>
-            </View>
+                </View>
+            </TouchableOpacity>
         </View>
     );
 };
 
-export default Header;
+export default JoinedWindowHeader;
 
 const _s = StyleSheet.create({
     container: {
-        height: 60,
+        height: 90,
         minWidth: '100%',
-        flexDirection: 'row'
+        paddingHorizontal: '8%',
+        paddingVertical: '2%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    btn: {
+        flex: 1,
+        flexDirection: 'row',
+        backgroundColor: _c.white,
+        borderRadius: 20,
+        borderWidth: StyleSheet.hairlineWidth * 4,
+        borderStyle: 'dotted',
+        borderColor: _c.main_red
     },
     side: {
         flex: 1,
@@ -73,16 +88,10 @@ const _s = StyleSheet.create({
         height: _fs.xl,
         width: _fs.xl,
     },
-    btn: {
-        height: _fs.xl + 15,
-        width: _fs.xl + 15,
-        backgroundColor: _c.white,
-        borderRadius: 5,
-    },
     title: {
-        fontSize: _fs.x3l,
-        fontFamily: _f.regularAlt,
-        lineHeight: _fs.xxl * 1.3,
+        fontSize: _fs.xl,
+        fontFamily: _f.eRegular,
+        lineHeight: _fs.xl * 1.3,
         textAlign: 'center',
         textAlignVertical: 'center',
         color: _c.black,

@@ -14,18 +14,23 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 interface PeopleMarkerProps {
   coordinate: LatLng;
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
+  focusMapToLatLng: (x: LatLng) => void;
 }
 
 const PeopleMarker = ({
   coordinate,
   eventDetailsModalVisible,
+  focusMapToLatLng
 }: PeopleMarkerProps) => {
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   console.log(userProfile, 'AAAAAA');
   const txt = useLocalizedTxt();
   return (
     <Marker
-      onPress={() => eventDetailsModalVisible[1](true)}
+      onPress={() => {
+        focusMapToLatLng(coordinate)
+        eventDetailsModalVisible[1](true)
+      }}
       coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>

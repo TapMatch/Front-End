@@ -3,7 +3,8 @@ import {StyleSheet} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
-import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView from "react-native-map-clustering";
+import {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
 import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
@@ -12,12 +13,12 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface TapMatchMapProps {
     set_mapRef: any;
+    focusMapToLatLng: (x: LatLng) => void;
     mapCoordinates: [LatLng, (x: LatLng) => void];
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
-    eventManagementModalVisible: [boolean, (x: boolean) => void]
 }
 
-const TapMatchMap = ({set_mapRef, eventManagementModalVisible, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
+const TapMatchMap = ({focusMapToLatLng, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
     // const {} = useContext(HomeScreenContext);
 
@@ -26,14 +27,11 @@ const TapMatchMap = ({set_mapRef, eventManagementModalVisible, mapCoordinates, e
             ref={(x) => set_mapRef(x)}
             // onRegionChangeComplete={({latitude, longitude}) => mapCoordinates[1]({latitude, longitude})}
             onMapReady={() => {
-                console.log('09090909090900')
+                console.log('09090909090900');
             }}
             onPress={() => {
                 if (eventDetailsModalVisible[0]) {
-                    eventDetailsModalVisible[1](false)
-                }
-                if (eventManagementModalVisible[0]) {
-                    eventManagementModalVisible[1](false)
+                    eventDetailsModalVisible[1](false);
                 }
             }}
             provider={PROVIDER_GOOGLE}
@@ -49,10 +47,11 @@ const TapMatchMap = ({set_mapRef, eventManagementModalVisible, mapCoordinates, e
                 longitudeDelta: 0.0121,
             }}>
             <PeopleMarker
-                coordinate={mapCoordinates[0]}
+                focusMapToLatLng={focusMapToLatLng}
+                coordinate={{...mapCoordinates[0], latitude: mapCoordinates[0].latitude + 0.0000001}}
                 eventDetailsModalVisible={eventDetailsModalVisible}
             />
-            {/* <UserLocationMarker coordinate={userLocation[0]} /> */}
+            <UserLocationMarker coordinate={userLocation[0]} />
         </MapView>
 
     );

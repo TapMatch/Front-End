@@ -6,16 +6,16 @@ import {_f} from 'ts/UIConfig/fonts';
 import openMap from 'react-native-open-maps';
 
 interface PlaceAndTimeProps {
-    joinState: 'join' | 'full' | 'joined';
+    eventJoinState: 'join' | 'full' | 'joined';
 }
 
-const PlaceAndTime = ({joinState}: PlaceAndTimeProps) => {
+const PlaceAndTime = ({eventJoinState}: PlaceAndTimeProps) => {
     return (
-        <View style={[_s.container, _s.center]}>
+        <View style={_s.container}>
             <TouchableOpacity onPress={() => openMap({latitude: 37.865101, longitude: -119.538330})}>
                 <Text numberOfLines={1} style={[_s.txt, _s.linkStyle]}>GeorgenStraße 4</Text>
             </TouchableOpacity>
-            {joinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>Tomorrow 10PM</Text>}
+            {eventJoinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>Tomorrow 10PM</Text>}
         </View>
     );
 };
@@ -26,6 +26,7 @@ const _s = StyleSheet.create({
     container: {
         flex: 1,
         minWidth: '100%',
+        alignItems: 'center',
     },
     center: {
         justifyContent: 'center',

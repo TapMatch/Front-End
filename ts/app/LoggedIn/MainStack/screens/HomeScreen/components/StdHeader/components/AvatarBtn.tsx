@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
@@ -35,11 +35,13 @@ const _s = StyleSheet.create({
     borderColor: _c.white,
     height: 50,
     width: 50,
+    backgroundColor: _c.invisible,
+    overflow: Platform.OS === 'ios' ? 'visible' : 'hidden',
     justifyContent: 'center',
     alignItems: 'center',
   },
   btn: {
-    backgroundColor: _c.white,
+    backgroundColor: _c.invisible,
     height: '100%',
     width: '100%',
     justifyContent: 'center',

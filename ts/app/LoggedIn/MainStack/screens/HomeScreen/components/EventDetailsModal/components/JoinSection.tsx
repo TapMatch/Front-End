@@ -6,11 +6,11 @@ import {_f} from 'ts/UIConfig/fonts';
 import CheckCircleRed from 'assets/svg/check-circle-red.svg';
 
 interface JoinSectionProps {
-    joinState: 'join' | 'full' | 'joined';
+    eventJoinState: 'join' | 'full' | 'joined';
 }
 
-const JoinSection = ({joinState}: JoinSectionProps) => {
-    switch (joinState) {
+const JoinSection = ({eventJoinState}: JoinSectionProps) => {
+    switch (eventJoinState) {
         case 'join': return (
             <View style={[_s.container, _s.center]}>
                 <TouchableOpacity onPress={() => console.log('joininig event ...')} style={[_s.btn, _s.shadow, _s.center]}>
@@ -28,7 +28,7 @@ const JoinSection = ({joinState}: JoinSectionProps) => {
 
         );
         case 'joined': return (
-            <View style={[_s.container, _s.center, {flexDirection: 'row'}]}>
+            <View style={[_s.container, _s.center, _s.joinedStateStyle]}>
                 <CheckCircleRed height={_fs.xxl} width={_fs.xxl} />
                 <Text numberOfLines={1} style={[_s.txt, _s.infoTxt]}>You and 12 others are going!</Text>
             </View>
@@ -69,6 +69,11 @@ const _s = StyleSheet.create({
         color: _c.main_red,
         fontSize: _fs.l,
         marginLeft: 10
+    },
+    joinedStateStyle: {
+        flexDirection: 'row',
+        height: 'auto',
+        paddingBottom: 5,
     },
     txt: {
         maxWidth: '100%',
