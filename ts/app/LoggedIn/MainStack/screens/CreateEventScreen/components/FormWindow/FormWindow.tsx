@@ -1,21 +1,27 @@
 import {useKeyboard} from '@react-native-community/hooks';
-import React, {useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet, Dimensions, Platform} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {vs} from 'react-native-size-matters';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 import {_c} from 'ts/UIConfig/colors';
 import DateTimeInput from './components/DateTimeInput';
 import DescriptionInput from './components/DescriptionInput';
 import LimitSlider from './components/LimitSlider';
 import LocationPickerBtn from './components/LocationPickerBtn';
+import NameInput from './components/NameInput';
 import Title from './components/Title';
 
-interface FormWindowProps {}
+interface FormWindowProps { }
 
 const FormWindow = (props: FormWindowProps) => {
-  const description = useState<string>('');
-  const joinLimit = useState<number>(1);
-  const dateTime = useState<Date>(new Date());
+  const {
+    description,
+    joinLimit,
+    dateTime,
+    eventName
+  } = useContext(CreateEventScreenContext);
+
   const k = useKeyboard();
   const pb = definePaddingBottom(k);
 
@@ -28,6 +34,7 @@ const FormWindow = (props: FormWindowProps) => {
           contentContainerStyle={{paddingBottom: pb}}>
           <View style={_s.content}>
             <Title />
+            <NameInput eventName={eventName} />
             <DescriptionInput description={description} />
             <LocationPickerBtn />
             <LimitSlider joinLimit={joinLimit} />

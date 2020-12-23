@@ -5,28 +5,22 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
-import {useNavigation} from '@react-navigation/native';
 import LockOpenBlack from 'assets/svg/lock-open-black.svg'; //
 
 interface ListItemProps {
   item: any;
+  onPress: () => void;
 }
 
-const ListItemUnlocked = ({item}: ListItemProps) => {
-  const {navigate} = useNavigation();
+const ListItemUnlocked = ({item, onPress}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
   const {name, id, city, access} = item;
 
   return (
     <TouchableOpacity
-      // onPress={() =>
-      //   navigate('CommunityCodeInput', {
-      //     community: item,
-      //     is_open: !!item?.is_open,
-      //   })
-      // }
-      disabled={true}
+      onPress={onPress}
+      disabled={false}
       style={_s.container}>
       <View style={_s.left}>
         <LockOpenBlack height={iconSize} width={iconSize} />

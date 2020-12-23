@@ -1,10 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {_c} from 'ts/UIConfig/colors';
 
-interface AvatarImgProps {}
+interface AvatarImgProps { }
 
 const AvatarImg = (props: AvatarImgProps) => {
+  const {userProfile} = useContext(TapMatchContext);
+
   return (
     <View style={_s.container}>
       <Image
@@ -12,7 +15,7 @@ const AvatarImg = (props: AvatarImgProps) => {
         style={_s.avatar}
         source={{
           uri:
-            'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+            userProfile[0].avatar,
         }}
       />
     </View>

@@ -15,6 +15,8 @@ import EventManageHeader from './components/EventManageHeader/EventManageHeader'
 import YesNoModal from 'ts/app/common/components/YesNoModal';
 import EventDetailsHeader from './components/EventDetailsHeader/EventDetailsHeader';
 import CommunitiesModal from './components/CommunitiesModal/CommunitiesModal';
+import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 interface HomeScreenProps {
   navigation: any;
@@ -24,6 +26,7 @@ interface HomeScreenProps {
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   let _mapRef = useRef<any>(null);
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const {selectedCommunityData, eventMarkers, selectedMarkerData} = useContext(MainStackContext);
   const startingPoint: LatLng = {
     ...userLocation[0],
     latitudeDelta: 0.015,
@@ -34,10 +37,10 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const profileModalVisible = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
   const yesNoModalVisible = useState<boolean>(false);
-  const communitiesModalVisible = useState<boolean>(true);
+  const communitiesModalVisible = useState<boolean>(false);
   const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
   const mapCoordinates = useState<LatLng>(startingPoint);
-  const selectedMarkerData = useState<any>({});
+
   const closeAllWhiteModalWindows = () => {
     if (eventDetailsModalVisible[0]) {
       eventDetailsModalVisible[1](false);
@@ -112,10 +115,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     }
   }, [profileModalVisible, eventDetailsModalVisible, communitiesModalVisible]);
 
+  useEffect(() => {
+    getEventMarkers({userToken: userToken[0], id: selectedCommunityData[0].id, eventMarkers});
+  }, [selectedCommunityData]);
+
   if (isFocused) {
     return (
       <HomeScreenContext.Provider
-        value={{profileModalVisible, eventDetailsModalVisible, mapCoordinates}}>
+        value={{profileModalVisible, selectedCommunityData, eventDetailsModalVisible, mapCoordinates, communitiesModalVisible}}>
         <View style={[_s.container]}>
           <StatusBar
             animated={true}
@@ -136,7 +143,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
               eventJoinState={'join'}
               modalVisible={eventDetailsModalVisible}
             />
-            <CommunitiesModal modalVisible={communitiesModalVisible} />
+            <CommunitiesModal selectedCommunityData={selectedCommunityData} modalVisible={communitiesModalVisible} />
           </Fragment>}
           <YesNoModal
             {...defineYesNoModalProps()}

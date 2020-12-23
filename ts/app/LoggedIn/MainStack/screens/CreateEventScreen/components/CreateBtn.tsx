@@ -12,20 +12,20 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
-import {useNavigation} from '@react-navigation/native';
 import {useKeyboard} from '@react-native-community/hooks';
 
-interface CreateBtnProps {}
+interface CreateBtnProps {
+  onPress: () => void;
+}
 
-const CreateBtn = (props: CreateBtnProps) => {
+const CreateBtn = ({onPress}: CreateBtnProps) => {
   const {bottom} = useSafeAreaInsets();
-  const {goBack} = useNavigation();
   const {keyboardShown} = useKeyboard();
   if (!keyboardShown) {
     return (
       <View style={[_s.container, _s.center, {paddingBottom: bottom}]}>
         <View style={_s.btnContainer}>
-          <TouchableOpacity onPress={goBack} style={[_s.btn, _s.center]}>
+          <TouchableOpacity onPress={onPress} style={[_s.btn, _s.center]}>
             <Text style={_s.btnTxt}>Create</Text>
           </TouchableOpacity>
         </View>

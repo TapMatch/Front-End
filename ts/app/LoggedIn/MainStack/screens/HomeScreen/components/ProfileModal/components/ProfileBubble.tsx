@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -12,12 +12,14 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
 import {_f} from 'ts/UIConfig/fonts';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
-interface ProfileBubbleProps {}
+interface ProfileBubbleProps { }
 
 const ProfileBubble = (props: ProfileBubbleProps) => {
   const txt = useLocalizedTxt();
-
+  const {userProfile} = useContext(TapMatchContext);
+  const {name, phone} = userProfile[0];
   return (
     <View style={_s.container}>
       <View style={_s.triangleContainer}>
@@ -30,8 +32,8 @@ const ProfileBubble = (props: ProfileBubbleProps) => {
           source={require('assets/png/holding-hands.png')}>
           <View style={_s.top}>
             <View style={_s.topLeft}>
-              <Text style={_s.name}>Ezra</Text>
-              <Text style={_s.phoneNum}>+3339551234500</Text>
+              <Text style={_s.name}>{name}</Text>
+              <Text style={_s.phoneNum}>{phone}</Text>
             </View>
             <View style={_s.topRight}>
               <TapMatchBetaLogo height={_fs.x9l * 2} width={_fs.x9l * 2} />

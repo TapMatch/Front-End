@@ -2,19 +2,21 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 
-interface IgetAllCommunities {
+interface IgetEventMarkers {
   userToken: string;
-  communities: [any, (x: any) => void];
+  id: string;
+  eventMarkers:any
 }
 
-export async function getAllCommunities({
-  communities,
+export async function getEventMarkers({
+  id,
   userToken,
-}: IgetAllCommunities) {
+  eventMarkers
+}: IgetEventMarkers) {
   try {
     const options: AxiosRequestConfig = {
       method: 'GET',
-      url: `${tapMatchServerUrl}api/communities`,
+      url: `${tapMatchServerUrl}api/communities/${id}/events`,
       headers: {
         'X-Auth-Token': userToken,
         'Content-Type': 'application/json',
@@ -22,13 +24,13 @@ export async function getAllCommunities({
     };
     axios
       .request(options)
-      .then(({data}: any) => communities[1](data))
+      .then(({data}: any) => eventMarkers[1](data))
       .catch((error) => {
         console.log(error);
-        callAlert(undefined, `${error.toString()} ::: getAllCommunities`);
+        // callAlert(undefined, `${error.toString()} ::: getEventMarkers`);
       });
   } catch (error) {
-    console.log(`${error} ::: getAllCommunities`);
-    callAlert(undefined, `${error.toString()} ::: getAllCommunities`);
+    console.log(`${error} ::: getEventMarkers`);
+    callAlert(undefined, `${error.toString()} ::: getEventMarkers`);
   }
 }

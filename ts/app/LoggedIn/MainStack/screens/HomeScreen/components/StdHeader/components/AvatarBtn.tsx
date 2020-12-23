@@ -2,11 +2,13 @@ import React, {useContext} from 'react';
 import {Text, View, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface AvatarBtnProps { }
 
 const AvatarBtn = (props: AvatarBtnProps) => {
   const {profileModalVisible} = useContext(HomeScreenContext);
+  const {userProfile} = useContext(TapMatchContext);
   return (
     <View style={[_s.container, _s.shadow]}>
       <TouchableOpacity
@@ -18,7 +20,7 @@ const AvatarBtn = (props: AvatarBtnProps) => {
           style={_s.avatar}
           source={{
             uri:
-              'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+              userProfile[0].avatar,
           }}
         />
       </TouchableOpacity>

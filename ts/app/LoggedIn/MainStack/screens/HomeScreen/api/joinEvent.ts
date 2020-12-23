@@ -3,7 +3,7 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
-interface IdeleteEvent {
+interface IjoinEvetn {
     userToken: string;
     communityId: string;
     eventId: string;
@@ -11,16 +11,16 @@ interface IdeleteEvent {
 
 }
 
-export async function deleteEvent({
+export async function joinEvetn({
     communityId,
     eventId,
     userToken,
     eventMarkers
-}: IdeleteEvent) {
+}: IjoinEvetn) {
     try {
         const options: AxiosRequestConfig = {
-            method: 'DELETE',
-            url: `${tapMatchServerUrl}api/communities/${communityId}/events/${eventId}`,
+            method: 'POST',
+            url: `${tapMatchServerUrl}api/communities/${communityId}/events/${eventId}/join`,
             headers: {
                 'X-Auth-Token': userToken,
                 'Content-Type': 'application/json',
@@ -31,10 +31,10 @@ export async function deleteEvent({
             .then(({data}: any) => getEventMarkers({userToken, id: communityId, eventMarkers}))
             .catch((error) => {
                 console.log(error);
-                // callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+                // callAlert(undefined, `${error.toString()} ::: joinEvetn`);
             });
     } catch (error) {
-        console.log(`${error} ::: deleteEvent`);
-        callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+        console.log(`${error} ::: joinEvetn`);
+        callAlert(undefined, `${error.toString()} ::: joinEvetn`);
     }
 }

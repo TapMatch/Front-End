@@ -1,23 +1,26 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import ChevronDownRed from 'assets/svg/chevron-down-red.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
+import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
 interface CommunityBtnProps { }
 
 const CommunityBtn = (props: CommunityBtnProps) => {
   const {navigate} = useNavigation();
+  const {communitiesModalVisible, selectedCommunityData} = useContext(HomeScreenContext);
+  const {name, id, city, access} = selectedCommunityData[0];
   return (
     <TouchableOpacity
       onLongPress={() => navigate('SecretScreen')}
-      onPress={() => navigate('Communities')}
+      onPress={() => communitiesModalVisible[1](true)}
       style={[_s.container, _s.shadow]}>
       <View style={_s.txtContainer}>
         <View style={_s.titleContainer}>
-          <Text style={[_s.txt, _s.title]}>UvA</Text>
+          <Text style={[_s.txt, _s.title]}>{name}</Text>
           <ChevronDownRed height={_fs.xl} width={_fs.xl} />
         </View>
         <Text style={[_s.txt, _s.usersNum]}>1.909 Members</Text>
