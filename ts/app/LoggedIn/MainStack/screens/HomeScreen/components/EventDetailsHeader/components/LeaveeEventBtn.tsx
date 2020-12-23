@@ -1,15 +1,15 @@
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {useNavigation} from '@react-navigation/native';
 
-interface LeaveeEventBtnProps { }
+interface LeaveeEventBtnProps {
+  setupLeaveEventUI: () => void;
+}
 
-const LeaveeEventBtn = (props: LeaveeEventBtnProps) => {
-  const {navigate} = useNavigation();
+const LeaveeEventBtn = ({setupLeaveEventUI}: LeaveeEventBtnProps) => {
   return (
     <TouchableOpacity
-      onPress={() => navigate('CreateEvent')}
+      onPress={() => setupLeaveEventUI()}
       style={_s.container}>
       <Image source={require('assets/png/logout-black.png')} style={_s.img} />
     </TouchableOpacity>

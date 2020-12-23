@@ -11,10 +11,11 @@ import {_f} from 'ts/UIConfig/fonts';
 
 interface EventDetailsHeaderProps {
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
+  setupLeaveEventUI: () => void;
 }
 
 const iconSize = _fs.xxl * 1.5;
-const EventDetailsHeader = ({eventDetailsModalVisible}: EventDetailsHeaderProps) => {
+const EventDetailsHeader = ({eventDetailsModalVisible, setupLeaveEventUI}: EventDetailsHeaderProps) => {
   const {top} = useSafeAreaInsets();
 
   return (
@@ -33,7 +34,7 @@ const EventDetailsHeader = ({eventDetailsModalVisible}: EventDetailsHeaderProps)
           </View>
         </View>
         <View style={_s.right}>
-          <LeaveeEventBtn />
+          <LeaveeEventBtn setupLeaveEventUI={setupLeaveEventUI} />
         </View>
       </View>
       <View pointerEvents={'none'} style={[_s.shadowContainer]}>

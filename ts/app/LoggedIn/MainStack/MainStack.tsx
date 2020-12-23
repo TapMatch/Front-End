@@ -8,11 +8,8 @@ import HomeScreen from './screens/HomeScreen/HomeScreen';
 import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
 import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
 import LocationPickerScreen from './screens/LocationPickerScreen/LocationPickerScreen';
-import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
-import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 
 export default function MainStack() {
-  console.log('HUHHHUJFURTDIYFUGIH:NULYKTJREYDTUFYGUHIJO')
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
@@ -33,7 +30,6 @@ export default function MainStack() {
             width: 0,
           },
         },
-        // ...transitions,
         ...insets,
       }}>
       <Screen
@@ -79,26 +75,6 @@ export default function MainStack() {
       <Screen
         name="WebScreen"
         component={WebScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      />
-
-      <Screen
-        name="Communities"
-        component={CommunitiesScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      />
-
-      <Screen
-        name="CommunityCodeInput"
-        component={CommunityCodeInputScreen}
         options={() => {
           return {
             headerShown: false,

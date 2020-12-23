@@ -14,6 +14,7 @@ import TapMatchMap from './components/TapMatchMap/TapMatchMap';
 import EventManageHeader from './components/EventManageHeader/EventManageHeader';
 import YesNoModal from 'ts/app/common/components/YesNoModal';
 import EventDetailsHeader from './components/EventDetailsHeader/EventDetailsHeader';
+import CommunitiesModal from './components/CommunitiesModal/CommunitiesModal';
 
 interface HomeScreenProps {
   navigation: any;
@@ -21,34 +22,25 @@ interface HomeScreenProps {
 }
 
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
-  let _mapRef = useRef<any>();
+  let _mapRef = useRef<any>(null);
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const startingPoint: LatLng = {
     ...userLocation[0],
     latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
   };
+  console.log(userProfile, 'userProfile');
   const isFocused = useIsFocused();
   const profileModalVisible = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
   const yesNoModalVisible = useState<boolean>(false);
+  const communitiesModalVisible = useState<boolean>(true);
+  const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
   const mapCoordinates = useState<LatLng>(startingPoint);
-  const yesNoModalMode = useState<'delete_event' | 'leave_event' | 'cancel_create_event'>('leave_event');
   const selectedMarkerData = useState<any>({});
   const closeAllWhiteModalWindows = () => {
     if (eventDetailsModalVisible[0]) {
       eventDetailsModalVisible[1](false);
-    }
-  };
-  const renderHeader = () => {
-    if (eventDetailsModalVisible[0] && Object.keys(selectedMarkerData[0])) {
-      if (false) {//am watching my event
-        return <EventManageHeader eventDetailsModalVisible={eventDetailsModalVisible} />;
-      } else {
-        return <EventDetailsHeader eventDetailsModalVisible={eventDetailsModalVisible} />;
-      }
-    } else {
-      return <StdHeader />;
     }
   };
   const renderCommandsAndReminders = () => {
@@ -64,42 +56,61 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
       </Fragment>;
     }
   };
+
   const set_mapRef = (x: any) => _mapRef = x;
-  const focusMapToLatLng = (x: LatLng) => _mapRef?.animateToRegion(x);
+  const focusMapToLatLng = (x: LatLng) => typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
   const defineYesNoModalProps = () => {
     switch (yesNoModalMode[0]) {
       case 'delete_event': return ({
-        onNoPress: () => console.log('onNoPress'),
+        onNoPress: () => console.log('onNoPress -delete'),
         onYesPress: () => console.log('onYesPress'),
-        title: 'sfsdfsdf',
-        modalVisible: yesNoModalVisible
-      });
-      case 'cancel_create_event': return ({
-        onNoPress: () => console.log('onNoPress'),
-        onYesPress: () => console.log('onYesPress'),
-        title: 'sfsdfsdf',
+        title: 'Are you sure\nYou want to\nDelete this event?',
         modalVisible: yesNoModalVisible
       });
       case 'leave_event': return ({
-        onNoPress: () => console.log('onNoPress'),
-        onYesPress: () => console.log('onYesPress'),
-        title: 'sfsdfsdf',
+        onNoPress: () => console.log('onNoPress -leave'),
+        title: 'Are you sure\nYou want to\nleave this event?',
         modalVisible: yesNoModalVisible
       });
       default: return ({
         onNoPress: () => console.log('default'),
-        onYesPress: () => console.log('default'),
         title: 'default',
         modalVisible: yesNoModalVisible
       });
     }
 
   };
+
+  const setupLeaveEventUI = () => {
+    yesNoModalVisible[1](true);
+    yesNoModalMode[1]('leave_event');
+  };
+  const setupDeleteEventUI = () => {
+    yesNoModalVisible[1](true);
+    yesNoModalMode[1]('delete_event');
+  };
+
+  const renderHeader = () => {
+    if (!yesNoModalVisible[0]) {
+      if (eventDetailsModalVisible[0] && Object.keys(selectedMarkerData[0])) {
+        if (true) {//am watching my event
+          return <EventManageHeader setupDeleteEventUI={() => setupDeleteEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
+        } else {
+          return <EventDetailsHeader setupLeaveEventUI={() => setupLeaveEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
+        }
+      } else {
+        return <StdHeader />;
+      }
+    } else {
+      return null;
+    }
+  };
+
   useEffect(() => {
-    if (profileModalVisible[0]) {
+    if (profileModalVisible[0] || communitiesModalVisible[0]) {
       closeAllWhiteModalWindows();
     }
-  }, [profileModalVisible, eventDetailsModalVisible]);
+  }, [profileModalVisible, eventDetailsModalVisible, communitiesModalVisible]);
 
   if (isFocused) {
     return (
@@ -119,11 +130,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             eventDetailsModalVisible={eventDetailsModalVisible}
             set_mapRef={set_mapRef}
           />
-          <ProfileModal modalVisible={profileModalVisible} />
-          <EventDetailsModal
-            eventJoinState={'join'}
-            modalVisible={eventDetailsModalVisible}
-          />
+          {!yesNoModalVisible[0] && <Fragment>
+            <ProfileModal modalVisible={profileModalVisible} />
+            <EventDetailsModal
+              eventJoinState={'join'}
+              modalVisible={eventDetailsModalVisible}
+            />
+            <CommunitiesModal modalVisible={communitiesModalVisible} />
+          </Fragment>}
           <YesNoModal
             {...defineYesNoModalProps()}
           />

@@ -1,10 +1,10 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
-import MapView from "react-native-map-clustering";
-import {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
+// import MapView from "react-native-map-clustering";
+import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
 import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
@@ -20,15 +20,25 @@ interface TapMatchMapProps {
 
 const TapMatchMap = ({focusMapToLatLng, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+    let _mapRef = useRef<any>(null);
     // const {} = useContext(HomeScreenContext);
 
     return (
         <MapView
-            ref={(x) => set_mapRef(x)}
-            // onRegionChangeComplete={({latitude, longitude}) => mapCoordinates[1]({latitude, longitude})}
-            onMapReady={() => {
-                console.log('09090909090900');
+            ref={(x) => {
+                set_mapRef(x);
+                _mapRef = x;
             }}
+            onMapReady={() => {
+                set_mapRef(_mapRef);
+            }}
+            // onClusterPress={() => set_mapRef(_mapRef)}
+            // clusterFontFamily={_f.eRegular}
+            // clusterColor={_c.linkBlue}
+            // onRegionChangeComplete={({latitude, longitude}) => mapCoordinates[1]({latitude, longitude})}
+            // onMapReady={() => {
+            //     console.log('09090909090900');
+            // }}
             onPress={() => {
                 if (eventDetailsModalVisible[0]) {
                     eventDetailsModalVisible[1](false);

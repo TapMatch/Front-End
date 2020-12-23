@@ -11,8 +11,8 @@ interface YesNoModalProps {
   modalVisible: [boolean, (x: boolean) => void];
   title: string;
   subtitle?: string;
-  onYesPress: () => void;
-  onNoPress: () => void;
+  onYesPress?: () => void;
+  onNoPress?: () => void;
 }
 const YesNoModal = ({
   modalVisible,
@@ -23,7 +23,7 @@ const YesNoModal = ({
 }: YesNoModalProps) => {
   const txt = useLocalizedTxt();
   const renderSubtitle = () => {
-    if (subtitle) {
+    if (typeof subtitle === 'string') {
       return (
         <Text numberOfLines={2} style={_s.subtitle}>
           {subtitle}
@@ -34,11 +34,15 @@ const YesNoModal = ({
     }
   };
   const handleYes = () => {
-    onYesPress();
+    if (typeof onYesPress === 'function') {
+      onYesPress();
+    }
     modalVisible[1](false);
   };
   const handleNo = () => {
-    onNoPress();
+    if (typeof onNoPress === 'function') {
+      onNoPress();
+    }
     modalVisible[1](false);
   };
   return (
@@ -57,12 +61,12 @@ const YesNoModal = ({
           {renderSubtitle()}
         </View>
         <View style={_s.bottom}>
-          <TouchableOpacity onPress={handleYes} style={[_s.btn, _s.yesBtn]}>
+          <TouchableOpacity activeOpacity={1} onPress={handleYes} style={[_s.btn, _s.yesBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.yesBtnTxt]}>
               {txt.yes}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity onPress={handleNo} style={[_s.btn, _s.noBtn]}>
+          <TouchableOpacity activeOpacity={1} onPress={handleNo} style={[_s.btn, _s.noBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.noBtnTxt]}>
               {txt.noStay}
             </Text>

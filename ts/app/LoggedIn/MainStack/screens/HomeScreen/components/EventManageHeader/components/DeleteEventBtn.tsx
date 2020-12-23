@@ -1,16 +1,15 @@
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import PlusBlack from 'assets/svg/bin-black.svg';
+import {StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {useNavigation} from '@react-navigation/native';
 
-interface DeleteEventBtnProps { }
+interface DeleteEventBtnProps {
+  setupDeleteEventUI: () => void;
+}
 
-const DeleteEventBtn = (props: DeleteEventBtnProps) => {
-  const {navigate} = useNavigation();
+const DeleteEventBtn = ({setupDeleteEventUI}: DeleteEventBtnProps) => {
   return (
     <TouchableOpacity
-      onPress={() => navigate('CreateEvent')}
+      onPress={() => setupDeleteEventUI()}
       style={_s.container}>
       <Image source={require('assets/png/bin-black.png')} style={_s.img} />
     </TouchableOpacity>

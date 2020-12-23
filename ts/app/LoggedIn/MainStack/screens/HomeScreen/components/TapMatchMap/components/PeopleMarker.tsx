@@ -23,13 +23,12 @@ const PeopleMarker = ({
   focusMapToLatLng
 }: PeopleMarkerProps) => {
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  console.log(userProfile, 'AAAAAA');
   const txt = useLocalizedTxt();
   return (
     <Marker
       onPress={() => {
-        focusMapToLatLng(coordinate)
-        eventDetailsModalVisible[1](true)
+        focusMapToLatLng(coordinate);
+        eventDetailsModalVisible[1](true);
       }}
       coordinate={coordinate}>
       <View style={_s.container}>
@@ -162,6 +161,7 @@ const _s = StyleSheet.create({
     width: 50,
   },
   topTxt: {
+    opacity: 0,
     fontFamily: _f.regularAlt,
     color: _c.black,
     fontSize: 20,

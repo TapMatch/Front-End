@@ -13,38 +13,27 @@ import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from './api/getAllCommunities';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
+import Modal from 'react-native-modal';
 
-interface CommunitiesScreenProps {
-  navigation: any;
-  route: any;
+interface CommunitiesModalProps {
+  modalVisible: [boolean, (x: boolean) => void];
 }
 
-const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
+const CommunitiesModal = ({modalVisible}: CommunitiesModalProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
-  const isFocused = useIsFocused();
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const communities = useState<any>([]);
-  const coordinates = userLocation[0];
-  useEffect(() => {
-    getAllCommunities({
-      userToken: userToken[0],
-      communities,
-    });
-  }, []);
+  const communities = useState<any>(userProfile[0].communities);
 
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getAllCommunities({
-        userToken: userToken[0],
-        communities,
-      });
-    });
-    return unsubscribe;
-  }, []);
-
-  if (isFocused) {
-    return (
+  return (
+    <Modal
+      animationIn={'fadeIn'}
+      animationInTiming={600}
+      animationOut={'fadeOut'}
+      hasBackdrop={false}
+      animationOutTiming={600}
+      isVisible={modalVisible[0]}
+      style={_s.modal}>
       <View style={[_s.container]}>
         <View style={[_s.content, {paddingTop: 60 + top}]}>
           <TitleAndReturn />
@@ -78,30 +67,15 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
             <FeedbackBtn />
           </View>
         </View>
-        <MapView
-          provider={PROVIDER_GOOGLE}
-          customMapStyle={googleMapStyle}
-          zoomEnabled={true}
-          style={_s.map}
-          pitchEnabled={false}
-          rotateEnabled={false}
-          scrollEnabled={false}
-          region={{
-            ...coordinates,
-            latitudeDelta: 0.015,
-            longitudeDelta: 0.0121,
-          }}
-        />
       </View>
-    );
-  } else {
-    return null;
-  }
+    </Modal>
+  );
 };
 
-export default CommunitiesScreen;
+export default CommunitiesModal;
 
 const _s = StyleSheet.create({
+  modal: {margin: 0},
   container: {
     position: 'relative',
     height: '100%',

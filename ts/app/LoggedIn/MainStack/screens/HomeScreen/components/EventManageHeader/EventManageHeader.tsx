@@ -12,10 +12,11 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface EventManageHeaderProps {
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
+  setupDeleteEventUI: () => void;
 }
 
 const iconSize = _fs.xxl * 1.5;
-const EventManageHeader = ({eventDetailsModalVisible}: EventManageHeaderProps) => {
+const EventManageHeader = ({eventDetailsModalVisible, setupDeleteEventUI}: EventManageHeaderProps) => {
   const {top} = useSafeAreaInsets();
 
   return (
@@ -34,7 +35,7 @@ const EventManageHeader = ({eventDetailsModalVisible}: EventManageHeaderProps) =
           </View>
         </View>
         <View style={_s.right}>
-          <DeleteEventBtn />
+          <DeleteEventBtn setupDeleteEventUI={setupDeleteEventUI} />
         </View>
       </View>
       <View pointerEvents={'none'} style={[_s.shadowContainer]}>

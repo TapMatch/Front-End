@@ -7,7 +7,7 @@ import TitleAndReturn from './components/TitleAndReturn';
 import SearchInput from './components/SearchInput';
 import BlackGradient from 'ts/app/common/components/BlackGradient';
 
-interface HeaderProps {}
+interface HeaderProps { }
 
 const Header = (props: HeaderProps) => {
   const {top} = useSafeAreaInsets();
