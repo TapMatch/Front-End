@@ -4,13 +4,13 @@ import PlusBlack from 'assets/svg/plus-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {useNavigation} from '@react-navigation/native';
 
-interface AddEventBtnProps {}
+interface AddEventBtnProps { }
 
 const AddEventBtn = (props: AddEventBtnProps) => {
   const {navigate} = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigate('CreateEvent')}
+      onPress={() => navigate('CreateEvent', {address: null, coordinates: null})}
       style={_s.container}>
       <PlusBlack height={_fs.x6l} width={_fs.x6l} />
     </TouchableOpacity>

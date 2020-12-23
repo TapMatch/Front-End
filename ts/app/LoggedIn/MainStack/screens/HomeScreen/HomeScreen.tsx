@@ -32,7 +32,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
   };
-  console.log(userProfile, 'userProfile');
+  console.log(userProfile, '============================userProfile');
   const isFocused = useIsFocused();
   const profileModalVisible = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
@@ -108,6 +108,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
       return null;
     }
   };
+  const getMarkers = () => getEventMarkers({userToken: userToken[0], id: selectedCommunityData[0].id, eventMarkers});
 
   useEffect(() => {
     if (profileModalVisible[0] || communitiesModalVisible[0]) {
@@ -116,9 +117,8 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   }, [profileModalVisible, eventDetailsModalVisible, communitiesModalVisible]);
 
   useEffect(() => {
-    getEventMarkers({userToken: userToken[0], id: selectedCommunityData[0].id, eventMarkers});
+    getMarkers();
   }, [selectedCommunityData]);
-
   if (isFocused) {
     return (
       <HomeScreenContext.Provider
@@ -132,6 +132,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           {!yesNoModalVisible[0] && renderHeader()}
           {!yesNoModalVisible[0] && renderCommandsAndReminders()}
           <TapMatchMap
+            markers={[]}
             focusMapToLatLng={focusMapToLatLng}
             mapCoordinates={mapCoordinates}
             eventDetailsModalVisible={eventDetailsModalVisible}

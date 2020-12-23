@@ -20,7 +20,6 @@ export async function requestOTP({
       headers: {'Content-Type': 'application/json'},
       data: {
         phone: `+${callingCode}${phoneNumber}`,
-        password: 'password',
         country_code: +callingCode,
       },
     };

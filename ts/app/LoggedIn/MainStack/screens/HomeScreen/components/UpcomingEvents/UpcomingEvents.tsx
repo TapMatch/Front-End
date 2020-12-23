@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -8,22 +8,27 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import ListItem from './components/ListItem';
+import {getUpcomingEvents} from '../../api/getUpcomingEvents';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface UpcomingEventsProps {
-  resetMap: () => void
+  resetMap: () => void;
 }
 
 const iconSize = '75%';
 
 const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
-  const listIsOpen = useState<boolean>(false);
+  const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen} = useContext(MainStackContext);
+  const {userToken} = useContext(TapMatchContext);
   const txt = useLocalizedTxt();
   const renderList = () => {
-    if (listIsOpen[0]) {
+    if (upcomingEventsListIsOpen[0]) {
       return (
         <View style={_s.listContainer}>
-          {[0, 1, 2, 3, 4].map((el, ind, arr) => (
+          {upcomingEvents[0].map((el: any, ind: number, arr: any) => (
             <ListItem
+              item={el}
               key={`${ind}-addIDHereLater`}
               isLast={ind === arr.length - 1}
             />
@@ -34,9 +39,18 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
       return null;
     }
   };
-  const borderState = listIsOpen[0]
+  const borderState = upcomingEventsListIsOpen[0]
     ? _s.eventListOpenerBorderOpen
     : _s.eventListOpenerBorderClosed;
+
+  useEffect(() => {
+    getUpcomingEvents({
+      communityId: selectedCommunityData[0].id,
+      userToken: userToken[0],
+      upcomingEvents
+    });
+  }, []);
+
   return (
     <View pointerEvents={'box-none'} style={_s.container}>
       <TouchableOpacity onPress={resetMap} style={_s.side}>
@@ -45,13 +59,13 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
           width={iconSize}
         />
       </TouchableOpacity>
-      <View style={[_s.middle, {height: listIsOpen[0] ? 'auto' : vs(60)}]}>
+      <View style={[_s.middle, {height: upcomingEventsListIsOpen[0] ? 'auto' : vs(60)}]}>
         <View style={_s.shadow}>
           <TouchableOpacity
-            onPress={() => listIsOpen[1](!listIsOpen[0])}
+            onPress={() => upcomingEvents[0].length ? upcomingEventsListIsOpen[1](!upcomingEventsListIsOpen[0]) : null}
             activeOpacity={1}
             style={[_s.eventListOpener, borderState]}>
-            <Text style={_s.txt}>{`5 ${txt.upcomingEvents}`}</Text>
+            <Text style={_s.txt}>{`${upcomingEvents[0].length} ${txt.upcomingEvents}`}</Text>
           </TouchableOpacity>
           {renderList()}
         </View>
@@ -60,7 +74,11 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
         <RefreshCircleRed
           height={iconSize}
           width={iconSize}
-          onPress={() => console.log('get new upcoming events')}
+          onPress={() => getUpcomingEvents({
+            communityId: selectedCommunityData[0].id,
+            userToken: userToken[0],
+            upcomingEvents
+          })}
         />
       </View>
     </View>

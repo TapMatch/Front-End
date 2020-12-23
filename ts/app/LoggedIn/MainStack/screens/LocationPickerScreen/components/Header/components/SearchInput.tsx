@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, TextInput, Platform} from 'react-native';
+import React, {useContext, useState} from 'react';
+import {View, StyleSheet} from 'react-native';
 import SearchBlack from 'assets/svg/search-black.svg';
 import {_c} from 'ts/UIConfig/colors';
 import {vs} from 'react-native-size-matters';
@@ -8,16 +8,20 @@ import {_f} from 'ts/UIConfig/fonts';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 // import {NativeModules} from 'react-native'
 import * as RNLocalize from "react-native-localize";
+import {useDimensions, useKeyboard} from '@react-native-community/hooks';
+import {LocationPickerScreenContext} from 'ts/app/contexts/LocationPickerScreenContext';
 
 interface SearchInputProps {
-  searchString: [string, (x: string) => void];
 }
 
 // const locale = Platform.OS === 'ios' ? NativeModules.SettingsManager.settings.AppleLocale ||
 //   NativeModules.SettingsManager.settings.AppleLanguages[0] : NativeModules.I18nManager.localeIdentifier
 
-const SearchInput = ({searchString}: SearchInputProps) => {
-  const language = useState<string>(RNLocalize.getLocales()[0].languageCode)
+const SearchInput = (props: SearchInputProps) => {
+  const {coordinates, address} = useContext(LocationPickerScreenContext);
+  const {width, height} = useDimensions().screen;
+  const {keyboardHeight} = useKeyboard();
+  const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
   return (
     <View style={_s.container}>
       <SearchBlack
@@ -26,27 +30,37 @@ const SearchInput = ({searchString}: SearchInputProps) => {
         width={_fs.xl}
       />
       <GooglePlacesAutocomplete
-        currentLocationLabel={'Current location'}
+        onFail={(e) => console.log(e)}
         autoFillOnNotFound={true}
-        currentLocation={true}
+        enablePoweredByContainer={false}
         numberOfLines={1}
         fetchDetails={true}
-        listViewDisplayed={true}
+        listViewDisplayed={false}
         styles={{
-          textInput: _s.textInput
-        }}
-        requestUrl={{
-          url:
-            'https://cors-anywhere.herokuapp.com/https://maps.googleapis.com/maps/api',
-          useOnPlatform: 'all',
+          textInput: _s.textInput,
+          listView: {
+            backgroundColor: _c.white,
+            position: 'absolute',
+            top: vs(49),
+            left: -width * 0.19,
+            maxHeight: height - keyboardHeight - vs(49) - 180,
+            minWidth: width,
+            zIndex: 1000000
+          },
         }}
         placeholder=''
-        onPress={(data, details = null) => {
-          // 'details' is provided when fetchDetails = true
-          console.log(data, details);
+        onPress={(data, details: any = null) => {
+          const {formatted_address, geometry} = details;
+          address[1](formatted_address);
+          coordinates[1]({
+            longitude: geometry.location.long,
+            latitude: geometry.location.lat,
+            latitudeDelta: 0.015,
+            longitudeDelta: 0.0121,
+          });
         }}
         query={{
-          key: Platform.OS === 'ios' ? 'AIzaSyB53VDwI7HptVIC5M9lecKwi16MTu5vH5M' : 'AIzaSyDFaUgVps-c5tUyWCyQuod4wQs4OWw-zGQ',
+          key: 'AIzaSyBI-erIASkJmmIjkNGN0_EIsgBVPCSIxng',
           language,
         }}
       />

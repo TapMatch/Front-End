@@ -35,6 +35,7 @@ const YesNoModal = ({
   };
   const handleYes = () => {
     if (typeof onYesPress === 'function') {
+      console.log('IUUIUIIIUIUIUIUIUIUIIUIUIUIUIUI');
       onYesPress();
     }
     modalVisible[1](false);

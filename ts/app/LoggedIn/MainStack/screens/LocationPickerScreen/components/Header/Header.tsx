@@ -11,7 +11,6 @@ interface HeaderProps { }
 
 const Header = (props: HeaderProps) => {
   const {top} = useSafeAreaInsets();
-  const searchString = useState<string>('');
   return (
     <Fragment>
       <View style={[_s.container, {paddingTop: top}]}>
@@ -19,7 +18,7 @@ const Header = (props: HeaderProps) => {
           <TitleAndReturn />
         </View>
         <View style={_s.half}>
-          <SearchInput searchString={searchString} />
+          <SearchInput />
         </View>
       </View>
       <View pointerEvents={'none'} style={[_s.shadowContainer]}>

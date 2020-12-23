@@ -9,6 +9,7 @@ import googleMapStyle from "ts/constants/googleMapStyle.json";
 import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {MarkerUnits} from 'react-native-svg';
 // import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
 interface TapMatchMapProps {
@@ -16,9 +17,10 @@ interface TapMatchMapProps {
     focusMapToLatLng: (x: LatLng) => void;
     mapCoordinates: [LatLng, (x: LatLng) => void];
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
+    markers: any;
 }
 
-const TapMatchMap = ({focusMapToLatLng, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
+const TapMatchMap = ({focusMapToLatLng, markers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
     let _mapRef = useRef<any>(null);
     // const {} = useContext(HomeScreenContext);
@@ -56,11 +58,11 @@ const TapMatchMap = ({focusMapToLatLng, set_mapRef, mapCoordinates, eventDetails
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}>
-            <PeopleMarker
+            {markers.map((el: any) => <PeopleMarker
                 focusMapToLatLng={focusMapToLatLng}
                 coordinate={{...mapCoordinates[0], latitude: mapCoordinates[0].latitude + 0.0000001}}
                 eventDetailsModalVisible={eventDetailsModalVisible}
-            />
+            />)}
             <UserLocationMarker coordinate={userLocation[0]} />
         </MapView>
 

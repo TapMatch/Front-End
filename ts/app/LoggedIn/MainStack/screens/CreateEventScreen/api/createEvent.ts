@@ -3,6 +3,7 @@ import {LatLng} from 'react-native-maps';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
+import moment from 'moment';
 
 interface IcreateEvent {
     userToken: string;
@@ -38,7 +39,7 @@ export async function createEvent({
             data: {
                 name,
                 description,
-                date: date.toDateString(),
+                date: moment(date).format('YYYY-DD-MM HH:mm'),
                 coordinates: coordinates.toString(),
                 address,
                 join_limit

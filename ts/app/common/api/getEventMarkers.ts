@@ -5,7 +5,7 @@ import callAlert from 'ts/utils/callAlert';
 interface IgetEventMarkers {
   userToken: string;
   id: string;
-  eventMarkers:any
+  eventMarkers: any;
 }
 
 export async function getEventMarkers({
@@ -24,7 +24,10 @@ export async function getEventMarkers({
     };
     axios
       .request(options)
-      .then(({data}: any) => eventMarkers[1](data))
+      .then(({data}: any) => {
+        console.log(data, '-0-0-0-0-0-0-0-0-0-0-0-');
+        eventMarkers[1](data);
+      })
       .catch((error) => {
         console.log(error);
         // callAlert(undefined, `${error.toString()} ::: getEventMarkers`);

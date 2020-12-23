@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -6,9 +6,13 @@ import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
 import PenBlue from 'assets/svg/pen-blue.svg';
 import {useNavigation} from '@react-navigation/native';
-interface LocationPickerBtnProps {}
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
+interface LocationPickerBtnProps { }
 
 const LocationPickerBtn = (props: LocationPickerBtnProps) => {
+  const {
+    eventAddress
+  } = useContext(CreateEventScreenContext);
   const {navigate} = useNavigation();
   return (
     <TouchableOpacity
@@ -16,7 +20,7 @@ const LocationPickerBtn = (props: LocationPickerBtnProps) => {
       style={[_s.container]}>
       <Text style={[_s.txt, _s.title]}>Place</Text>
       <View style={_s.bottom}>
-        <Text style={[_s.txt, _s.address]}>Dreschstraße 5</Text>
+        <Text style={[_s.txt, _s.address]}>{eventAddress[0]}</Text>
         <PenBlue height={_fs.x3l} width={_fs.x3l} />
       </View>
     </TouchableOpacity>

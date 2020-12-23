@@ -9,6 +9,8 @@ import FeedbackBtn from './components/FeedbackBtn';
 import {useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
 import Modal from 'react-native-modal';
+import {getUpcomingEvents} from '../../api/getUpcomingEvents';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 interface CommunitiesModalProps {
   modalVisible: [boolean, (x: boolean) => void];
@@ -19,7 +21,8 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const communities = useState<any>(userProfile[0].communities);
+  const communities = useState<any>(userProfile[0].communities[0]);
+  const {upcomingEvents, upcomingEventsListIsOpen} = useContext(MainStackContext);
 
   return (
     <Modal
@@ -35,6 +38,7 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
           <TitleAndReturn modalVisible={modalVisible} />
           <View style={_s.middle}>
             <FlatList
+              keyExtractor={(item: any) => `community-${item?.id}-${item.name}`}
               contentContainerStyle={{paddingHorizontal: '7%'}}
               showsHorizontalScrollIndicator={false}
               showsVerticalScrollIndicator={false}
@@ -42,6 +46,12 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
               renderItem={({item, index, separators}) =>
                 <ListItemUnlocked onPress={() => {
                   selectedCommunityData[1](item);
+                  upcomingEventsListIsOpen[1](false);
+                  getUpcomingEvents({
+                    communityId: item.id,
+                    userToken: userToken[0],
+                    upcomingEvents
+                  });
                   modalVisible[1](false);
                 }} item={item} />
               }

@@ -1,5 +1,5 @@
 import React, {Fragment} from 'react';
-import {View, StyleSheet, Text} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -8,7 +8,6 @@ import BlackGradient from 'ts/app/common/components/BlackGradient';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface EventManageHeaderProps {
   eventDetailsModalVisible: [boolean, (x: boolean) => void];

@@ -5,14 +5,16 @@ import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import moment from 'moment';
 
 interface ListItemProps {
   isLast: boolean;
+  item: any;
 }
 
-const ListItem = ({isLast}: ListItemProps) => {
+const ListItem = ({isLast, item}: ListItemProps) => {
   return (
-    <TouchableOpacity style={_s.container}>
+    <TouchableOpacity onPress={() => console.log(item.id)} style={_s.container}>
       <View style={_s.iconContainer}>
         <CheckCircleRed height={_fs.l} width={_fs.l} />
       </View>
@@ -21,7 +23,7 @@ const ListItem = ({isLast}: ListItemProps) => {
           _s.txtContainer,
           {borderBottomWidth: isLast ? 0 : StyleSheet.hairlineWidth},
         ]}>
-        <Text style={_s.txt}>Ball Time - Tue 19:00</Text>
+        <Text style={_s.txt}>{item.name} - {moment(new Date(item.datetime.date)).format('ddd HH:mm')}</Text>
       </View>
     </TouchableOpacity>
   );

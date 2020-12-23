@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Text,
   View,
@@ -14,12 +14,15 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {Dimensions} from 'react-native';
+import {LocationPickerScreenContext} from 'ts/app/contexts/LocationPickerScreenContext';
 
-interface DoneBtnProps {}
+interface DoneBtnProps { }
 
 const DoneBtn = (props: DoneBtnProps) => {
+  const {coordinates, address} = useContext(LocationPickerScreenContext);
+
   const {bottom} = useSafeAreaInsets();
-  const {goBack} = useNavigation();
+  const {navigate} = useNavigation();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
 
   return (
@@ -29,7 +32,12 @@ const DoneBtn = (props: DoneBtnProps) => {
       style={[_s.container, {bottom: bottom + 15}]}
       keyboardVerticalOffset={vs(15)}>
       <View style={_s.btnContainer}>
-        <TouchableOpacity onPress={goBack} style={[_s.btn, _s.center]}>
+        <TouchableOpacity onPress={() =>
+          navigate('CreateEvent', {
+            address: address[0],
+            coordinates: coordinates[0]
+          })
+        } style={[_s.btn, _s.center]}>
           <Text style={_s.btnTxt}>Done</Text>
         </TouchableOpacity>
       </View>

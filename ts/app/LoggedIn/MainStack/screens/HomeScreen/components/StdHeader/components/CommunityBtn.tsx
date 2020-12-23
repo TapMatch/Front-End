@@ -12,7 +12,7 @@ interface CommunityBtnProps { }
 const CommunityBtn = (props: CommunityBtnProps) => {
   const {navigate} = useNavigation();
   const {communitiesModalVisible, selectedCommunityData} = useContext(HomeScreenContext);
-  const {name, id, city, access} = selectedCommunityData[0];
+  const {name, id, city, access, count} = selectedCommunityData[0];
   return (
     <TouchableOpacity
       onLongPress={() => navigate('SecretScreen')}
@@ -23,7 +23,7 @@ const CommunityBtn = (props: CommunityBtnProps) => {
           <Text style={[_s.txt, _s.title]}>{name}</Text>
           <ChevronDownRed height={_fs.xl} width={_fs.xl} />
         </View>
-        <Text style={[_s.txt, _s.usersNum]}>1.909 Members</Text>
+        <Text style={[_s.txt, _s.usersNum]}>{count} Members</Text>
       </View>
     </TouchableOpacity>
   );

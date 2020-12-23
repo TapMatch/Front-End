@@ -95,12 +95,12 @@ const _s = StyleSheet.create({
     width: '100%',
   },
   topLeft: {
-    flex: 1,
+    flex: 0.8,
     justifyContent: 'flex-start',
     alignItems: 'flex-start',
   },
   topRight: {
-    flex: 1,
+    flex: 0.2,
     justifyContent: 'flex-start',
     alignItems: 'flex-end',
   },
@@ -125,14 +125,14 @@ const _s = StyleSheet.create({
     fontSize: _fs.s,
   },
   phoneNum: {
-    textAlign: 'center',
+    textAlign: 'left',
     textAlignVertical: 'center',
     color: _c.grey,
     fontFamily: _f.eRegular,
     fontSize: _fs.l,
   },
   name: {
-    textAlign: 'center',
+    textAlign: 'left',
     textAlignVertical: 'center',
     color: _c.black,
     fontFamily: _f.eRegular,
