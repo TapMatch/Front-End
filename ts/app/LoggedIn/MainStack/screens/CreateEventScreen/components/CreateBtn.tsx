@@ -16,16 +16,17 @@ import {useKeyboard} from '@react-native-community/hooks';
 
 interface CreateBtnProps {
   onPress: () => void;
+  disabled: boolean;
 }
 
-const CreateBtn = ({onPress}: CreateBtnProps) => {
+const CreateBtn = ({onPress, disabled}: CreateBtnProps) => {
   const {bottom} = useSafeAreaInsets();
   const {keyboardShown} = useKeyboard();
   if (!keyboardShown) {
     return (
-      <View style={[_s.container, _s.center, {paddingBottom: bottom}]}>
+      <View style={[_s.container, _s.center, {paddingBottom: bottom, opacity: disabled ? 0.2 : 1}]}>
         <View style={_s.btnContainer}>
-          <TouchableOpacity onPress={onPress} style={[_s.btn, _s.center]}>
+          <TouchableOpacity disabled={disabled} onPress={onPress} style={[_s.btn, _s.center]}>
             <Text style={_s.btnTxt}>Create</Text>
           </TouchableOpacity>
         </View>

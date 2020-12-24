@@ -16,7 +16,7 @@ const AvatarBtn = (props: AvatarBtnProps) => {
         onPress={() => profileModalVisible[1](!profileModalVisible[0])}
         style={_s.btn}>
         <Image
-          resizeMode={'contain'}
+          resizeMode={'cover'}
           style={_s.avatar}
           source={{
             uri:

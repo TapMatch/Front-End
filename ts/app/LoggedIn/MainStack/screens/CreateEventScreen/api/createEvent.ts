@@ -40,15 +40,18 @@ export async function createEvent({
                 name,
                 description,
                 date: moment(date).format('YYYY-DD-MM HH:mm'),
-                coordinates: coordinates.toString(),
+                coordinates: JSON.stringify(coordinates),
                 address,
                 join_limit
             }
         };
 
-        axios
+        return axios
             .request(options)
-            .then(({data}: any) => getEventMarkers({userToken, id: communityId, eventMarkers}))
+            .then(({data}: any) => {
+                console.log(data, 'HHHHHHHHHHHHHHHHHHHHHHHHH');
+                getEventMarkers({userToken, id: communityId, eventMarkers});
+            })
             .catch((error) => {
                 console.log(error);
                 // callAlert(undefined, `${error.toString()} ::: createEvent`);
@@ -56,5 +59,6 @@ export async function createEvent({
     } catch (error) {
         console.log(`${error} ::: createEvent`);
         callAlert(undefined, `${error.toString()} ::: createEvent`);
+        return;
     }
 }

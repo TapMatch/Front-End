@@ -31,11 +31,12 @@ const SearchInput = (props: SearchInputProps) => {
       />
       <GooglePlacesAutocomplete
         onFail={(e) => console.log(e)}
+        minLength={5}
+        numberOfLines={1}
         autoFillOnNotFound={true}
         enablePoweredByContainer={false}
-        numberOfLines={1}
         fetchDetails={true}
-        listViewDisplayed={false}
+        listViewDisplayed={true}
         styles={{
           textInput: _s.textInput,
           listView: {
@@ -45,15 +46,16 @@ const SearchInput = (props: SearchInputProps) => {
             left: -width * 0.19,
             maxHeight: height - keyboardHeight - vs(49) - 180,
             minWidth: width,
-            zIndex: 1000000
+            zIndex: 500000
           },
         }}
         placeholder=''
         onPress={(data, details: any = null) => {
           const {formatted_address, geometry} = details;
+          console.log(geometry, 'geometry');
           address[1](formatted_address);
           coordinates[1]({
-            longitude: geometry.location.long,
+            longitude: geometry.location.lng,
             latitude: geometry.location.lat,
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,

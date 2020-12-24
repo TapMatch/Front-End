@@ -20,7 +20,7 @@ const TitleAndReturn = ({modalVisible}: TitleAndReturnProps) => {
         <ChevronWhite height={_fs.x9l} width={_fs.x9l} />
       </TouchableOpacity>
       <Text numberOfLines={1} style={_s.txt}>
-        {txt.communities}
+        My {txt.communities}
       </Text>
     </View>
   );

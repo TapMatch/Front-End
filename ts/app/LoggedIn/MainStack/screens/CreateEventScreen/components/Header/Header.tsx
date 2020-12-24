@@ -4,10 +4,10 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import Title from './components/Title';
-import AddEventBtn from './components/CloseBtn';
+import CloseBtn from './components/CloseBtn';
 import BlackGradient from 'ts/app/common/components/BlackGradient';
 
-interface HeaderProps {}
+interface HeaderProps { }
 
 const Header = (props: HeaderProps) => {
   const {top} = useSafeAreaInsets();
@@ -19,7 +19,7 @@ const Header = (props: HeaderProps) => {
           <Title />
         </View>
         <View style={_s.right}>
-          <AddEventBtn />
+          <CloseBtn />
         </View>
       </View>
       <View pointerEvents={'none'} style={[_s.shadowContainer]}>

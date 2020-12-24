@@ -24,15 +24,15 @@ const DoneBtn = (props: DoneBtnProps) => {
   const {bottom} = useSafeAreaInsets();
   const {navigate} = useNavigation();
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
-
+  const btnDisabled = address[0].length === 0 || !Object.keys(coordinates[0]);
   return (
     <KeyboardAvoidingView
       behavior={KAVBehaviorObj}
       contentContainerStyle={[_s.container, {bottom: bottom + 15}]}
       style={[_s.container, {bottom: bottom + 15}]}
       keyboardVerticalOffset={vs(15)}>
-      <View style={_s.btnContainer}>
-        <TouchableOpacity onPress={() =>
+      <View style={[_s.btnContainer, {opacity: btnDisabled ? 0.2 : 1}]}>
+        <TouchableOpacity disabled={btnDisabled} onPress={() =>
           navigate('CreateEvent', {
             address: address[0],
             coordinates: coordinates[0]

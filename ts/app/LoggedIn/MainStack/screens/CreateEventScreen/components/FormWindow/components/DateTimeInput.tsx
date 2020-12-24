@@ -33,6 +33,7 @@ const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
         </View>
       </TouchableOpacity>
       <DateTimePickerModal
+        isDarkModeEnabled={true}
         minimumDate={new Date()}
         isVisible={dateTimePickerModalVisible[0]}
         mode="datetime"

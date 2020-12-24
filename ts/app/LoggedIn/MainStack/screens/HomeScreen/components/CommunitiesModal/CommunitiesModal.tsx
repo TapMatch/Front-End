@@ -11,6 +11,7 @@ import ListItemUnlocked from './components/ListItemUnlocked';
 import Modal from 'react-native-modal';
 import {getUpcomingEvents} from '../../api/getUpcomingEvents';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
 interface CommunitiesModalProps {
   modalVisible: [boolean, (x: boolean) => void];
@@ -22,7 +23,7 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
   const {height} = useDimensions().screen;
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const communities = useState<any>(userProfile[0].communities[0]);
-  const {upcomingEvents, upcomingEventsListIsOpen} = useContext(MainStackContext);
+  const {upcomingEvents, eventMarkers, upcomingEventsListIsOpen} = useContext(MainStackContext);
 
   return (
     <Modal
@@ -51,6 +52,11 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
                     communityId: item.id,
                     userToken: userToken[0],
                     upcomingEvents
+                  });
+                  getEventMarkers({
+                    id: item.id,
+                    userToken: userToken[0],
+                    eventMarkers
                   });
                   modalVisible[1](false);
                 }} item={item} />

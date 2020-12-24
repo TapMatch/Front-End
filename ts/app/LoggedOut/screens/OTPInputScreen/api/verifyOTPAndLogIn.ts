@@ -5,7 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 
 interface IverifyOTPAndLogIn {
-  PHPSESSID: string;
+  PHPSESSID: [string, (x: string) => void];
   OTP: string;
   LoggedIn: [boolean, (x: boolean) => void];
   userProfile: [any, (x: any) => void];
@@ -26,7 +26,7 @@ export async function verifyOTPAndLogIn({
       method: 'POST',
       url: `${tapMatchServerUrl}verify/code`,
       headers: {
-        Cookie: PHPSESSID,
+        Cookie: PHPSESSID[0],
         'Content-Type': 'application/json',
       },
       data: {
@@ -59,7 +59,7 @@ export async function verifyOTPAndLogIn({
           console.log(error);
           callAlert(undefined, `Code is invalid.`);
         } else {
-          console.log(error);
+          console.log(error.toString(), '::: verifyOTPAndLogIn');
           callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
         }
       });

@@ -29,6 +29,7 @@ const FormWindow = (props: FormWindowProps) => {
     <View style={_s.container}>
       <View style={_s.window}>
         <KeyboardAwareScrollView
+          keyboardShouldPersistTaps={'always'}
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: pb}}>

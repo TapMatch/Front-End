@@ -31,23 +31,27 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const joinLimit = useState<number>(1);
   const dateTime = useState<Date>(new Date());
   const yesNoModalVisible = useState<boolean>(false);
-  const navAction = useState<NavigationAction | null>(null);
 
   useEffect(
     () => {
-      const unsubscribe = navigation.addListener('beforeRemove', (e: any) => {
-        e.preventDefault();
-        yesNoModalVisible[1](true);
-        navAction[1](e.data.action);
-      });
-      return unsubscribe;
+      if (route.params.address.length) {
+        eventAddress[1](route.params.address);
+      }
+      if (Object.keys(route.params.coordinates)) {
+        evetnCoordinates[1]({
+          longitude: route.params.coordinates.longitude,
+          latitude: route.params.coordinates.latitude
+        });
+      }
     },
-    [navigation]
+    [route.params.address, route.params.coordinates]
   );
-
   if (isFocused) {
     return (
-      <CreateEventScreenContext.Provider value={{description, joinLimit, dateTime, eventName, eventAddress, evetnCoordinates}}>
+      <CreateEventScreenContext.Provider value={{
+        description, joinLimit, dateTime,
+        eventName, eventAddress, evetnCoordinates, yesNoModalVisible
+      }}>
         <View style={[_s.container]}>
           <StatusBar
             animated={true}
@@ -56,20 +60,28 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
           />
           <Header />
           <FormWindow />
-          <CreateBtn onPress={() => {
-            navigation.goBack();
-            createEvent({
-              eventMarkers,
-              communityId: selectedCommunityData[0].id,
-              coordinates: evetnCoordinates[0],
-              address: eventAddress[0],
-              description: description[0],
-              join_limit: joinLimit[0],
-              date: dateTime[0],
-              name: eventName[0],
-              userToken: userToken[0]
-            });
-          }} />
+          <CreateBtn disabled={eventName[0].length === 0 || eventAddress[0].length === 0 || description[0].length === 0}
+            onPress={() => {
+              navigation.goBack();
+              createEvent({
+                eventMarkers,
+                communityId: selectedCommunityData[0].id,
+                userToken: userToken[0],
+                coordinates: evetnCoordinates[0],
+                address: eventAddress[0],
+                description: description[0],
+                join_limit: joinLimit[0],
+                date: dateTime[0],
+                name: eventName[0],
+              }).then(() => {
+                description[1]('');
+                eventAddress[1]('');
+                eventName[1]('');
+                joinLimit[1](1);
+                dateTime[1](new Date());
+                evetnCoordinates[1](userLocation[0]);
+              });
+            }} />
           <MapView
             provider={PROVIDER_GOOGLE}
             customMapStyle={googleMapStyle}
@@ -85,7 +97,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
             }}
           />
           <YesNoModal
-            onYesPress={() => navigation.dispatch(navAction[0])}
+            onYesPress={navigation.goBack}
             modalVisible={yesNoModalVisible}
             subtitle={'Note that If you quit,\nno draft Will be saved'}
             title={'Are you sure\nYou want to\nleave create?'}

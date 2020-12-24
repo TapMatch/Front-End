@@ -36,7 +36,7 @@ const _s = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     width: '100%',
-    height: vs(120),
+    minHeight: vs(100),
     borderBottomColor: _c.grey,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
@@ -50,6 +50,7 @@ const _s = StyleSheet.create({
     fontSize: _fs.m,
   },
   address: {
+    maxWidth: '85%',
     fontSize: _fs.xl,
   },
   bottom: {

@@ -10,7 +10,7 @@ const AddEventBtn = (props: AddEventBtnProps) => {
   const {navigate} = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigate('CreateEvent', {address: null, coordinates: null})}
+      onPress={() => navigate('CreateEvent', {address: '', coordinates: {}})}
       style={_s.container}>
       <PlusBlack height={_fs.x6l} width={_fs.x6l} />
     </TouchableOpacity>

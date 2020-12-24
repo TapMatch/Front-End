@@ -13,6 +13,9 @@ export async function getEventMarkers({
   userToken,
   eventMarkers
 }: IgetEventMarkers) {
+  console.log(id,
+    userToken,
+    eventMarkers, 'GGGGGGGGGGGGGGGGGGGGGGG');
   try {
     const options: AxiosRequestConfig = {
       method: 'GET',

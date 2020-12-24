@@ -1,17 +1,17 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
 import PlusBlack from 'assets/svg/close-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {useNavigation} from '@react-navigation/native';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 
-interface CloseBtnProps {}
+interface CloseBtnProps { }
 
 const CloseBtn = (props: CloseBtnProps) => {
-  const {goBack} = useNavigation();
+  const {yesNoModalVisible} = useContext(CreateEventScreenContext);
   return (
-    <TouchableOpacity onPress={goBack} style={_s.container}>
+    <TouchableOpacity onPress={() => yesNoModalVisible[1](true)} style={_s.container} >
       <PlusBlack height={_fs.xxl} width={_fs.xxl} />
-    </TouchableOpacity>
+    </TouchableOpacity >
   );
 };
 
