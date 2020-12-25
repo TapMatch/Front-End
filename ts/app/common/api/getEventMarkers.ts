@@ -6,16 +6,20 @@ interface IgetEventMarkers {
   userToken: string;
   id: string;
   eventMarkers: any;
+  selectedMarkerData?: any;
 }
 
 export async function getEventMarkers({
   id,
   userToken,
-  eventMarkers
+  eventMarkers,
+  selectedMarkerData
 }: IgetEventMarkers) {
-  console.log(id,
+  console.log(
+    id,
     userToken,
-    eventMarkers, 'GGGGGGGGGGGGGGGGGGGGGGG');
+    eventMarkers[0],
+    '>>>>>>getEventMarkers<<<<<<');
   try {
     const options: AxiosRequestConfig = {
       method: 'GET',
@@ -24,12 +28,23 @@ export async function getEventMarkers({
         'X-Auth-Token': userToken,
         'Content-Type': 'application/json',
       },
+      withCredentials: false
     };
     axios
       .request(options)
       .then(({data}: any) => {
-        console.log(data, '-0-0-0-0-0-0-0-0-0-0-0-');
+        console.log(']]]]]]]]]]]]]]]]]]]]]', data, '[[[[[[[[[[[[[[[[[[[[');
         eventMarkers[1](data);
+        if (selectedMarkerData) {
+          const id = selectedMarkerData[0].id;
+          const element = eventMarkers[0].find((el: any) => el.id === id);
+          console.log(element, '*****************************************************************************************');
+          if (element) {
+            selectedMarkerData[1](element);
+          } else {
+            console.log('CAN NOT RELOAD SELECTED MARKER DATA');
+          }
+        }
       })
       .catch((error) => {
         console.log(error);

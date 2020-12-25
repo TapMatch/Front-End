@@ -8,11 +8,14 @@ import Title from './components/Title';
 import ReSendCode from './components/ReSendCode';
 import {resendOTP} from './api/resendOTP';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {useIsFocused} from '@react-navigation/native';
+import {NavigationRouteContext, useIsFocused} from '@react-navigation/native';
+import CookieManager from '@react-native-community/cookies';
 
-interface OTPInputScreenProps {}
+interface OTPInputScreenProps {
+  navigation: any;
+}
 
-const OTPInputScreen = (props: OTPInputScreenProps) => {
+const OTPInputScreen = ({navigation}: OTPInputScreenProps) => {
   const OTP = useState<string>('');
   const ReSendCodeDisabled = useState<boolean>(true);
   const resendTimerTrigger = useState<boolean>(true);
@@ -29,6 +32,11 @@ const OTPInputScreen = (props: OTPInputScreenProps) => {
     }, 18000);
     return () => clearInterval(resendTimer);
   }, [resendTimerTrigger[0]]);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {CookieManager.clearAll();});
+    return unsubscribe;
+  }, []);
 
   return (
     <View style={_s.container}>

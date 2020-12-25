@@ -1,42 +1,79 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import CheckCircleRed from 'assets/svg/check-circle-red.svg';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {joinEvent} from '../../../api/joinEvent';
+import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
 interface JoinSectionProps {
     eventJoinState: 'join' | 'full' | 'joined';
 }
 
 const JoinSection = ({eventJoinState}: JoinSectionProps) => {
-    switch (eventJoinState) {
-        case 'join': return (
-            <View style={[_s.container, _s.center]}>
-                <TouchableOpacity onPress={() => console.log('joininig event ...')} style={[_s.btn, _s.shadow, _s.center]}>
-                    <Text numberOfLines={1} style={[_s.txt, _s.btnTxt]}>Join</Text>
-                </TouchableOpacity>
-            </View>
-        );
-        case 'full': return (
-            <View style={[_s.container, _s.center]}>
-                <View style={[_s.full, _s.center]}>
-                    <Text numberOfLines={1} style={[_s.txt, _s.fullTitle]}>Full</Text>
-                    <Text numberOfLines={1} style={[_s.txt, _s.fullTxt]}>Tap Faster Next Time 😉</Text>
-                </View>
-            </View>
+    const {eventMarkers, selectedMarkerData} = useContext(MainStackContext);
+    const {currentUserIsOrganizer} = useContext(HomeScreenContext);
+    const {userToken} = useContext(TapMatchContext);
+    const {id, members} = selectedMarkerData[0];
+    const defineMessage = () => {
+        if (currentUserIsOrganizer[0]) {
+            if (members.length) {
+                return `You and ${members.length} others are going!`;
+            } else {
+                return `You and are going!`;
+            }
+        } else {
+            if (members.length - 1) {
 
-        );
-        case 'joined': return (
-            <View style={[_s.container, _s.center, _s.joinedStateStyle]}>
-                <CheckCircleRed height={_fs.xxl} width={_fs.xxl} />
-                <Text numberOfLines={1} style={[_s.txt, _s.infoTxt]}>You and 12 others are going!</Text>
-            </View>
-        );
-        default:
-            return (
-                <View style={[_s.container, _s.center]} />
+                return `You and ${members.length - 1} others are going!`;
+            } else {
+                return `You and are going!`;
+            }
+        }
+    };
+
+    if (currentUserIsOrganizer[0]) {
+        return <View style={[_s.container, _s.center, _s.joinedStateStyle]}>
+            <CheckCircleRed height={_fs.xxl} width={_fs.xxl} />
+            <Text numberOfLines={1} style={[_s.txt, _s.infoTxt]}>{defineMessage()}</Text>
+        </View>;
+    } else {
+        switch (eventJoinState) {
+            case 'join': return (
+                <View style={[_s.container, _s.center]}>
+                    <TouchableOpacity onPress={() => joinEvent({
+                        communityId: id,
+                        userToken: userToken[0],
+                        eventMarkers,
+                        selectedMarkerData
+                    })} style={[_s.btn, _s.shadow, _s.center]}>
+                        <Text numberOfLines={1} style={[_s.txt, _s.btnTxt]}>Join</Text>
+                    </TouchableOpacity>
+                </View>
             );
+            case 'full': return (
+                <View style={[_s.container, _s.center]}>
+                    <View style={[_s.full, _s.center]}>
+                        <Text numberOfLines={1} style={[_s.txt, _s.fullTitle]}>Full</Text>
+                        <Text numberOfLines={1} style={[_s.txt, _s.fullTxt]}>Tap Faster Next Time 😉</Text>
+                    </View>
+                </View>
+
+            );
+            case 'joined': return (
+                <View style={[_s.container, _s.center, _s.joinedStateStyle]}>
+                    <CheckCircleRed height={_fs.xxl} width={_fs.xxl} />
+                    <Text numberOfLines={1} style={[_s.txt, _s.infoTxt]}>{defineMessage()}</Text>
+                </View>
+            );
+            default:
+                return (
+                    <View style={[_s.container, _s.center]} />
+                );
+        }
     }
 };
 

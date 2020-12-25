@@ -3,6 +3,7 @@ import {Text, View, StyleSheet, Image, TouchableOpacity, Platform} from 'react-n
 import {_c} from 'ts/UIConfig/colors';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {tapMatchServerUrl} from 'ts/constants/constants';
 
 interface AvatarBtnProps { }
 
@@ -20,7 +21,8 @@ const AvatarBtn = (props: AvatarBtnProps) => {
           style={_s.avatar}
           source={{
             uri:
-              userProfile[0].avatar,
+              // `${tapMatchServerUrl}${userProfile[0].avatar}`,
+              `${userProfile[0].avatar}`,
           }}
         />
       </TouchableOpacity>

@@ -23,7 +23,7 @@ const ListItem = ({isLast, item}: ListItemProps) => {
           _s.txtContainer,
           {borderBottomWidth: isLast ? 0 : StyleSheet.hairlineWidth},
         ]}>
-        <Text style={_s.txt}>{item.name} - {moment(new Date(item.datetime.date)).format('ddd HH:mm')}</Text>
+        <Text numberOfLines={2} style={_s.txt}>{item.name} - {moment(item.datetime.date).format('ddd HH:mm')}</Text>
       </View>
     </TouchableOpacity>
   );
@@ -44,7 +44,7 @@ const _s = StyleSheet.create({
     borderBottomColor: _c.grey,
     alignSelf: 'stretch',
     justifyContent: 'center',
-    alignItems: 'flex-end',
+    alignItems: 'center',
     paddingRight: '10%',
   },
   iconContainer: {

@@ -8,7 +8,6 @@ interface IresendOTP {
 
 export async function resendOTP({PHPSESSID}: IresendOTP) {
   try {
-    console.log(PHPSESSID, 'PHPSESSID-----PHPSESSID');
     const options: AxiosRequestConfig = {
       method: 'POST',
       url: `${tapMatchServerUrl}verify/resend`,
@@ -16,6 +15,7 @@ export async function resendOTP({PHPSESSID}: IresendOTP) {
         Cookie: PHPSESSID[0],
         'Content-Type': 'application/json',
       },
+      withCredentials: false
     };
 
     axios

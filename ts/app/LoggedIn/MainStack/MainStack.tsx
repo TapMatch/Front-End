@@ -14,7 +14,7 @@ import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 export default function MainStack() {
   const {userProfile} = useContext(TapMatchContext);
   const selectedCommunityData = useState<any>(userProfile[0].communities[0][0]);
-  const eventMarkers = useState<any>([]);
+  const eventMarkers = useState<any>(null);
   const upcomingEvents = useState<any>([]);
   const selectedMarkerData = useState<any>({});
   const upcomingEventsListIsOpen = useState<boolean>(false);

@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useContext} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
@@ -8,6 +8,8 @@ import BlackGradient from 'ts/app/common/components/BlackGradient';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import moment from 'moment';
 
 interface EventDetailsHeaderProps {
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
@@ -17,7 +19,8 @@ interface EventDetailsHeaderProps {
 const iconSize = _fs.xxl * 1.5;
 const EventDetailsHeader = ({eventDetailsModalVisible, setupLeaveEventUI}: EventDetailsHeaderProps) => {
   const {top} = useSafeAreaInsets();
-
+  const {selectedMarkerData} = useContext(MainStackContext);
+  const {name, datetime} = selectedMarkerData[0];
   return (
     <Fragment>
       <View style={[_s.container, {paddingTop: top}]}>
@@ -27,10 +30,10 @@ const EventDetailsHeader = ({eventDetailsModalVisible, setupLeaveEventUI}: Event
         <View style={_s.middle}>
           <View style={_s.middleTop}>
             <Text style={_s.topMiddleTxt}>Get Ready for</Text>
-            <Text style={_s.topMiddleTxt}>{`Ball Time`}.</Text>
+            <Text style={_s.topMiddleTxt}>{name}.</Text>
           </View>
           <View style={_s.middleBottom}>
-            <Text style={_s.bottomMiddleTxt}>{`13.10.20 at 10 pm`}</Text>
+            <Text style={_s.bottomMiddleTxt}>{moment(datetime).format('DD/MM/YYYY HH:mm')}</Text>
           </View>
         </View>
         <View style={_s.right}>

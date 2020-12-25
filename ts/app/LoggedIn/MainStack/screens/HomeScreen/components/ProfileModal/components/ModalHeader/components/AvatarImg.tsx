@@ -1,6 +1,7 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet, Image} from 'react-native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {tapMatchServerUrl} from 'ts/constants/constants';
 import {_c} from 'ts/UIConfig/colors';
 
 interface AvatarImgProps { }
@@ -15,7 +16,8 @@ const AvatarImg = (props: AvatarImgProps) => {
         style={_s.avatar}
         source={{
           uri:
-            userProfile[0].avatar,
+            // `${tapMatchServerUrl}${userProfile[0].avatar}`,
+            `${userProfile[0].avatar}`,
         }}
       />
     </View>

@@ -10,6 +10,8 @@ import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {MarkerUnits} from 'react-native-svg';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 // import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
 interface TapMatchMapProps {
@@ -17,14 +19,14 @@ interface TapMatchMapProps {
     focusMapToLatLng: (x: LatLng) => void;
     mapCoordinates: [LatLng, (x: LatLng) => void];
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
-    markers: any;
 }
 
 const TapMatchMap = ({focusMapToLatLng, markers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+    const {selectedCommunityData, eventMarkers, selectedMarkerData} = useContext(MainStackContext);
     let _mapRef = useRef<any>(null);
     // const {} = useContext(HomeScreenContext);
-
+    console.log(eventMarkers[0], 'eventMarkers[0]-----eventMarkers[0]');
     return (
         <MapView
             ref={(x) => {
@@ -33,6 +35,11 @@ const TapMatchMap = ({focusMapToLatLng, markers, set_mapRef, mapCoordinates, eve
             }}
             onMapReady={() => {
                 set_mapRef(_mapRef);
+                getEventMarkers({
+                    id: selectedMarkerData[0].id,
+                    userToken: userToken[0],
+                    eventMarkers
+                });
             }}
             // onClusterPress={() => set_mapRef(_mapRef)}
             // clusterFontFamily={_f.eRegular}
@@ -58,11 +65,15 @@ const TapMatchMap = ({focusMapToLatLng, markers, set_mapRef, mapCoordinates, eve
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}>
-            {markers.map((el: any) => <PeopleMarker
-                focusMapToLatLng={focusMapToLatLng}
-                coordinate={{...mapCoordinates[0], latitude: mapCoordinates[0].latitude + 0.0000001}}
-                eventDetailsModalVisible={eventDetailsModalVisible}
-            />)}
+            {eventMarkers[0] && eventMarkers[0].map((el: any) =>
+                <PeopleMarker
+                    key={el.id}
+                    item={el}
+                    focusMapToLatLng={focusMapToLatLng}
+                    coordinate={el.coordinates}
+                    // coordinate={{...mapCoordinates[0], latitude: mapCoordinates[0].latitude + 0.0000001}}
+                    eventDetailsModalVisible={eventDetailsModalVisible}
+                />)}
             <UserLocationMarker coordinate={userLocation[0]} />
         </MapView>
 

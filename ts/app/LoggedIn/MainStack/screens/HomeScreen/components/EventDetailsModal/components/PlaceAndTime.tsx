@@ -1,21 +1,29 @@
-import React from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import React, {useContext} from 'react';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import openMap from 'react-native-open-maps';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import moment from 'moment';
 
 interface PlaceAndTimeProps {
     eventJoinState: 'join' | 'full' | 'joined';
 }
 
 const PlaceAndTime = ({eventJoinState}: PlaceAndTimeProps) => {
+    const {selectedMarkerData} = useContext(MainStackContext);
+    const {address, datetime, coordinates} = selectedMarkerData[0];
     return (
         <View style={_s.container}>
-            <TouchableOpacity onPress={() => openMap({latitude: 37.865101, longitude: -119.538330})}>
-                <Text numberOfLines={1} style={[_s.txt, _s.linkStyle]}>GeorgenStraße 4</Text>
+            <TouchableOpacity onPress={() => openMap({
+                // {latitude: 37.865101, longitude: -119.538330}
+                ...coordinates,
+                query: address
+            })}>
+                <Text numberOfLines={1} style={[_s.txt, _s.linkStyle]}>{address}</Text>
             </TouchableOpacity>
-            {eventJoinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>Tomorrow 10PM</Text>}
+            {eventJoinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>{moment(datetime.date).format('DD/MM/YYYY HH:mm')}</Text>}
         </View>
     );
 };

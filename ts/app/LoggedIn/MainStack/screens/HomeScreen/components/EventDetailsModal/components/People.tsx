@@ -1,30 +1,39 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, Image, Platform} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 interface PeopleProps { }
 
 const People = (props: PeopleProps) => {
-    return (
-        <View style={_s.container}>
-            {[0, 1, 2, 3, 4].map((el) => <View key={`people-${el}`}
-                style={_s.personContainer}>
-                <View style={[_s.avatarContainer, _s.shadow]}>
-                    <Image
-                        resizeMode={'contain'}
-                        style={_s.avatar}
-                        source={{
-                            uri:
-                                'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
-                        }}
-                    />
-                </View>
-                <Text numberOfLines={1} style={_s.txt}>Human {el}</Text>
-            </View>)}
-        </View>
-    );
+    const {selectedMarkerData} = useContext(MainStackContext);
+    const {members} = selectedMarkerData[0];
+
+    if (!members.length) {
+        return <View style={[_s.container, {height: 45}]} />;
+    } else {
+        return (
+            <View style={_s.container}>
+                {members.map((el: any) =>
+                    <View key={`people-${el}`}
+                        style={_s.personContainer}>
+                        <View style={[_s.avatarContainer, _s.shadow]}>
+                            <Image
+                                resizeMode={'contain'}
+                                style={_s.avatar}
+                                source={{
+                                    uri:
+                                        'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+                                }}
+                            />
+                        </View>
+                        <Text numberOfLines={1} style={_s.txt}>Human {el}</Text>
+                    </View>)}
+            </View>);
+    }
+
 };
 
 export default People;

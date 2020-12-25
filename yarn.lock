@@ -1141,6 +1141,13 @@
   "resolved" "https://registry.npmjs.org/@react-native-community/clipboard/-/clipboard-1.5.1.tgz"
   "version" "1.5.1"
 
+"@react-native-community/cookies@^5.0.1":
+  "integrity" "sha512-Is/kWBmYBFtX4DOImfglK5Bz2w3PdpgMGTqdVQSbZlFdSDw32lwFMk1mLSAzL5EcUEDwJJbcEATbU3JGSZSVXw=="
+  "resolved" "https://registry.npmjs.org/@react-native-community/cookies/-/cookies-5.0.1.tgz"
+  "version" "5.0.1"
+  dependencies:
+    "invariant" "^2.2.4"
+
 "@react-native-community/datetimepicker@^3.0.8":
   "integrity" "sha512-85pOIjRnhrUmyWFH52qGGya1MDwE7vU4fDqt21yY6EyT7TolwQvZknwId8TAmREawsMoCMchke6VFo1IqRaUOA=="
   "resolved" "https://registry.npmjs.org/@react-native-community/datetimepicker/-/datetimepicker-3.0.8.tgz"
@@ -6504,7 +6511,7 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native@*", "react-native@>= 0.59", "react-native@>=0.60.0", "react-native@>0.45.0", "react-native@0.63.3":
+"react-native@*", "react-native@>= 0.59", "react-native@>= 0.60.2", "react-native@>=0.60.0", "react-native@>0.45.0", "react-native@0.63.3":
   "integrity" "sha512-71wq13uNo5W8QVQnFlnzZ3AD+XgUBYGhpsxysQFW/hJ8GAt/J5o+Bvhy81FXichp6IBDJDh/JgfHH2gNji8dFA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.3.tgz"
   "version" "0.63.3"

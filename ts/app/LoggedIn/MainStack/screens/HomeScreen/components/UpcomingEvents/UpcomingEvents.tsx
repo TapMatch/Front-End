@@ -43,13 +43,13 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
     ? _s.eventListOpenerBorderOpen
     : _s.eventListOpenerBorderClosed;
 
-  useEffect(() => {
-    getUpcomingEvents({
-      communityId: selectedCommunityData[0].id,
-      userToken: userToken[0],
-      upcomingEvents
-    });
-  }, []);
+  // useEffect(() => {
+  //   getUpcomingEvents({
+  //     communityId: selectedCommunityData[0].id,
+  //     userToken: userToken[0],
+  //     upcomingEvents
+  //   });
+  // });
 
   return (
     <View pointerEvents={'box-none'} style={_s.container}>

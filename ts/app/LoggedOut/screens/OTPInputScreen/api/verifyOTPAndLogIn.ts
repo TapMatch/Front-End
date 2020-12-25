@@ -32,6 +32,7 @@ export async function verifyOTPAndLogIn({
       data: {
         verify_code: OTP,
       },
+      withCredentials: false
     };
 
     axios

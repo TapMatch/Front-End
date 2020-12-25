@@ -1,11 +1,10 @@
-import React, {useContext} from 'react';
+import React, {Fragment, useContext} from 'react';
 import {View, StyleSheet, Image, Text} from 'react-native';
 import {Marker, LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
-import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
@@ -15,30 +14,35 @@ interface PeopleMarkerProps {
   coordinate: LatLng;
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
   focusMapToLatLng: (x: LatLng) => void;
+  item: any;
 }
 
 const PeopleMarker = ({
+  item,
   coordinate,
   eventDetailsModalVisible,
   focusMapToLatLng
 }: PeopleMarkerProps) => {
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const txt = useLocalizedTxt();
+  const {members, name, join_limit} = item;
+  const {selectedMarkerData} = useContext(MainStackContext);
   return (
     <Marker
       onPress={() => {
         focusMapToLatLng(coordinate);
         eventDetailsModalVisible[1](true);
+        selectedMarkerData[1](item);
       }}
       coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>
-          <Text numberOfLines={1} style={_s.topTxt}>
-            🔥
+          {join_limit - members.length < join_limit * 0.8 && members.length !== join_limit && <Fragment>
+            <Text numberOfLines={1} style={_s.topTxt}>
+              🔥
           </Text>
-          <Text numberOfLines={1} style={_s.topTxt}>
-            Almost Full
+            <Text numberOfLines={1} style={_s.topTxt}>
+              Almost Full
           </Text>
+          </Fragment>}
         </View>
 
         <View style={_s.main}>
@@ -112,7 +116,7 @@ const PeopleMarker = ({
           <View style={_s.oval} />
           <View style={_s.labelContainer}>
             <View style={[_s.whiteBox, _s.shadow]}>
-              <Text style={_s.whiteBoxTxt}>{txt.baseball}</Text>
+              <Text numberOfLines={1} style={_s.whiteBoxTxt}>{name}</Text>
             </View>
             <View style={_s.triangle} />
           </View>

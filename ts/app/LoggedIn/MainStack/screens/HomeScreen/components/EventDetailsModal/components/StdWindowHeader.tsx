@@ -1,15 +1,19 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image, Share} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import callAlert from 'ts/utils/callAlert';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 interface HeaderProps {
     eventJoinState: 'join' | 'full' | 'joined';
 }
 
 const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
+    const {selectedMarkerData} = useContext(MainStackContext);
+    const {name} = selectedMarkerData[0];
+
     const shareContent = async () => {
         try {
             const result = await Share.share({
@@ -33,7 +37,7 @@ const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
         <View style={_s.container}>
             <View style={[_s.side]} />
             <View style={[_s.middle, _s.center]}>
-                <Text numberOfLines={1} style={_s.title}>Ball Time</Text>
+                <Text numberOfLines={1} style={_s.title}>{name}</Text>
             </View>
             <View style={[_s.side, _s.center, _s.right]}>
                 <TouchableOpacity onPress={shareContent} style={[_s.btn, _s.shadow, _s.center]}>

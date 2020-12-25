@@ -40,7 +40,7 @@ export async function createEvent({
                 name,
                 description,
                 date: moment(date).format('YYYY-DD-MM HH:mm'),
-                coordinates: JSON.stringify(coordinates),
+                coordinates: coordinates,
                 address,
                 join_limit
             }

@@ -1,16 +1,18 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, Image} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 interface ParagraphProps { }
 
 const Paragraph = (props: ParagraphProps) => {
+    const {selectedMarkerData} = useContext(MainStackContext);
+    const {description} = selectedMarkerData[0];
     return (
         <View style={_s.container}>
-            <Text numberOfLines={2} style={_s.txt}>A marathon free for anyone to join,
-charity run for Somalian school.</Text>
+            <Text numberOfLines={2} style={_s.txt}>{description}</Text>
         </View>
     );
 };

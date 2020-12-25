@@ -42,7 +42,7 @@ const EventDetailsModal = ({modalVisible, eventJoinState}: EventDetailsModalProp
         {renderWindowHeader()}
         <View style={_s.modalMainContent}>
           <Paragraph />
-          <PlaceAndTime eventJoinState={'join'} />
+          <PlaceAndTime eventJoinState={eventJoinState} />
           <JoinSection eventJoinState={eventJoinState} />
         </View>
         <People />

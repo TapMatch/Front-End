@@ -32,7 +32,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
   };
-  console.log(userProfile, '============================userProfile');
   const isFocused = useIsFocused();
   const profileModalVisible = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
@@ -40,12 +39,35 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const communitiesModalVisible = useState<boolean>(false);
   const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
   const mapCoordinates = useState<LatLng>(startingPoint);
+  const hasJoinedCurrentSelectedEvent = useState<boolean>(false);
+  const currentUserIsOrganizer = useState<boolean>(false);
+
+  useEffect(() => {
+    if (profileModalVisible[0] || communitiesModalVisible[0]) {
+      closeAllWhiteModalWindows();
+    }
+  }, [profileModalVisible, eventDetailsModalVisible, communitiesModalVisible]);
+
+  useEffect(() => {
+    currentUserIsOrganizer[1](userProfile[0].id === selectedMarkerData[0].organizer);
+  }, [selectedMarkerData]);
+
+  useEffect(() => {
+    getMarkers();
+  }, []);
+
+  useEffect(() => {
+    const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
+    const hasJoined = ind > -1;
+    hasJoinedCurrentSelectedEvent[1](hasJoined);
+  }, [selectedMarkerData]);
 
   const closeAllWhiteModalWindows = () => {
     if (eventDetailsModalVisible[0]) {
       eventDetailsModalVisible[1](false);
     }
   };
+
   const renderCommandsAndReminders = () => {
     if (eventDetailsModalVisible[0]) {
       return null;
@@ -61,7 +83,9 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   };
 
   const set_mapRef = (x: any) => _mapRef = x;
+
   const focusMapToLatLng = (x: LatLng) => typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
+
   const defineYesNoModalProps = () => {
     switch (yesNoModalMode[0]) {
       case 'delete_event': return ({
@@ -88,18 +112,24 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     yesNoModalVisible[1](true);
     yesNoModalMode[1]('leave_event');
   };
+
   const setupDeleteEventUI = () => {
     yesNoModalVisible[1](true);
     yesNoModalMode[1]('delete_event');
   };
 
   const renderHeader = () => {
+    console.log(userProfile[0].id, selectedMarkerData[0].organizer, 'userProfile[0].id === selectedMarkerData[0].organizer');
     if (!yesNoModalVisible[0]) {
       if (eventDetailsModalVisible[0] && Object.keys(selectedMarkerData[0])) {
-        if (true) {//am watching my event
+        if (currentUserIsOrganizer[0]) {//am watching my event
           return <EventManageHeader setupDeleteEventUI={() => setupDeleteEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
         } else {
-          return <EventDetailsHeader setupLeaveEventUI={() => setupLeaveEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
+          if (hasJoinedCurrentSelectedEvent[0]) {
+            return <EventDetailsHeader setupLeaveEventUI={() => setupLeaveEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
+          } else {
+            return <StdHeader />;
+          }
         }
       } else {
         return <StdHeader />;
@@ -108,21 +138,33 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
       return null;
     }
   };
+
   const getMarkers = () => getEventMarkers({userToken: userToken[0], id: selectedCommunityData[0].id, eventMarkers});
 
-  useEffect(() => {
-    if (profileModalVisible[0] || communitiesModalVisible[0]) {
-      closeAllWhiteModalWindows();
+  const defineJoinState = () => {
+    const {join_limit, members} = selectedMarkerData[0];
+    if (members) {
+      if (join_limit === members.length) {
+        return 'full';
+      } else {
+        return hasJoinedCurrentSelectedEvent[0] ? 'joined' : 'join';
+      }
+    } else {
+      return 'join';
     }
-  }, [profileModalVisible, eventDetailsModalVisible, communitiesModalVisible]);
+  };
 
-  useEffect(() => {
-    getMarkers();
-  }, [selectedCommunityData]);
   if (isFocused) {
     return (
       <HomeScreenContext.Provider
-        value={{profileModalVisible, selectedCommunityData, eventDetailsModalVisible, mapCoordinates, communitiesModalVisible}}>
+        value={{
+          profileModalVisible,
+          currentUserIsOrganizer,
+          selectedCommunityData,
+          eventDetailsModalVisible,
+          mapCoordinates,
+          communitiesModalVisible
+        }}>
         <View style={[_s.container]}>
           <StatusBar
             animated={true}
@@ -132,7 +174,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           {!yesNoModalVisible[0] && renderHeader()}
           {!yesNoModalVisible[0] && renderCommandsAndReminders()}
           <TapMatchMap
-            markers={[]}
             focusMapToLatLng={focusMapToLatLng}
             mapCoordinates={mapCoordinates}
             eventDetailsModalVisible={eventDetailsModalVisible}
@@ -141,7 +182,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           {!yesNoModalVisible[0] && <Fragment>
             <ProfileModal modalVisible={profileModalVisible} />
             <EventDetailsModal
-              eventJoinState={'join'}
+              eventJoinState={defineJoinState()}
               modalVisible={eventDetailsModalVisible}
             />
             <CommunitiesModal selectedCommunityData={selectedCommunityData} modalVisible={communitiesModalVisible} />
