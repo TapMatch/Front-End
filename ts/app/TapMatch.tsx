@@ -105,7 +105,7 @@ const TapMatch = () => {
   ) => {
     if (LoggedIn) {
       if (userProfile !== null) {
-        console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', userProfile[0], '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥');
+        // console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', userProfile[0], '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥');
         if (user_has_passed_onboarding) {
           return <MainStack />;
         } else {

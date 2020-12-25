@@ -31,7 +31,7 @@ const SearchInput = (props: SearchInputProps) => {
       />
       <GooglePlacesAutocomplete
         onFail={(e) => console.log(e)}
-        minLength={5}
+        minLength={3}
         numberOfLines={1}
         autoFillOnNotFound={true}
         enablePoweredByContainer={false}

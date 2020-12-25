@@ -33,7 +33,7 @@ const EventDetailsHeader = ({eventDetailsModalVisible, setupLeaveEventUI}: Event
             <Text style={_s.topMiddleTxt}>{name}.</Text>
           </View>
           <View style={_s.middleBottom}>
-            <Text style={_s.bottomMiddleTxt}>{moment(datetime).format('DD/MM/YYYY HH:mm')}</Text>
+            <Text style={_s.bottomMiddleTxt}>{moment(datetime.date).format('DD/MM/YYYY HH:mm')}</Text>
           </View>
         </View>
         <View style={_s.right}>

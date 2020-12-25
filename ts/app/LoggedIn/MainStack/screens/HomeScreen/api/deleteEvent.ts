@@ -5,34 +5,54 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
 interface IdeleteEvent {
     userToken: string;
-    communityId: string;
-    eventId: string;
+    selectedCommunityData: any;
     eventMarkers: any;
-
+    selectedMarkerData?: any;
+    currentUserIsOrganizer: boolean;
+    eventDetailsModalVisible: [boolean, (x: boolean) => void];
 }
 
 export async function deleteEvent({
-    communityId,
-    eventId,
+    selectedCommunityData,
     userToken,
-    eventMarkers
+    eventMarkers,
+    eventDetailsModalVisible,
+    selectedMarkerData,
+    currentUserIsOrganizer
 }: IdeleteEvent) {
+    console.log(selectedCommunityData[0].id,
+        userToken,
+        eventMarkers[0],
+        selectedMarkerData[0]);
     try {
-        const options: AxiosRequestConfig = {
-            method: 'DELETE',
-            url: `${tapMatchServerUrl}api/communities/${communityId}/events/${eventId}`,
-            headers: {
-                'X-Auth-Token': userToken,
-                'Content-Type': 'application/json',
-            },
-        };
-        axios
-            .request(options)
-            .then(({data}: any) => getEventMarkers({userToken, id: communityId, eventMarkers}))
-            .catch((error) => {
-                console.log(error);
-                // callAlert(undefined, `${error.toString()} ::: deleteEvent`);
-            });
+        if (currentUserIsOrganizer) {
+            const options: AxiosRequestConfig = {
+                method: 'DELETE',
+                url: `${tapMatchServerUrl}api/communities/${selectedCommunityData[0].id}/events/${selectedMarkerData[0].id}`,
+                headers: {
+                    'X-Auth-Token': userToken,
+                    'Content-Type': 'application/json',
+                },
+            };
+            axios
+                .request(options)
+                .then(() => {
+                    eventDetailsModalVisible[1](false);
+                    const ind = eventMarkers[0].findIndex((el: any) => el.id === selectedMarkerData[0].id);
+                    if (ind > -1) {
+                        let newEventMarkersArr = [...eventMarkers[0]];
+                        newEventMarkersArr.splice(ind, 1);
+                        eventMarkers[1](newEventMarkersArr);
+                    }
+                })
+                .then(({data}: any) => getEventMarkers({userToken, id: selectedCommunityData[0].id, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
+                .catch((error) => {
+                    console.log(error);
+                    // callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+                });
+        } else {
+            console.log('ONLY ORGANIZER CAN DELETE EVENT');
+        }
     } catch (error) {
         console.log(`${error} ::: deleteEvent`);
         callAlert(undefined, `${error.toString()} ::: deleteEvent`);

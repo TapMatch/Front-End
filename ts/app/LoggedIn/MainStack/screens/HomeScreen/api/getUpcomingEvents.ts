@@ -13,7 +13,6 @@ export async function getUpcomingEvents({
     userToken,
     upcomingEvents
 }: IgetUpcomingEvents) {
-    console.log(communityId, userToken, upcomingEvents, '>>>>>>>>>>>getUpcomingEvents<<<<<<<<',);
     try {
         const options: AxiosRequestConfig = {
             method: 'GET',

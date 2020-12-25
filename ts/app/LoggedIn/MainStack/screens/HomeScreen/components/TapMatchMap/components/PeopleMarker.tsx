@@ -23,8 +23,24 @@ const PeopleMarker = ({
   eventDetailsModalVisible,
   focusMapToLatLng
 }: PeopleMarkerProps) => {
-  const {members, name, join_limit} = item;
+  const {members, name, join_limit, organizer} = item;
   const {selectedMarkerData} = useContext(MainStackContext);
+
+  const positionArr = [
+    {position: {left: 70, top: 30}, style: 0},
+    {position: {left: 20, top: 60}, style: 0},
+    {position: {left: 20, top: 60}, style: 0},
+    {position: {left: 29, top: 34}, style: 1},
+    {position: {left: 29, top: 34}, style: 1},
+  ];
+  const layers = [
+    {
+      zIndex: 10,
+    },
+    {
+      zIndex: 20,
+    },
+  ];
   return (
     <Marker
       onPress={() => {
@@ -46,74 +62,33 @@ const PeopleMarker = ({
         </View>
 
         <View style={_s.main}>
-          <Image
-            resizeMode={'stretch'}
-            style={[
-              _s.placeholderImg,
-              _s.shadow,
-              _s.placeholderImgBackLayer,
-              {
-                left: 70,
-                top: 30,
-              },
-            ]}
-            source={require('assets/png/PlaceholderPeopleImages/5.png')}
-          />
+          {members.map((el: any, ind: number) =>
+            <Image
+              resizeMode={'center'}
+              style={[
+                _s.placeholderImg,
+                _s.memberAvatarContainer,
+                _s.shadow,
+                layers[positionArr[ind].style],
+                positionArr[ind].position,
+              ]}
+              source={{
+                uri: el.avatar
+              }}
+            />)}
 
-          <Image
-            resizeMode={'stretch'}
-            style={[
-              _s.placeholderImg,
-              _s.shadow,
-              _s.placeholderImgBackLayer,
-              {left: 20, top: 60},
-            ]}
-            source={require('assets/png/PlaceholderPeopleImages/4.png')}
-          />
-          <Image
-            resizeMode={'stretch'}
-            style={[
-              _s.placeholderImg,
-              _s.shadow,
-              _s.placeholderImgBackLayer,
-              {right: 20, top: 60},
-            ]}
-            source={require('assets/png/PlaceholderPeopleImages/2.png')}
-          />
-
-          <Image
-            resizeMode={'stretch'}
-            style={[
-              _s.placeholderImg,
-              _s.shadow,
-              _s.placeholderImgFrontLayer,
-              {left: 29, top: 34},
-            ]}
-            source={require('assets/png/PlaceholderPeopleImages/1.png')}
-          />
-          <Image
-            resizeMode={'stretch'}
-            style={[
-              _s.placeholderImg,
-              _s.shadow,
-              _s.placeholderImgFrontLayer,
-              {right: 29, top: 34},
-            ]}
-            source={require('assets/png/PlaceholderPeopleImages/3.png')}
-          />
 
           <View style={[_s.avatarContainer, , _s.shadow]}>
             <Image
               resizeMode={'cover'}
               style={_s.avatar}
               source={{
-                uri:
-                  'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
+                uri: organizer.avatar
               }}
             />
           </View>
 
-          <View style={_s.oval} />
+          {members.length > 0 && <View style={_s.oval} />}
           <View style={_s.labelContainer}>
             <View style={[_s.whiteBox, _s.shadow]}>
               <Text numberOfLines={1} style={_s.whiteBoxTxt}>{name}</Text>
@@ -163,6 +138,17 @@ const _s = StyleSheet.create({
   avatar: {
     height: 50,
     width: 50,
+  },
+  memberAvatarContainer: {
+    borderRadius: 300,
+    borderWidth: 5,
+    borderColor: _c.white,
+    zIndex: 100,
+    height: 50,
+    width: 50,
+    overflow: 'hidden',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   topTxt: {
     opacity: 0,
@@ -215,15 +201,9 @@ const _s = StyleSheet.create({
   placeholderImg: {
     height: 70,
     width: 70,
-
     position: 'absolute',
   },
-  placeholderImgBackLayer: {
-    zIndex: 10,
-  },
-  placeholderImgFrontLayer: {
-    zIndex: 20,
-  },
+
   shadow: {
     shadowColor: _c.black,
     shadowOffset: {

@@ -49,7 +49,6 @@ export async function createEvent({
         return axios
             .request(options)
             .then(({data}: any) => {
-                console.log(data, 'HHHHHHHHHHHHHHHHHHHHHHHHH');
                 getEventMarkers({userToken, id: communityId, eventMarkers});
             })
             .catch((error) => {

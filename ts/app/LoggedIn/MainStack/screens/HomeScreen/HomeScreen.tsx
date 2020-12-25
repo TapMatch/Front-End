@@ -17,6 +17,8 @@ import EventDetailsHeader from './components/EventDetailsHeader/EventDetailsHead
 import CommunitiesModal from './components/CommunitiesModal/CommunitiesModal';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {deleteEvent} from './api/deleteEvent';
+import {leaveEvent} from './api/leaveEvent';
 
 interface HomeScreenProps {
   navigation: any;
@@ -38,6 +40,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const yesNoModalVisible = useState<boolean>(false);
   const communitiesModalVisible = useState<boolean>(false);
   const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
+  const eventJoinState = useState<'join' | 'full' | 'joined'>('join');
   const mapCoordinates = useState<LatLng>(startingPoint);
   const hasJoinedCurrentSelectedEvent = useState<boolean>(false);
   const currentUserIsOrganizer = useState<boolean>(false);
@@ -49,8 +52,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   }, [profileModalVisible, eventDetailsModalVisible, communitiesModalVisible]);
 
   useEffect(() => {
-    currentUserIsOrganizer[1](userProfile[0].id === selectedMarkerData[0].organizer);
+    if (Object.keys(selectedMarkerData[0]).length) {
+      currentUserIsOrganizer[1](userProfile[0].id === selectedMarkerData[0].organizer.id);
+    }
   }, [selectedMarkerData]);
+
+  useEffect(() => {
+    eventJoinState[1](defineJoinState());
+  }, [selectedMarkerData, eventDetailsModalVisible]);
 
   useEffect(() => {
     getMarkers();
@@ -72,13 +81,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     if (eventDetailsModalVisible[0]) {
       return null;
     } else {
-      return <Fragment>
-        <UpcomingEvents resetMap={() => {
-          closeAllWhiteModalWindows();
-          focusMapToLatLng(startingPoint);
-        }} />
-        { /* <EventReminder /> */}
-      </Fragment>;
+      return (
+        <Fragment>
+          <UpcomingEvents resetMap={() => {
+            closeAllWhiteModalWindows();
+            focusMapToLatLng(startingPoint);
+          }} />
+          { /* <EventReminder /> */}
+        </Fragment>);
     }
   };
 
@@ -88,22 +98,40 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
   const defineYesNoModalProps = () => {
     switch (yesNoModalMode[0]) {
-      case 'delete_event': return ({
-        onNoPress: () => console.log('onNoPress -delete'),
-        onYesPress: () => console.log('onYesPress'),
-        title: 'Are you sure\nYou want to\nDelete this event?',
-        modalVisible: yesNoModalVisible
-      });
-      case 'leave_event': return ({
-        onNoPress: () => console.log('onNoPress -leave'),
-        title: 'Are you sure\nYou want to\nleave this event?',
-        modalVisible: yesNoModalVisible
-      });
-      default: return ({
-        onNoPress: () => console.log('default'),
-        title: 'default',
-        modalVisible: yesNoModalVisible
-      });
+      case 'delete_event':
+        return ({
+          onNoPress: () => console.log('onNoPress -delete'),
+          onYesPress: () => deleteEvent({
+            eventDetailsModalVisible,
+            currentUserIsOrganizer: currentUserIsOrganizer[0],
+            selectedCommunityData: selectedCommunityData,
+            userToken: userToken[0],
+            selectedMarkerData,
+            eventMarkers
+          }),
+          title: 'Are you sure\nYou want to\nDelete this event?',
+          modalVisible: yesNoModalVisible
+        });
+      case 'leave_event':
+        return ({
+          onYesPress: () =>
+            leaveEvent({
+              userProfile,
+              eventDetailsModalVisible,
+              selectedCommunityData: selectedCommunityData,
+              userToken: userToken[0],
+              selectedMarkerData,
+              eventMarkers
+            }),
+          title: 'Are you sure\nYou want to\nleave this event?',
+          modalVisible: yesNoModalVisible
+        });
+      default:
+        return ({
+          onNoPress: () => console.log('default'),
+          title: 'default',
+          modalVisible: yesNoModalVisible
+        });
     }
 
   };
@@ -119,9 +147,8 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   };
 
   const renderHeader = () => {
-    console.log(userProfile[0].id, selectedMarkerData[0].organizer, 'userProfile[0].id === selectedMarkerData[0].organizer');
     if (!yesNoModalVisible[0]) {
-      if (eventDetailsModalVisible[0] && Object.keys(selectedMarkerData[0])) {
+      if (eventDetailsModalVisible[0] && Object.keys(selectedMarkerData[0]).length) {
         if (currentUserIsOrganizer[0]) {//am watching my event
           return <EventManageHeader setupDeleteEventUI={() => setupDeleteEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
         } else {
@@ -174,19 +201,21 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           {!yesNoModalVisible[0] && renderHeader()}
           {!yesNoModalVisible[0] && renderCommandsAndReminders()}
           <TapMatchMap
+            eventMarkers={eventMarkers}
             focusMapToLatLng={focusMapToLatLng}
             mapCoordinates={mapCoordinates}
             eventDetailsModalVisible={eventDetailsModalVisible}
             set_mapRef={set_mapRef}
           />
-          {!yesNoModalVisible[0] && <Fragment>
-            <ProfileModal modalVisible={profileModalVisible} />
-            <EventDetailsModal
-              eventJoinState={defineJoinState()}
-              modalVisible={eventDetailsModalVisible}
-            />
-            <CommunitiesModal selectedCommunityData={selectedCommunityData} modalVisible={communitiesModalVisible} />
-          </Fragment>}
+          {!yesNoModalVisible[0] &&
+            <Fragment>
+              <ProfileModal modalVisible={profileModalVisible} />
+              <EventDetailsModal
+                eventJoinState={eventJoinState[0]}
+                modalVisible={eventDetailsModalVisible}
+              />
+              <CommunitiesModal selectedCommunityData={selectedCommunityData} modalVisible={communitiesModalVisible} />
+            </Fragment>}
           <YesNoModal
             {...defineYesNoModalProps()}
           />

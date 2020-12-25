@@ -14,24 +14,15 @@ interface JoinSectionProps {
 }
 
 const JoinSection = ({eventJoinState}: JoinSectionProps) => {
-    const {eventMarkers, selectedMarkerData} = useContext(MainStackContext);
+    const {eventMarkers, selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
     const {currentUserIsOrganizer} = useContext(HomeScreenContext);
-    const {userToken} = useContext(TapMatchContext);
-    const {id, members} = selectedMarkerData[0];
+    const {userToken, userProfile} = useContext(TapMatchContext);
+    const {members} = selectedMarkerData[0];
     const defineMessage = () => {
-        if (currentUserIsOrganizer[0]) {
-            if (members.length) {
-                return `You and ${members.length} others are going!`;
-            } else {
-                return `You and are going!`;
-            }
+        if (members.length) {
+            return `You and ${members.length} others are going!`;
         } else {
-            if (members.length - 1) {
-
-                return `You and ${members.length - 1} others are going!`;
-            } else {
-                return `You and are going!`;
-            }
+            return `You and are going!`;
         }
     };
 
@@ -45,10 +36,11 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
             case 'join': return (
                 <View style={[_s.container, _s.center]}>
                     <TouchableOpacity onPress={() => joinEvent({
-                        communityId: id,
+                        communityId: selectedCommunityData[0].id,
                         userToken: userToken[0],
                         eventMarkers,
-                        selectedMarkerData
+                        selectedMarkerData,
+                        userProfile
                     })} style={[_s.btn, _s.shadow, _s.center]}>
                         <Text numberOfLines={1} style={[_s.txt, _s.btnTxt]}>Join</Text>
                     </TouchableOpacity>

@@ -19,14 +19,14 @@ interface TapMatchMapProps {
     focusMapToLatLng: (x: LatLng) => void;
     mapCoordinates: [LatLng, (x: LatLng) => void];
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
+    eventMarkers: any;
 }
 
-const TapMatchMap = ({focusMapToLatLng, markers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
+const TapMatchMap = ({focusMapToLatLng, eventMarkers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-    const {selectedCommunityData, eventMarkers, selectedMarkerData} = useContext(MainStackContext);
+    const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
     let _mapRef = useRef<any>(null);
     // const {} = useContext(HomeScreenContext);
-    console.log(eventMarkers[0], 'eventMarkers[0]-----eventMarkers[0]');
     return (
         <MapView
             ref={(x) => {
@@ -65,13 +65,12 @@ const TapMatchMap = ({focusMapToLatLng, markers, set_mapRef, mapCoordinates, eve
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}>
-            {eventMarkers[0] && eventMarkers[0].map((el: any) =>
+            {eventMarkers[0].map((el: any) =>
                 <PeopleMarker
-                    key={el.id}
+                    key={`PeopleMarker-${el.id}-${el.name}`}
                     item={el}
                     focusMapToLatLng={focusMapToLatLng}
                     coordinate={el.coordinates}
-                    // coordinate={{...mapCoordinates[0], latitude: mapCoordinates[0].latitude + 0.0000001}}
                     eventDetailsModalVisible={eventDetailsModalVisible}
                 />)}
             <UserLocationMarker coordinate={userLocation[0]} />

@@ -2,24 +2,23 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
+import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 
 interface IjoinEvent {
     userToken: string;
     communityId: string;
     eventMarkers: any;
     selectedMarkerData?: any;
+    userProfile: any;
 }
 
 export async function joinEvent({
     communityId,
     userToken,
     eventMarkers,
-    selectedMarkerData
+    selectedMarkerData,
+    userProfile
 }: IjoinEvent) {
-    console.log(communityId,
-        userToken,
-        eventMarkers[0],
-        selectedMarkerData[0]);
     try {
         const options: AxiosRequestConfig = {
             method: 'POST',
@@ -31,6 +30,7 @@ export async function joinEvent({
         };
         axios
             .request(options)
+            .then(() => getUserProfile({userProfile, userToken}))
             .then(({data}: any) => getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
             .catch((error) => {
                 console.log(error);

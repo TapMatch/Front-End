@@ -16,20 +16,19 @@ const People = (props: PeopleProps) => {
     } else {
         return (
             <View style={_s.container}>
-                {members.map((el: any) =>
-                    <View key={`people-${el}`}
+                {members.map(({id, name, avatar}: any) =>
+                    <View key={`people-${id}`}
                         style={_s.personContainer}>
                         <View style={[_s.avatarContainer, _s.shadow]}>
                             <Image
-                                resizeMode={'contain'}
+                                resizeMode={'cover'}
                                 style={_s.avatar}
                                 source={{
-                                    uri:
-                                        'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_1280.png',
+                                    uri: avatar
                                 }}
                             />
                         </View>
-                        <Text numberOfLines={1} style={_s.txt}>Human {el}</Text>
+                        <Text numberOfLines={2} style={_s.txt}>{name}</Text>
                     </View>)}
             </View>);
     }
@@ -71,7 +70,7 @@ const _s = StyleSheet.create({
     },
     txt: {
         maxWidth: '100%',
-        marginTop: 5,
+        marginTop: 2,
         fontSize: _fs.xxs,
         fontFamily: _f.regularAlt,
         textAlign: 'center',

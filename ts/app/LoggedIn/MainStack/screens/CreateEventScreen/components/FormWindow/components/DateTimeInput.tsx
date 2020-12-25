@@ -12,7 +12,6 @@ interface DateTimeInputProps {
 
 const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
   const dateTimePickerModalVisible = useState<boolean>(false);
-  console.log(new Date());
   return (
     <Fragment>
       <TouchableOpacity

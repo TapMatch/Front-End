@@ -33,12 +33,10 @@ export async function getEventMarkers({
     axios
       .request(options)
       .then(({data}: any) => {
-        console.log(']]]]]]]]]]]]]]]]]]]]]', data, '[[[[[[[[[[[[[[[[[[[[');
         eventMarkers[1](data);
         if (selectedMarkerData) {
           const id = selectedMarkerData[0].id;
           const element = eventMarkers[0].find((el: any) => el.id === id);
-          console.log(element, '*****************************************************************************************');
           if (element) {
             selectedMarkerData[1](element);
           } else {
