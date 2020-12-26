@@ -15,7 +15,11 @@ const CommunityBtn = (props: CommunityBtnProps) => {
   const {name, id, city, access, count} = selectedCommunityData[0];
   return (
     <TouchableOpacity
+
+      // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
       onLongPress={() => navigate('SecretScreen')}
+
+      //
       onPress={() => communitiesModalVisible[1](true)}
       style={[_s.container, _s.shadow]}>
       <View style={_s.txtContainer}>

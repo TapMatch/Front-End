@@ -7,7 +7,10 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 import CaptionBubble from 'assets/svg/caption-bubble.svg';
-interface FeedbackBtnProps {}
+interface FeedbackBtnProps {
+  // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
+  testingMode: any;
+}
 
 const FeedbackBtn = (props: FeedbackBtnProps) => {
   const {navigate} = useNavigation();
@@ -15,6 +18,9 @@ const FeedbackBtn = (props: FeedbackBtnProps) => {
 
   return (
     <TouchableOpacity
+      // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
+      onLongPress={() => props.testingMode[1](!props.testingMode[0])}
+
       onPress={() => navigate('WebScreen', {url: 'https://www.blender.org/'})}
       style={_s.container}>
       <CaptionBubble height={_fs.m} width={_fs.m} />

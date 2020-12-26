@@ -6,7 +6,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
-interface RequestCommunityBtnProps {}
+interface RequestCommunityBtnProps { }
 
 const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
   const {navigate} = useNavigation();
@@ -14,7 +14,10 @@ const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
 
   return (
     <TouchableOpacity
+      // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
       onLongPress={() => navigate('SecretScreen')}
+
+      //
       onPress={() => navigate('WebScreen', {url: 'https://vradov.space/'})}
       style={_s.container}>
       <View style={_s.circle} />

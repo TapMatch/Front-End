@@ -18,7 +18,7 @@ const NameInput = ({name}: NameInputProps) => {
           autoCorrect={false}
           autoFocus={false}
           maxLength={40}
-          style={_s.NameInputView}
+          style={_s.input}
           value={name[0]}
           onChangeText={name[1]}
         />
@@ -45,8 +45,14 @@ const _s = StyleSheet.create({
     justifyContent: 'flex-start',
     marginHorizontal: '10%',
   },
-  NameInputView: {
+  input: {
     height: '70%',
     flex: 1,
+    overflow: 'visible',
+    textAlign: 'left',
+    textAlignVertical: 'center',
+    paddingVertical: 0,
+    fontFamily: _f.eRegular,
+    fontSize: _fs.m,
   },
 });

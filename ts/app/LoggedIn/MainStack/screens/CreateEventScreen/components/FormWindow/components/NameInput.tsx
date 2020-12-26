@@ -64,6 +64,7 @@ const _s = StyleSheet.create({
         alignItems: 'flex-start',
     },
     input: {
+        paddingVertical: 0,
         marginTop: 4,
         alignItems: 'center',
         justifyContent: 'center',

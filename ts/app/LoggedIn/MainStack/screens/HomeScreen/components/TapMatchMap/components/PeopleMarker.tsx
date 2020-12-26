@@ -154,7 +154,7 @@ const _s = StyleSheet.create({
     opacity: 0,
     fontFamily: _f.regularAlt,
     color: _c.black,
-    fontSize: 20,
+    fontSize: 16,
     textAlign: 'center',
     textAlignVertical: 'center',
   },

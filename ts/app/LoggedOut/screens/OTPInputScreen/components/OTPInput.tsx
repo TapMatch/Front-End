@@ -63,6 +63,7 @@ const _s = StyleSheet.create({
     marginHorizontal: '4.5%',
   },
   underlineStyleBase: {
+    paddingVertical: 0,
     height: '100%',
     borderWidth: 0,
     borderBottomWidth: 0,

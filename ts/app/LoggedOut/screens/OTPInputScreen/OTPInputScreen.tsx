@@ -24,8 +24,11 @@ const OTPInputScreen = ({navigation}: OTPInputScreenProps) => {
 
   useEffect(() => {
     const resendTimer = setInterval(() => {
+      console.log('HUHUHUHUHUHUHUHUHUHUH878787878787878666UHUHUUUHUHUHUHUHUHUHUHUHUHUHUHUHUHUHUHUHUHHUH');
       if (isFocused) {
+        console.log('zzzzzzzzzzzzzzzzzzzzz-zzzzzzzzzzzzzzzzzzzzz-zzzzzzzzzzzzzzzzzzzzz-zzzzzzzzzzzzzzzzzzzzz');
         if (PHPSESSID[0].length) {
+          console.log('xxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxx-xxxxxxxxxxxxxxxxxxxxxx');
           ReSendCodeDisabled[1](false);
         }
       }

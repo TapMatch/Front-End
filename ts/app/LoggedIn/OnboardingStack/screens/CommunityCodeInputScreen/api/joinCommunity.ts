@@ -30,9 +30,9 @@ export async function joinCommunity({
       },
       data: code
         ? {
-            access: code,
-          }
-        : undefined,
+          access: code,
+        }
+        : {},
     };
     axios
       .request(options)

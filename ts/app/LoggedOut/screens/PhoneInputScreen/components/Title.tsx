@@ -5,7 +5,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
-interface TitleProps {}
+interface TitleProps { }
 
 const Title = (props: TitleProps) => {
   const txt = useLocalizedTxt();
@@ -32,6 +32,6 @@ const _s = StyleSheet.create({
     textAlignVertical: 'center',
     color: _c.black,
     fontFamily: _f.eRegular,
-    fontSize: _fs.x8l,
+    fontSize: _fs.x6l,
   },
 });

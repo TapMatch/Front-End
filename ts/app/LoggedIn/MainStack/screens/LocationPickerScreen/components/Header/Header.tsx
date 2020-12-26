@@ -4,7 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import TitleAndReturn from './components/TitleAndReturn';
-import SearchInput from './components/SearchInput';
+import SearchInput from './components/SearchInput/SearchInput';
 import BlackGradient from 'ts/app/common/components/BlackGradient';
 
 interface HeaderProps { }

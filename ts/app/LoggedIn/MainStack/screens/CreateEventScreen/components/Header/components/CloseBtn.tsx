@@ -1,6 +1,6 @@
 import React, {useContext} from 'react';
 import {StyleSheet, TouchableOpacity} from 'react-native';
-import PlusBlack from 'assets/svg/close-black.svg';
+import CloseBlack from 'assets/svg/close-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 
@@ -10,7 +10,7 @@ const CloseBtn = (props: CloseBtnProps) => {
   const {yesNoModalVisible} = useContext(CreateEventScreenContext);
   return (
     <TouchableOpacity onPress={() => yesNoModalVisible[1](true)} style={_s.container} >
-      <PlusBlack height={_fs.xxl} width={_fs.xxl} />
+      <CloseBlack height={_fs.xxl} width={_fs.xxl} />
     </TouchableOpacity >
   );
 };

@@ -102,6 +102,9 @@ const _s = StyleSheet.create({
     textAlign: 'left',
     textAlignVertical: 'center',
     flex: 1,
+    paddingVertical: 0,
+    fontFamily: _f.eRegular,
+    fontSize: _fs.s,
   },
   countryPickerTrigger: {
     height: '60%',

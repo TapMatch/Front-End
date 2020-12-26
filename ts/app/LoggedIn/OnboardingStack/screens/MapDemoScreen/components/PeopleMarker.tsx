@@ -5,6 +5,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {vs} from 'react-native-size-matters';
 
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
@@ -151,7 +152,7 @@ const _s = StyleSheet.create({
   topTxt: {
     fontFamily: _f.regularAlt,
     color: _c.main_red,
-    fontSize: 20,
+    fontSize: vs(14),
     textAlign: 'center',
     textAlignVertical: 'center',
   },

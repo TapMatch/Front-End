@@ -68,6 +68,7 @@ const _s = StyleSheet.create({
     // paddingHorizontal: '3%',
   },
   underlineStyleBase: {
+    paddingVertical: 0,
     height: '100%',
     borderWidth: 0,
     borderBottomWidth: 0,

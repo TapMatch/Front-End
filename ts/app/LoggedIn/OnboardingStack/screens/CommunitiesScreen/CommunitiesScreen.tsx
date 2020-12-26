@@ -26,6 +26,12 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const communities = useState<any>([]);
   const coordinates = userLocation[0];
+
+  // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
+  const testingMode = useState<boolean>(false);
+
+
+
   useEffect(() => {
     getAllCommunities({
       userToken: userToken[0],
@@ -55,10 +61,11 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
               showsVerticalScrollIndicator={false}
               data={communities[0]}
               renderItem={({item, index, separators}) => {
-                const c = userProfile[0].communities.find((el: any) => {
+                const c = userProfile[0].communities[0].find((el: any) => {
                   return el.id === item.id;
                 });
-                return c ? (
+                const cond = testingMode[0] ? false : c;
+                return cond ? (
                   <ListItemUnlocked item={{...item, access: c.access}} />
                 ) : (
                     <ListItemLocked item={item} />
@@ -75,7 +82,9 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
               },
             ]}>
             <RequestCommunityBtn />
-            <FeedbackBtn />
+            {/* <FeedbackBtn /> */}
+            {/* FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION */}
+            <FeedbackBtn testingMode={testingMode} />
           </View>
         </View>
         <MapView
