@@ -64,7 +64,8 @@ const PeopleMarker = ({
         <View style={_s.main}>
           {members.map((el: any, ind: number) =>
             <Image
-              resizeMode={'center'}
+              key={el.avatar}
+              resizeMode={'cover'}
               style={[
                 _s.placeholderImg,
                 _s.memberAvatarContainer,
