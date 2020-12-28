@@ -20,6 +20,14 @@ export async function joinCommunity({
   communityId,
   code,
 }: IjoinCommunity) {
+  // console.log({
+  //   errorState,
+  //   userProfile,
+  //   windowState,
+  //   userToken,
+  //   communityId,
+  //   code
+  // }, `*****************`);
   try {
     const options: AxiosRequestConfig = {
       method: 'POST',
@@ -37,6 +45,14 @@ export async function joinCommunity({
     axios
       .request(options)
       .then(({data}: any) => {
+        console.log(data, 'TGTGTGTGTGTGTG');
+
+        getUserProfile({userProfile, userToken});
+        return data;
+      })
+
+      .then((data) => {
+        console.log(data, 'HHHHHHHHHHHHHHH');
         if (data.error === 'incorrect code') {
           if (errorState) {
             errorState[1](true);
@@ -47,13 +63,12 @@ export async function joinCommunity({
           windowState[1](false);
         }
       })
-      .then(() => getUserProfile({userProfile, userToken}))
       .catch((error) => {
         console.log(error);
-        callAlert(undefined, `${error.toString()} ::: joinCommunity`);
+        callAlert(undefined, `${error.toString()} ::: joinCommunity1`);
       });
   } catch (error) {
-    console.log(`${error} ::: joinCommunity`);
+    console.log(`${error} ::: joinCommunity2`);
     callAlert(undefined, `${error.toString()} ::: joinCommunity`);
   }
 }

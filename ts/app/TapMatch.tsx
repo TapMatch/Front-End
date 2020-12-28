@@ -98,15 +98,12 @@ const TapMatch = () => {
     );
   };
 
-  const createRootNavigation = (
-    LoggedIn: boolean,
-    user_has_passed_onboarding: boolean,
-    userProfile: any,
-  ) => {
-    if (LoggedIn) {
+  const createRootNavigation = () => {
+    if (LoggedIn[0]) {
       if (userProfile !== null) {
         // console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', userProfile[0], '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥');
-        if (user_has_passed_onboarding) {
+        // console.log('💧💧💧💧💧💧💧💧💧💧', userToken[0], '💧💧💧💧💧💧💧💧💧💧💧💧');
+        if (user_has_passed_onboarding[0]) {
           return <MainStack />;
         } else {
           return <OnboardingStack />;
@@ -131,11 +128,7 @@ const TapMatch = () => {
       }}>
       <NoNetworkModal />
       <NavigationContainer
-        children={createRootNavigation(
-          LoggedIn[0],
-          user_has_passed_onboarding[0],
-          userProfile[0],
-        )}
+        children={createRootNavigation()}
       />
     </TapMatchContext.Provider>
   );
