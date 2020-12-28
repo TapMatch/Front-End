@@ -49,7 +49,7 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
   //     userToken: userToken[0],
   //     upcomingEvents
   //   });
-  // });
+  // }, [selectedCommunityData[0].id]);
 
   return (
     <View pointerEvents={'box-none'} style={_s.container}>

@@ -1,23 +1,27 @@
-import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useContext} from 'react';
+import {Text, View, StyleSheet, TouchableOpacity, Keyboard} from 'react-native';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {useNavigation} from '@react-navigation/native';
+import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputContext';
 
-interface WindowHeaderProps {}
+interface WindowHeaderProps { }
 
 const iconSize = _fs.xxl * 1.4;
 
 const WindowHeader = (props: WindowHeaderProps) => {
   const txt = useLocalizedTxt();
-  const {goBack} = useNavigation();
+  const {modalVisible} = useContext(CommunityCodeInputContext);
+
   return (
     <View style={_s.container}>
-      <TouchableOpacity style={_s.iconContainerBtn} onPress={goBack}>
+      <TouchableOpacity style={_s.iconContainerBtn} onPress={() => {
+        Keyboard.dismiss();
+        modalVisible[1](false);
+      }}>
         <ChevronLeftBlack height={iconSize} width={iconSize} />
       </TouchableOpacity>
       <View style={_s.txtContainer}>

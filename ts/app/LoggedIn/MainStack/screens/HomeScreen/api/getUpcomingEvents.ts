@@ -24,7 +24,7 @@ export async function getUpcomingEvents({
         };
         axios
             .request(options)
-            .then(({data}: any) => upcomingEvents[1](data))
+            .then(({data}: any) => upcomingEvents[1](data.data))
             .catch((error) => {
                 console.log(error);
                 // callAlert(undefined, `${error.toString()} ::: getUpcomingEvents`);

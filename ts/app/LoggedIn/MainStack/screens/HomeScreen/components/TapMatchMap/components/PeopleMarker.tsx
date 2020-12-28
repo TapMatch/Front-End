@@ -62,7 +62,7 @@ const PeopleMarker = ({
         </View>
 
         <View style={_s.main}>
-          {members.map((el: any, ind: number) =>
+          {members.map((el: any, ind: number) => el.id !== organizer.id ?
             <Image
               key={el.avatar}
               resizeMode={'cover'}
@@ -76,7 +76,7 @@ const PeopleMarker = ({
               source={{
                 uri: el.avatar
               }}
-            />)}
+            /> : null)}
 
 
           <View style={[_s.avatarContainer, , _s.shadow]}>

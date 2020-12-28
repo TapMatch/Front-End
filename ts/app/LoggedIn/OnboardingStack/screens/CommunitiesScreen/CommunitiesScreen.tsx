@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {Fragment, useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, FlatList} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
@@ -13,25 +13,72 @@ import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from './api/getAllCommunities';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
+import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
 
 interface CommunitiesScreenProps {
   navigation: any;
-  route: any;
 }
 
-const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
+const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const isFocused = useIsFocused();
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const communities = useState<any>([]);
+  const codeInputVisible = useState<boolean>(false);
+  const selectedCommunity = useState<any>({});
   const coordinates = userLocation[0];
 
   // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
   const testingMode = useState<boolean>(false);
 
-
-
+  const selectItem = (item: any) => {
+    selectedCommunity[1](item);
+    codeInputVisible[1](true);
+  };
+  const renderContent = () => {
+    if (codeInputVisible[0]) {
+      return <CommunityCodeInput communityItem={selectedCommunity} modalVisible={codeInputVisible} />;
+    } else {
+      return <Fragment>
+        <Title />
+        <View style={_s.middle}>
+          <FlatList
+            contentContainerStyle={{paddingHorizontal: '7%'}}
+            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
+            data={communities[0]}
+            renderItem={({item}) => {
+              const c = userProfile[0].communities[0].find((el: any) => {
+                return el.id === item.id;
+              });
+              {/* FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION */}
+              const cond = testingMode[0] ? false : c;
+              {/**/}
+              return cond ? (
+                <ListItemUnlocked item={{...item, access: c.access}} />
+              ) : (
+                  <ListItemLocked selectItem={selectItem} item={item} />
+                );
+            }}
+          />
+        </View>
+        <View
+          style={[
+            _s.bottom,
+            {
+              paddingTop: height * 0.02,
+              paddingBottom: height * 0.02 + bottom,
+            },
+          ]}>
+          <RequestCommunityBtn />
+          {/* <FeedbackBtn /> */}
+          {/* FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION */}
+          <FeedbackBtn testingMode={testingMode} />
+        </View>
+      </Fragment>;
+    }
+  };
   useEffect(() => {
     getAllCommunities({
       userToken: userToken[0],
@@ -52,41 +99,9 @@ const CommunitiesScreen = ({navigation, route}: CommunitiesScreenProps) => {
   if (isFocused) {
     return (
       <View style={[_s.container]}>
-        <View style={[_s.content, {paddingTop: 60 + top}]}>
-          <Title />
-          <View style={_s.middle}>
-            <FlatList
-              contentContainerStyle={{paddingHorizontal: '7%'}}
-              showsHorizontalScrollIndicator={false}
-              showsVerticalScrollIndicator={false}
-              data={communities[0]}
-              renderItem={({item, index, separators}) => {
-                const c = userProfile[0].communities[0].find((el: any) => {
-                  return el.id === item.id;
-                });
-                const cond = testingMode[0] ? false : c;
-                return cond ? (
-                  <ListItemUnlocked item={{...item, access: c.access}} />
-                ) : (
-                    <ListItemLocked item={item} />
-                  );
-              }}
-            />
-          </View>
-          <View
-            style={[
-              _s.bottom,
-              {
-                paddingTop: height * 0.02,
-                paddingBottom: height * 0.02 + bottom,
-              },
-            ]}>
-            <RequestCommunityBtn />
-            {/* <FeedbackBtn /> */}
-            {/* FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION */}
-            <FeedbackBtn testingMode={testingMode} />
-          </View>
-        </View>
+        { <View style={[_s.content, {paddingTop: 60 + top}]}>
+          {renderContent()}
+        </View>}
         <MapView
           provider={PROVIDER_GOOGLE}
           customMapStyle={googleMapStyle}

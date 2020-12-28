@@ -6,10 +6,8 @@ import NameInputScreen from './screens/NameInputScreen/NameInputScreen';
 import AvatarCameraScreen from './screens/AvatarCameraScreen/AvatarCameraScreen';
 import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
 import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
-// import LoggedOutPlaceholderScreen from './screens/LoggedOutPlaceholderScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
-import CommunityCodeInputScreen from './screens/CommunityCodeInputScreen/CommunityCodeInputScreen';
 import SecretScreen from '../MainStack/screens/SecretScreen';
 
 export default function OnboardingStack() {
@@ -97,16 +95,6 @@ export default function OnboardingStack() {
       <Screen
         name="Communities"
         component={CommunitiesScreen}
-        options={() => {
-          return {
-            headerShown: false,
-          };
-        }}
-      />
-
-      <Screen
-        name="CommunityCodeInput"
-        component={CommunityCodeInputScreen}
         options={() => {
           return {
             headerShown: false,

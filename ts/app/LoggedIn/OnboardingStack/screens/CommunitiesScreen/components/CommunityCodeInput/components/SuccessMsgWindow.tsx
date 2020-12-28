@@ -7,11 +7,10 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {vs} from 'react-native-size-matters';
 import CheckCircleRed from 'assets/svg/check-circle-red.svg';
 import LockOpenWhite from 'assets/svg/lock-open-white.svg';
-import {useNavigation} from '@react-navigation/native';
-import {CommunityCodeInputScreenContext} from 'ts/app/contexts/CommunityCodeInputScreenContext';
+import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputContext';
 import {useDimensions} from '@react-native-community/hooks';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {postUserFinishedOnboarding} from '../api/postUserFinishedOnboarding';
+import {postUserFinishedOnboarding} from '../../../api/postUserFinishedOnboarding';
 
 interface CodeInputWindowProps {
   community: any;
@@ -19,8 +18,7 @@ interface CodeInputWindowProps {
 
 const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const txt = useLocalizedTxt();
-  const {windowState} = useContext(CommunityCodeInputScreenContext);
-  const {navigate} = useNavigation();
+  const {windowState} = useContext(CommunityCodeInputContext);
   const circleCheckRedSize = vs(70);
   const lockOpenWhiteSize = vs(55);
   const {height} = useDimensions().screen;

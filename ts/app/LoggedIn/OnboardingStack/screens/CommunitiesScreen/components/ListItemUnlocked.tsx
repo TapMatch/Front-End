@@ -5,41 +5,33 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
-import {useNavigation} from '@react-navigation/native';
-import LockOpenBlack from 'assets/svg/lock-open-black.svg'; //
+import LockOpenBlack from 'assets/svg/lock-open-black.svg';
 
 interface ListItemProps {
   item: any;
 }
 
 const ListItemUnlocked = ({item}: ListItemProps) => {
-  const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
-  const {name, id, city, access} = item;
+  const {name, id, city, access, is_open} = item;
 
   return (
     <TouchableOpacity
-      // onPress={() =>
-      //   navigate('CommunityCodeInput', {
-      //     community: item,
-      //     is_open: !!item?.is_open,
-      //   })
-      // }
       disabled={true}
       style={_s.container}>
       <View style={_s.left}>
         <LockOpenBlack height={iconSize} width={iconSize} />
       </View>
       <View style={_s.middle}>
-        <View style={_s.middle_top}>
+        <View style={!is_open ? _s.middle_top : _s.middle_top_full}>
           <Text style={[_s.title, _s.txt]}>{name}</Text>
-          <Text style={[_s.city, _s.txt]}>{city}</Text>
+          {!!city && <Text style={[_s.city, _s.txt]}>{city}</Text>}
         </View>
-        <View style={_s.middle_bottom}>
+        {!is_open && <View style={_s.middle_bottom}>
           <Text style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
           <Text style={[_s.users_num, _s.txt, _s.code]}>{access}</Text>
-        </View>
+        </View>}
       </View>
       <View style={_s.right} />
     </TouchableOpacity>
@@ -84,6 +76,11 @@ const _s = StyleSheet.create({
   middle_top: {
     flex: 0.7,
     justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  middle_top_full: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
   },
   middle_bottom: {
