@@ -1,16 +1,16 @@
-import React, {Fragment, useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import {_c} from 'ts/UIConfig/colors';
-import {_fs} from 'ts/UIConfig/fontSizes';
-import {_f} from 'ts/UIConfig/fonts';
-import {vs} from 'react-native-size-matters';
+import React, { Fragment, useState } from 'react';
+import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { _c } from 'ts/UIConfig/colors';
+import { _fs } from 'ts/UIConfig/fontSizes';
+import { _f } from 'ts/UIConfig/fonts';
+import { vs } from 'react-native-size-matters';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 interface DateTimeInputProps {
   dateTime: [Date, (x: Date) => void];
 }
 
-const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
+const DateTimeInput = ({ dateTime }: DateTimeInputProps) => {
   const dateTimePickerModalVisible = useState<boolean>(false);
   return (
     <Fragment>
@@ -32,7 +32,7 @@ const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
         </View>
       </TouchableOpacity>
       <DateTimePickerModal
-        isDarkModeEnabled={true}
+        isDarkModeEnabled={false}
         minimumDate={new Date()}
         isVisible={dateTimePickerModalVisible[0]}
         mode="datetime"

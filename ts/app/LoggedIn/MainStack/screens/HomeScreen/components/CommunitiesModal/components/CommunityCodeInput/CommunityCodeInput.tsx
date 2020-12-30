@@ -1,26 +1,26 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { _c } from 'ts/UIConfig/colors';
-import { TapMatchContext } from 'ts/app/contexts/TapMatchContext';
+import React, {useContext, useState, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {_c} from 'ts/UIConfig/colors';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import CodeInputWindow from './components/CodeInputWindow/CodeInputWindow';
 import SuccessMsgWindow from './components/SuccessMsgWindow';
-import { CommunityCodeInputContext } from 'ts/app/contexts/CommunityCodeInputContext';
-import { joinCommunity } from 'ts/app/common/api/joinCommunity';
+import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputContext';
+import {joinCommunity} from 'ts/app/common/api/joinCommunity';
 
 interface CommunitiesScreenProps {
   communityItem: any;
-  modalVisible: [boolean, (x: boolean) => void];
+  codeInputVisible: [boolean, (x: boolean) => void];
 }
 
 const CommunityCodeInput = ({
   communityItem,
-  modalVisible
+  codeInputVisible
 }: CommunitiesScreenProps) => {
   const windowState = useState<boolean>(!communityItem[0].is_open);
-  const { userProfile, userToken } = useContext(TapMatchContext);
+  const {userProfile, userToken} = useContext(TapMatchContext);
 
   useEffect(() => {
-    if (modalVisible[0]) {
+    if (codeInputVisible[0]) {
       if (communityItem[0].is_open) {
         joinCommunity({
           userProfile,
@@ -30,18 +30,18 @@ const CommunityCodeInput = ({
         });
       }
     }
-  }, [modalVisible[0]]);
+  }, [codeInputVisible[0]]);
 
   const renderWindow = () => {
     return windowState[0] ? (
       <CodeInputWindow community={communityItem[0]} />
     ) : (
-        <SuccessMsgWindow community={communityItem[0]} />
+        <SuccessMsgWindow codeInputVisible={codeInputVisible} community={communityItem[0]} />
       );
   };
   return (
 
-    <CommunityCodeInputContext.Provider value={{ windowState, modalVisible }}>
+    <CommunityCodeInputContext.Provider value={{windowState, codeInputVisible}}>
       <View style={_s.content}>
         {renderWindow()}
       </View>

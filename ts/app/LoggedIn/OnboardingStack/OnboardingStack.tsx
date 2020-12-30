@@ -1,7 +1,7 @@
 import React from 'react';
-import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
-import {Platform} from 'react-native';
-import {_c} from 'ts/UIConfig/colors';
+import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
+import { Platform } from 'react-native';
+import { _c } from 'ts/UIConfig/colors';
 import NameInputScreen from './screens/NameInputScreen/NameInputScreen';
 import AvatarCameraScreen from './screens/AvatarCameraScreen/AvatarCameraScreen';
 import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
@@ -12,12 +12,12 @@ import SecretScreen from '../MainStack/screens/SecretScreen';
 
 export default function OnboardingStack() {
   const Stack = createStackNavigator();
-  const {Navigator, Screen} = Stack;
+  const { Navigator, Screen } = Stack;
   const transitions =
     Platform.OS === 'ios'
       ? TransitionPresets.DefaultTransition
       : TransitionPresets.FadeFromBottomAndroid;
-  const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
+  const insets = Platform.OS === 'ios' ? {} : { safeAreaInsets: { top: 0 } };
   return (
     <Navigator
       screenOptions={{
@@ -97,6 +97,7 @@ export default function OnboardingStack() {
         component={CommunitiesScreen}
         options={() => {
           return {
+            gestureEnabled: false,
             headerShown: false,
           };
         }}
@@ -104,7 +105,7 @@ export default function OnboardingStack() {
 
       <Screen
         name="SecretScreen"
-        options={{title: 'SecretScreen'}}
+        options={{ title: 'SecretScreen' }}
         component={SecretScreen}
       />
     </Navigator>

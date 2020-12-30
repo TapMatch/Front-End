@@ -15,8 +15,7 @@ interface ListItemProps {
 const ListItemUnlocked = ({item, onPress}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
-  const {name, id, city, access} = item;
-
+  const {name, id, city, access, is_open} = item;
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -26,14 +25,14 @@ const ListItemUnlocked = ({item, onPress}: ListItemProps) => {
         <LockOpenBlack height={iconSize} width={iconSize} />
       </View>
       <View style={_s.middle}>
-        <View style={_s.middle_top}>
+        <View style={!is_open ? _s.middle_top : _s.middle_top_full}>
           <Text style={[_s.title, _s.txt]}>{name}</Text>
-          <Text style={[_s.city, _s.txt]}>{city}</Text>
+          {!!city && <Text style={[_s.city, _s.txt]}>{city}</Text>}
         </View>
-        <View style={_s.middle_bottom}>
+        {!is_open && <View style={_s.middle_bottom}>
           <Text style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
           <Text style={[_s.users_num, _s.txt, _s.code]}>{access}</Text>
-        </View>
+        </View>}
       </View>
       <View style={_s.right} />
     </TouchableOpacity>
@@ -70,13 +69,19 @@ const _s = StyleSheet.create({
   },
   middle: {
     paddingVertical: vs(12),
-    flex: 0.4,
+    flex: 0.6,
     minHeight: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
+  middle_top_full: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   middle_top: {
     flex: 0.7,
+    minWidth: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

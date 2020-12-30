@@ -10,7 +10,7 @@ const Title = (props: TitleProps) => {
     <View style={[_s.container]}>
       <View style={_s.txtContainer}>
         <Text style={[_s.txt, _s.title]}>Set up your Event!</Text>
-        <Text style={[_s.txt, _s.eg]}>Pump out your event</Text>
+        <Text style={[_s.txt, _s.eg]}>Pimp out your event</Text>
       </View>
     </View>
   );

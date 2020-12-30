@@ -1,5 +1,5 @@
 import React, {Fragment, useContext, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
+import {View, StyleSheet, StatusBar, AppState} from 'react-native';
 import {LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
@@ -8,7 +8,7 @@ import StdHeader from './components/StdHeader/StdHeader';
 import UpcomingEvents from './components/UpcomingEvents/UpcomingEvents';
 import ProfileModal from './components/ProfileModal/ProfileModal';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
-import EventReminder from './components/EventReminder';
+// import EventReminder from './components/EventReminder';
 import EventDetailsModal from './components/EventDetailsModal/EventDetailsModal';
 import TapMatchMap from './components/TapMatchMap/TapMatchMap';
 import EventManageHeader from './components/EventManageHeader/EventManageHeader';
@@ -19,6 +19,7 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {deleteEvent} from './api/deleteEvent';
 import {leaveEvent} from './api/leaveEvent';
+import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 
 interface HomeScreenProps {
   navigation: any;
@@ -28,7 +29,7 @@ interface HomeScreenProps {
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   let _mapRef = useRef<any>(null);
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const {selectedCommunityData, eventMarkers, selectedMarkerData} = useContext(MainStackContext);
+  const {selectedCommunityData, eventMarkers, selectedMarkerData, upcomingEvents} = useContext(MainStackContext);
   const startingPoint: LatLng = {
     ...userLocation[0],
     latitudeDelta: 0.015,
@@ -44,6 +45,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const mapCoordinates = useState<LatLng>(startingPoint);
   const hasJoinedCurrentSelectedEvent = useState<boolean>(false);
   const currentUserIsOrganizer = useState<boolean>(false);
+
+  useEffect(() => {
+    AppState.addEventListener("change", _handleAppStateChange);
+
+    return () => {
+      AppState.removeEventListener("change", _handleAppStateChange);
+    };
+  }, []);
 
   useEffect(() => {
     if (profileModalVisible[0] || communitiesModalVisible[0]) {
@@ -70,6 +79,21 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     const hasJoined = ind > -1;
     hasJoinedCurrentSelectedEvent[1](hasJoined);
   }, [selectedMarkerData]);
+
+  const _handleAppStateChange = (appState: string) => {
+    if (appState === 'background') {
+      getUpcomingEvents({
+        communityId: selectedCommunityData[0].id,
+        userToken: userToken[0],
+        upcomingEvents
+      });
+      getEventMarkers({
+        id: selectedCommunityData[0].id,
+        userToken: userToken[0],
+        eventMarkers
+      });
+    }
+  };
 
   const closeAllWhiteModalWindows = () => {
     if (eventDetailsModalVisible[0]) {

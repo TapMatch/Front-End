@@ -8,9 +8,10 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import ListItem from './components/ListItem';
-import {getUpcomingEvents} from '../../api/getUpcomingEvents';
+import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
 interface UpcomingEventsProps {
   resetMap: () => void;
@@ -19,8 +20,9 @@ interface UpcomingEventsProps {
 const iconSize = '75%';
 
 const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
-  const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen} = useContext(MainStackContext);
+  const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers} = useContext(MainStackContext);
   const {userToken} = useContext(TapMatchContext);
+  // console.log(upcomingEvents[0], 'upcomingEvents-upcomingEvents-upcomingEvents');
   const txt = useLocalizedTxt();
   const renderList = () => {
     if (upcomingEventsListIsOpen[0]) {
@@ -43,13 +45,13 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
     ? _s.eventListOpenerBorderOpen
     : _s.eventListOpenerBorderClosed;
 
-  // useEffect(() => {
-  //   getUpcomingEvents({
-  //     communityId: selectedCommunityData[0].id,
-  //     userToken: userToken[0],
-  //     upcomingEvents
-  //   });
-  // }, [selectedCommunityData[0].id]);
+  useEffect(() => {
+    getUpcomingEvents({
+      communityId: selectedCommunityData[0].id,
+      userToken: userToken[0],
+      upcomingEvents
+    });
+  }, [selectedCommunityData[0].id]);
 
   return (
     <View pointerEvents={'box-none'} style={_s.container}>
@@ -74,11 +76,18 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
         <RefreshCircleRed
           height={iconSize}
           width={iconSize}
-          onPress={() => getUpcomingEvents({
-            communityId: selectedCommunityData[0].id,
-            userToken: userToken[0],
-            upcomingEvents
-          })}
+          onPress={() => {
+            getUpcomingEvents({
+              communityId: selectedCommunityData[0].id,
+              userToken: userToken[0],
+              upcomingEvents
+            });
+            getEventMarkers({
+              id: selectedCommunityData[0].id,
+              userToken: userToken[0],
+              eventMarkers
+            });
+          }}
         />
       </View>
     </View>

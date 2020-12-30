@@ -36,7 +36,7 @@ const TapMatchMap = ({focusMapToLatLng, eventMarkers, set_mapRef, mapCoordinates
             onMapReady={() => {
                 set_mapRef(_mapRef);
                 getEventMarkers({
-                    id: selectedMarkerData[0].id,
+                    id: selectedCommunityData[0].id,
                     userToken: userToken[0],
                     eventMarkers
                 });

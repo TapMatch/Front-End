@@ -80,7 +80,7 @@ const _s = StyleSheet.create({
   },
   middle: {
     paddingVertical: vs(12),
-    flex: 0.4,
+    flex: 0.5,
     minHeight: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',

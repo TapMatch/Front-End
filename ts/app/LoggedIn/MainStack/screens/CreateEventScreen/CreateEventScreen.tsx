@@ -1,16 +1,16 @@
-import React, {useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
-import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
-import {_c} from 'ts/UIConfig/colors';
-import {NavigationAction, useIsFocused} from '@react-navigation/native';
-import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import React, { useContext, useEffect, useState } from 'react';
+import { View, StyleSheet, StatusBar } from 'react-native';
+import MapView, { LatLng, PROVIDER_GOOGLE } from 'react-native-maps';
+import { _c } from 'ts/UIConfig/colors';
+import { NavigationAction, useIsFocused } from '@react-navigation/native';
+import { TapMatchContext } from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import FormWindow from './components/FormWindow/FormWindow';
 import CreateBtn from './components/CreateBtn';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
-import {createEvent} from './api/createEvent';
-import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
-import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import { createEvent } from './api/createEvent';
+import { CreateEventScreenContext } from 'ts/app/contexts/CreateEventScreenContext';
+import { MainStackContext } from 'ts/app/contexts/MainStackContext';
 import YesNoModal from 'ts/app/common/components/YesNoModal';
 
 interface CreateEventScreenProps {
@@ -18,11 +18,11 @@ interface CreateEventScreenProps {
   route: any;
 }
 
-const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
+const CreateEventScreen = ({ navigation, route }: CreateEventScreenProps) => {
   const isFocused = useIsFocused();
-  const {selectedCommunityData, eventMarkers} = useContext(MainStackContext);
+  const { selectedCommunityData, eventMarkers, upcomingEvents } = useContext(MainStackContext);
 
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const { userLocation, userToken, userProfile } = useContext(TapMatchContext);
   const coordinates = userLocation[0];
   const description = useState<string>('');
   const eventAddress = useState<string>('');
@@ -65,6 +65,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
               navigation.goBack();
               createEvent({
                 eventMarkers,
+                upcomingEvents,
                 communityId: selectedCommunityData[0].id,
                 userToken: userToken[0],
                 coordinates: evetnCoordinates[0],

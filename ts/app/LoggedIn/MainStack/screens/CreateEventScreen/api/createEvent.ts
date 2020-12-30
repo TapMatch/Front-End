@@ -1,14 +1,16 @@
-import axios, {AxiosRequestConfig} from 'axios';
-import {LatLng} from 'react-native-maps';
-import {tapMatchServerUrl} from 'ts/constants/constants';
+import axios, { AxiosRequestConfig } from 'axios';
+import { LatLng } from 'react-native-maps';
+import { tapMatchServerUrl } from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
-import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
+import { getEventMarkers } from 'ts/app/common/api/getEventMarkers';
 import moment from 'moment';
+import { getUpcomingEvents } from 'ts/app/common/api/getUpcomingEvents';
 
 interface IcreateEvent {
     userToken: string;
     communityId: string;
     eventMarkers: any;
+    upcomingEvents: any;
     name: string;
     description: string;
     date: Date;
@@ -26,7 +28,8 @@ export async function createEvent({
     date,
     address,
     coordinates,
-    join_limit
+    join_limit,
+    upcomingEvents
 }: IcreateEvent) {
     try {
         const options: AxiosRequestConfig = {
@@ -48,8 +51,9 @@ export async function createEvent({
 
         return axios
             .request(options)
-            .then(({data}: any) => {
-                getEventMarkers({userToken, id: communityId, eventMarkers});
+            .then(({ data }: any) => {
+                getEventMarkers({ userToken, id: communityId, eventMarkers });
+                getUpcomingEvents({ userToken, communityId, upcomingEvents });
             })
             .catch((error) => {
                 console.log(error);

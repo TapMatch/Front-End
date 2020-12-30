@@ -29,6 +29,7 @@ export async function joinCommunity({
   //   code
   // }, `*****************`);
   try {
+    console.log('🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺', communityId, '🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺');
     const options: AxiosRequestConfig = {
       method: 'POST',
       url: `${tapMatchServerUrl}api/communities/${communityId}/join`,
@@ -46,7 +47,6 @@ export async function joinCommunity({
       .request(options)
       .then(({data}: any) => {
         console.log(data, 'TGTGTGTGTGTGTG');
-
         getUserProfile({userProfile, userToken});
         return data;
       })

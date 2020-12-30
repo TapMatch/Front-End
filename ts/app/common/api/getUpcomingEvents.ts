@@ -13,6 +13,7 @@ export async function getUpcomingEvents({
     userToken,
     upcomingEvents
 }: IgetUpcomingEvents) {
+    console.log('UIIUIUIUIUIUIUIUIUIUIUIUIUIIIUIUIUI', communityId);
     try {
         const options: AxiosRequestConfig = {
             method: 'GET',
@@ -24,7 +25,10 @@ export async function getUpcomingEvents({
         };
         axios
             .request(options)
-            .then(({data}: any) => upcomingEvents[1](data.data))
+            .then(({data}: any) => {
+                upcomingEvents[1](data.data);
+                console.log(data.data, 'UPCOMING EVENTS!!!');
+            })
             .catch((error) => {
                 console.log(error);
                 // callAlert(undefined, `${error.toString()} ::: getUpcomingEvents`);

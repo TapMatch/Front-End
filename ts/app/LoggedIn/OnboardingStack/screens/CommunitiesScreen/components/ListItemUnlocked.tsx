@@ -15,7 +15,7 @@ const ListItemUnlocked = ({item}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
   const {name, id, city, access, is_open} = item;
-
+  console.log(is_open, '0909090090');
   return (
     <TouchableOpacity
       disabled={true}
@@ -68,13 +68,14 @@ const _s = StyleSheet.create({
   },
   middle: {
     paddingVertical: vs(12),
-    flex: 0.4,
+    flex: 0.6,
     minHeight: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',
   },
   middle_top: {
     flex: 0.7,
+    minWidth: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',
   },

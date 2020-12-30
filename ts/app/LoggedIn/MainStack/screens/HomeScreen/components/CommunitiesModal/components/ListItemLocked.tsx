@@ -5,17 +5,16 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
-import {useNavigation} from '@react-navigation/native';
 import ChevronRightBlack from 'assets/svg/chevron-right-black.svg'; //
 import LockClosedBlack from 'assets/svg/lock-closed-black.svg';
 import LockOpenBlack from 'assets/svg/lock-open-black.svg';
 
 interface ListItemProps {
+  selectItem: (x: any) => void;
   item: any;
 }
 
-const ListItem = ({item}: ListItemProps) => {
-  const {navigate} = useNavigation();
+const ListItem = ({item, selectItem}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
   const {name, members, city} = item;
@@ -29,12 +28,7 @@ const ListItem = ({item}: ListItemProps) => {
 
   return (
     <TouchableOpacity
-      onPress={() =>
-        navigate('CommunityCodeInput', {
-          community: item,
-          is_open: !!item?.is_open,
-        })
-      }
+      onPress={() => selectItem(item)}
       style={_s.container}>
       <View style={_s.left}>{renderIcon()}</View>
       <View style={_s.middle}>
@@ -86,7 +80,7 @@ const _s = StyleSheet.create({
   },
   middle: {
     paddingVertical: vs(12),
-    flex: 0.4,
+    flex: 0.5,
     minHeight: '100%',
     justifyContent: 'space-around',
     alignItems: 'center',

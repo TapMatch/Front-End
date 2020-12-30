@@ -8,10 +8,10 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Title from './components/Title';
 import RequestCommunityBtn from './components/RequestCommunityBtn';
 import FeedbackBtn from './components/FeedbackBtn';
-import {useDimensions} from '@react-native-community/hooks';
+import {useBackHandler, useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
-import {getAllCommunities} from './api/getAllCommunities';
+import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
 
@@ -31,6 +31,36 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
 
   // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
   const testingMode = useState<boolean>(false);
+
+  useBackHandler(() => false);
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('beforeRemove', (e: any) => {
+      e.preventDefault();
+    });
+    return unsubscribe;
+  }, [navigation]);
+
+  useEffect(() => {
+    getAllCommunities({
+      userToken: userToken[0],
+      communities,
+    });
+  }, []);
+
+
+
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      getAllCommunities({
+        userToken: userToken[0],
+        communities,
+      });
+    });
+    return unsubscribe;
+  }, []);
+
 
   const selectItem = (item: any) => {
     selectedCommunity[1](item);
@@ -79,22 +109,6 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
       </Fragment>;
     }
   };
-  useEffect(() => {
-    getAllCommunities({
-      userToken: userToken[0],
-      communities,
-    });
-  }, []);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {
-      getAllCommunities({
-        userToken: userToken[0],
-        communities,
-      });
-    });
-    return unsubscribe;
-  }, []);
 
   if (isFocused) {
     return (
