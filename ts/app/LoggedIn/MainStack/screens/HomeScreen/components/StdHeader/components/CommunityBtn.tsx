@@ -6,12 +6,14 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
-interface CommunityBtnProps { }
+interface CommunityBtnProps {}
 
 const CommunityBtn = (props: CommunityBtnProps) => {
   const {navigate} = useNavigation();
-  const {communitiesModalVisible, selectedCommunityData} = useContext(HomeScreenContext);
+  const {communitiesModalVisible} = useContext(HomeScreenContext);
+  const {selectedCommunityData} = useContext(MainStackContext);
   const {name, id, city, access, count} = selectedCommunityData[0];
   return (
     <TouchableOpacity

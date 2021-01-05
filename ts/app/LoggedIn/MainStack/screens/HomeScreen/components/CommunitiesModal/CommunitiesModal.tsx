@@ -44,19 +44,18 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
   }, [modalVisible[0]]);
 
   useEffect(() => {
-    if (modalVisible[0]) {
-      getAllCommunities({
-        userToken: userToken[0],
-        communities: allCommunities,
-      }).then(() => {
-        const cleanCommunitiesList = allCommunities[0].filter((el: any) => {
-          const ind = userProfile[0].communities[0].findIndex((item: any) => item.id === el.id);
-          return ind === -1;
-        });
-        console.log(cleanCommunitiesList, 'fdkfuhdlfkuhdfliushiughoiusdfghdfspiu;hlfdiou;g');
-        myCommunities[1]([...userProfile[0].communities[0], ...cleanCommunitiesList]);
+    getAllCommunities({
+      userToken: userToken[0],
+      communities: allCommunities,
+    }).then(() => {
+      const cleanCommunitiesList = allCommunities[0].filter((el: any) => {
+        const ind = userProfile[0].communities[0].findIndex((item: any) => item.id === el.id);
+        return ind === -1;
       });
-    }
+      console.log(cleanCommunitiesList, 'fdkfuhdlfkuhdfliushiughoiusdfghdfspiu;hlfdiou;g');
+      myCommunities[1]([...userProfile[0].communities[0], ...cleanCommunitiesList]);
+    });
+
   }, [modalVisible[0], userProfile[0].communities[0]]);
 
   console.log(myCommunities[0]);

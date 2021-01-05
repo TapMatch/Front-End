@@ -211,7 +211,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
         value={{
           profileModalVisible,
           currentUserIsOrganizer,
-          selectedCommunityData,
           eventDetailsModalVisible,
           mapCoordinates,
           communitiesModalVisible
