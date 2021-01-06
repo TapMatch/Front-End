@@ -6314,6 +6314,11 @@
   dependencies:
     "prop-types" "^15.7.2"
 
+"react-native-branch@^5.0.0":
+  "integrity" "sha512-6VInx3bvWOfEJ916zdA1yzJhcjB26N0oMUJInW3reFIijsk6KOjyM46UH3/MixdNUOV/nZn1JoRZM+wpLffDWQ=="
+  "resolved" "https://registry.npmjs.org/react-native-branch/-/react-native-branch-5.0.0.tgz"
+  "version" "5.0.0"
+
 "react-native-camera@^3.40.0":
   "integrity" "sha512-Ur0hZqZcl3SntTVMB9GxuiLYpQxqwgzhQVb+7EGae4WjfDzQEwlGF0bJ7UpZyeUTb1oZmsiSib58xUckn11XMw=="
   "resolved" "https://registry.npmjs.org/react-native-camera/-/react-native-camera-3.40.0.tgz"
@@ -6518,7 +6523,7 @@
     "escape-string-regexp" "2.0.0"
     "invariant" "2.2.4"
 
-"react-native@*", "react-native@>= 0.59", "react-native@>= 0.60.2", "react-native@>=0.60.0", "react-native@>0.45.0", "react-native@0.63.3":
+"react-native@*", "react-native@>= 0.59", "react-native@>= 0.60", "react-native@>= 0.60.2", "react-native@>=0.60.0", "react-native@>0.45.0", "react-native@0.63.3":
   "integrity" "sha512-71wq13uNo5W8QVQnFlnzZ3AD+XgUBYGhpsxysQFW/hJ8GAt/J5o+Bvhy81FXichp6IBDJDh/JgfHH2gNji8dFA=="
   "resolved" "https://registry.npmjs.org/react-native/-/react-native-0.63.3.tgz"
   "version" "0.63.3"

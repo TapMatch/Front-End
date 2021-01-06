@@ -14,6 +14,7 @@ import OnboardingStack from './LoggedIn/OnboardingStack/OnboardingStack';
 import {getUserProfile} from './common/api/getUserProfile';
 import PlaceholderStack from './LoggedIn/PlaceholderStack/PlaceholderStack';
 import OneSignal from 'react-native-onesignal';
+import branch, {BranchEvent} from 'react-native-branch';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
