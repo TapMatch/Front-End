@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-
+#import <RNBranch/RNBranch.h>
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -54,8 +54,18 @@ static void InitializeFlipper(UIApplication *application) {
   [self.window makeKeyAndVisible];
   
   [RNSplashScreen show];
-  
+  [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
+
   return YES;
+}
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
+{
+  return [RNBranch application:app openURL:url options:options];
+}
+
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+    return [RNBranch continueUserActivity:userActivity];
 }
 
 - (NSURL *)sourceURLForBridge:(RCTBridge *)bridge

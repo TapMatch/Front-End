@@ -31,6 +31,8 @@ target 'TapMatch_Front_end' do
   # pod 'Permission-SpeechRecognition', :path => "#{permissions_path}/SpeechRecognition.podspec"
   # pod 'Permission-StoreKit', :path => "#{permissions_path}/StoreKit.podspec"
 
+  pod 'react-native-branch', path: '../node_modules/react-native-branch'
+  
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])

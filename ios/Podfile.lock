@@ -1,5 +1,6 @@
 PODS:
   - boost-for-react-native (1.63.0)
+  - Branch (0.35.0)
   - CocoaAsyncSocket (7.6.4)
   - CocoaLibEvent (1.0.0)
   - DoubleConversion (1.1.6)
@@ -287,6 +288,9 @@ PODS:
     - React-cxxreact (= 0.63.3)
     - React-jsi (= 0.63.3)
   - React-jsinspector (0.63.3)
+  - react-native-branch (5.0.0):
+    - Branch (= 0.35.0)
+    - React
   - react-native-camera (3.40.0):
     - React-Core
     - react-native-camera/RCT (= 3.40.0)
@@ -452,6 +456,7 @@ DEPENDENCIES:
   - React-jsi (from `../node_modules/react-native/ReactCommon/jsi`)
   - React-jsiexecutor (from `../node_modules/react-native/ReactCommon/jsiexecutor`)
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
+  - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-camera (from `../node_modules/react-native-camera`)
   - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-geolocation-service (from `../node_modules/react-native-geolocation-service`)
@@ -491,6 +496,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - Branch
     - CocoaAsyncSocket
     - CocoaLibEvent
     - Firebase
@@ -550,6 +556,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/jsiexecutor"
   React-jsinspector:
     :path: "../node_modules/react-native/ReactCommon/jsinspector"
+  react-native-branch:
+    :path: "../node_modules/react-native-branch"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
   react-native-cookies:
@@ -623,6 +631,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
+  Branch: 9a37f707974a128c37829033c49018b79c7e7a2d
   CocoaAsyncSocket: 694058e7c0ed05a9e217d1b3c7ded962f4180845
   CocoaLibEvent: 2fab71b8bd46dd33ddb959f7928ec5909f838e3f
   DoubleConversion: cde416483dac037923206447da6e1454df403714
@@ -661,6 +670,7 @@ SPEC CHECKSUMS:
   React-jsi: df07aa95b39c5be3e41199921509bfa929ed2b9d
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
+  react-native-branch: 8bda99ca8dc5a16d32bd81c8a8d937cb3d2c5e0c
   react-native-camera: 35854c4f764a4a6cf61c1c3525888b92f0fe4b31
   react-native-cookies: ce50e42ace7cf0dd47769260ca5bbe8eee607e4e
   react-native-geolocation-service: 141e33bdb179bcba10b216ee13962611e21f2be4
@@ -698,6 +708,6 @@ SPEC CHECKSUMS:
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 07b4e476d75a16f3c48c46ff17a9869df6d9a082
+PODFILE CHECKSUM: 5c1fc33d3a073e34df76154dc0a3bd47dc8be1ff
 
 COCOAPODS: 1.10.0

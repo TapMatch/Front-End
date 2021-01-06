@@ -78,6 +78,19 @@
 	</array>
 	<key>UIUserInterfaceStyle</key>
 	<string>Light</string>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>tapmatch</string>
+			</array>
+		</dict>
+	</array>
+	<key>branch_app_domain</key>
+	<string>vwutp.test-app.link</string>
+	<key>branch_key</key>
+	<string>key_test_kd9eeRrw7eTBOng6YDrEtbcnxsbO4zDu</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>
