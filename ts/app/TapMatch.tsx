@@ -15,6 +15,7 @@ import {getUserProfile} from './common/api/getUserProfile';
 import PlaceholderStack from './LoggedIn/PlaceholderStack/PlaceholderStack';
 import OneSignal from 'react-native-onesignal';
 import branch, {BranchEvent} from 'react-native-branch';
+import {updateUserProfile} from './common/api/updateUserProfile';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
@@ -22,6 +23,7 @@ const TapMatch = () => {
   const userProfile = useState<any>(null);
   const userToken = useState<string>('');
   const PHPSESSID = useState<string>('');
+  const userOneSignalId = useState<string>('');
   const userLocation = useState<LatLng>({
     latitude: 37.78825,
     longitude: -122.4324,
@@ -51,6 +53,34 @@ const TapMatch = () => {
       // }
     }
   }, [LoggedIn[0]]);
+
+  useEffect(() => {
+    OneSignal.addEventListener('ids', handleOneSignalIds);
+    return () => OneSignal.removeEventListener('ids', handleOneSignalIds);
+  }, []);
+
+  useEffect(() => {
+    OneSignal.addEventListener('ids', handleOneSignalIds);
+    return () => OneSignal.removeEventListener('ids', handleOneSignalIds);
+  }, []);
+
+  useEffect(() => {
+    // console.log('JKKKKJKJKJKJKJKJKJKJKJKJKJKJ');
+    if (userProfile[0] !== null) {
+      // if (userProfile[0].hasOwnProperty('uuid')) {
+      // console.log('UUUUUUUUUUUUUUUUU');
+      if (userProfile[0].uuid !== userOneSignalId[0]) {
+        updateUserProfile({
+          userToken: userToken[0],
+          userProfile,
+          data: {
+            uuid: userOneSignalId[0]
+          }
+        });
+      }
+    }
+    // }
+  }, [userProfile[0]]);
 
   useEffect(() => {
     AsyncStorage.getItem('@user_token')
@@ -83,6 +113,10 @@ const TapMatch = () => {
     AppState.addEventListener('change', getUserLocation);
     return () => AppState.removeEventListener('change', getUserLocation);
   }, []);
+
+  const handleOneSignalIds = ({userId}: any) => {
+    userOneSignalId[1](userId);
+  };
 
   const getUserLocation = () => {
     check(locationPermission).then((x) => {
