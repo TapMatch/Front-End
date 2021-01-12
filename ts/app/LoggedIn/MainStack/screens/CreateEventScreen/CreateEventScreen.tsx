@@ -1,28 +1,29 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { View, StyleSheet, StatusBar } from 'react-native';
-import MapView, { LatLng, PROVIDER_GOOGLE } from 'react-native-maps';
-import { _c } from 'ts/UIConfig/colors';
-import { NavigationAction, useIsFocused } from '@react-navigation/native';
-import { TapMatchContext } from 'ts/app/contexts/TapMatchContext';
+import React, {useContext, useEffect, useState} from 'react';
+import {View, StyleSheet, StatusBar} from 'react-native';
+import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
+import {_c} from 'ts/UIConfig/colors';
+import {NavigationAction, useIsFocused} from '@react-navigation/native';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import FormWindow from './components/FormWindow/FormWindow';
 import CreateBtn from './components/CreateBtn';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
-import { createEvent } from './api/createEvent';
-import { CreateEventScreenContext } from 'ts/app/contexts/CreateEventScreenContext';
-import { MainStackContext } from 'ts/app/contexts/MainStackContext';
+import {createEvent} from './api/createEvent';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
+import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import YesNoModal from 'ts/app/common/components/YesNoModal';
+import DeepLinkHandler from '../../components/DeepLinkHandler';
 
 interface CreateEventScreenProps {
   navigation: any;
   route: any;
 }
 
-const CreateEventScreen = ({ navigation, route }: CreateEventScreenProps) => {
+const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const isFocused = useIsFocused();
-  const { selectedCommunityData, eventMarkers, upcomingEvents } = useContext(MainStackContext);
+  const {selectedCommunityData, eventMarkers, upcomingEvents} = useContext(MainStackContext);
 
-  const { userLocation, userToken, userProfile } = useContext(TapMatchContext);
+  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const coordinates = userLocation[0];
   const description = useState<string>('');
   const eventAddress = useState<string>('');
@@ -52,58 +53,60 @@ const CreateEventScreen = ({ navigation, route }: CreateEventScreenProps) => {
         description, joinLimit, dateTime,
         eventName, eventAddress, evetnCoordinates, yesNoModalVisible
       }}>
-        <View style={[_s.container]}>
-          <StatusBar
-            animated={true}
-            backgroundColor={_c.smoke}
-            barStyle={'dark-content'}
-          />
-          <Header />
-          <FormWindow />
-          <CreateBtn disabled={eventName[0].length === 0 || eventAddress[0].length === 0 || description[0].length === 0}
-            onPress={() => {
-              navigation.goBack();
-              createEvent({
-                eventMarkers,
-                upcomingEvents,
-                communityId: selectedCommunityData[0].id,
-                userToken: userToken[0],
-                coordinates: evetnCoordinates[0],
-                address: eventAddress[0],
-                description: description[0],
-                join_limit: joinLimit[0],
-                date: dateTime[0],
-                name: eventName[0],
-              }).then(() => {
-                description[1]('');
-                eventAddress[1]('');
-                eventName[1]('');
-                joinLimit[1](1);
-                dateTime[1](new Date());
-                evetnCoordinates[1](userLocation[0]);
-              });
-            }} />
-          <MapView
-            provider={PROVIDER_GOOGLE}
-            customMapStyle={googleMapStyle}
-            zoomEnabled={true}
-            style={_s.map}
-            pitchEnabled={true}
-            rotateEnabled={true}
-            scrollEnabled={true}
-            region={{
-              ...coordinates,
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121,
-            }}
-          />
-          <YesNoModal
-            onYesPress={navigation.goBack}
-            modalVisible={yesNoModalVisible}
-            subtitle={'Note that If you quit,\nno draft Will be saved'}
-            title={'Are you sure\nYou want to\nleave create?'}
-          />
-        </View>
+        <DeepLinkHandler navigation={navigation} route={route}>
+          <View style={[_s.container]}>
+            <StatusBar
+              animated={true}
+              backgroundColor={_c.smoke}
+              barStyle={'dark-content'}
+            />
+            <Header />
+            <FormWindow />
+            <CreateBtn disabled={eventName[0].length === 0 || eventAddress[0].length === 0 || description[0].length === 0}
+              onPress={() => {
+                navigation.goBack();
+                createEvent({
+                  eventMarkers,
+                  upcomingEvents,
+                  communityId: selectedCommunityData[0].id,
+                  userToken: userToken[0],
+                  coordinates: evetnCoordinates[0],
+                  address: eventAddress[0],
+                  description: description[0],
+                  join_limit: joinLimit[0],
+                  date: dateTime[0],
+                  name: eventName[0],
+                }).then(() => {
+                  description[1]('');
+                  eventAddress[1]('');
+                  eventName[1]('');
+                  joinLimit[1](1);
+                  dateTime[1](new Date());
+                  evetnCoordinates[1](userLocation[0]);
+                });
+              }} />
+            <MapView
+              provider={PROVIDER_GOOGLE}
+              customMapStyle={googleMapStyle}
+              zoomEnabled={true}
+              style={_s.map}
+              pitchEnabled={true}
+              rotateEnabled={true}
+              scrollEnabled={true}
+              region={{
+                ...coordinates,
+                latitudeDelta: 0.015,
+                longitudeDelta: 0.0121,
+              }}
+            />
+            <YesNoModal
+              onYesPress={navigation.goBack}
+              modalVisible={yesNoModalVisible}
+              subtitle={'Note that If you quit,\nno draft Will be saved'}
+              title={'Are you sure\nYou want to\nleave create?'}
+            />
+          </View>
+        </DeepLinkHandler>
       </CreateEventScreenContext.Provider>
     );
   } else {

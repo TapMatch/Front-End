@@ -30,7 +30,7 @@ export default StartBtn;
 
 const _s = StyleSheet.create({
   container: {
-    backgroundColor: _c.transparentBtn,
+    backgroundColor: _c.white,
     minWidth: '100%',
     justifyContent: 'flex-start',
     alignItems: 'center',

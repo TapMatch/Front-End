@@ -44,7 +44,7 @@ const PeopleMarker = ({
   return (
     <Marker
       onPress={() => {
-        focusMapToLatLng(coordinate);
+        // focusMapToLatLng(coordinate);
         eventDetailsModalVisible[1](true);
         selectedMarkerData[1](item);
       }}

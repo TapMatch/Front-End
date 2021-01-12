@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
-// import MapView from "react-native-map-clustering";
-import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView from "react-native-map-clustering";
+import {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
 import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
@@ -29,7 +29,7 @@ const TapMatchMap = ({focusMapToLatLng, eventMarkers, set_mapRef, mapCoordinates
     // const {} = useContext(HomeScreenContext);
     return (
         <MapView
-            ref={(x) => {
+            mapRef={(x) => {
                 set_mapRef(x);
                 _mapRef = x;
             }}

@@ -5,6 +5,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import callAlert from 'ts/utils/callAlert';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import shareContent from 'ts/app/common/serveces/shareContent';
 
 interface HeaderProps {
     eventJoinState: 'join' | 'full' | 'joined';
@@ -14,25 +15,6 @@ const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
     const {selectedMarkerData} = useContext(MainStackContext);
     const {name} = selectedMarkerData[0];
 
-    const shareContent = async () => {
-        try {
-            const result = await Share.share({
-                message: 'TabMatch is a cool app!',
-            });
-            if (result.action === Share.sharedAction) {
-                if (result.activityType) {
-                    console.log(result, 'result-on');
-                } else {
-                    console.log(result, 'result-off');
-                }
-            } else if (result.action === Share.dismissedAction) {
-                console.log('NOOOOOOOOOOOOO');
-            }
-        } catch (error) {
-            callAlert(undefined, error.message);
-        }
-    };
-
     return (
         <View style={_s.container}>
             <View style={[_s.side]} />
@@ -40,7 +22,7 @@ const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
                 <Text numberOfLines={1} style={_s.title}>{name}</Text>
             </View>
             <View style={[_s.side, _s.center, _s.right]}>
-                <TouchableOpacity onPress={shareContent} style={[_s.btn, _s.shadow, _s.center]}>
+                <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0])} style={[_s.btn, _s.shadow, _s.center]}>
                     <Image
                         style={_s.img}
                         resizeMode={'contain'}

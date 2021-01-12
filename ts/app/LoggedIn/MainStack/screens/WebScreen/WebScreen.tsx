@@ -4,6 +4,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import WebView from 'react-native-webview';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import DeepLinkHandler from '../../components/DeepLinkHandler';
 import CloseButton from './components/CloseButton';
 import WebLoader from './components/WebLoader';
 
@@ -12,23 +13,26 @@ const WebScreen = ({navigation, route}: any) => {
   const loadComplete = useState<boolean>(false);
 
   return (
-    <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
-      {loadComplete[0] && <CloseButton onPress={() => navigation.goBack()} />}
-      <StatusBar
-        animated={true}
-        backgroundColor={_c.white}
-        barStyle={'dark-content'}
-      />
-      <WebView
-        startInLoadingState={true}
-        onLoadEnd={() => loadComplete[1](true)}
-        renderLoading={() => <WebLoader />}
-        source={{
-          uri: route.params.url,
-        }}
-        style={_s.webView}
-      />
-    </View>
+    <DeepLinkHandler navigation={navigation} route={route}>
+      <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
+        {loadComplete[0] && <CloseButton onPress={() => navigation.goBack()} />}
+        <StatusBar
+          animated={true}
+          backgroundColor={_c.white}
+          barStyle={'dark-content'}
+        />
+        <WebView
+          startInLoadingState={true}
+          onLoadEnd={() => loadComplete[1](true)}
+          renderLoading={() => <WebLoader />}
+          source={{
+            uri: route.params.url,
+          }}
+          style={_s.webView}
+        />
+      </View>
+    </DeepLinkHandler>
+
   );
 };
 

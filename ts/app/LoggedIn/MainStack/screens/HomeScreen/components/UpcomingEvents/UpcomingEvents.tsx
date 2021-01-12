@@ -73,22 +73,24 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
         </View>
       </View>
       <View pointerEvents={'box-none'} style={_s.side}>
-        <RefreshCircleRed
-          height={iconSize}
-          width={iconSize}
-          onPress={() => {
-            getUpcomingEvents({
-              communityId: selectedCommunityData[0].id,
-              userToken: userToken[0],
-              upcomingEvents
-            });
-            getEventMarkers({
-              id: selectedCommunityData[0].id,
-              userToken: userToken[0],
-              eventMarkers
-            });
-          }}
-        />
+        <TouchableOpacity style={_s.resetBtn} onPress={() => {
+          getUpcomingEvents({
+            communityId: selectedCommunityData[0].id,
+            userToken: userToken[0],
+            upcomingEvents
+          });
+          getEventMarkers({
+            id: selectedCommunityData[0].id,
+            userToken: userToken[0],
+            eventMarkers
+          });
+        }}>
+          <RefreshCircleRed
+            height={'100%'}
+            width={'100%'}
+
+          />
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -166,4 +168,10 @@ const _s = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderBottomColor: _c.grey,
   },
+  resetBtn: {
+    height: iconSize,
+    width: iconSize,
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });

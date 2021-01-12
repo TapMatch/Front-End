@@ -21,9 +21,9 @@ const StartModal = ({modalVisible}: StartModalProps) => {
   const {navigate} = useNavigation();
   const headerHeight = useHeaderHeight();
   const moveOn = () => {
-    modalVisible[1](false)
-    navigate('PhoneInput')
-  }
+    modalVisible[1](false);
+    navigate('PhoneInput');
+  };
   return (
     <Modal
       animationIn={'fadeIn'}
@@ -61,7 +61,7 @@ const _s = StyleSheet.create({
     backgroundColor: _c.invisible,
   },
   middle: {
-    width: '100%',
+    minWidth: '100%',
     flex: 0.7,
     justifyContent: 'flex-end',
     alignItems: 'center',

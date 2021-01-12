@@ -20,6 +20,7 @@ import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {deleteEvent} from './api/deleteEvent';
 import {leaveEvent} from './api/leaveEvent';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
+import DeepLinkHandler from '../../components/DeepLinkHandler';
 
 interface HomeScreenProps {
   navigation: any;
@@ -28,6 +29,8 @@ interface HomeScreenProps {
 
 const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   let _mapRef = useRef<any>(null);
+  const set_mapRef = (x: any) => _mapRef = x;
+
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const {selectedCommunityData, eventMarkers, selectedMarkerData, upcomingEvents} = useContext(MainStackContext);
   const startingPoint: LatLng = {
@@ -68,6 +71,10 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
   useEffect(() => {
     eventJoinState[1](defineJoinState());
+    if (selectedMarkerData[0].coordinates) {
+      focusMapToLatLng(selectedMarkerData[0].coordinates);
+    }
+
   }, [selectedMarkerData, eventDetailsModalVisible]);
 
   useEffect(() => {
@@ -116,9 +123,11 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     }
   };
 
-  const set_mapRef = (x: any) => _mapRef = x;
 
-  const focusMapToLatLng = (x: LatLng) => typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
+  const focusMapToLatLng = (x: LatLng) => {
+    console.log(x, '}{}{}{}{}{}{}{}{}{}{}{}{', _mapRef);
+    return typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
+  };
 
   const defineYesNoModalProps = () => {
     switch (yesNoModalMode[0]) {
@@ -241,6 +250,12 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             </Fragment>}
           <YesNoModal
             {...defineYesNoModalProps()}
+          />
+          <DeepLinkHandler
+            focusMapToLatLng={focusMapToLatLng}
+            eventDetailsModalVisible={eventDetailsModalVisible}
+            navigation={navigation}
+            route={route}
           />
         </View>
       </HomeScreenContext.Provider>
