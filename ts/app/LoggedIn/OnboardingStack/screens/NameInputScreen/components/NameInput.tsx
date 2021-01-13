@@ -1,28 +1,35 @@
-import React from 'react';
+import React, {useRef} from 'react';
 import {View, StyleSheet, TextInput} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {vs} from 'react-native-size-matters';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 interface NameInputProps {
   name: [string, (x: string) => void];
 }
 
 const NameInput = ({name}: NameInputProps) => {
+  let nameInputRef = useRef();
   return (
     <View style={_s.container}>
-      <View style={_s.inputContainer}>
+      <TouchableOpacity onPress={() => {
+        if (typeof nameInputRef.current.focus === 'function') {
+          nameInputRef.current.focus();
+        }
+      }} activeOpacity={1} style={_s.inputContainer}>
         <TextInput
+          ref={nameInputRef}
           autoCompleteType={'off'}
           autoCorrect={false}
           autoFocus={false}
-          maxLength={40}
+          maxLength={12}
           style={_s.input}
           value={name[0]}
           onChangeText={name[1]}
         />
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -42,17 +49,17 @@ const _s = StyleSheet.create({
     backgroundColor: _c.greyLight,
     height: vs(55),
     alignItems: 'center',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     marginHorizontal: '10%',
   },
   input: {
     height: '70%',
-    flex: 1,
+    width: '70%',
     overflow: 'visible',
-    textAlign: 'left',
+    textAlign: 'center',
     textAlignVertical: 'center',
     paddingVertical: 0,
     fontFamily: _f.eRegular,
-    fontSize: _fs.m,
+    fontSize: _fs.xl,
   },
 });

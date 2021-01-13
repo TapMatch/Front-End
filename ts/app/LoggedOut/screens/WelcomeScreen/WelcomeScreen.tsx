@@ -14,12 +14,12 @@ import SloganParagraph from './components/SloganParagraph';
 import {_c} from 'ts/UIConfig/colors';
 import StartModal from './components/StartModal/StartModal';
 
-interface WelcomeScreenProps { }
+interface WelcomeScreenProps {}
 
 const WelcomeScreen = (props: WelcomeScreenProps) => {
   const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
-  const startModalVisible = useState<boolean>(false)
+  const startModalVisible = useState<boolean>(false);
   const logoSize = width * 0.6;
 
   return (

@@ -68,7 +68,7 @@ const PhoneInput = ({
           contextMenuHidden={true}
           keyboardType={'number-pad'}
           onChangeText={phoneNumber[1]}
-          maxLength={16}
+          maxLength={15}
           style={_s.input}
         />
       </View>

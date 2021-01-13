@@ -108,7 +108,6 @@ const TapMatch = () => {
   }, []);
 
   useEffect(() => {
-    getUserLocation();
     AppState.addEventListener('change', getUserLocation);
     return () => AppState.removeEventListener('change', getUserLocation);
   }, []);
@@ -125,17 +124,11 @@ const TapMatch = () => {
 
   const setUserLocation = (x: string) => {
     if (x === 'granted') {
-      handleGeolocation();
-    } else {
-      request(locationPermission).then((x) => {
-        if (x === 'granted') {
-          handleGeolocation();
-        }
-      });
+      runGeolocationService();
     }
   };
 
-  const handleGeolocation = () => {
+  const runGeolocationService = () => {
     Geolocation.getCurrentPosition(
       ({coords}) => {
         const {latitude, longitude} = coords;
