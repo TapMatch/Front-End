@@ -9,7 +9,7 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 // import {NativeModules} from 'react-native'
 import * as RNLocalize from "react-native-localize";
 import {useDimensions, useKeyboard} from '@react-native-community/hooks';
-import {LocationPickerScreenContext} from 'ts/app/contexts/LocationPickerScreenContext';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 
 interface SearchInputProps {
 }
@@ -18,7 +18,7 @@ interface SearchInputProps {
 //   NativeModules.SettingsManager.settings.AppleLanguages[0] : NativeModules.I18nManager.localeIdentifier
 
 const SearchInput = (props: SearchInputProps) => {
-  const {coordinates, address} = useContext(LocationPickerScreenContext);
+  const {coordinates, address} = useContext(CreateEventScreenContext);
   const {width, height} = useDimensions().screen;
   const {keyboardHeight} = useKeyboard();
   const language = useState<string>(RNLocalize.getLocales()[0].languageCode);

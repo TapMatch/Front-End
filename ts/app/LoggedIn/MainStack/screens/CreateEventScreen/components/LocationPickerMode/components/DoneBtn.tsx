@@ -14,15 +14,18 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {useNavigation} from '@react-navigation/native';
 import {Dimensions} from 'react-native';
-import {LocationPickerScreenContext} from 'ts/app/contexts/LocationPickerScreenContext';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 
-interface DoneBtnProps { }
+interface DoneBtnProps {}
 
 const DoneBtn = (props: DoneBtnProps) => {
-  const {coordinates, address} = useContext(LocationPickerScreenContext);
-
   const {bottom} = useSafeAreaInsets();
-  const {navigate} = useNavigation();
+  const {
+    coordinates,
+    address,
+    addingLocationOn
+  } = useContext(CreateEventScreenContext);
+
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const btnDisabled = address[0].length === 0 || !Object.keys(coordinates[0]);
   return (
@@ -32,12 +35,13 @@ const DoneBtn = (props: DoneBtnProps) => {
       style={[_s.container, {bottom: bottom + 15}]}
       keyboardVerticalOffset={vs(15)}>
       <View style={[_s.btnContainer, {opacity: btnDisabled ? 0.2 : 1}]}>
-        <TouchableOpacity disabled={btnDisabled} onPress={() =>
-          navigate('CreateEvent', {
-            address: address[0],
-            coordinates: coordinates[0]
-          })
-        } style={[_s.btn, _s.center]}>
+        <TouchableOpacity disabled={btnDisabled} onPress={() => {
+          addingLocationOn[1](false);
+          // navigate('CreateEvent', {
+          //   address: address[0],
+          //   coordinates: coordinates[0]
+          // })
+        }} style={[_s.btn, _s.center]}>
           <Text style={_s.btnTxt}>Done</Text>
         </TouchableOpacity>
       </View>

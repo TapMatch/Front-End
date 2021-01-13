@@ -13,6 +13,7 @@ import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import YesNoModal from 'ts/app/common/components/YesNoModal';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
+import LocationPickerMode from './components/LocationPickerMode/LocationPickerMode';
 
 interface CreateEventScreenProps {
   navigation: any;
@@ -24,88 +25,90 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const {selectedCommunityData, eventMarkers, upcomingEvents} = useContext(MainStackContext);
 
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const coordinates = userLocation[0];
   const description = useState<string>('');
-  const eventAddress = useState<string>('');
-  const evetnCoordinates = useState<LatLng>(userLocation[0]);
+  // const address = useState<string>('');
+  // const coordinates = useState<LatLng>(userLocation[0]);
   const eventName = useState<string>('');
   const joinLimit = useState<number>(1);
   const dateTime = useState<Date>(new Date());
   const yesNoModalVisible = useState<boolean>(false);
 
-  useEffect(
-    () => {
-      if (route.params.address.length) {
-        eventAddress[1](route.params.address);
-      }
-      if (Object.keys(route.params.coordinates)) {
-        evetnCoordinates[1]({
-          longitude: route.params.coordinates.longitude,
-          latitude: route.params.coordinates.latitude
-        });
-      }
-    },
-    [route.params.address, route.params.coordinates]
-  );
+  const addingLocationOn = useState<boolean>(false);
+
+  const coordinates = useState<any>({
+    ...userLocation[0], latitudeDelta: 0.015,
+    longitudeDelta: 0.0121,
+  });
+  const address = useState<string>('');
+
+  const renderContent = () => {
+    if (addingLocationOn[0]) {
+      return <LocationPickerMode />;
+    } else {
+      return (
+        <View style={[_s.container]}>
+          <Header />
+          <FormWindow />
+          <CreateBtn disabled={eventName[0].length === 0 || address[0].length === 0 || description[0].length === 0}
+            onPress={() => {
+              navigation.goBack();
+              createEvent({
+                eventMarkers,
+                upcomingEvents,
+                communityId: selectedCommunityData[0].id,
+                userToken: userToken[0],
+                coordinates: coordinates[0],
+                address: address[0],
+                description: description[0],
+                join_limit: joinLimit[0],
+                date: dateTime[0],
+                name: eventName[0],
+              }).then(() => {
+                description[1]('');
+                address[1]('');
+                eventName[1]('');
+                joinLimit[1](1);
+                dateTime[1](new Date());
+                coordinates[1](userLocation[0]);
+              });
+            }} />
+          <MapView
+            provider={PROVIDER_GOOGLE}
+            customMapStyle={googleMapStyle}
+            zoomEnabled={true}
+            style={_s.map}
+            pitchEnabled={true}
+            rotateEnabled={true}
+            scrollEnabled={true}
+            initialRegion={{
+              ...userLocation[0],
+              latitudeDelta: 0.015,
+              longitudeDelta: 0.0121,
+            }}
+          />
+          <YesNoModal
+            onYesPress={navigation.goBack}
+            modalVisible={yesNoModalVisible}
+            subtitle={'Note that If you quit,\nno draft Will be saved'}
+            title={'Are you sure\nYou want to\nleave create?'}
+          />
+        </View>
+      );
+    }
+  };
   if (isFocused) {
     return (
       <CreateEventScreenContext.Provider value={{
-        description, joinLimit, dateTime,
-        eventName, eventAddress, evetnCoordinates, yesNoModalVisible
+        description, joinLimit, dateTime, addingLocationOn,
+        eventName, address, coordinates, yesNoModalVisible
       }}>
         <DeepLinkHandler navigation={navigation} route={route}>
-          <View style={[_s.container]}>
-            <StatusBar
-              animated={true}
-              backgroundColor={_c.smoke}
-              barStyle={'dark-content'}
-            />
-            <Header />
-            <FormWindow />
-            <CreateBtn disabled={eventName[0].length === 0 || eventAddress[0].length === 0 || description[0].length === 0}
-              onPress={() => {
-                navigation.goBack();
-                createEvent({
-                  eventMarkers,
-                  upcomingEvents,
-                  communityId: selectedCommunityData[0].id,
-                  userToken: userToken[0],
-                  coordinates: evetnCoordinates[0],
-                  address: eventAddress[0],
-                  description: description[0],
-                  join_limit: joinLimit[0],
-                  date: dateTime[0],
-                  name: eventName[0],
-                }).then(() => {
-                  description[1]('');
-                  eventAddress[1]('');
-                  eventName[1]('');
-                  joinLimit[1](1);
-                  dateTime[1](new Date());
-                  evetnCoordinates[1](userLocation[0]);
-                });
-              }} />
-            <MapView
-              provider={PROVIDER_GOOGLE}
-              customMapStyle={googleMapStyle}
-              zoomEnabled={true}
-              style={_s.map}
-              pitchEnabled={true}
-              rotateEnabled={true}
-              scrollEnabled={true}
-              region={{
-                ...coordinates,
-                latitudeDelta: 0.015,
-                longitudeDelta: 0.0121,
-              }}
-            />
-            <YesNoModal
-              onYesPress={navigation.goBack}
-              modalVisible={yesNoModalVisible}
-              subtitle={'Note that If you quit,\nno draft Will be saved'}
-              title={'Are you sure\nYou want to\nleave create?'}
-            />
-          </View>
+          <StatusBar
+            animated={true}
+            backgroundColor={_c.smoke}
+            barStyle={'dark-content'}
+          />
+          {renderContent()}
         </DeepLinkHandler>
       </CreateEventScreenContext.Provider>
     );

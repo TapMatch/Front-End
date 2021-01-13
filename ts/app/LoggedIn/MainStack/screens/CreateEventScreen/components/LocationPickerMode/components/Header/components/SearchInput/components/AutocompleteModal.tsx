@@ -8,10 +8,10 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import * as RNLocalize from "react-native-localize";
 import {useDimensions, useKeyboard} from '@react-native-community/hooks';
-import {LocationPickerScreenContext} from 'ts/app/contexts/LocationPickerScreenContext';
 import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import CloseBlack from 'assets/svg/close-black.svg';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 
 interface AutocompleteModalProps {
     modalVisible: [boolean, (x: boolean) => void];
@@ -20,7 +20,7 @@ interface AutocompleteModalProps {
 const AutocompleteModal = ({
     modalVisible,
 }: AutocompleteModalProps) => {
-    const {coordinates, address} = useContext(LocationPickerScreenContext);
+    const {coordinates, address} = useContext(CreateEventScreenContext);
     const {width, height} = useDimensions().screen;
     const {keyboardHeight} = useKeyboard();
     const language = useState<string>(RNLocalize.getLocales()[0].languageCode);

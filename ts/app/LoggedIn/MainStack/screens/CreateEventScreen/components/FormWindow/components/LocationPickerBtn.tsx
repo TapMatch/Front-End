@@ -5,22 +5,22 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
 import PenBlue from 'assets/svg/pen-blue.svg';
-import {useNavigation} from '@react-navigation/native';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
-interface LocationPickerBtnProps { }
+
+interface LocationPickerBtnProps {}
 
 const LocationPickerBtn = (props: LocationPickerBtnProps) => {
   const {
-    eventAddress
+    address,
+    addingLocationOn
   } = useContext(CreateEventScreenContext);
-  const {navigate} = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigate('LocationPicker')}
+      onPress={() => addingLocationOn[1](true)}
       style={[_s.container]}>
       <Text style={[_s.txt, _s.title]}>Place</Text>
       <View style={_s.bottom}>
-        <Text style={[_s.txt, _s.address]}>{eventAddress[0]}</Text>
+        <Text style={[_s.txt, _s.address]}>{address[0]}</Text>
         <PenBlue height={_fs.x3l} width={_fs.x3l} />
       </View>
     </TouchableOpacity>

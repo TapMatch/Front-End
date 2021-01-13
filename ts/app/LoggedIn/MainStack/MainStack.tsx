@@ -7,7 +7,6 @@ import WebScreen from './screens/WebScreen/WebScreen';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
 import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
-import LocationPickerScreen from './screens/LocationPickerScreen/LocationPickerScreen';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
@@ -88,16 +87,6 @@ export default function MainStack() {
         <Screen
           name="CreateEvent"
           component={CreateEventScreen}
-          options={() => {
-            return {
-              headerShown: false,
-            };
-          }}
-        />
-
-        <Screen
-          name="LocationPicker"
-          component={LocationPickerScreen}
           options={() => {
             return {
               headerShown: false,

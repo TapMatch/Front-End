@@ -7,7 +7,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import AutocompleteModal from './components/AutocompleteModal';
-import {LocationPickerScreenContext} from 'ts/app/contexts/LocationPickerScreenContext';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 // import {NativeModules} from 'react-native'
 
 interface SearchInputProps {
@@ -17,7 +17,7 @@ interface SearchInputProps {
 //   NativeModules.SettingsManager.settings.AppleLanguages[0] : NativeModules.I18nManager.localeIdentifier
 
 const SearchInput = (props: SearchInputProps) => {
-    const {address} = useContext(LocationPickerScreenContext);
+    const {address} = useContext(CreateEventScreenContext);
 
     const modalVisible = useState<boolean>(false);
     return (

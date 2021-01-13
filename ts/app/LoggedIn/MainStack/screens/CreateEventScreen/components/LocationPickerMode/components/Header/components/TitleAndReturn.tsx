@@ -1,18 +1,20 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
-import {useNavigation} from '@react-navigation/native';
+import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 
 interface TitleAndReturnProps {}
 
 const TitleAndReturn = (props: TitleAndReturnProps) => {
-  const {goBack} = useNavigation();
+  const {
+    addingLocationOn
+  } = useContext(CreateEventScreenContext);
   return (
     <View style={[_s.container]}>
-      <TouchableOpacity onPress={goBack} style={_s.btn}>
+      <TouchableOpacity onPress={() => addingLocationOn[1](false)} style={_s.btn}>
         <ChevronLeftBlack height={_fs.x9l} width={_fs.x9l} />
       </TouchableOpacity>
       <Text style={[_s.txt, _s.title]}>Pin point your Event</Text>
