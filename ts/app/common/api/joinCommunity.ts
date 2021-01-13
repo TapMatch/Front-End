@@ -43,7 +43,7 @@ export async function joinCommunity({
               errorState[1](true);
               throw 'incorrect code';
             } else {
-              console.log('!!!!!!!!!!!!-----incorrect code----!!!!!!!!!!', data);
+              // console.log('!!!!!!!!!!!!-----incorrect code----!!!!!!!!!!', data);
               throw 'incorrect code';
             }
           } else {

@@ -20,10 +20,7 @@ export async function deleteEvent({
     selectedMarkerData,
     currentUserIsOrganizer
 }: IdeleteEvent) {
-    console.log(selectedCommunityData[0].id,
-        userToken,
-        eventMarkers[0],
-        selectedMarkerData[0]);
+
     try {
         if (currentUserIsOrganizer) {
             const options: AxiosRequestConfig = {

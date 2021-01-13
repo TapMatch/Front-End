@@ -7,6 +7,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 import CaptionBubble from 'assets/svg/caption-bubble.svg';
+import {constants} from 'ts/constants/constants';
 interface FeedbackBtnProps {
   // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
   testingMode: any;
@@ -21,7 +22,7 @@ const FeedbackBtn = (props: FeedbackBtnProps) => {
       // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
       onLongPress={() => props.testingMode[1](!props.testingMode[0])}
 
-      onPress={() => navigate('WebScreen', {url: 'https://www.blender.org/'})}
+      onPress={() => navigate('WebScreen', {url: constants.feedbackURL})}
       style={_s.container}>
       <CaptionBubble height={_fs.m} width={_fs.m} />
       <Text style={_s.txt}>{txt.giveUsYourFeedback}</Text>

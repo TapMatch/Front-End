@@ -52,14 +52,10 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
         const ind = userProfile[0].communities[0].findIndex((item: any) => item.id === el.id);
         return ind === -1;
       });
-      console.log(cleanCommunitiesList, 'fdkfuhdlfkuhdfliushiughoiusdfghdfspiu;hlfdiou;g');
       myCommunities[1]([...userProfile[0].communities[0], ...cleanCommunitiesList]);
     });
 
   }, [modalVisible[0], userProfile[0].communities[0]]);
-
-  console.log(myCommunities[0]);
-  console.log(allCommunities[0]);
 
   const renderContent = () => {
     if (codeInputVisible[0]) {

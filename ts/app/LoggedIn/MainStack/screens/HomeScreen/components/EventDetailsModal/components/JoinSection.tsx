@@ -8,6 +8,7 @@ import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {joinEvent} from '../../../api/joinEvent';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
+import callAlert from 'ts/utils/callAlert';
 
 interface JoinSectionProps {
     eventJoinState: 'join' | 'full' | 'joined';
@@ -35,13 +36,19 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
         switch (eventJoinState) {
             case 'join': return (
                 <View style={[_s.container, _s.center]}>
-                    <TouchableOpacity onPress={() => joinEvent({
-                        communityId: selectedCommunityData[0].id,
-                        userToken: userToken[0],
-                        eventMarkers,
-                        selectedMarkerData,
-                        userProfile
-                    })} style={[_s.btn, _s.shadow, _s.center]}>
+                    <TouchableOpacity onPress={() => {
+                        if (userProfile[0].events.length < 5) {
+                            joinEvent({
+                                communityId: selectedCommunityData[0].id,
+                                userToken: userToken[0],
+                                eventMarkers,
+                                selectedMarkerData,
+                                userProfile
+                            });
+                        } else {
+                            callAlert(undefined, 'You can join up to 5 events at a time.');
+                        }
+                    }} style={[_s.btn, _s.shadow, _s.center]}>
                         <Text numberOfLines={1} style={[_s.txt, _s.btnTxt]}>Join</Text>
                     </TouchableOpacity>
                 </View>

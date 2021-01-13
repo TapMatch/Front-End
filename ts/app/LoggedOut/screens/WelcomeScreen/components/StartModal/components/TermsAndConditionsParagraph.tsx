@@ -9,7 +9,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 
 interface TermsAndConditionsParagraphProps {
-  modalVisible: [boolean, (x: boolean) => void]
+  modalVisible: [boolean, (x: boolean) => void];
 }
 
 const TermsAndConditionsParagraph = (
@@ -17,12 +17,12 @@ const TermsAndConditionsParagraph = (
 ) => {
   const txt = useLocalizedTxt();
   const {navigate} = useNavigation();
-  const isFocused = useIsFocused()
+  const isFocused = useIsFocused();
   const formatLinks = (url: string) => {
     switch (url) {
-      case constants.termsOfUseUrl_EN.trim():
+      case constants.termsOfUseUrl_EN:
         return txt.termsOfUse;
-      case constants.privacyPolicy_EN.trim():
+      case constants.privacyPolicy_EN:
         return txt.privacyPolicy;
       default:
         return url;
@@ -34,15 +34,19 @@ const TermsAndConditionsParagraph = (
       <Hyperlink
         linkStyle={_s.linkStyle}
         onPress={(url) => {
-          modalVisible[1](false)
-          navigate('WebScreen', {url})
+          modalVisible[1](false);
+          navigate('WebScreen', {url});
         }}
         linkText={(url) => formatLinks(url)}>
         <Text
           numberOfLines={3}
           style={
             _s.paragraphTxt
-          }>{`${txt.termsAndConditionsParagraph1}${constants.termsOfUseUrl_EN}${txt.termsAndConditionsParagraph2}${constants.privacyPolicy_EN}`}</Text>
+          }>
+          {
+            `${txt.termsAndConditionsParagraph1}${` ${constants.termsOfUseUrl_EN} `}${txt.termsAndConditionsParagraph2}${` ${constants.privacyPolicy_EN} `}`
+          }
+        </Text>
       </Hyperlink>
     </View>
   );

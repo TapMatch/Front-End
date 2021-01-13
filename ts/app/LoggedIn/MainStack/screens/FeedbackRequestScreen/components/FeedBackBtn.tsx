@@ -6,7 +6,8 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
-import CaptionBubble from 'assets/svg/caption-bubble.svg';
+import {constants} from 'ts/constants/constants';
+
 interface FeedbackBtnProps {}
 
 const FeedbackBtn = (props: FeedbackBtnProps) => {
@@ -16,7 +17,7 @@ const FeedbackBtn = (props: FeedbackBtnProps) => {
   return (
     <View style={_s.container}>
       <TouchableOpacity
-        onPress={() => navigate('WebScreen', {url: 'https://www.blender.org/'})}
+        onPress={() => navigate('WebScreen', {url: constants.feedbackURL})}
         style={[_s.btn, _s.shadow]}>
         <Text style={_s.txt}>Send Feedback</Text>
       </TouchableOpacity>

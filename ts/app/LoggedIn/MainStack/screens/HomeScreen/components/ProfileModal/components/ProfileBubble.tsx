@@ -14,7 +14,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
-interface ProfileBubbleProps { }
+interface ProfileBubbleProps {}
 
 const ProfileBubble = (props: ProfileBubbleProps) => {
   const txt = useLocalizedTxt();
@@ -41,7 +41,7 @@ const ProfileBubble = (props: ProfileBubbleProps) => {
           </View>
           <View style={_s.bottom}>
             <Text style={_s.bottomTxt}>
-              To edit your profile You must delete the app and sign Up again as
+              To edit your profile You must delete the app and sign up again as
               we do not store your information. Sorry for the Inconvenience. We
               are still in our infancy.
             </Text>

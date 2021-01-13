@@ -1,6 +1,6 @@
 import {Share} from "react-native";
 import callAlert from "ts/utils/callAlert";
-import branch, {BranchEvent} from 'react-native-branch';
+import branch from 'react-native-branch';
 
 const shareContent = async (data: any) => {
     try {

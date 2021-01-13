@@ -6,7 +6,8 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
-interface RequestCommunityBtnProps { }
+import {constants} from 'ts/constants/constants';
+interface RequestCommunityBtnProps {}
 
 const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
   const {navigate} = useNavigation();
@@ -18,7 +19,7 @@ const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
       onLongPress={() => navigate('SecretScreen')}
 
       //
-      onPress={() => navigate('WebScreen', {url: 'https://vradov.space/'})}
+      onPress={() => navigate('WebScreen', {url: constants.feedbackURL})}
       style={_s.container}>
       <View style={_s.circle} />
       <Text style={_s.txt}>{txt.requestACommunity}</Text>

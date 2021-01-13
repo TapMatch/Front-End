@@ -15,7 +15,6 @@ export async function updateUserProfile({
     data,
 }: IupdateUserProfile) {
     try {
-        console.log('rtrtrtrtrtrtr!!!!!234!!!!!trtrtrtrtrtrtrr');
 
         const options: AxiosRequestConfig = {
             method: 'PUT',
@@ -31,7 +30,6 @@ export async function updateUserProfile({
             .request(options)
             .then(({data}: any) => {
                 userProfile[1](data.data);
-                // console.log('YYYYYYYYYYYY54355YYYYYYYYY', data.data);
                 const user_profile = JSON.stringify(data);
                 AsyncStorage.setItem('@user_profile', user_profile);
             })
