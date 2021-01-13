@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
@@ -11,6 +11,7 @@ import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputConte
 import {useDimensions} from '@react-native-community/hooks';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {postUserFinishedOnboarding} from '../../../api/postUserFinishedOnboarding';
+import {useIsFocused} from '@react-navigation/native';
 
 interface CodeInputWindowProps {
   community: any;
@@ -19,6 +20,7 @@ interface CodeInputWindowProps {
 const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const txt = useLocalizedTxt();
   const {windowState} = useContext(CommunityCodeInputContext);
+  const isFocused = useIsFocused();
   const circleCheckRedSize = vs(70);
   const lockOpenWhiteSize = vs(55);
   const {height} = useDimensions().screen;
@@ -26,16 +28,27 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const {user_has_passed_onboarding, userProfile, userToken} = useContext(
     TapMatchContext,
   );
+  const moveOn = () => {
+    user_has_passed_onboarding[1](true);
+    postUserFinishedOnboarding({
+      userProfile,
+      userToken: userToken[0],
+    });
+    windowState[1](false);
+  };
+
+  useEffect(() => {
+    const redirect_timer = setTimeout(() => {
+      if (isFocused) {
+        moveOn();
+      }
+    }, 7000);
+    return clearTimeout(redirect_timer);
+  }, []);
+
   return (
     <TouchableOpacity
-      onPress={() => {
-        user_has_passed_onboarding[1](true);
-        postUserFinishedOnboarding({
-          userProfile,
-          userToken: userToken[0],
-        });
-        windowState[1](false);
-      }}
+      onPress={moveOn}
       style={[_s.container, {maxHeight: height * 0.52}]}>
       <CheckCircleRed height={circleCheckRedSize} width={circleCheckRedSize} />
       <Text style={[_s.txt, _s.msg]}>{txt.youAreNowAPartOf}</Text>

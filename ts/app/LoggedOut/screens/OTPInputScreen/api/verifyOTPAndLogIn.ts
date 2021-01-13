@@ -3,6 +3,7 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
+import * as RNLocalize from "react-native-localize";
 
 interface IverifyOTPAndLogIn {
   PHPSESSID: [string, (x: string) => void];
@@ -30,11 +31,11 @@ export async function verifyOTPAndLogIn({
         'Content-Type': 'application/json',
       },
       data: {
+        timezone: RNLocalize.getTimeZone(),
         verify_code: OTP,
       },
       withCredentials: false
     };
-
     axios
       .request(options)
       .then(({data}: any) => {

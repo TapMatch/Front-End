@@ -17,31 +17,27 @@ import ListItemLocked from './components/ListItemLocked';
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
 
 interface CommunitiesModalProps {
-  modalVisible: [boolean, (x: boolean) => void];
   selectedCommunityData: any;
 }
 
-const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModalProps) => {
+const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const {userToken, userProfile} = useContext(TapMatchContext);
   const myCommunities = useState<any>([]);
-  const allCommunities = useState<any>([]);
-  const codeInputVisible = useState<boolean>(false);
-  const selectedCommunity = useState<any>({});
 
-  const {upcomingEvents, eventMarkers, upcomingEventsListIsOpen} = useContext(MainStackContext);
+  const {upcomingEvents, eventMarkers, upcomingEventsListIsOpen, communitySelectedForJoin, allCommunities, communitiesModalVisible, communityCodeInputVisible} = useContext(MainStackContext);
 
   const selectItem = (item: any) => {
-    selectedCommunity[1](item);
-    codeInputVisible[1](true);
+    communitySelectedForJoin[1](item);
+    communityCodeInputVisible[1](true);
   };
 
   useEffect(() => {
-    if (!modalVisible[0]) {
-      selectedCommunity[1]({});
+    if (!communitiesModalVisible[0]) {
+      communitySelectedForJoin[1]({});
     }
-  }, [modalVisible[0]]);
+  }, [communitiesModalVisible[0]]);
 
   useEffect(() => {
     getAllCommunities({
@@ -52,17 +48,20 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
         const ind = userProfile[0].communities[0].findIndex((item: any) => item.id === el.id);
         return ind === -1;
       });
-      myCommunities[1]([...userProfile[0].communities[0], ...cleanCommunitiesList]);
+      const open_communities = cleanCommunitiesList.filter((el: any) => el.is_open);
+      const closed_communities = cleanCommunitiesList.filter((el: any) => !el.is_open);
+
+      myCommunities[1]([...userProfile[0].communities[0], ...open_communities, ...closed_communities]);
     });
 
-  }, [modalVisible[0], userProfile[0].communities[0]]);
+  }, [communitiesModalVisible[0], userProfile[0].communities[0]]);
 
   const renderContent = () => {
-    if (codeInputVisible[0]) {
-      return <CommunityCodeInput communityItem={selectedCommunity} codeInputVisible={codeInputVisible} />;
+    if (communityCodeInputVisible[0]) {
+      return <CommunityCodeInput communityItem={communitySelectedForJoin} codeInputVisible={communityCodeInputVisible} />;
     } else {
       return (<Fragment>
-        <TitleAndReturn modalVisible={modalVisible} />
+        <TitleAndReturn modalVisible={communitiesModalVisible} />
         <View style={_s.middle}>
           <FlatList
             keyExtractor={(item: any) => `community-${item?.id}-${item.name}`}
@@ -88,7 +87,7 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
                     userToken: userToken[0],
                     eventMarkers
                   });
-                  modalVisible[1](false);
+                  communitiesModalVisible[1](false);
                 }} item={{...item, access: c.access}} />
               ) : (
                   <ListItemLocked selectItem={selectItem} item={item} />
@@ -117,7 +116,7 @@ const CommunitiesModal = ({modalVisible, selectedCommunityData}: CommunitiesModa
       animationOut={'fadeOut'}
       // hasBackdrop={false}
       animationOutTiming={600}
-      isVisible={modalVisible[0]}
+      isVisible={communitiesModalVisible[0]}
       style={_s.modal}>
       <View style={[_s.container]}>
         <View style={[_s.content, {paddingTop: 60 + top}]}>

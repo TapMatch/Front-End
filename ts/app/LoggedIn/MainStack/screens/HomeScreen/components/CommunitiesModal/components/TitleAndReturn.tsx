@@ -1,17 +1,17 @@
 import React from 'react';
-import { Text, View, StyleSheet, TouchableOpacity } from 'react-native';
-import { _c } from 'ts/UIConfig/colors';
-import { _f } from 'ts/UIConfig/fonts';
-import { _fs } from 'ts/UIConfig/fontSizes';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {_c} from 'ts/UIConfig/colors';
+import {_f} from 'ts/UIConfig/fonts';
+import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
-import { vs } from 'react-native-size-matters';
+import {vs} from 'react-native-size-matters';
 import ChevronWhite from 'assets/svg/chevron-left-white.svg';
 
 interface TitleAndReturnProps {
   modalVisible: [boolean, (x: boolean) => void];
 }
 
-const TitleAndReturn = ({ modalVisible }: TitleAndReturnProps) => {
+const TitleAndReturn = ({modalVisible}: TitleAndReturnProps) => {
   const txt = useLocalizedTxt();
 
   return (
@@ -39,9 +39,10 @@ const _s = StyleSheet.create({
     flexDirection: 'row',
   },
   btn: {
+    transform: [{rotate: `270deg`}],
     alignItems: 'center',
     paddingVertical: '3%',
-    paddingLeft: '3%',
+    paddingLeft: '1.5%',
     paddingRight: 8,
     justifyContent: 'center',
   },

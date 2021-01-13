@@ -60,8 +60,14 @@ export async function joinCommunity({
         return data;
       })
       .catch((error) => {
-        console.log(error);
-        callAlert(undefined, `${error.toString()} ::: joinCommunity1`);
+        console.log(error.toString(), '::: joinCommunity10');
+        if (error.toString() === 'Error: Request failed with status code 422') {
+          if (errorState) {
+            errorState[1](true);
+          }
+        } else {
+          callAlert(undefined, `${error.toString()} ::: joinCommunity1`);
+        }
       });
   } catch (error) {
     console.log(`${error} ::: joinCommunity2`);

@@ -1,12 +1,23 @@
 import React, {useContext, useEffect} from 'react';
 import branch from 'react-native-branch';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 const DeepLinkHandler = ({
     children, navigation, route,
-    focusMapToLatLng, eventDetailsModalVisible
+    eventDetailsModalVisible
 }: any) => {
-    const {selectedCommunityData, eventMarkers, selectedMarkerData, upcomingEvents} = useContext(MainStackContext);
+    const {
+        selectedCommunityData,
+        eventMarkers,
+        selectedMarkerData,
+        allCommunities,
+        communitiesModalVisible,
+        communitySelectedForJoin,
+        communityCodeInputVisible
+    } = useContext(MainStackContext);
+    const {userProfile} = useContext(TapMatchContext);
+
     useEffect(() => {
         branch.subscribe(({error, params, uri}: any) => {
             if (error) {
@@ -18,15 +29,29 @@ const DeepLinkHandler = ({
     });
 
     const processDeepLink = async () => {
-        let lastParams = await branch.getLatestReferringParams(); // params from last open
+        let lastParams = await branch.getLatestReferringParams();
         if (route.name === 'Home') {
-            if (lastParams) {
-                console.log('05498750394OOOOOOOOOOOUUU', lastParams.tapmatch_data.coordinates);
-                // setTimeout(
-                //     () =>
-                //         focusMapToLatLng(lastParams.tapmatch_data.coordinates)
-                //     , 500);
-                selectedMarkerData[1](lastParams.tapmatch_data);
+            console.log(lastParams.tapmatch_event_data, 'lastParams.tapmatch_datalastParams.tapmatch_datalastParams.tapmatch_event_data');
+            if (lastParams.tapmatch_event_data) {
+                const dlUserCommunity = userProfile[0].communities[0].find((el: any) => el.id === lastParams.tapmatch_community_id);
+                if (dlUserCommunity) {
+                    if (selectedCommunityData[0].id !== dlUserCommunity.id) {
+                        selectedCommunityData[1](dlUserCommunity);
+                    }
+                } else {
+                    const dlCommunity = allCommunities[0].find((el: any) => el.id === lastParams.tapmatch_community_id);
+                    if (dlCommunity) {
+                        communitySelectedForJoin[1](dlCommunity);
+                        communitiesModalVisible[1](true);
+                        communityCodeInputVisible[1](true);
+                    } else {
+                        console.log('no such community');
+                    }
+                }
+
+                // const dlEvent = eventMarkers[0].find((el: any) => el.id === lastParams.tapmatch_event_data);
+                // console.log('05498750394OOOOOOOOOOOUUU', lastParams.tapmatch_event_data.coordinates);
+                selectedMarkerData[1](lastParams.tapmatch_event_data);
                 eventDetailsModalVisible[1](true);
             }
         } else {

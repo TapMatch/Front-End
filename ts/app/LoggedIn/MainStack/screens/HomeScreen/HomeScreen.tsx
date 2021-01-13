@@ -32,7 +32,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const set_mapRef = (x: any) => _mapRef = x;
 
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const {selectedCommunityData, eventMarkers, selectedMarkerData, upcomingEvents} = useContext(MainStackContext);
+  const {selectedCommunityData, eventMarkers, selectedMarkerData, upcomingEvents, communitiesModalVisible} = useContext(MainStackContext);
   const startingPoint: LatLng = {
     ...userLocation[0],
     latitudeDelta: 0.015,
@@ -42,7 +42,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const profileModalVisible = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
   const yesNoModalVisible = useState<boolean>(false);
-  const communitiesModalVisible = useState<boolean>(false);
   const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
   const eventJoinState = useState<'join' | 'full' | 'joined'>('join');
   const mapCoordinates = useState<LatLng>(startingPoint);
@@ -123,7 +122,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     }
   };
 
-
   const focusMapToLatLng = (x: LatLng) => {
     return typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
   };
@@ -165,7 +163,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           modalVisible: yesNoModalVisible
         });
     }
-
   };
 
   const setupLeaveEventUI = () => {
@@ -245,7 +242,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
                 eventJoinState={eventJoinState[0]}
                 modalVisible={eventDetailsModalVisible}
               />
-              <CommunitiesModal selectedCommunityData={selectedCommunityData} modalVisible={communitiesModalVisible} />
+              <CommunitiesModal selectedCommunityData={selectedCommunityData} />
             </Fragment>}
           <YesNoModal
             {...defineYesNoModalProps()}

@@ -8,22 +8,22 @@ const shareContent = async (data: any) => {
             locallyIndex: true,
             title: 'TabMatch',
             contentDescription: 'TabMatch',
-            // contentMetadata: {data}
         });
         let linkProperties = {
             feature: 'share',
             channel: 'TabMatch app'
         };
-
+        console.log(data, 'fuhserogyiuerhlufgepirgulrefpiosfhdgiublfksdgjhoierlkufh');
         let controlParams = {
             $url_redirect_mode: 2,
             $deeplink_path: 'Home',
-            tapmatch_data: data
+            tapmatch_community_id: data.community_id,
+            tapmatch_event_data: data,
             // $desktop_url: 'http://desktop-url.com/monster/12345'
         };
 
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
-        console.log(url, '🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸🐸');
+
         const result = await Share.share({
             message: `TabMatch is a cool app!\n ${url}`,
         });

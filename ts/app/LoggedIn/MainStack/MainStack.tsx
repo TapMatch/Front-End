@@ -23,16 +23,29 @@ export default function MainStack() {
   const selectedMarkerData = useState<any>({});
   const upcomingEventsListIsOpen = useState<boolean>(false);
 
+  const allCommunities = useState<any>([]);
+
+  // for community modal
+  const communitiesModalVisible = useState<boolean>(false);
+  const communityCodeInputVisible = useState<boolean>(false);
+  const communitySelectedForJoin = useState<any>({});
+
+
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
+
   return (
     <MainStackContext.Provider value={{
       selectedCommunityData,
       upcomingEvents,
+      communitySelectedForJoin,
       upcomingEventsListIsOpen,
       eventMarkers,
-      selectedMarkerData
+      selectedMarkerData,
+      communitiesModalVisible,
+      allCommunities,
+      communityCodeInputVisible
     }}>
       <Navigator
         mode={'modal'}

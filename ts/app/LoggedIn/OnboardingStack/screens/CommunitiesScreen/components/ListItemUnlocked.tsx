@@ -15,7 +15,6 @@ const ListItemUnlocked = ({item}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
   const {name, id, city, access, is_open} = item;
-  console.log(is_open, '0909090090');
   return (
     <TouchableOpacity
       disabled={true}
