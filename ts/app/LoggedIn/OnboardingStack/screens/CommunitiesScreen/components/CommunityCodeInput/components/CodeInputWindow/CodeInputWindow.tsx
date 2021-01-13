@@ -13,7 +13,6 @@ interface CodeInputWindowProps {
 }
 
 const CodeInputWindow = ({community}: CodeInputWindowProps) => {
-  console.log(community, 'fksadjf;lkadsjfl;kadjs;flkjsal;j');
   const code = useState<string>('');
   const errorState = useState<boolean>(false);
   const txt = useLocalizedTxt();

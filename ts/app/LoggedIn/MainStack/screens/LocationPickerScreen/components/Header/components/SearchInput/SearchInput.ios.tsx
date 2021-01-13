@@ -52,7 +52,6 @@ const SearchInput = (props: SearchInputProps) => {
         placeholder=''
         onPress={(data, details: any = null) => {
           const {formatted_address, geometry} = details;
-          console.log(geometry, 'geometry');
           address[1](formatted_address);
           coordinates[1]({
             longitude: geometry.location.lng,

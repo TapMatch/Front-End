@@ -22,7 +22,6 @@ const iconSize = '75%';
 const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
   const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers} = useContext(MainStackContext);
   const {userToken} = useContext(TapMatchContext);
-  // console.log(upcomingEvents[0], 'upcomingEvents-upcomingEvents-upcomingEvents');
   const txt = useLocalizedTxt();
   const renderList = () => {
     if (upcomingEventsListIsOpen[0]) {

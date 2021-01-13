@@ -10,9 +10,8 @@ import DescriptionInput from './components/DescriptionInput';
 import LimitSlider from './components/LimitSlider';
 import LocationPickerBtn from './components/LocationPickerBtn';
 import NameInput from './components/NameInput';
-import Title from './components/Title';
 
-interface FormWindowProps { }
+interface FormWindowProps {}
 
 const FormWindow = (props: FormWindowProps) => {
   const {
@@ -34,7 +33,6 @@ const FormWindow = (props: FormWindowProps) => {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: pb}}>
           <View style={_s.content}>
-            <Title />
             <NameInput eventName={eventName} />
             <DescriptionInput description={description} />
             <LocationPickerBtn />
@@ -49,7 +47,7 @@ const FormWindow = (props: FormWindowProps) => {
 function definePaddingBottom({keyboardHeight, keyboardShown}: any) {
   if (Platform.OS === 'ios') {
     if (keyboardShown) {
-      return keyboardHeight;
+      return 0;
     } else {
       return 50;
     }

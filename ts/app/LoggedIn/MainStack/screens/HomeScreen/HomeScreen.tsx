@@ -125,7 +125,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
 
   const focusMapToLatLng = (x: LatLng) => {
-    console.log(x, '}{}{}{}{}{}{}{}{}{}{}{}{', _mapRef);
     return typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
   };
 

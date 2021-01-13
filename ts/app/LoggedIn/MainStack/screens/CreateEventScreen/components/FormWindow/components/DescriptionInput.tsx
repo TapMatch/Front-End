@@ -1,45 +1,53 @@
-import React, {MutableRefObject, useRef} from 'react';
+import React, {useState} from 'react';
 import {
-  Text,
   View,
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  Text,
 } from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
+
 interface DescriptionInputProps {
   description: [string, (x: string) => void];
 }
 
 const DescriptionInput = ({description}: DescriptionInputProps) => {
-  let input = useRef<any>(null);
+  const inputOnScreen = useState<boolean>(false);
+
+  const renderInput = () => {
+    if (inputOnScreen[0]) {
+      return (
+        <TextInput
+          value={description[0]}
+          onBlur={() => inputOnScreen[1](false)}
+          textContentType={'none'}
+          importantForAutofill={'no'}
+          autoCapitalize={'none'}
+          autoCompleteType={'off'}
+          autoCorrect={false}
+          autoFocus={true}
+          maxLength={30}
+          contextMenuHidden={true}
+          onChangeText={description[1]}
+          multiline={true}
+          style={_s.input}
+        />);
+    } else {
+      return (
+        <TouchableOpacity activeOpacity={1} onPress={() => inputOnScreen[1](true)}>
+          <Text style={_s.input}>
+            {description[0].length ? description[0] : 'Description'}
+          </Text>
+        </TouchableOpacity>);
+    }
+  };
   return (
     <View style={[_s.container]}>
-      <TouchableOpacity
-        style={_s.focusBtn}
-        activeOpacity={1}
-        onPress={() => input.focus()}>
-        <Text style={_s.title}>Description</Text>
-      </TouchableOpacity>
-      <TextInput
-        ref={(x) => {
-          input = x;
-        }}
-        value={description[0]}
-        textContentType={'none'}
-        importantForAutofill={'no'}
-        autoCapitalize={'none'}
-        autoCompleteType={'off'}
-        autoCorrect={false}
-        autoFocus={false}
-        contextMenuHidden={true}
-        onChangeText={description[1]}
-        multiline={true}
-        style={_s.input}
-      />
+      {renderInput()}
     </View>
   );
 };
@@ -48,42 +56,29 @@ export default DescriptionInput;
 
 const _s = StyleSheet.create({
   container: {
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
+    justifyContent: 'center',
+    alignItems: 'center',
     width: '100%',
     minHeight: vs(100),
     height: 'auto',
     borderBottomColor: _c.grey,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    paddingHorizontal: '6%',
-    paddingVertical: '4%',
-  },
-  focusBtn: {
-    width: '100%',
-    alignItems: 'flex-start',
+    paddingHorizontal: '5%',
   },
   input: {
     paddingVertical: 0,
-    marginTop: 4,
     alignItems: 'center',
     justifyContent: 'center',
     fontFamily: _f.eRegular,
-    lineHeight: _fs.l + 3,
+    lineHeight: _fs.l,
     fontSize: _fs.l,
     color: _c.black,
     overflow: 'visible',
     paddingLeft: 5,
-    minHeight: _fs.l + 3,
+    minHeight: _fs.l,
     height: 'auto',
-    textAlign: 'left',
-    textAlignVertical: 'center',
-    width: '100%',
-  },
-  title: {
     textAlign: 'center',
     textAlignVertical: 'center',
-    fontFamily: _f.eRegular,
-    fontSize: _fs.xl,
-    color: _c.grey,
+    width: '100%',
   },
 });

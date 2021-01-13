@@ -20,16 +20,7 @@ export async function joinCommunity({
   communityId,
   code,
 }: IjoinCommunity) {
-  // console.log({
-  //   errorState,
-  //   userProfile,
-  //   windowState,
-  //   userToken,
-  //   communityId,
-  //   code
-  // }, `*****************`);
   try {
-    // console.log('🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺', communityId, '🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺🦺', code);
     const options: AxiosRequestConfig = {
       method: 'POST',
       url: `${tapMatchServerUrl}api/communities/${communityId}/join`,
@@ -43,13 +34,11 @@ export async function joinCommunity({
         :
         undefined
     };
-    console.log(options.data, 'options.dataoptions.dataoptions.dataoptions.dataoptions.dataoptions.data');
     axios
       .request(options)
       .then(({data}) => {
         if (data.hasOwnProperty('error')) {
           if (data.error.includes('incorrect')) {
-            console.log('%^^%^%^%^%^%^%^%^%^%%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^%^');
             if (errorState) {
               errorState[1](true);
               throw 'incorrect code';
@@ -67,7 +56,6 @@ export async function joinCommunity({
         }
       })
       .then((data: any) => {
-        console.log(data, 'TGTGTGTGTGTGTG');
         getUserProfile({userProfile, userToken});
         return data;
       })

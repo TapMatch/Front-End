@@ -33,7 +33,7 @@ const Camera = (props: CameraProps) => {
       try {
         if (RNCameraRef.current) {
           const {uri} = await RNCameraRef.current.takePictureAsync({
-            quality: 0.2,
+            quality: 1,
             width: 300,
             mirrorImage: !cameraTypeBool[0],
             orientation: 'portrait',
@@ -49,7 +49,7 @@ const Camera = (props: CameraProps) => {
   useEffect(() => {
     (async () => {
       const base64 = await getBase64(pictureURI[0]);
-      postAvatar({userToken: userToken[0], base64, pictureURI: pictureURI[0]});
+      postAvatar({userToken: userToken[0], pictureURI: pictureURI[0]});
       await navigate('MapDemo', {base64});
     })();
   }, [uploadToServerTrigger[0]]);

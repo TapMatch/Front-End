@@ -34,7 +34,7 @@ const shareContent = async (data: any) => {
                 console.log(result, 'result-off');
             }
         } else if (result.action === Share.dismissedAction) {
-            console.log('NOOOOOOOOOOOOO');
+            console.log('dismissedAction');
         }
     } catch (error) {
         console.log(error, '::: shareContent');

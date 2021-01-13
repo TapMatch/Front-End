@@ -13,7 +13,6 @@ import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 
 export default function MainStack() {
   const {userProfile} = useContext(TapMatchContext);
-  // console.log(userProfile[0].communities[0][0], 'userProfile[0].communities[0][0]');
   const selectedCommunityData = useState<any>(userProfile[0].communities[0][0]);
   // const selectedCommunityData = useState<any>({
   //   id: 0,

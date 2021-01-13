@@ -24,7 +24,6 @@ const LocationPickerScreen = ({navigation, route}: LocationPickerScreenProps) =>
     longitudeDelta: 0.0121,
   });
   const address = useState<string>('');
-  console.log(coordinates[0], address[0], 'fdgaiud;hif;asdiuhadp;');
   if (isFocused) {
     return (
       <LocationPickerScreenContext.Provider value={{coordinates, address}}>

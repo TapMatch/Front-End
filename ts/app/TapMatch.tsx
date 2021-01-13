@@ -64,10 +64,8 @@ const TapMatch = () => {
   }, []);
 
   useEffect(() => {
-    // console.log('JKKKKJKJKJKJKJKJKJKJKJKJKJKJ');
     if (userProfile[0] !== null) {
       // if (userProfile[0].hasOwnProperty('uuid')) {
-      // console.log('UUUUUUUUUUUUUUUUU');
       if (userProfile[0].uuid !== userOneSignalId[0]) {
         updateUserProfile({
           userToken: userToken[0],
