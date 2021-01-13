@@ -16,7 +16,7 @@ interface JoinSectionProps {
 
 const JoinSection = ({eventJoinState}: JoinSectionProps) => {
     const {eventMarkers, selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
-    const {currentUserIsOrganizer} = useContext(HomeScreenContext);
+    const {currentUserIsOrganizer, eventDetailsModalVisible} = useContext(HomeScreenContext);
     const {userToken, userProfile} = useContext(TapMatchContext);
     const {members} = selectedMarkerData[0];
     const defineMessage = () => {
@@ -39,6 +39,7 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
                     <TouchableOpacity onPress={() => {
                         if (userProfile[0].events.length < 5) {
                             joinEvent({
+                                eventDetailsModalVisible,
                                 communityId: selectedCommunityData[0].id,
                                 userToken: userToken[0],
                                 eventMarkers,

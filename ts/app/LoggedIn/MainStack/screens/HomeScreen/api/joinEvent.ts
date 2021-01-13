@@ -10,6 +10,7 @@ interface IjoinEvent {
     eventMarkers: any;
     selectedMarkerData?: any;
     userProfile: any;
+    eventDetailsModalVisible: [boolean, (x: boolean) => void];
 }
 
 export async function joinEvent({
@@ -17,7 +18,8 @@ export async function joinEvent({
     userToken,
     eventMarkers,
     selectedMarkerData,
-    userProfile
+    userProfile,
+    eventDetailsModalVisible
 }: IjoinEvent) {
     try {
         const options: AxiosRequestConfig = {
@@ -33,6 +35,27 @@ export async function joinEvent({
             .then(() => getUserProfile({userProfile, userToken}))
             .then(({data}: any) => getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
             .catch((error) => {
+                if (error.response) {
+                    if (error.response.request) {
+                        if (error.response.request._response) {
+                            if (error.response.request._response === `{"error":"event with this id does not exist"}`) {
+                                const btns = [
+                                    {
+                                        text: 'Ok',
+                                        onPress: () => {
+                                            eventDetailsModalVisible[1](false);
+                                            const ind = eventMarkers[0].findIndex((el: any) => el.id === selectedMarkerData[0].id);
+                                            let newArr = [...eventMarkers[0]];
+                                            newArr.splice(ind, 1);
+                                            eventMarkers[1](newArr);
+                                        },
+                                    },
+                                ];
+                                callAlert(undefined, 'This event was removed by the host.', btns);
+                            }
+                        }
+                    }
+                }
                 console.log(error);
                 // callAlert(undefined, `${error.toString()} ::: joinEvent`);
             });

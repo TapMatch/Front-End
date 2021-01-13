@@ -38,7 +38,28 @@ export async function leaveEvent({
 			.then(() => getUserProfile({userProfile, userToken}))
 			.then(({data}: any) => getEventMarkers({userToken, id: selectedCommunityData[0].id, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
 			.catch((error) => {
-				console.log(error);
+				if (error.response) {
+					if (error.response.request) {
+						if (error.response.request._response) {
+							if (error.response.request._response === `{"error":"event with this id does not exist"}`) {
+								const btns = [
+									{
+										text: 'Ok',
+										onPress: () => {
+											eventDetailsModalVisible[1](false);
+											const ind = eventMarkers[0].findIndex((el: any) => el.id === selectedMarkerData[0].id);
+											let newArr = [...eventMarkers[0]];
+											newArr.splice(ind, 1);
+											eventMarkers[1](newArr);
+										},
+									},
+								];
+								callAlert(undefined, 'This event was removed by the host.', btns);
+							}
+						}
+					}
+				}
+				// console.log(error);
 				// callAlert(undefined, `${error.toString()} ::: leaveEvent`);
 			});
 	} catch (error) {
