@@ -24,10 +24,8 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const isFocused = useIsFocused();
   const {selectedCommunityData, eventMarkers, upcomingEvents} = useContext(MainStackContext);
 
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const {userLocation, userToken} = useContext(TapMatchContext);
   const description = useState<string>('');
-  // const address = useState<string>('');
-  // const coordinates = useState<LatLng>(userLocation[0]);
   const eventName = useState<string>('');
   const joinLimit = useState<number>(1);
   const dateTime = useState<Date>(new Date());
@@ -64,14 +62,6 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
                 date: dateTime[0],
                 name: eventName[0],
               });
-              // .then(() => {
-              // description[1]('');
-              // address[1]('');
-              // eventName[1]('');
-              // joinLimit[1](1);
-              // dateTime[1](new Date());
-              // coordinates[1](userLocation[0]);
-              // });
             }} />
           <MapView
             provider={PROVIDER_GOOGLE}

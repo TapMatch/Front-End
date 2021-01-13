@@ -78,7 +78,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
   useEffect(() => {
     getMarkers();
-  }, []);
+  }, [selectedCommunityData[0].id]);
 
   useEffect(() => {
     const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
@@ -113,8 +113,9 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     } else {
       return (
         <Fragment>
-          <UpcomingEvents resetMap={() => {
+          <UpcomingEvents eventDetailsModalVisible={eventDetailsModalVisible} resetMap={() => {
             closeAllWhiteModalWindows();
+            getMarkers();
             focusMapToLatLng(startingPoint);
           }} />
           { /* <EventReminder /> */}

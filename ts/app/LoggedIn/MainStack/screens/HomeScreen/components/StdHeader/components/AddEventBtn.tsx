@@ -15,7 +15,7 @@ const AddEventBtn = (props: AddEventBtnProps) => {
     <TouchableOpacity
       onPress={() => {
         if (userProfile[0].events.length < 5) {
-          navigate('CreateEvent', {address: '', coordinates: {}});
+          navigate('CreateEvent');
         } else {
           callAlert(undefined, 'You can\'t create events with 5 or more events joined.');
         }

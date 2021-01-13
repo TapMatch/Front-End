@@ -20,7 +20,7 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
     const {userToken, userProfile} = useContext(TapMatchContext);
     const {members} = selectedMarkerData[0];
     const defineMessage = () => {
-        if (members.length) {
+        if (members.length - 1) {
             return `You and ${members.length} others are going!`;
         } else {
             return `You and are going!`;

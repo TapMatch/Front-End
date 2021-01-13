@@ -10,11 +10,12 @@ import moment from 'moment';
 interface ListItemProps {
   isLast: boolean;
   item: any;
+  onPress: any;
 }
 
-const ListItem = ({isLast, item}: ListItemProps) => {
+const ListItem = ({isLast, item, onPress}: ListItemProps) => {
   return (
-    <TouchableOpacity onPress={() => console.log(item.id)} style={_s.container}>
+    <TouchableOpacity onPress={() => onPress(item)} style={_s.container}>
       <View style={_s.iconContainer}>
         <CheckCircleRed height={_fs.l} width={_fs.l} />
       </View>

@@ -37,10 +37,6 @@ const DoneBtn = (props: DoneBtnProps) => {
       <View style={[_s.btnContainer, {opacity: btnDisabled ? 0.2 : 1}]}>
         <TouchableOpacity disabled={btnDisabled} onPress={() => {
           addingLocationOn[1](false);
-          // navigate('CreateEvent', {
-          //   address: address[0],
-          //   coordinates: coordinates[0]
-          // })
         }} style={[_s.btn, _s.center]}>
           <Text style={_s.btnTxt}>Done</Text>
         </TouchableOpacity>

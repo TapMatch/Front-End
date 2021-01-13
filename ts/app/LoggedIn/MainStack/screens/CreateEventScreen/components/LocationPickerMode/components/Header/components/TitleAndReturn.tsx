@@ -5,16 +5,27 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface TitleAndReturnProps {}
 
 const TitleAndReturn = (props: TitleAndReturnProps) => {
   const {
-    addingLocationOn
+    addingLocationOn,
+    address,
+    coordinates,
   } = useContext(CreateEventScreenContext);
+  const {userLocation} = useContext(TapMatchContext);
   return (
     <View style={[_s.container]}>
-      <TouchableOpacity onPress={() => addingLocationOn[1](false)} style={_s.btn}>
+      <TouchableOpacity onPress={() => {
+        coordinates[1]({
+          ...userLocation[0], latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        });
+        address[1]('');
+        addingLocationOn[1](false);
+      }} style={_s.btn}>
         <ChevronLeftBlack height={_fs.x9l} width={_fs.x9l} />
       </TouchableOpacity>
       <Text style={[_s.txt, _s.title]}>Pin point your Event</Text>

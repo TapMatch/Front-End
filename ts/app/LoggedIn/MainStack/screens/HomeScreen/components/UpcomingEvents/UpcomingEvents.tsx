@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -15,12 +15,13 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
 interface UpcomingEventsProps {
   resetMap: () => void;
+  eventDetailsModalVisible: [boolean, (x: boolean) => void];
 }
 
 const iconSize = '75%';
 
-const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
-  const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers} = useContext(MainStackContext);
+const UpcomingEvents = ({resetMap, eventDetailsModalVisible}: UpcomingEventsProps) => {
+  const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers, selectedMarkerData, allCommunities} = useContext(MainStackContext);
   const {userToken} = useContext(TapMatchContext);
   const txt = useLocalizedTxt();
   const renderList = () => {
@@ -29,6 +30,14 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
         <View style={_s.listContainer}>
           {upcomingEvents[0].map((el: any, ind: number, arr: any) => (
             <ListItem
+              onPress={(clickedItem: any) => {
+                const clickedItemCommunity = allCommunities[0].find((el: any) => el.id === clickedItem.community_id);
+                selectedCommunityData[1](clickedItemCommunity);
+                // eventMarkers[1]([clickedItem, ...eventMarkers[0]]);
+                selectedMarkerData[1](clickedItem);
+                eventDetailsModalVisible[1](true);
+                upcomingEventsListIsOpen[1](false);
+              }}
               item={el}
               key={`${ind}-addIDHereLater`}
               isLast={ind === arr.length - 1}
