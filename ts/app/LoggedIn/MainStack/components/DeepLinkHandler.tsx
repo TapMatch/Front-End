@@ -9,7 +9,6 @@ const DeepLinkHandler = ({
 }: any) => {
     const {
         selectedCommunityData,
-        eventMarkers,
         selectedMarkerData,
         allCommunities,
         communitiesModalVisible,
@@ -31,7 +30,6 @@ const DeepLinkHandler = ({
     const processDeepLink = async () => {
         let lastParams = await branch.getLatestReferringParams();
         if (route.name === 'Home') {
-            console.log(lastParams.tapmatch_event_data, 'lastParams.tapmatch_datalastParams.tapmatch_datalastParams.tapmatch_event_data');
             if (lastParams.tapmatch_event_data) {
                 const dlUserCommunity = userProfile[0].communities[0].find((el: any) => el.id === lastParams.tapmatch_community_id);
                 if (dlUserCommunity) {

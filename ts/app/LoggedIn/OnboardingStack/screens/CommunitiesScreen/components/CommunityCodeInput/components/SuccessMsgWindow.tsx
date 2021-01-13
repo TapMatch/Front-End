@@ -29,7 +29,6 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
     TapMatchContext,
   );
   const moveOn = () => {
-    console.log('YYYYYYYYYYYYYYYYYYYY');
     user_has_passed_onboarding[1](true);
     postUserFinishedOnboarding({
       userProfile,
@@ -39,15 +38,12 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   };
 
   useEffect(() => {
-    console.log('kfkdfodfdfhsdifjJUHUHHUHUJHGTFTYDYTRERWQTEWZYRXUTCYVUBLIN');
     const redirect_timer = setTimeout(() => {
-      console.log('fghupsdfugihpesri;ghesriughepri888888');
       if (isFocused) {
-        console.log('OIUYOIUYOIUYOIUYOIUYOIUYOIU');
         moveOn();
       }
     }, 7000);
-    // return clearTimeout(redirect_timer);
+    return () => clearTimeout(redirect_timer);
   }, []);
 
   return (

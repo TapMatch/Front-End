@@ -10,7 +10,7 @@ interface IpostAvatar {
 
 export async function postAvatar({userToken, pictureURI}: IpostAvatar) {
   try {
-    ImageResizer.createResizedImage(pictureURI, 300, 300, 'JPEG', 15)
+    ImageResizer.createResizedImage(pictureURI, 300, 300, 'JPEG', 2)
       .then(response => {
         const form = new FormData();
         form.append('photo', {

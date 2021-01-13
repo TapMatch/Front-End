@@ -10,6 +10,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import moment from 'moment';
+import makeDayWord from 'ts/utils/makeDayWord';
 
 interface EventDetailsHeaderProps {
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
@@ -33,7 +34,7 @@ const EventDetailsHeader = ({eventDetailsModalVisible, setupLeaveEventUI}: Event
             <Text style={_s.topMiddleTxt}>{name}.</Text>
           </View>
           <View style={_s.middleBottom}>
-            <Text style={_s.bottomMiddleTxt}>{moment(datetime.date).format('DD/MM/YYYY HH:mm')}</Text>
+            <Text style={_s.bottomMiddleTxt}>{`${makeDayWord(datetime.date)} ${moment(datetime.date).format('HH:mm a')}`}</Text>
           </View>
         </View>
         <View style={_s.right}>

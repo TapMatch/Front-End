@@ -6,6 +6,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import openMap from 'react-native-open-maps';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import moment from 'moment';
+import makeDayWord from 'ts/utils/makeDayWord';
 
 interface PlaceAndTimeProps {
     eventJoinState: 'join' | 'full' | 'joined';
@@ -17,13 +18,12 @@ const PlaceAndTime = ({eventJoinState}: PlaceAndTimeProps) => {
     return (
         <View style={_s.container}>
             <TouchableOpacity onPress={() => openMap({
-                // {latitude: 37.865101, longitude: -119.538330}
                 ...coordinates,
                 query: address
             })}>
                 <Text numberOfLines={1} style={[_s.txt, _s.linkStyle]}>{address}</Text>
             </TouchableOpacity>
-            {eventJoinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>{moment(datetime.date).format('DD/MM/YYYY HH:mm')}</Text>}
+            {eventJoinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>{`${makeDayWord(datetime.date)} ${moment(datetime.date).format('HH:mm a')}`}</Text>}
         </View>
     );
 };

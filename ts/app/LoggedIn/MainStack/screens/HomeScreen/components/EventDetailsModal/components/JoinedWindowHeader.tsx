@@ -1,10 +1,11 @@
 import React, {useContext} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image, Share} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import shareContent from 'ts/app/common/serveces/shareContent';
+import FastImage from 'react-native-fast-image';
 
 interface HeaderProps {
     // eventJoinState: 'join' | 'full' | 'joined';
@@ -23,9 +24,9 @@ const JoinedWindowHeader = (props: HeaderProps) => {
                     <Text numberOfLines={1} style={_s.title}>{name}</Text>
                 </View>
                 <View style={[_s.side, _s.center, _s.right]}>
-                    <Image
+                    <FastImage
                         style={_s.img}
-                        resizeMode={'contain'}
+                        resizeMode={FastImage.resizeMode.contain}
                         source={require('assets/png/forward-black.png')}
                     />
                 </View>

@@ -24,7 +24,7 @@ const PeopleMarker = ({
   eventDetailsModalVisible,
   focusMapToLatLng
 }: PeopleMarkerProps) => {
-  const {members, name, join_limit, organizer} = item;
+  const {members, name, join_limit, organizer, id} = item;
   const {selectedMarkerData} = useContext(MainStackContext);
 
   const positionArr = [
@@ -45,10 +45,10 @@ const PeopleMarker = ({
   return (
     <Marker
       onPress={() => {
-        // focusMapToLatLng(coordinate);
         eventDetailsModalVisible[1](true);
         selectedMarkerData[1](item);
       }}
+      zIndex={+id}
       coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>
@@ -66,7 +66,6 @@ const PeopleMarker = ({
           {members.map((el: any, ind: number) => el.id !== organizer.id ?
             <FastImage
               key={el.avatar}
-              // resizeMode={'cover'}
               style={[
                 _s.placeholderImg,
                 _s.memberAvatarContainer,
@@ -83,7 +82,6 @@ const PeopleMarker = ({
 
           <View style={[_s.avatarContainer, , _s.shadow]}>
             <FastImage
-              // resizeMode={'cover'}
               style={_s.avatar}
               source={{
                 uri: organizer.avatar

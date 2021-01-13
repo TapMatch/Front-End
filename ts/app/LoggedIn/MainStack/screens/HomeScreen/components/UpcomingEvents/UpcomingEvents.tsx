@@ -61,7 +61,7 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
         />
       </TouchableOpacity>
       <View style={[_s.middle, {height: upcomingEventsListIsOpen[0] ? 'auto' : vs(60)}]}>
-        <View style={_s.shadow}>
+        {upcomingEvents[0].length > 0 && <View style={_s.shadow}>
           <TouchableOpacity
             onPress={() => upcomingEvents[0].length ? upcomingEventsListIsOpen[1](!upcomingEventsListIsOpen[0]) : null}
             activeOpacity={1}
@@ -69,7 +69,7 @@ const UpcomingEvents = ({resetMap}: UpcomingEventsProps) => {
             <Text style={_s.txt}>{`${upcomingEvents[0].length} ${txt.upcomingEvents}`}</Text>
           </TouchableOpacity>
           {renderList()}
-        </View>
+        </View>}
       </View>
       <View pointerEvents={'box-none'} style={_s.side}>
         <TouchableOpacity style={_s.resetBtn} onPress={() => {
@@ -112,7 +112,7 @@ const _s = StyleSheet.create({
     minWidth: '100%',
   },
   middle: {
-    maxWidth: '70%',
+    width: '70%',
     justifyContent: 'flex-start',
     alignItems: 'stretch',
     paddingHorizontal: '5%',
