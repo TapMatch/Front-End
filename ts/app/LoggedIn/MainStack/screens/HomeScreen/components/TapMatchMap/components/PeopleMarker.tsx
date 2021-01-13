@@ -1,10 +1,11 @@
 import React, {Fragment, useContext} from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {Marker, LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import FastImage from 'react-native-fast-image';
 
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
@@ -51,7 +52,7 @@ const PeopleMarker = ({
       coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>
-          {join_limit - members.length < join_limit * 0.8 && members.length !== join_limit && <Fragment>
+          {join_limit - members.length < join_limit * 0.7 && members.length !== join_limit && <Fragment>
             <Text numberOfLines={1} style={_s.topTxt}>
               🔥
           </Text>
@@ -63,9 +64,9 @@ const PeopleMarker = ({
 
         <View style={_s.main}>
           {members.map((el: any, ind: number) => el.id !== organizer.id ?
-            <Image
+            <FastImage
               key={el.avatar}
-              resizeMode={'cover'}
+              // resizeMode={'cover'}
               style={[
                 _s.placeholderImg,
                 _s.memberAvatarContainer,
@@ -74,14 +75,15 @@ const PeopleMarker = ({
                 positionArr[ind].position,
               ]}
               source={{
+                cache: FastImage.cacheControl.web,
                 uri: el.avatar
               }}
             /> : null)}
 
 
           <View style={[_s.avatarContainer, , _s.shadow]}>
-            <Image
-              resizeMode={'cover'}
+            <FastImage
+              // resizeMode={'cover'}
               style={_s.avatar}
               source={{
                 uri: organizer.avatar

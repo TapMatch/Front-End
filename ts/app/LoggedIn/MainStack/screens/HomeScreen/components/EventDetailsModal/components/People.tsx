@@ -1,11 +1,12 @@
 import React, {useContext} from 'react';
-import {Text, View, StyleSheet, Image, Platform} from 'react-native';
+import {Text, View, StyleSheet, Platform} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import FastImage from 'react-native-fast-image';
 
-interface PeopleProps { }
+interface PeopleProps {}
 
 const People = (props: PeopleProps) => {
     const {selectedMarkerData} = useContext(MainStackContext);
@@ -20,8 +21,7 @@ const People = (props: PeopleProps) => {
                     <View key={`people-${id}`}
                         style={_s.personContainer}>
                         <View style={[_s.avatarContainer, _s.shadow]}>
-                            <Image
-                                resizeMode={'cover'}
+                            <FastImage
                                 style={_s.avatar}
                                 source={{
                                     uri: avatar

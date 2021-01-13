@@ -1,11 +1,10 @@
 import React, {useContext} from 'react';
-import {Text, View, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
+import {View, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {tapMatchServerUrl} from 'ts/constants/constants';
 
-interface AvatarBtnProps { }
+interface AvatarBtnProps {}
 
 const AvatarBtn = (props: AvatarBtnProps) => {
   const {profileModalVisible} = useContext(HomeScreenContext);
@@ -21,7 +20,6 @@ const AvatarBtn = (props: AvatarBtnProps) => {
           style={_s.avatar}
           source={{
             uri:
-              // `${tapMatchServerUrl}${userProfile[0].avatar}`,
               `${userProfile[0].avatar}`,
           }}
         />

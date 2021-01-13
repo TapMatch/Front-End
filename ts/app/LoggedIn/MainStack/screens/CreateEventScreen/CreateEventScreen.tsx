@@ -63,14 +63,15 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
                 join_limit: joinLimit[0],
                 date: dateTime[0],
                 name: eventName[0],
-              }).then(() => {
-                description[1]('');
-                address[1]('');
-                eventName[1]('');
-                joinLimit[1](1);
-                dateTime[1](new Date());
-                coordinates[1](userLocation[0]);
               });
+              // .then(() => {
+              // description[1]('');
+              // address[1]('');
+              // eventName[1]('');
+              // joinLimit[1](1);
+              // dateTime[1](new Date());
+              // coordinates[1](userLocation[0]);
+              // });
             }} />
           <MapView
             provider={PROVIDER_GOOGLE}
@@ -80,11 +81,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
             pitchEnabled={true}
             rotateEnabled={true}
             scrollEnabled={true}
-            initialRegion={{
-              ...userLocation[0],
-              latitudeDelta: 0.015,
-              longitudeDelta: 0.0121,
-            }}
+            region={coordinates[0]}
           />
           <YesNoModal
             onYesPress={navigation.goBack}

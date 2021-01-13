@@ -1,11 +1,12 @@
 import React from 'react';
-import {View, StyleSheet, Image, Text} from 'react-native';
+import {View, StyleSheet, Text} from 'react-native';
 import {Marker, LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {vs} from 'react-native-size-matters';
+import FastImage from 'react-native-fast-image';
 
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
@@ -31,8 +32,8 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
         </View>
 
         <View style={_s.main}>
-          <Image
-            resizeMode={'stretch'}
+          <FastImage
+            resizeMode={FastImage.resizeMode.stretch}
             style={[
               _s.placeholderImg,
               _s.shadow,
@@ -45,8 +46,8 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
             source={require('assets/png/PlaceholderPeopleImages/5.png')}
           />
 
-          <Image
-            resizeMode={'stretch'}
+          <FastImage
+            resizeMode={FastImage.resizeMode.stretch}
             style={[
               _s.placeholderImg,
               _s.shadow,
@@ -55,8 +56,8 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
             ]}
             source={require('assets/png/PlaceholderPeopleImages/4.png')}
           />
-          <Image
-            resizeMode={'stretch'}
+          <FastImage
+            resizeMode={FastImage.resizeMode.stretch}
             style={[
               _s.placeholderImg,
               _s.shadow,
@@ -66,8 +67,8 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
             source={require('assets/png/PlaceholderPeopleImages/2.png')}
           />
 
-          <Image
-            resizeMode={'stretch'}
+          <FastImage
+            resizeMode={FastImage.resizeMode.stretch}
             style={[
               _s.placeholderImg,
               _s.shadow,
@@ -76,8 +77,8 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
             ]}
             source={require('assets/png/PlaceholderPeopleImages/1.png')}
           />
-          <Image
-            resizeMode={'stretch'}
+          <FastImage
+            resizeMode={FastImage.resizeMode.stretch}
             style={[
               _s.placeholderImg,
               _s.shadow,
@@ -88,12 +89,10 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
           />
 
           <View style={[_s.avatarContainer, , _s.shadow]}>
-            <Image
-              resizeMode={'cover'}
+            <FastImage
               style={_s.avatar}
               source={{
                 uri: base64,
-                // 'https://thumbs.dreamstime.com/z/person-gray-photo-placeholder-man-costume-white-background-person-gray-photo-placeholder-man-136701248.jpg',
               }}
             />
           </View>

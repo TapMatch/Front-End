@@ -1,22 +1,20 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {tapMatchServerUrl} from 'ts/constants/constants';
 import {_c} from 'ts/UIConfig/colors';
 
-interface AvatarImgProps { }
+interface AvatarImgProps {}
 
 const AvatarImg = (props: AvatarImgProps) => {
   const {userProfile} = useContext(TapMatchContext);
 
   return (
     <View style={_s.container}>
-      <Image
-        resizeMode={'cover'}
+      <FastImage
         style={_s.avatar}
         source={{
           uri:
-            // `${tapMatchServerUrl}${userProfile[0].avatar}`,
             `${userProfile[0].avatar}`,
         }}
       />
