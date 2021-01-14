@@ -49,6 +49,8 @@ const YesNoModal = ({
     <Modal
       animationIn={'fadeIn'}
       animationInTiming={600}
+      backdropColor={_c.yesNoModalbackground}
+      backdropOpacity={0.75}
       animationOut={'fadeOut'}
       animationOutTiming={600}
       isVisible={modalVisible[0]}
@@ -63,7 +65,8 @@ const YesNoModal = ({
         <View style={_s.bottom}>
           <TouchableOpacity activeOpacity={1} onPress={handleYes} style={[_s.btn, _s.yesBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.yesBtnTxt]}>
-              {txt.yes}
+              {/* {txt.yes} */}
+              Yes
             </Text>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={1} onPress={handleNo} style={[_s.btn, _s.noBtn]}>
@@ -83,8 +86,9 @@ const _s = StyleSheet.create({
   modal: {margin: 0},
   container: {
     flex: 1,
+    paddingVertical: '20%',
     alignItems: 'stretch',
-    backgroundColor: _c.modalbackground,
+    // backgroundColor: _c.yesNoModalbackground,
   },
   top: {
     flex: 0.4,
@@ -100,7 +104,7 @@ const _s = StyleSheet.create({
   },
   title: {
     fontSize: _fs.x3l,
-    fontFamily: _f.regularAltBold,
+    fontFamily: _f.regularAlt,
     lineHeight: _fs.xxl * 1.3,
     textAlign: 'center',
     textAlignVertical: 'center',
@@ -108,7 +112,7 @@ const _s = StyleSheet.create({
   },
   subtitle: {
     fontSize: _fs.s,
-    fontFamily: _f.regular,
+    fontFamily: _f.regularAlt,
     textAlign: 'center',
     textAlignVertical: 'center',
     color: _c.white,
@@ -116,13 +120,13 @@ const _s = StyleSheet.create({
   btn: {
     height: vs(60),
     width: '60%',
-    borderRadius: 15,
+    borderRadius: 25,
     justifyContent: 'center',
     alignItems: 'center',
   },
   btnTxt: {
-    fontSize: _fs.xl,
-    fontFamily: _f.regular,
+    fontSize: _fs.xxl,
+    fontFamily: _f.regularAlt,
     textAlign: 'center',
     textAlignVertical: 'center',
   },
