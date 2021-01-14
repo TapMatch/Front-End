@@ -6,6 +6,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {vs} from 'react-native-size-matters';
+import GestureRecognizer from 'react-native-swipe-gestures';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -33,12 +34,23 @@ const EventDetailsModal = ({modalVisible, eventJoinState}: EventDetailsModalProp
     }
   };
   const windowHeightParameter = eventJoinState === 'joined' ? 0.565 : 0.545;
+
+  const config = {
+    velocityThreshold: 0.3,
+    directionalOffsetThreshold: 80
+  };
+
   if (modalVisible[0]) {
     return (
-      <View style={[_s.content, {
-        height: (wh.height - vs(120)) * windowHeightParameter,
-        bottom: (wh.width * 0.025) + (bottom * 0.75)
-      }]}>
+      <GestureRecognizer
+        onSwipeDown={() => modalVisible[1](false)}
+        config={config}
+        style={[_s.content, {
+          height: (wh.height - vs(120)) * windowHeightParameter,
+          bottom: (wh.width * 0.025) + (bottom * 0.75)
+        }]}
+      >
+
         {renderWindowHeader()}
         <View style={_s.modalMainContent}>
           <Paragraph />
@@ -46,7 +58,8 @@ const EventDetailsModal = ({modalVisible, eventJoinState}: EventDetailsModalProp
           <JoinSection eventJoinState={eventJoinState} />
         </View>
         <People />
-      </View>
+      </GestureRecognizer>
+
     );
   } else {
     return null;

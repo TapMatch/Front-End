@@ -1,5 +1,5 @@
 import {useKeyboard} from '@react-native-community/hooks';
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {View, StyleSheet, Dimensions, Platform} from 'react-native';
 import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 import {vs} from 'react-native-size-matters';

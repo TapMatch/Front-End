@@ -21,6 +21,8 @@ export default function MainStack() {
   const upcomingEvents = useState<any>([]);
   const selectedMarkerData = useState<any>({});
   const upcomingEventsListIsOpen = useState<boolean>(false);
+  const eventDetailsModalVisible = useState<boolean>(false);
+
 
   const allCommunities = useState<any>([]);
 
@@ -42,6 +44,7 @@ export default function MainStack() {
       upcomingEventsListIsOpen,
       eventMarkers,
       selectedMarkerData,
+      eventDetailsModalVisible,
       communitiesModalVisible,
       allCommunities,
       communityCodeInputVisible

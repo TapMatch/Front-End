@@ -1,8 +1,8 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useState} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
-import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
-import {NavigationAction, useIsFocused} from '@react-navigation/native';
+import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import FormWindow from './components/FormWindow/FormWindow';
@@ -22,7 +22,10 @@ interface CreateEventScreenProps {
 
 const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const isFocused = useIsFocused();
-  const {selectedCommunityData, eventMarkers, upcomingEvents} = useContext(MainStackContext);
+  const {
+    selectedCommunityData, eventMarkers, upcomingEvents,
+    selectedMarkerData, eventDetailsModalVisible
+  } = useContext(MainStackContext);
 
   const {userLocation, userToken} = useContext(TapMatchContext);
   const description = useState<string>('');
@@ -53,6 +56,8 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
               createEvent({
                 eventMarkers,
                 upcomingEvents,
+                selectedMarkerData,
+                eventDetailsModalVisible,
                 communityId: selectedCommunityData[0].id,
                 userToken: userToken[0],
                 coordinates: coordinates[0],
@@ -60,7 +65,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
                 description: description[0],
                 join_limit: joinLimit[0],
                 date: dateTime[0],
-                name: eventName[0],
+                name: eventName[0]
               });
             }} />
           <MapView

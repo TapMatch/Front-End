@@ -5,6 +5,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import capitalizeString from 'ts/utils/capitalizeString';
 
 interface NameInputProps {
   eventName: [string, (x: string) => void];
@@ -27,7 +28,7 @@ const NameInput = ({eventName}: NameInputProps) => {
           autoFocus={true}
           numberOfLines={1}
           contextMenuHidden={true}
-          onChangeText={eventName[1]}
+          onChangeText={(txt) => eventName[1](capitalizeString(txt))}
           maxLength={12}
           multiline={false}
           style={[_s.txt, _s.title]}

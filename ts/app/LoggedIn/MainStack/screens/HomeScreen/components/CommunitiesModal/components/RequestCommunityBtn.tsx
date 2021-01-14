@@ -15,7 +15,7 @@ const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
 
   return (
     <TouchableOpacity
-      onPress={() => navigate('WebScreen', {url: constants.feedbackURL})}
+      onPress={() => navigate('WebScreen', {url: constants.requestCommunityURL})}
       style={_s.container}>
       <View style={_s.circle} />
       <Text style={_s.txt}>{txt.requestACommunity}</Text>

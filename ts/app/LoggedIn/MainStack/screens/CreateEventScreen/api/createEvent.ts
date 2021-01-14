@@ -1,10 +1,10 @@
-import axios, { AxiosRequestConfig } from 'axios';
-import { LatLng } from 'react-native-maps';
-import { tapMatchServerUrl } from 'ts/constants/constants';
+import axios, {AxiosRequestConfig} from 'axios';
+import {LatLng} from 'react-native-maps';
+import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
-import { getEventMarkers } from 'ts/app/common/api/getEventMarkers';
+import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import moment from 'moment';
-import { getUpcomingEvents } from 'ts/app/common/api/getUpcomingEvents';
+import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 
 interface IcreateEvent {
     userToken: string;
@@ -17,6 +17,8 @@ interface IcreateEvent {
     address: string;
     coordinates: LatLng;
     join_limit: number;
+    selectedMarkerData: any;
+    eventDetailsModalVisible: any;
 }
 
 export async function createEvent({
@@ -24,12 +26,14 @@ export async function createEvent({
     eventMarkers,
     userToken,
     name,
+    eventDetailsModalVisible,
     description,
     date,
     address,
     coordinates,
     join_limit,
-    upcomingEvents
+    upcomingEvents,
+    selectedMarkerData
 }: IcreateEvent) {
     try {
         const options: AxiosRequestConfig = {
@@ -51,9 +55,14 @@ export async function createEvent({
 
         return axios
             .request(options)
-            .then(({ data }: any) => {
-                getEventMarkers({ userToken, id: communityId, eventMarkers });
-                getUpcomingEvents({ userToken, communityId, upcomingEvents });
+            .then(({data}: any) => {
+                getEventMarkers({userToken, id: communityId, eventMarkers});
+                getUpcomingEvents({userToken, communityId, upcomingEvents});
+                return data;
+            })
+            .then((data) => {
+                selectedMarkerData[1](data);
+                eventDetailsModalVisible[1](true);
             })
             .catch((error) => {
                 console.log(error);

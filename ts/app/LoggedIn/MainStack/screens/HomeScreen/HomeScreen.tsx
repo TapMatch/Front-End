@@ -32,7 +32,12 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const set_mapRef = (x: any) => _mapRef = x;
 
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const {selectedCommunityData, eventMarkers, selectedMarkerData, upcomingEvents, communitiesModalVisible} = useContext(MainStackContext);
+  const {
+    selectedCommunityData, eventDetailsModalVisible,
+    eventMarkers, selectedMarkerData, upcomingEvents,
+    communitiesModalVisible
+  } = useContext(MainStackContext);
+
   const startingPoint: LatLng = {
     ...userLocation[0],
     latitudeDelta: 0.015,
@@ -40,7 +45,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   };
   const isFocused = useIsFocused();
   const profileModalVisible = useState<boolean>(false);
-  const eventDetailsModalVisible = useState<boolean>(false);
   const yesNoModalVisible = useState<boolean>(false);
   const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
   const eventJoinState = useState<'join' | 'full' | 'joined'>('join');
