@@ -77,6 +77,7 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
             contentContainerStyle={{paddingHorizontal: '7%'}}
             showsHorizontalScrollIndicator={false}
             showsVerticalScrollIndicator={false}
+            keyExtractor={(item) => `${item.id}`}
             data={communities[0]}
             renderItem={({item}) => {
               const c = userProfile[0].communities[0].find((el: any) => {

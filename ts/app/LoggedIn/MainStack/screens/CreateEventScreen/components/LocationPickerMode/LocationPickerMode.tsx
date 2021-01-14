@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
+import {View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
@@ -9,15 +9,21 @@ import DoneBtn from './components/DoneBtn';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
 import LocationMarker from './components/LocationMarker';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
+import TargetWhite from 'assets/svg/target-white.svg';
+import {vs} from 'react-native-size-matters';
+import UserLocationMarker from './components/UserLocationMarker';
 
 interface LocationPickerModeProps {
 }
 
 const LocationPickerMode = (props: LocationPickerModeProps) => {
+  const _createEventMapRef = useRef(null);
   const isFocused = useIsFocused();
   const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const {coordinates} = useContext(CreateEventScreenContext);
-
+  const focusMapToUserLocation = () => {
+    return typeof _createEventMapRef?.current.animateToRegion === 'function' ? _createEventMapRef?.current.animateToRegion(userLocation[0]) : null;
+  };
   if (isFocused) {
     return (
       <View style={_s.container}>
@@ -26,8 +32,10 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
           backgroundColor={_c.smoke}
           barStyle={'dark-content'}
         />
+
         <DoneBtn />
         <MapView
+          ref={_createEventMapRef}
           // onPress={({nativeEvent}) => coordinates[1]({
           //   ...nativeEvent.coordinate,
           //   latitudeDelta: 0.015,
@@ -42,9 +50,16 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
           scrollEnabled={true}
           region={coordinates[0]}
         >
+          <UserLocationMarker coordinate={userLocation[0]} />
           <LocationMarker coordinate={coordinates[0]} />
         </MapView>
         <Header />
+        <TouchableOpacity onPress={focusMapToUserLocation} style={_s.userLocatioBtn}>
+          <TargetWhite
+            height={vs(45)}
+            width={vs(45)}
+          />
+        </TouchableOpacity>
       </View>
     );
   } else {
@@ -65,4 +80,9 @@ const _s = StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  userLocatioBtn: {
+    position: 'absolute',
+    left: 10,
+    top: vs(160),
+  }
 });

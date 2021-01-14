@@ -17,3 +17,5 @@
   **[] $VALUES;
   public *;
 }
+
+-dontwarn io.branch.**

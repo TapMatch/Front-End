@@ -1,6 +1,7 @@
-import {Share} from "react-native";
+import {Platform, Share} from "react-native";
 import callAlert from "ts/utils/callAlert";
 import branch from 'react-native-branch';
+import {constants} from "ts/constants/constants";
 
 const shareContent = async (data: any, selectedCommunityData: any) => {
     try {
@@ -8,19 +9,22 @@ const shareContent = async (data: any, selectedCommunityData: any) => {
             locallyIndex: true,
             title: 'TabMatch',
             contentDescription: 'TabMatch',
+            contentMetadata: {
+                customMetadata: {
+                    tapmatch_community_id: `${data.community_id}`,
+                    tapmatch_event_data: JSON.stringify(data),
+                }
+            }
         });
         let linkProperties = {
             feature: 'share',
-            channel: 'TabMatch app'
+            channel: `TabMatch ${Platform.OS} app`
         };
         let controlParams = {
             $url_redirect_mode: 2,
             $deeplink_path: 'Home',
-            tapmatch_community_id: data.community_id,
-            tapmatch_event_data: data,
-            // $desktop_url: 'http://desktop-url.com/monster/12345'
+            $desktop_url: constants.feedbackURL
         };
-
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
 
         const result = await Share.share({

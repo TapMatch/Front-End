@@ -20,7 +20,7 @@ const DeepLinkHandler = ({
     useEffect(() => {
         branch.subscribe(({error, params, uri}: any) => {
             if (error) {
-                console.error('Error from Branch: ' + error);
+                console.log('Error from Branch: ' + error);
                 return;
             }
             return processDeepLink();
@@ -30,14 +30,14 @@ const DeepLinkHandler = ({
     const processDeepLink = async () => {
         let lastParams = await branch.getLatestReferringParams();
         if (route.name === 'Home') {
-            if (lastParams.tapmatch_event_data) {
-                const dlUserCommunity = userProfile[0].communities[0].find((el: any) => el.id === lastParams.tapmatch_community_id);
+            if (typeof lastParams.tapmatch_event_data === 'string') {
+                const dlUserCommunity = userProfile[0].communities[0].find((el: any) => +el.id === +lastParams.tapmatch_community_id);
                 if (dlUserCommunity) {
                     if (selectedCommunityData[0].id !== dlUserCommunity.id) {
                         selectedCommunityData[1](dlUserCommunity);
                     }
                 } else {
-                    const dlCommunity = allCommunities[0].find((el: any) => el.id === lastParams.tapmatch_community_id);
+                    const dlCommunity = allCommunities[0].find((el: any) => +el.id === +lastParams.tapmatch_community_id);
                     if (dlCommunity) {
                         communitySelectedForJoin[1](dlCommunity);
                         communitiesModalVisible[1](true);
@@ -46,10 +46,7 @@ const DeepLinkHandler = ({
                         console.log('no such community');
                     }
                 }
-
-                // const dlEvent = eventMarkers[0].find((el: any) => el.id === lastParams.tapmatch_event_data);
-                // console.log('05498750394OOOOOOOOOOOUUU', lastParams.tapmatch_event_data.coordinates);
-                selectedMarkerData[1](lastParams.tapmatch_event_data);
+                selectedMarkerData[1](JSON.parse(lastParams.tapmatch_event_data));
                 eventDetailsModalVisible[1](true);
             }
         } else {

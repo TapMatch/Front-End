@@ -10,7 +10,7 @@ interface UserLocationMarkerProps {
 const UserLocationMarker = ({coordinate}: UserLocationMarkerProps) => {
     return (
         <Marker
-            zIndex={1000}
+            zIndex={-1000}
             coordinate={coordinate}>
             <View style={_s.container} />
         </Marker>
