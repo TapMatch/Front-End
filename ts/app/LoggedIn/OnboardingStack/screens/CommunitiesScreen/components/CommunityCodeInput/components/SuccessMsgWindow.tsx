@@ -25,9 +25,8 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const lockOpenWhiteSize = vs(55);
   const {height} = useDimensions().screen;
   const {name, city} = community;
-  const {user_has_passed_onboarding, userProfile, userToken} = useContext(
-    TapMatchContext,
-  );
+  const {user_has_passed_onboarding, userProfile, userToken} = useContext(TapMatchContext);
+
   const moveOn = () => {
     user_has_passed_onboarding[1](true);
     postUserFinishedOnboarding({

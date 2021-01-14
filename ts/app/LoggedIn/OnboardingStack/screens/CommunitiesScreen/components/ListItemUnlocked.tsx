@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {Text, TouchableOpacity, StyleSheet, View} from 'react-native';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
@@ -6,6 +6,8 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import LockOpenBlack from 'assets/svg/lock-open-black.svg';
+import {postUserFinishedOnboarding} from '../api/postUserFinishedOnboarding';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface ListItemProps {
   item: any;
@@ -15,9 +17,19 @@ const ListItemUnlocked = ({item}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
   const {name, id, city, access, is_open} = item;
+  const {user_has_passed_onboarding, userProfile, userToken} = useContext(TapMatchContext);
+
+  const moveOn = () => {
+    user_has_passed_onboarding[1](true);
+    postUserFinishedOnboarding({
+      userProfile,
+      userToken: userToken[0],
+    });
+  };
+
   return (
     <TouchableOpacity
-      disabled={true}
+      onPress={moveOn}
       style={_s.container}>
       <View style={_s.left}>
         <LockOpenBlack height={iconSize} width={iconSize} />
