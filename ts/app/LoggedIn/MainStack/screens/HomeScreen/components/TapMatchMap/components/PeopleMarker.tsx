@@ -14,7 +14,6 @@ import FastImage from 'react-native-fast-image';
 interface PeopleMarkerProps {
   coordinate: LatLng;
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
-  focusMapToLatLng: (x: LatLng) => void;
   item: any;
 }
 
@@ -22,17 +21,16 @@ const PeopleMarker = ({
   item,
   coordinate,
   eventDetailsModalVisible,
-  focusMapToLatLng
 }: PeopleMarkerProps) => {
   const {members, name, join_limit, organizer, id} = item;
   const {selectedMarkerData} = useContext(MainStackContext);
 
   const positionArr = [
+    {position: {left: 20, top: 60}, style: 0},
+    {position: {left: 29, top: 34}, style: 1},
     {position: {left: 70, top: 30}, style: 0},
-    {position: {left: 20, top: 60}, style: 0},
-    {position: {left: 20, top: 60}, style: 0},
     {position: {left: 29, top: 34}, style: 1},
-    {position: {left: 29, top: 34}, style: 1},
+    {position: {left: 20, top: 60}, style: 0},
   ];
   const layers = [
     {

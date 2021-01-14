@@ -2,7 +2,7 @@ import {Share} from "react-native";
 import callAlert from "ts/utils/callAlert";
 import branch from 'react-native-branch';
 
-const shareContent = async (data: any) => {
+const shareContent = async (data: any, selectedCommunityData: any) => {
     try {
         let branchUniversalObject = await branch.createBranchUniversalObject(`event-${data.name}-${data.id}`, {
             locallyIndex: true,
@@ -13,7 +13,6 @@ const shareContent = async (data: any) => {
             feature: 'share',
             channel: 'TabMatch app'
         };
-        console.log(data, 'fuhserogyiuerhlufgepirgulrefpiosfhdgiublfksdgjhoierlkufh');
         let controlParams = {
             $url_redirect_mode: 2,
             $deeplink_path: 'Home',
@@ -25,7 +24,7 @@ const shareContent = async (data: any) => {
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
 
         const result = await Share.share({
-            message: `TabMatch is a cool app!\n ${url}`,
+            message: generateMsg(url, selectedCommunityData[0].access),
         });
         if (result.action === Share.sharedAction) {
             if (result.activityType) {
@@ -41,5 +40,14 @@ const shareContent = async (data: any) => {
         callAlert(undefined, error.message);
     }
 };
+
+
+function generateMsg(url: string, code: string) {
+    if (code) {
+        return `Join our event!\nAn access code to enter the community is ${code} \n ${url}`;
+    } else {
+        return `Join our event!\nIt's an open invitation\n ${url}`;
+    }
+}
 
 export default shareContent;

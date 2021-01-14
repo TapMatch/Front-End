@@ -23,7 +23,7 @@ const PlaceAndTime = ({eventJoinState}: PlaceAndTimeProps) => {
             })}>
                 <Text numberOfLines={1} style={[_s.txt, _s.linkStyle]}>{address}</Text>
             </TouchableOpacity>
-            {eventJoinState === 'join' && <Text numberOfLines={1} style={[_s.txt, _s.time]}>{`${makeDayWord(datetime.date)} ${moment(datetime.date).format('HH:mm a')}`}</Text>}
+            {(eventJoinState === 'join' || eventJoinState === 'full') && <Text numberOfLines={1} style={[_s.txt, _s.time]}>{`${makeDayWord(datetime.date)} ${moment(datetime.date).format('HH:mm a')}`}</Text>}
         </View>
     );
 };
@@ -34,7 +34,9 @@ const _s = StyleSheet.create({
     container: {
         flex: 1,
         minWidth: '100%',
+        paddingHorizontal: '22%',
         alignItems: 'center',
+        justifyContent: 'center'
     },
     center: {
         justifyContent: 'center',
@@ -42,13 +44,13 @@ const _s = StyleSheet.create({
     },
     txt: {
         maxWidth: '100%',
-        fontSize: _fs.m,
+        fontSize: _fs.l,
         fontFamily: _f.regularAlt,
         textAlign: 'center',
         textAlignVertical: 'center',
     },
     time: {
-        marginTop: 2,
+        marginTop: 3,
         color: _c.black,
     },
     shadow: {

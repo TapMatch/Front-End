@@ -47,7 +47,7 @@ const EventDetailsModal = ({modalVisible, eventJoinState}: EventDetailsModalProp
         config={config}
         style={[_s.content, {
           height: (wh.height - vs(120)) * windowHeightParameter,
-          bottom: (wh.width * 0.025) + (bottom * 0.75)
+          bottom: (wh.width * 0.025) + (bottom * 0.5)
         }]}
       >
 
@@ -77,9 +77,11 @@ const _s = StyleSheet.create({
     flex: 1,
   },
   content: {
-    borderRadius: 30,
+    borderRadius: 40,
     backgroundColor: _c.smoke,
     position: 'absolute',
+    paddingTop: '4%',
+    paddingHorizontal: '4%',
     left: wh.width * 0.025,
     width: wh.width * 0.95,
     overflow: 'hidden',

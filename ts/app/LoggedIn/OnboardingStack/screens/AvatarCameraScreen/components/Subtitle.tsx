@@ -23,14 +23,13 @@ export default Subtitle;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
   },
   txt: {
     textAlign: 'center',
     textAlignVertical: 'center',
     color: _c.main_red,
-    fontFamily: _f.eRegular,
+    fontFamily: _f.regularAlt,
     fontSize: _fs.l,
   },
 });

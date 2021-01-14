@@ -121,7 +121,7 @@ const _s = StyleSheet.create({
   container: {
     position: 'relative',
     width: '100%',
-    height: '45%',
+    height: '50%',
     overflow: 'hidden',
     backgroundColor: _c.greyLight,
   },

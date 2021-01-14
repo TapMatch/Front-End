@@ -9,6 +9,7 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {joinEvent} from '../../../api/joinEvent';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import callAlert from 'ts/utils/callAlert';
+import {vs} from 'react-native-size-matters';
 
 interface JoinSectionProps {
     eventJoinState: 'join' | 'full' | 'joined';
@@ -21,9 +22,9 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
     const {members} = selectedMarkerData[0];
     const defineMessage = () => {
         if (members.length - 1) {
-            return `You and ${members.length} others are going!`;
+            return `You and ${members.length - 1} others are going!`;
         } else {
-            return `You and are going!`;
+            return `You are going!`;
         }
     };
 
@@ -81,22 +82,22 @@ export default JoinSection;
 
 const _s = StyleSheet.create({
     container: {
-        height: 55,
+        height: vs(60),
         minWidth: '100%',
     },
     btn: {
         width: '60%',
         minWidth: '60%',
-        height: 50,
+        height: vs(50),
         backgroundColor: _c.main_red,
-        borderRadius: 20
+        borderRadius: vs(20)
     },
     full: {
         width: '60%',
         minWidth: '60%',
-        height: 50,
+        height: vs(50),
         backgroundColor: _c.greyLight,
-        borderRadius: 20
+        borderRadius: vs(20)
     },
     btnTxt: {
         color: _c.white,

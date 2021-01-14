@@ -235,7 +235,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           {!yesNoModalVisible[0] && renderCommandsAndReminders()}
           <TapMatchMap
             eventMarkers={eventMarkers}
-            focusMapToLatLng={focusMapToLatLng}
             mapCoordinates={mapCoordinates}
             eventDetailsModalVisible={eventDetailsModalVisible}
             set_mapRef={set_mapRef}

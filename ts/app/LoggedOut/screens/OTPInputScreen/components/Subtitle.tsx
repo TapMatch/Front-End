@@ -35,7 +35,7 @@ const _s = StyleSheet.create({
     textAlign: 'center',
     textAlignVertical: 'center',
     color: _c.main_red,
-    fontFamily: _f.eRegular,
+    fontFamily: _f.regularAlt,
     fontSize: _fs.l,
   },
 });

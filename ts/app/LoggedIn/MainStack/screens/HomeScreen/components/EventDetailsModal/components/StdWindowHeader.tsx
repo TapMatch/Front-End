@@ -12,7 +12,7 @@ interface HeaderProps {
 }
 
 const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
-    const {selectedMarkerData} = useContext(MainStackContext);
+    const {selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
     const {name} = selectedMarkerData[0];
 
     return (
@@ -22,7 +22,7 @@ const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
                 <Text numberOfLines={1} style={_s.title}>{name}</Text>
             </View>
             <View style={[_s.side, _s.center, _s.right]}>
-                <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0])} style={[_s.btn, _s.shadow, _s.center]}>
+                <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0], selectedCommunityData)} style={[_s.btn, _s.shadow, _s.center]}>
                     <FastImage
                         style={_s.img}
                         resizeMode={FastImage.resizeMode.contain}
@@ -38,7 +38,7 @@ export default StdWindowHeader;
 
 const _s = StyleSheet.create({
     container: {
-        height: 60,
+        height: '15%',
         minWidth: '100%',
         flexDirection: 'row'
     },

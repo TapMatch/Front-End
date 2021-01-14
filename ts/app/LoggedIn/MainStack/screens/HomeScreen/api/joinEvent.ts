@@ -53,6 +53,7 @@ export async function joinEvent({
                                 ];
                                 callAlert(undefined, 'This event was removed by the host.', btns);
                             }
+                            console.log(error.response.request._response, 'error.response.request._response ::: joinEvent');
                         }
                     }
                 }

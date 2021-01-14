@@ -148,10 +148,11 @@ const _s = StyleSheet.create({
 
   middle: {
     minWidth: '100%',
-    flex: 0.8,
+    flex: 0.85,
+    paddingBottom: 5,
   },
   bottom: {
-    flex: 0.2,
+    flex: 0.15,
     minWidth: '100%',
     justifyContent: 'center',
     alignItems: 'center',

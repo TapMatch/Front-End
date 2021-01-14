@@ -16,13 +16,12 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
 interface TapMatchMapProps {
     set_mapRef: any;
-    focusMapToLatLng: (x: LatLng) => void;
     mapCoordinates: [LatLng, (x: LatLng) => void];
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
     eventMarkers: any;
 }
 
-const TapMatchMap = ({focusMapToLatLng, eventMarkers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
+const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
     const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
     let _mapRef = useRef<any>(null);
@@ -69,7 +68,6 @@ const TapMatchMap = ({focusMapToLatLng, eventMarkers, set_mapRef, mapCoordinates
                 <PeopleMarker
                     key={`PeopleMarker-${el.id}-${el.name}`}
                     item={el}
-                    focusMapToLatLng={focusMapToLatLng}
                     coordinate={el.coordinates}
                     eventDetailsModalVisible={eventDetailsModalVisible}
                 />)}

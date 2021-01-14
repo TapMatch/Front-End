@@ -6,22 +6,24 @@ import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import shareContent from 'ts/app/common/serveces/shareContent';
 import FastImage from 'react-native-fast-image';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface HeaderProps {
     // eventJoinState: 'join' | 'full' | 'joined';
 }
 
 const JoinedWindowHeader = (props: HeaderProps) => {
-    const {selectedMarkerData} = useContext(MainStackContext);
+    const {selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
+    const {userProfile} = useContext(TapMatchContext);
     const {name} = selectedMarkerData[0];
 
     return (
         <View style={_s.container}>
-            <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0])} style={_s.btn}>
+            <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0], selectedCommunityData)} style={_s.btn}>
                 <View style={[_s.side]} />
                 <View style={[_s.middle, _s.center]}>
-                    <Text numberOfLines={1} style={_s.title}>Share</Text>
-                    <Text numberOfLines={1} style={_s.title}>{name}</Text>
+                    <Text numberOfLines={1} style={[_s.title, _s.share]}>Share</Text>
+                    <Text numberOfLines={1} style={[_s.title, _s.eventName]}>{name}</Text>
                 </View>
                 <View style={[_s.side, _s.center, _s.right]}>
                     <FastImage
@@ -39,10 +41,9 @@ export default JoinedWindowHeader;
 
 const _s = StyleSheet.create({
     container: {
-        height: 90,
+        height: '30%',
         minWidth: '100%',
-        paddingHorizontal: '8%',
-        paddingVertical: '2%',
+        paddingHorizontal: '5%',
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -51,7 +52,7 @@ const _s = StyleSheet.create({
         flexDirection: 'row',
         backgroundColor: _c.white,
         borderRadius: 20,
-        borderWidth: StyleSheet.hairlineWidth * 4,
+        borderWidth: StyleSheet.hairlineWidth * 8,
         borderStyle: 'dotted',
         borderColor: _c.main_red
     },
@@ -75,12 +76,19 @@ const _s = StyleSheet.create({
         width: _fs.xl,
     },
     title: {
-        fontSize: _fs.xl,
-        fontFamily: _f.eRegular,
-        lineHeight: _fs.xl * 1.3,
+        fontFamily: _f.regularAlt,
         textAlign: 'center',
         textAlignVertical: 'center',
         color: _c.black,
+    },
+    share: {
+        fontSize: _fs.xxl,
+        lineHeight: _fs.x3l,
+    },
+    eventName: {
+        marginTop: 8,
+        fontSize: _fs.x8l,
+        lineHeight: _fs.x9l,
     },
     shadow: {
         shadowColor: _c.black,

@@ -10,6 +10,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
+import capitalizeString from 'ts/utils/capitalizeString';
 
 interface DescriptionInputProps {
   description: [string, (x: string) => void];
@@ -32,7 +33,7 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
           autoFocus={true}
           maxLength={30}
           contextMenuHidden={true}
-          onChangeText={description[1]}
+          onChangeText={(txt) => description[1](capitalizeString(txt))}
           multiline={true}
           style={_s.input}
         />);
