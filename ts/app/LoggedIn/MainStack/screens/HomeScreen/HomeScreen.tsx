@@ -21,6 +21,7 @@ import {deleteEvent} from './api/deleteEvent';
 import {leaveEvent} from './api/leaveEvent';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
+import cities from 'ts/constants/cities';
 
 interface HomeScreenProps {
   navigation: any;
@@ -86,18 +87,37 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   }, [selectedMarkerData[0].id]);
 
   useEffect(() => {
+    if (selectedCommunityData[0].name) {
+      if (selectedCommunityData[0].name === 'Open World') {
+        focusMapToLatLng({
+          ...userLocation[0],
+          latitudeDelta: 0.100,
+          longitudeDelta: 0.0121,
+        });
+      } else {
+        const city: any = cities.find((el: any) => el.name === selectedCommunityData[0].city);
+        if (city) {
+          focusMapToLatLng({
+            ...city.latlng,
+            latitudeDelta: 0.100,
+            longitudeDelta: 0.0121,
+          });
+        }
+
+      }
+    }
+  }, [selectedCommunityData[0].id]);
+
+  useEffect(() => {
     getMarkers();
   }, [selectedCommunityData[0].id]);
 
   useEffect(() => {
     const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
     const hasJoined = ind > -1;
-    console.log([...userProfile[0].events.map(el => el.id)], 'userProfile[0].events---userProfile[0].events');
-    console.log(selectedMarkerData[0].id);
-    console.log(hasJoinedCurrentSelectedEvent[0], 'hasJoinedCurrentSelectedEvent---hasJoinedCurrentSelectedEvent');
     hasJoinedCurrentSelectedEvent[1](hasJoined);
   }, [selectedMarkerData, userProfile[0].events, eventDetailsModalVisible]);
-
+  console.log(selectedMarkerData[0], 'IOUYOIUYOIUYOIUYOIRUYRTDTRDHG');
   const _handleAppStateChange = (appState: string) => {
     if (appState === 'background') {
       getUpcomingEvents({

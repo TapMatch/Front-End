@@ -14,6 +14,7 @@ import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
 import googleMapStyle from "ts/constants/googleMapStyle.json";
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
+import {vs} from 'react-native-size-matters';
 
 interface CommunitiesScreenProps {
   navigation: any;
@@ -114,7 +115,7 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   if (isFocused) {
     return (
       <View style={[_s.container]}>
-        { <View style={[_s.content, {paddingTop: 60 + top}]}>
+        { <View style={[_s.content, {paddingTop: 30 + top}]}>
           {renderContent()}
         </View>}
         <MapView
@@ -154,6 +155,8 @@ const _s = StyleSheet.create({
   },
   bottom: {
     flex: 0.15,
+    marginBottom: '7%',
+    // height: vs(45) * 2 + 15,
     minWidth: '100%',
     justifyContent: 'center',
     alignItems: 'center',

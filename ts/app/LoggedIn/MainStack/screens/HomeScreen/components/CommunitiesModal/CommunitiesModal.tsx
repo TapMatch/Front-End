@@ -15,6 +15,7 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
 import ListItemLocked from './components/ListItemLocked';
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
+import {vs} from 'react-native-size-matters';
 
 interface CommunitiesModalProps {
   selectedCommunityData: any;
@@ -119,7 +120,7 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
       isVisible={communitiesModalVisible[0]}
       style={_s.modal}>
       <View style={[_s.container]}>
-        <View style={[_s.content, {paddingTop: 60 + top}]}>
+        <View style={[_s.content, {paddingTop: 30 + top}]}>
           {renderContent()}
         </View>
       </View>
@@ -143,6 +144,8 @@ const _s = StyleSheet.create({
   },
   bottom: {
     flex: 0.15,
+    marginBottom: '7%',
+    // height: vs(45) * 2 + 15,
     minWidth: '100%',
     justifyContent: 'center',
     alignItems: 'center',

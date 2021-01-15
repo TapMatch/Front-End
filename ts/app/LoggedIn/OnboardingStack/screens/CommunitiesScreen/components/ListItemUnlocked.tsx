@@ -78,7 +78,7 @@ const _s = StyleSheet.create({
     maxWidth: '30%',
   },
   middle: {
-    paddingVertical: vs(12),
+    paddingVertical: vs(8),
     flex: 0.6,
     minHeight: '100%',
     justifyContent: 'space-around',

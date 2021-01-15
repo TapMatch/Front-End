@@ -22,6 +22,7 @@ const PeopleMarker = ({
   coordinate,
   eventDetailsModalVisible,
 }: PeopleMarkerProps) => {
+
   const {members, name, join_limit, organizer, id} = item;
   const {selectedMarkerData} = useContext(MainStackContext);
 
@@ -29,9 +30,10 @@ const PeopleMarker = ({
     {position: {left: 20, top: 60}, style: 0},
     {position: {left: 29, top: 34}, style: 1},
     {position: {left: 70, top: 30}, style: 0},
-    {position: {left: 29, top: 34}, style: 1},
-    {position: {left: 20, top: 60}, style: 0},
+    {position: {right: 29, top: 34}, style: 1},
+    {position: {right: 20, top: 60}, style: 0},
   ];
+
   const layers = [
     {
       zIndex: 10,
@@ -40,12 +42,47 @@ const PeopleMarker = ({
       zIndex: 20,
     },
   ];
+
+  // if (name === 'hdhdh') {
+  //   console.log(members.length, 'popopopopopoppopop -- hdhdh');
+  //   console.log(item, 'HDHDH!!!! UYUYUYUYUYUYUYU!!!');
+  // }
+
+  const renderImages = () => {
+    return members.map((el: any, ind: number) => {
+      // if (name === 'hdhdh') {
+
+      //   console.log(members, organizer, '09090909');
+      // }
+      if (ind <= 4) {
+        return el.id !== organizer.id ?
+          <FastImage
+            key={el.avatar}
+            style={[
+              _s.placeholderImg,
+              _s.memberAvatarContainer,
+              _s.shadow,
+              layers[positionArr[ind].style],
+              positionArr[ind].position,
+            ]}
+            source={{
+              // cache: FastImage.cacheControl.web,
+              uri: el.avatar
+            }}
+          /> : null;
+      } else {
+        return null;
+      }
+    });
+  };
+
   return (
     <Marker
       onPress={() => {
         eventDetailsModalVisible[1](true);
         selectedMarkerData[1](item);
       }}
+      tracksViewChanges={true}
       zIndex={+id}
       coordinate={coordinate}>
       <View style={_s.container}>
@@ -61,24 +98,8 @@ const PeopleMarker = ({
         </View>
 
         <View style={_s.main}>
-          {members.map((el: any, ind: number) => el.id !== organizer.id ?
-            <FastImage
-              key={el.avatar}
-              style={[
-                _s.placeholderImg,
-                _s.memberAvatarContainer,
-                _s.shadow,
-                layers[positionArr[ind].style],
-                positionArr[ind].position,
-              ]}
-              source={{
-                cache: FastImage.cacheControl.web,
-                uri: el.avatar
-              }}
-            /> : null)}
-
-
-          <View style={[_s.avatarContainer, , _s.shadow]}>
+          {renderImages()}
+          <View style={[_s.avatarContainer, _s.shadow]}>
             <FastImage
               style={_s.avatar}
               source={{
