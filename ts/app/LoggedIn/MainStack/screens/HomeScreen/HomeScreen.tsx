@@ -96,7 +96,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     console.log(selectedMarkerData[0].id);
     console.log(hasJoinedCurrentSelectedEvent[0], 'hasJoinedCurrentSelectedEvent---hasJoinedCurrentSelectedEvent');
     hasJoinedCurrentSelectedEvent[1](hasJoined);
-  }, [selectedMarkerData]);
+  }, [selectedMarkerData, userProfile[0].events, eventDetailsModalVisible]);
 
   const _handleAppStateChange = (appState: string) => {
     if (appState === 'background') {

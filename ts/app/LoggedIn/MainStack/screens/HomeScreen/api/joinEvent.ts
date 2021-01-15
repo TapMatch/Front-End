@@ -66,6 +66,7 @@ export async function joinEvent({
                 }
                 console.log(error);
                 // callAlert(undefined, `${error.toString()} ::: joinEvent`);
+                getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null});
             });
     } catch (error) {
         console.log(`${error} ::: joinEvent`);

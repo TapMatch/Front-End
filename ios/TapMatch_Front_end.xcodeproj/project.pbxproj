@@ -862,7 +862,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapMatch_Front_end/TapMatch_Front_end.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = CAVPB8JT36;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TapMatch_Front_end/Info.plist;
@@ -892,7 +892,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapMatch_Front_end/TapMatch_Front_end.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = CAVPB8JT36;
 				INFOPLIST_FILE = TapMatch_Front_end/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
