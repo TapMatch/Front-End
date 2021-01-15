@@ -36,6 +36,8 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
 
   const addingLocationOn = useState<boolean>(false);
 
+  const gpaRefState = useState<any>();
+
   const coordinates = useState<any>({
     ...userLocation[0], latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
@@ -91,7 +93,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   if (isFocused) {
     return (
       <CreateEventScreenContext.Provider value={{
-        description, joinLimit, dateTime, addingLocationOn,
+        description, joinLimit, dateTime, addingLocationOn, gpaRefState,
         eventName, address, coordinates, yesNoModalVisible
       }}>
         <DeepLinkHandler navigation={navigation} route={route}>

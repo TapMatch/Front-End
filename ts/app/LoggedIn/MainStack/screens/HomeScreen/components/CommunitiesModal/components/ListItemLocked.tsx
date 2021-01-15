@@ -33,11 +33,12 @@ const ListItem = ({item, selectItem}: ListItemProps) => {
       <View style={_s.left}>{renderIcon()}</View>
       <View style={_s.middle}>
         <View style={_s.middle_top}>
-          <Text style={[_s.title, _s.txt]}>{name}</Text>
-          <Text style={[_s.city, _s.txt]}>{city}</Text>
+          <Text numberOfLines={1} style={[_s.title, _s.txt]}>{name}</Text>
+          <Text numberOfLines={1} style={[_s.city, _s.txt]}>{city}</Text>
         </View>
         <View style={_s.middle_bottom}>
           <Text
+            numberOfLines={1}
             style={[
               _s.users_num,
               _s.txt,

@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
@@ -12,18 +12,37 @@ import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext
 import TargetWhite from 'assets/svg/target-white.svg';
 import {vs} from 'react-native-size-matters';
 import UserLocationMarker from './components/UserLocationMarker';
+import Geocoder from 'react-native-geocoding';
+import * as RNLocalize from "react-native-localize";
 
 interface LocationPickerModeProps {
 }
 
 const LocationPickerMode = (props: LocationPickerModeProps) => {
-  const _createEventMapRef = useRef(null);
   const isFocused = useIsFocused();
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-  const {coordinates} = useContext(CreateEventScreenContext);
-  const focusMapToUserLocation = () => {
-    return typeof _createEventMapRef?.current.animateToRegion === 'function' ? _createEventMapRef?.current.animateToRegion(userLocation[0]) : null;
+  const {userLocation} = useContext(TapMatchContext);
+  const {coordinates, address, gpaRefState} = useContext(CreateEventScreenContext);
+  const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
+
+  useEffect(() => {
+    Geocoder.init('AIzaSyBI-erIASkJmmIjkNGN0_EIsgBVPCSIxng', {language});
+  }, []);
+
+  const setPressedCoordinates = (c: LatLng) => {
+    Geocoder.from(c,
+    ).then(json => {
+      const addressComponent = json.results[0].formatted_address;
+      address[1](addressComponent);
+      gpaRefState[0].current.setAddressText(addressComponent);
+    })
+      .catch(error => console.log(error));
+    coordinates[1]({
+      ...c,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    });
   };
+
   if (isFocused) {
     return (
       <View style={_s.container}>
@@ -32,15 +51,10 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
           backgroundColor={_c.smoke}
           barStyle={'dark-content'}
         />
-
+        <Header />
         <DoneBtn />
         <MapView
-          ref={_createEventMapRef}
-          // onPress={({nativeEvent}) => coordinates[1]({
-          //   ...nativeEvent.coordinate,
-          //   latitudeDelta: 0.015,
-          //   longitudeDelta: 0.0121,
-          // })}
+          onPress={({nativeEvent}) => setPressedCoordinates(nativeEvent.coordinate)}
           provider={PROVIDER_GOOGLE}
           customMapStyle={googleMapStyle}
           zoomEnabled={true}
@@ -53,8 +67,7 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
           <UserLocationMarker coordinate={userLocation[0]} />
           <LocationMarker coordinate={coordinates[0]} />
         </MapView>
-        <Header />
-        <TouchableOpacity onPress={focusMapToUserLocation} style={_s.userLocatioBtn}>
+        <TouchableOpacity onPress={() => setPressedCoordinates(userLocation[0])} style={_s.userLocatioBtn}>
           <TargetWhite
             height={vs(45)}
             width={vs(45)}

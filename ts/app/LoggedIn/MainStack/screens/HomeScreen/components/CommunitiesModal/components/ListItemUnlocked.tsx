@@ -26,12 +26,12 @@ const ListItemUnlocked = ({item, onPress}: ListItemProps) => {
       </View>
       <View style={_s.middle}>
         <View style={!is_open ? _s.middle_top : _s.middle_top_full}>
-          <Text style={[_s.title, _s.txt]}>{name}</Text>
-          {!!city && <Text style={[_s.city, _s.txt]}>{city}</Text>}
+          <Text numberOfLines={1} style={[_s.title, _s.txt]}>{name}</Text>
+          {!!city && <Text numberOfLines={1} style={[_s.city, _s.txt]}>{city}</Text>}
         </View>
         {!is_open && <View style={_s.middle_bottom}>
-          <Text style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
-          <Text style={[_s.users_num, _s.txt, _s.code]}>{access}</Text>
+          <Text numberOfLines={1} style={[_s.users_num, _s.txt]}>{txt.accessCode}</Text>
+          <Text numberOfLines={1} style={[_s.users_num, _s.txt, _s.code]}>{access}</Text>
         </View>}
       </View>
       <View style={_s.right} />

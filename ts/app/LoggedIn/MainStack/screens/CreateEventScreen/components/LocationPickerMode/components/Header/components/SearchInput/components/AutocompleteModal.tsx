@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import {vs} from 'react-native-size-matters';
@@ -20,12 +20,18 @@ interface AutocompleteModalProps {
 const AutocompleteModal = ({
     modalVisible,
 }: AutocompleteModalProps) => {
-    const {coordinates, address} = useContext(CreateEventScreenContext);
+    let _gpaRef = useRef();
+    const {coordinates, address, gpaRefState} = useContext(CreateEventScreenContext);
     const {width, height} = useDimensions().screen;
     const {keyboardHeight} = useKeyboard();
     const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
     const txt = useLocalizedTxt();
     const {top, bottom} = useSafeAreaInsets();
+
+    useEffect(() => {
+        gpaRefState[1](_gpaRef);
+    });
+
     return (
         <Modal
             animationIn={'slideInUp'}
@@ -41,6 +47,7 @@ const AutocompleteModal = ({
                     </TouchableOpacity >
                 </View>
                 <GooglePlacesAutocomplete
+                    ref={_gpaRef}
                     onFail={(e) => console.log(e)}
                     minLength={3}
                     numberOfLines={1}

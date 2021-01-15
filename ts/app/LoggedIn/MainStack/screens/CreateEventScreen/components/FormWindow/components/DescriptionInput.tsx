@@ -5,6 +5,7 @@ import {
   TextInput,
   TouchableOpacity,
   Text,
+  Platform,
 } from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -29,6 +30,7 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
           importantForAutofill={'no'}
           autoCapitalize={'none'}
           autoCompleteType={'off'}
+          keyboardType={Platform.OS === 'android' ? "visible-password" : 'default'}
           autoCorrect={false}
           autoFocus={true}
           maxLength={30}

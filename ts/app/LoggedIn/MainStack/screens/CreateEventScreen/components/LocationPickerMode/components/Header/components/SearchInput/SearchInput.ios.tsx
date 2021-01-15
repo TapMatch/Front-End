@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {View, StyleSheet} from 'react-native';
 import SearchBlack from 'assets/svg/search-black.svg';
 import {_c} from 'ts/UIConfig/colors';
@@ -10,6 +10,7 @@ import {GooglePlacesAutocomplete} from 'react-native-google-places-autocomplete'
 import * as RNLocalize from "react-native-localize";
 import {useDimensions, useKeyboard} from '@react-native-community/hooks';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
+import {add} from 'react-native-reanimated';
 
 interface SearchInputProps {
 }
@@ -18,10 +19,16 @@ interface SearchInputProps {
 //   NativeModules.SettingsManager.settings.AppleLanguages[0] : NativeModules.I18nManager.localeIdentifier
 
 const SearchInput = (props: SearchInputProps) => {
-  const {coordinates, address} = useContext(CreateEventScreenContext);
+  let _gpaRef = useRef();
+  const {coordinates, address, gpaRefState} = useContext(CreateEventScreenContext);
   const {width, height} = useDimensions().screen;
   const {keyboardHeight} = useKeyboard();
   const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
+
+  useEffect(() => {
+    gpaRefState[1](_gpaRef);
+  });
+
   return (
     <View style={_s.container}>
       <SearchBlack
@@ -30,6 +37,7 @@ const SearchInput = (props: SearchInputProps) => {
         width={_fs.xl}
       />
       <GooglePlacesAutocomplete
+        ref={_gpaRef}
         onFail={(e) => console.log(e)}
         minLength={3}
         numberOfLines={1}
@@ -49,7 +57,7 @@ const SearchInput = (props: SearchInputProps) => {
             zIndex: 500000
           },
         }}
-        placeholder=''
+        placeholder={''}
         onPress={(data, details: any = null) => {
           const {formatted_address, geometry} = details;
           address[1](formatted_address);
@@ -64,6 +72,9 @@ const SearchInput = (props: SearchInputProps) => {
           key: 'AIzaSyBI-erIASkJmmIjkNGN0_EIsgBVPCSIxng',
           language,
         }}
+      // GoogleReverseGeocodingQuery={{
+      //   region: `${coordinates[0].latitude},${coordinates[0].longitude}`,
+      // }}
       />
     </View>
   );

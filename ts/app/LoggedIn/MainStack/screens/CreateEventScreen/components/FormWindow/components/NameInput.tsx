@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
-import {Text, View, StyleSheet, TextInput} from 'react-native';
+import {Text, View, StyleSheet, TextInput, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 import capitalizeString from 'ts/utils/capitalizeString';
+import {RFValue} from 'react-native-responsive-fontsize';
 
 interface NameInputProps {
   eventName: [string, (x: string) => void];
@@ -23,15 +24,17 @@ const NameInput = ({eventName}: NameInputProps) => {
           textContentType={'none'}
           importantForAutofill={'no'}
           autoCapitalize={'none'}
+          underlineColorAndroid={"transparent"}
           autoCompleteType={'off'}
           autoCorrect={false}
+          keyboardType={Platform.OS === 'android' ? "visible-password" : 'default'}
           autoFocus={true}
           numberOfLines={1}
           contextMenuHidden={true}
           onChangeText={(txt) => eventName[1](capitalizeString(txt))}
           maxLength={12}
           multiline={false}
-          style={[_s.txt, _s.title]}
+          style={[_s.txt, _s.title, _s.input]}
         />);
     } else {
       return (
@@ -46,7 +49,6 @@ const NameInput = ({eventName}: NameInputProps) => {
     <View style={[_s.container]}>
       <View style={_s.txtContainer}>
         {renderInput()}
-        {/* <Text style={[_s.txt, _s.eg]}>e.g. Beer Pong</Text> */}
       </View>
     </View>
   );
@@ -74,12 +76,15 @@ const _s = StyleSheet.create({
     color: _c.black,
   },
   txtContainer: {
+    flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+    width: '100%'
   },
-  eg: {
-    fontFamily: _f.eRegular,
-    fontSize: _fs.s,
-    color: _c.main_red,
-  },
+  input: {
+    overflow: 'visible',
+    width: '100%',
+    fontSize: RFValue(24.5),
+    marginBottom: -RFValue(2)
+  }
 });
