@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
@@ -19,6 +19,9 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
     const {eventMarkers, selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
     const {currentUserIsOrganizer, eventDetailsModalVisible} = useContext(HomeScreenContext);
     const {userToken, userProfile} = useContext(TapMatchContext);
+
+    const joinRequestInprogress = useState<boolean>(false);
+
     const {members} = selectedMarkerData[0];
     const defineMessage = () => {
         if (members.length - 1) {
@@ -37,20 +40,24 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
         switch (eventJoinState) {
             case 'join': return (
                 <View style={[_s.container, _s.center]}>
-                    <TouchableOpacity onPress={() => {
-                        if (userProfile[0].events.length < 5) {
-                            joinEvent({
-                                eventDetailsModalVisible,
-                                communityId: selectedCommunityData[0].id,
-                                userToken: userToken[0],
-                                eventMarkers,
-                                selectedMarkerData,
-                                userProfile
-                            });
-                        } else {
-                            callAlert(undefined, 'You can join up to 5 events at a time.');
-                        }
-                    }} style={[_s.btn, _s.shadow, _s.center]}>
+                    <TouchableOpacity
+                        onPress={() => {
+                            if (!joinRequestInprogress[0]) {
+                                if (userProfile[0].events.length < 5) {
+                                    joinEvent({
+                                        joinRequestInprogress,
+                                        eventDetailsModalVisible,
+                                        communityId: selectedCommunityData[0].id,
+                                        userToken: userToken[0],
+                                        eventMarkers,
+                                        selectedMarkerData,
+                                        userProfile
+                                    });
+                                } else {
+                                    callAlert(undefined, 'You can join up to 5 events at a time.');
+                                }
+                            }
+                        }} style={[_s.btn, _s.shadow, _s.center]}>
                         <Text numberOfLines={1} style={[_s.txt, _s.btnTxt]}>Join</Text>
                     </TouchableOpacity>
                 </View>

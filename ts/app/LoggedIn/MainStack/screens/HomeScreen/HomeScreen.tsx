@@ -73,12 +73,17 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   }, [selectedMarkerData]);
 
   useEffect(() => {
-    eventJoinState[1](defineJoinState());
+    if (eventDetailsModalVisible[0]) {
+      eventJoinState[1](defineJoinState());
+    }
+
+  }, [eventDetailsModalVisible]);
+
+  useEffect(() => {
     if (selectedMarkerData[0].coordinates) {
       focusMapToLatLng(selectedMarkerData[0].coordinates);
     }
-
-  }, [selectedMarkerData, eventDetailsModalVisible]);
+  }, [selectedMarkerData[0].id]);
 
   useEffect(() => {
     getMarkers();
@@ -87,6 +92,9 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   useEffect(() => {
     const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
     const hasJoined = ind > -1;
+    console.log([...userProfile[0].events.map(el => el.id)], 'userProfile[0].events---userProfile[0].events');
+    console.log(selectedMarkerData[0].id);
+    console.log(hasJoinedCurrentSelectedEvent[0], 'hasJoinedCurrentSelectedEvent---hasJoinedCurrentSelectedEvent');
     hasJoinedCurrentSelectedEvent[1](hasJoined);
   }, [selectedMarkerData]);
 

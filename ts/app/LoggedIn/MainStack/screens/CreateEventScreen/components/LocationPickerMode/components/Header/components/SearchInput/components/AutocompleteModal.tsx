@@ -21,16 +21,12 @@ const AutocompleteModal = ({
     modalVisible,
 }: AutocompleteModalProps) => {
     let _gpaRef = useRef();
-    const {coordinates, address, gpaRefState} = useContext(CreateEventScreenContext);
+    const {coordinates, address} = useContext(CreateEventScreenContext);
     const {width, height} = useDimensions().screen;
     const {keyboardHeight} = useKeyboard();
     const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
     const txt = useLocalizedTxt();
     const {top, bottom} = useSafeAreaInsets();
-
-    useEffect(() => {
-        gpaRefState[1](_gpaRef);
-    });
 
     return (
         <Modal
@@ -47,7 +43,6 @@ const AutocompleteModal = ({
                     </TouchableOpacity >
                 </View>
                 <GooglePlacesAutocomplete
-                    ref={_gpaRef}
                     onFail={(e) => console.log(e)}
                     minLength={3}
                     numberOfLines={1}

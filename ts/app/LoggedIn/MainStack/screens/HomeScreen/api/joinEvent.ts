@@ -11,6 +11,7 @@ interface IjoinEvent {
     selectedMarkerData?: any;
     userProfile: any;
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
+    joinRequestInprogress: [boolean, (x: boolean) => void];
 }
 
 export async function joinEvent({
@@ -19,9 +20,11 @@ export async function joinEvent({
     eventMarkers,
     selectedMarkerData,
     userProfile,
-    eventDetailsModalVisible
+    eventDetailsModalVisible,
+    joinRequestInprogress
 }: IjoinEvent) {
     try {
+        joinRequestInprogress[1](true);
         const options: AxiosRequestConfig = {
             method: 'POST',
             url: `${tapMatchServerUrl}api/communities/${communityId}/events/${selectedMarkerData[0].id}/join`,
@@ -33,8 +36,12 @@ export async function joinEvent({
         axios
             .request(options)
             .then(() => getUserProfile({userProfile, userToken}))
-            .then(({data}: any) => getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
+            .then(({data}: any) => {
+                getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null})
+                    .then(() => joinRequestInprogress[1](false));
+            })
             .catch((error) => {
+                joinRequestInprogress[1](false);
                 if (error.response) {
                     if (error.response.request) {
                         if (error.response.request._response) {

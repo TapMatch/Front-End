@@ -48,7 +48,7 @@ const _s = StyleSheet.create({
     },
     personContainer: {
         height: '100%',
-        maxWidth: 60,
+        maxWidth: _fs.xxs * 12,
         alignItems: 'center',
         backgroundColor: _c.invisible
     },

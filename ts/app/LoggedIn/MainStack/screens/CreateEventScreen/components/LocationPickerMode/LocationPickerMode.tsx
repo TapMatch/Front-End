@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, StatusBar, TouchableOpacity, Platform} from 'react-native';
 import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
@@ -33,7 +33,9 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
     ).then(json => {
       const addressComponent = json.results[0].formatted_address;
       address[1](addressComponent);
-      gpaRefState[0].current.setAddressText(addressComponent);
+      if (Platform.OS === 'ios') {
+        gpaRefState[0].current.setAddressText(addressComponent);
+      }
     })
       .catch(error => console.log(error));
     coordinates[1]({
