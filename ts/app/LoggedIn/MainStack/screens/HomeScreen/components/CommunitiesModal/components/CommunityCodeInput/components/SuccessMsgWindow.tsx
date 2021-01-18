@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
@@ -9,7 +9,6 @@ import CheckCircleRed from 'assets/svg/check-circle-red.svg';
 import LockOpenWhite from 'assets/svg/lock-open-white.svg';
 import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputContext';
 import {useDimensions} from '@react-native-community/hooks';
-import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface CodeInputWindowProps {
   community: any;
@@ -24,17 +23,10 @@ const SuccessMsgWindow = ({community, codeInputVisible}: CodeInputWindowProps) =
   const lockOpenWhiteSize = vs(55);
   const {height} = useDimensions().screen;
   const {name, city} = community;
-  const {user_has_passed_onboarding, userProfile, userToken} = useContext(
-    TapMatchContext,
-  );
+
   return (
     <TouchableOpacity
       onPress={() => {
-        // user_has_passed_onboarding[1](true);
-        // postUserFinishedOnboarding({
-        //   userProfile,
-        //   userToken: userToken[0],
-        // });
         codeInputVisible[1](false);
         windowState[1](false);
       }}

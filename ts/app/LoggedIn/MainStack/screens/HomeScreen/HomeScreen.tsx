@@ -117,7 +117,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     const hasJoined = ind > -1;
     hasJoinedCurrentSelectedEvent[1](hasJoined);
   }, [selectedMarkerData, userProfile[0].events, eventDetailsModalVisible]);
-  console.log(selectedMarkerData[0], 'IOUYOIUYOIUYOIUYOIRUYRTDTRDHG');
+
   const _handleAppStateChange = (appState: string) => {
     if (appState === 'background') {
       getUpcomingEvents({
@@ -145,7 +145,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     } else {
       return (
         <Fragment>
-          <UpcomingEvents eventDetailsModalVisible={eventDetailsModalVisible} resetMap={() => {
+          <UpcomingEvents focusMapToLatLng={focusMapToLatLng} eventDetailsModalVisible={eventDetailsModalVisible} resetMap={() => {
             closeAllWhiteModalWindows();
             getMarkers();
             focusMapToLatLng(startingPoint);
@@ -170,7 +170,8 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             selectedCommunityData: selectedCommunityData,
             userToken: userToken[0],
             selectedMarkerData,
-            eventMarkers
+            eventMarkers,
+            userProfile
           }),
           title: 'Are you sure\nYou want to\nDelete this event?',
           modalVisible: yesNoModalVisible
@@ -228,7 +229,11 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     }
   };
 
-  const getMarkers = () => getEventMarkers({userToken: userToken[0], id: selectedCommunityData[0].id, eventMarkers});
+  const getMarkers = () => getEventMarkers({
+    userToken: userToken[0],
+    id: selectedCommunityData[0].id,
+    eventMarkers
+  });
 
   const defineJoinState = () => {
     const {join_limit, members} = selectedMarkerData[0];

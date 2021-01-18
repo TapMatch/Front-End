@@ -25,7 +25,8 @@
       <meta-data 
         android:name="io.branch.sdk.BranchKey.test" 
         android:value="key_test_kd9eeRrw7eTBOng6YDrEtbcnxsbO4zDu"/>
-<meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
+      <meta-data android:name="io.branch.sdk.TestMode" android:value="true" />
+      
       <activity
         android:name=".MainActivity"
         android:screenOrientation="portrait"

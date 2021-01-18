@@ -2,6 +2,7 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
+import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 
 interface IdeleteEvent {
     userToken: string;
@@ -10,6 +11,7 @@ interface IdeleteEvent {
     selectedMarkerData?: any;
     currentUserIsOrganizer: boolean;
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
+    userProfile: any;
 }
 
 export async function deleteEvent({
@@ -18,7 +20,8 @@ export async function deleteEvent({
     eventMarkers,
     eventDetailsModalVisible,
     selectedMarkerData,
-    currentUserIsOrganizer
+    currentUserIsOrganizer,
+    userProfile
 }: IdeleteEvent) {
 
     try {
@@ -42,6 +45,7 @@ export async function deleteEvent({
                         eventMarkers[1](newEventMarkersArr);
                     }
                 })
+                .then(() => getUserProfile({userProfile, userToken}))
                 .then(({data}: any) => getEventMarkers({userToken, id: selectedCommunityData[0].id, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
                 .catch((error) => {
                     if (error.response) {

@@ -10,26 +10,31 @@ interface PeopleProps {}
 
 const People = (props: PeopleProps) => {
     const {selectedMarkerData} = useContext(MainStackContext);
-    const {members} = selectedMarkerData[0];
+    const {members, organizer} = selectedMarkerData[0];
 
     if (!members.length) {
         return <View style={[_s.container, {height: 45}]} />;
     } else {
         return (
             <View style={_s.container}>
-                {members.map(({id, name, avatar}: any) =>
-                    <View key={`people-${id}`}
-                        style={_s.personContainer}>
-                        <View style={[_s.avatarContainer, _s.shadow]}>
-                            <FastImage
-                                style={_s.avatar}
-                                source={{
-                                    uri: avatar
-                                }}
-                            />
-                        </View>
-                        <Text numberOfLines={2} style={_s.txt}>{name}</Text>
-                    </View>)}
+                {members.map(({id, name, avatar}: any) => {
+                    if (id !== organizer.id) {
+                        return (<View key={`people-${id}`}
+                            style={_s.personContainer}>
+                            <View style={[_s.avatarContainer, _s.shadow]}>
+                                <FastImage
+                                    style={_s.avatar}
+                                    source={{
+                                        uri: avatar
+                                    }}
+                                />
+                            </View>
+                            <Text numberOfLines={2} style={_s.txt}>{name}</Text>
+                        </View>);
+                    } else {
+                        return null;
+                    }
+                })}
             </View>);
     }
 

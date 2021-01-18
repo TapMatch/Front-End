@@ -15,12 +15,13 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 
 interface UpcomingEventsProps {
   resetMap: () => void;
+  focusMapToLatLng: any;
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
 }
 
 const iconSize = '75%';
 
-const UpcomingEvents = ({resetMap, eventDetailsModalVisible}: UpcomingEventsProps) => {
+const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: UpcomingEventsProps) => {
   const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers, selectedMarkerData, allCommunities} = useContext(MainStackContext);
   const {userToken} = useContext(TapMatchContext);
   const txt = useLocalizedTxt();
@@ -37,6 +38,9 @@ const UpcomingEvents = ({resetMap, eventDetailsModalVisible}: UpcomingEventsProp
                 selectedMarkerData[1](clickedItem);
                 eventDetailsModalVisible[1](true);
                 upcomingEventsListIsOpen[1](false);
+                if (selectedMarkerData[0].coordinates) {
+                  focusMapToLatLng(selectedMarkerData[0].coordinates);
+                }
               }}
               item={el}
               key={`${ind}-addIDHereLater`}

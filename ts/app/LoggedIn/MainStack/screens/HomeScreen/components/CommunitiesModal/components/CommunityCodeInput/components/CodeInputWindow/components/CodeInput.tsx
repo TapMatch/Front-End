@@ -1,13 +1,13 @@
-import React, { useContext } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { _c } from 'ts/UIConfig/colors';
-import { vs } from 'react-native-size-matters';
-import { _fs } from 'ts/UIConfig/fontSizes';
-import { _f } from 'ts/UIConfig/fonts';
+import React, {useContext} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {_c} from 'ts/UIConfig/colors';
+import {vs} from 'react-native-size-matters';
+import {_fs} from 'ts/UIConfig/fontSizes';
+import {_f} from 'ts/UIConfig/fonts';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
-import { joinCommunity } from 'ts/app/common/api/joinCommunity';
-import { TapMatchContext } from 'ts/app/contexts/TapMatchContext';
-import { CommunityCodeInputContext } from 'ts/app/contexts/CommunityCodeInputContext';
+import {joinCommunity} from 'ts/app/common/api/joinCommunity';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputContext';
 
 interface CodeInputProps {
   code: [string, (x: string) => void];
@@ -15,9 +15,9 @@ interface CodeInputProps {
   errorState: [boolean, (x: boolean) => void];
 }
 
-const CodeInput = ({ code, communityId, errorState }: CodeInputProps) => {
-  const { userProfile, userToken } = useContext(TapMatchContext);
-  const { windowState } = useContext(CommunityCodeInputContext);
+const CodeInput = ({code, communityId, errorState}: CodeInputProps) => {
+  const {userProfile, userToken} = useContext(TapMatchContext);
+  const {windowState} = useContext(CommunityCodeInputContext);
 
   return (
     <View style={_s.container}>

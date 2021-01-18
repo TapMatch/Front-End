@@ -25,55 +25,61 @@ const PeopleMarker = ({
 
   const {members, name, join_limit, organizer, id} = item;
   const {selectedMarkerData} = useContext(MainStackContext);
-
-  const positionArr = [
-    {position: {left: 20, top: 60}, style: 0},
-    {position: {left: 29, top: 34}, style: 1},
-    {position: {left: 70, top: 30}, style: 0},
-    {position: {right: 29, top: 34}, style: 1},
-    {position: {right: 20, top: 60}, style: 0},
+  const len = members.length;
+  const positionArr = [//5
+    {position: {left: 28, top: 70}, style: 0},// 0
+    {position: {right: 32, top: 70}, style: 0},// 1
+    {position: {left: 50, top: 36}, style: len === 4 ? 3 : 1},// 2 but zIndex under 0's if length 3
+    {position: {right: 52, top: 36}, style: 1},// 3
+    {position: {left: 73, top: 28}, style: 2},// 4
   ];
 
   const layers = [
     {
-      zIndex: 10,
+      zIndex: 100,
     },
     {
-      zIndex: 20,
+      zIndex: 200,
+    },
+    {
+      zIndex: 300,
+    },
+    {
+      zIndex: 90,
     },
   ];
 
-  // if (name === 'hdhdh') {
-  //   console.log(members.length, 'popopopopopoppopop -- hdhdh');
-  //   console.log(item, 'HDHDH!!!! UYUYUYUYUYUYUYU!!!');
-  // }
-
-  const renderImages = () => {
-    return members.map((el: any, ind: number) => {
-      // if (name === 'hdhdh') {
-
-      //   console.log(members, organizer, '09090909');
-      // }
+  const renderImages = (members: any, organizerId: number) => {
+    const images: any = [];
+    let hasEncounteredOrganizeer = false;
+    for (let ind = 0; ind < members.length; ind++) {
       if (ind <= 4) {
-        return el.id !== organizer.id ?
-          <FastImage
-            key={el.avatar}
+        if (members[ind].id !== organizerId) {
+          const styleIndex = hasEncounteredOrganizeer ? ind - 1 : ind;
+          const img = <FastImage
+            key={members[ind].avatar}
             style={[
               _s.placeholderImg,
               _s.memberAvatarContainer,
               _s.shadow,
-              layers[positionArr[ind].style],
-              positionArr[ind].position,
+              layers[positionArr[styleIndex].style],
+              positionArr[styleIndex].position,
             ]}
             source={{
-              // cache: FastImage.cacheControl.web,
-              uri: el.avatar
+              cache: FastImage.cacheControl.web,
+              uri: members[ind].avatar
             }}
-          /> : null;
+          />;
+          images.push(img);
+        } else {
+          hasEncounteredOrganizeer = true;
+          continue;
+        }
       } else {
-        return null;
+        continue;
       }
-    });
+    }
+    return images;
   };
 
   return (
@@ -98,7 +104,7 @@ const PeopleMarker = ({
         </View>
 
         <View style={_s.main}>
-          {renderImages()}
+          {renderImages(members, +organizer.id)}
           <View style={[_s.avatarContainer, _s.shadow]}>
             <FastImage
               style={_s.avatar}
@@ -209,12 +215,12 @@ const _s = StyleSheet.create({
   oval: {
     zIndex: 0,
     position: 'absolute',
-    top: 70,
-    left: 56,
+    top: 75,
+    left: 59,
     backgroundColor: _c.main_red,
     opacity: 0.22,
-    width: 85,
-    height: 63,
+    width: 80,
+    height: 57,
     borderRadius: 50,
     transform: [{scaleX: 2}],
   },

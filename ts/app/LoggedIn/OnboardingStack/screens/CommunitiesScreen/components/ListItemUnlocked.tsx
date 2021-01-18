@@ -16,11 +16,12 @@ interface ListItemProps {
 const ListItemUnlocked = ({item}: ListItemProps) => {
   const txt = useLocalizedTxt();
   const iconSize = vs(26);
-  const {name, id, city, access, is_open} = item;
-  const {user_has_passed_onboarding, userProfile, userToken} = useContext(TapMatchContext);
+  const {name, city, access, is_open} = item;
+  const {user_has_passed_onboarding, userProfile, userToken, PHPSESSID} = useContext(TapMatchContext);
 
   const moveOn = () => {
     user_has_passed_onboarding[1](true);
+    PHPSESSID[1]('');
     postUserFinishedOnboarding({
       userProfile,
       userToken: userToken[0],

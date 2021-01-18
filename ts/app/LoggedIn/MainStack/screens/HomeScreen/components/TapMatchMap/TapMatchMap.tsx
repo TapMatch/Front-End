@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import {StyleSheet} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
@@ -9,10 +9,8 @@ import googleMapStyle from "ts/constants/googleMapStyle.json";
 import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {MarkerUnits} from 'react-native-svg';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
-// import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
 interface TapMatchMapProps {
     set_mapRef: any;
@@ -22,10 +20,9 @@ interface TapMatchMapProps {
 }
 
 const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
-    const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
-    const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
+    const {userLocation, userToken} = useContext(TapMatchContext);
+    const {selectedCommunityData} = useContext(MainStackContext);
     let _mapRef = useRef<any>(null);
-    // const {} = useContext(HomeScreenContext);
     return (
         <MapView
             mapRef={(x) => {

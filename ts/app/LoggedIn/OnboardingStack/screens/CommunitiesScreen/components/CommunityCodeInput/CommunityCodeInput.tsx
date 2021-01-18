@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet } from 'react-native';
-import { _c } from 'ts/UIConfig/colors';
-import { TapMatchContext } from 'ts/app/contexts/TapMatchContext';
+import React, {useContext, useState, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
+import {_c} from 'ts/UIConfig/colors';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import CodeInputWindow from './components/CodeInputWindow/CodeInputWindow';
 import SuccessMsgWindow from './components/SuccessMsgWindow';
-import { CommunityCodeInputContext } from 'ts/app/contexts/CommunityCodeInputContext';
-import { joinCommunity } from 'ts/app/common/api/joinCommunity';
+import {CommunityCodeInputContext} from 'ts/app/contexts/CommunityCodeInputContext';
+import {joinCommunity} from 'ts/app/common/api/joinCommunity';
 
 interface CommunitiesScreenProps {
   communityItem: any;
@@ -17,7 +17,7 @@ const CommunityCodeInput = ({
   modalVisible
 }: CommunitiesScreenProps) => {
   const windowState = useState<boolean>(!communityItem[0].is_open);
-  const { userProfile, userToken } = useContext(TapMatchContext);
+  const {userProfile, userToken} = useContext(TapMatchContext);
 
   useEffect(() => {
     if (modalVisible[0]) {
@@ -41,7 +41,7 @@ const CommunityCodeInput = ({
   };
   return (
 
-    <CommunityCodeInputContext.Provider value={{ windowState, modalVisible }}>
+    <CommunityCodeInputContext.Provider value={{windowState, modalVisible}}>
       <View style={_s.content}>
         {renderWindow()}
       </View>

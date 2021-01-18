@@ -21,7 +21,6 @@ export async function getUserProfile({
         'Content-Type': 'application/json',
       },
     };
-    console.log('8787878787878787878787878787878787878787878');
     axios
       .request(options)
       .then(({data}: any) => {

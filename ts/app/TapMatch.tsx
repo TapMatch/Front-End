@@ -5,7 +5,7 @@ import MainStack from './LoggedIn/MainStack/MainStack';
 import LoggedOutStack from './LoggedOut/LoggedOutStack';
 import NoNetworkModal from './common/NoNetworkModal';
 import Geolocation from 'react-native-geolocation-service';
-import {request, PERMISSIONS, check} from 'react-native-permissions';
+import {PERMISSIONS, check} from 'react-native-permissions';
 import {AppState, Platform} from 'react-native';
 import {LatLng} from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -148,7 +148,7 @@ const TapMatch = () => {
     if (LoggedIn[0]) {
       if (userProfile[0] !== null) {
         // console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', userProfile[0], '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥');
-        console.log('💧💧💧💧💧💧💧💧💧💧', userToken[0], '💧💧💧💧💧💧💧💧💧💧💧💧');
+        // console.log('💧💧💧💧💧💧💧💧💧💧', userToken[0], '💧💧💧💧💧💧💧💧💧💧💧💧');
         if (user_has_passed_onboarding[0]) {
           return <MainStack />;
         } else {
