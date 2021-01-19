@@ -7,7 +7,7 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import FormWindow from './components/FormWindow/FormWindow';
 import CreateBtn from './components/CreateBtn';
-import googleMapStyle from "ts/constants/googleMapStyle.json";
+import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
 import {createEvent} from './api/createEvent';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';

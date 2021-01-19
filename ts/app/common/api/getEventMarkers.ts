@@ -29,15 +29,16 @@ export async function getEventMarkers({
       .request(options)
       .then(({data}: any) => {
         eventMarkers[1](data);
-        if (selectedMarkerData) {
-          const id = selectedMarkerData[0].id;
-          const element = eventMarkers[0].find((el: any) => el.id === id);
-          if (element) {
-            selectedMarkerData[1](element);
-          } else {
-            console.log('CAN NOT RELOAD SELECTED MARKER DATA');
-          }
-        }
+        // if (selectedMarkerData) {
+        //   const id = selectedMarkerData[0].id;
+        //   const element = eventMarkers[0].find((el: any) => el.id === id);
+        //   if (element) {
+        //     console.log('WAWWAWAWAWAWAWAWAWAWAWAWAWAWAWAWA');
+        //     selectedMarkerData[1](element);
+        //   } else {
+        //     console.log('CAN NOT RELOAD SELECTED MARKER DATA');
+        //   }
+        // }
       })
       .catch((error) => {
         console.log(error);

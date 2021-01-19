@@ -32,6 +32,9 @@ export default function MainStack() {
   const communitySelectedForJoin = useState<any>({});
 
 
+  const requestingEventDetailsInProcess = useState<boolean>(false);
+
+
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
@@ -40,6 +43,7 @@ export default function MainStack() {
     <MainStackContext.Provider value={{
       selectedCommunityData,
       upcomingEvents,
+      requestingEventDetailsInProcess,
       communitySelectedForJoin,
       upcomingEventsListIsOpen,
       eventMarkers,

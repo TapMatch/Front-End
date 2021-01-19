@@ -9,7 +9,7 @@ import moment from 'moment';
 import makeDayWord from 'ts/utils/makeDayWord';
 
 interface PlaceAndTimeProps {
-    eventJoinState: 'join' | 'full' | 'joined';
+    eventJoinState: 'join' | 'full' | 'joined' | '';
 }
 
 const PlaceAndTime = ({eventJoinState}: PlaceAndTimeProps) => {
@@ -32,7 +32,7 @@ export default PlaceAndTime;
 
 const _s = StyleSheet.create({
     container: {
-        flex: 1,
+        flex: 0.8,
         minWidth: '100%',
         paddingHorizontal: '22%',
         alignItems: 'center',

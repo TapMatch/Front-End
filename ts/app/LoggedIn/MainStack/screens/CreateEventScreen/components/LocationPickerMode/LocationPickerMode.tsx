@@ -6,7 +6,7 @@ import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import DoneBtn from './components/DoneBtn';
-import googleMapStyle from "ts/constants/googleMapStyle.json";
+import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
 import LocationMarker from './components/LocationMarker';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 import TargetWhite from 'assets/svg/target-white.svg';

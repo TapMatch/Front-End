@@ -12,9 +12,8 @@ import {useBackHandler, useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
-import googleMapStyle from "ts/constants/googleMapStyle.json";
+import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
-import {vs} from 'react-native-size-matters';
 
 interface CommunitiesScreenProps {
   navigation: any;

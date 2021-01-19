@@ -35,13 +35,28 @@ export async function joinEvent({
         };
         axios
             .request(options)
+            .then(() => {
+                const {avatar, name, id} = userProfile[0];
+                const user = {
+                    ...selectedMarkerData[0],
+                    members: [
+                        ...selectedMarkerData[0].members,
+                        {
+                            avatar,
+                            name,
+                            id
+                        }]
+
+                };
+                selectedMarkerData[1](user);
+            })
             .then(() => getUserProfile({userProfile, userToken}))
-            .then(({data}: any) => {
+            .then(() => {
                 getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null})
                     .then(() => joinRequestInprogress[1](false));
             })
+
             .catch((error) => {
-                joinRequestInprogress[1](false);
                 if (error.response) {
                     if (error.response.request) {
                         if (error.response.request._response) {
@@ -66,7 +81,12 @@ export async function joinEvent({
                 }
                 console.log(error);
                 // callAlert(undefined, `${error.toString()} ::: joinEvent`);
-                getEventMarkers({userToken, id: communityId, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null});
+                getEventMarkers({
+                    userToken, id: communityId,
+                    eventMarkers,
+                    selectedMarkerData: selectedMarkerData ? selectedMarkerData : null
+                })
+                    .then(() => joinRequestInprogress[1](false));
             });
     } catch (error) {
         console.log(`${error} ::: joinEvent`);

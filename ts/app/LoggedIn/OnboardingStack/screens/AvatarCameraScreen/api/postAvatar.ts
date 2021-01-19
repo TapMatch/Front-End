@@ -1,7 +1,9 @@
 import axios, {AxiosRequestConfig} from 'axios';
+import {Platform} from 'react-native';
 import ImageResizer from 'react-native-image-resizer';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
+import logAxiosError from 'ts/utils/logAxiosError';
 
 interface IpostAvatar {
   userToken: any;
@@ -10,7 +12,8 @@ interface IpostAvatar {
 
 export async function postAvatar({userToken, pictureURI}: IpostAvatar) {
   try {
-    ImageResizer.createResizedImage(pictureURI, 300, 300, 'JPEG', 2)
+    const quality = Platform.OS === 'ios' ? 2 : 10;
+    ImageResizer.createResizedImage(pictureURI, 300, 300, 'JPEG', quality)
       .then(response => {
         const form = new FormData();
         form.append('photo', {
@@ -37,11 +40,12 @@ export async function postAvatar({userToken, pictureURI}: IpostAvatar) {
             console.log('SUCCESS!!!');
           })
           .catch(function (error) {
-            console.log(error);
-            callAlert(undefined, `${error.toString()} ::: postAvatar`);
+            logAxiosError(error, `postAvatar`);
           });
       })
-      .catch(err => {
+      .catch(error => {
+        callAlert(undefined, `${error.toString()} ::: postAvatar`);
+        console.log(error);
         // Oops, something went wrong. Check that the filename is correct and
         // inspect err to get more details.
       });

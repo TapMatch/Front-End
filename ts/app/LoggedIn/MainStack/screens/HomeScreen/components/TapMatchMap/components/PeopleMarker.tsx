@@ -6,6 +6,9 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import FastImage from 'react-native-fast-image';
+import {getEventById} from 'ts/app/common/api/getEventById';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 
 //! to remove text without losing layout
 //! comment out .topTxtContainer with children
@@ -23,9 +26,14 @@ const PeopleMarker = ({
   eventDetailsModalVisible,
 }: PeopleMarkerProps) => {
 
-  const {members, name, join_limit, organizer, id} = item;
-  const {selectedMarkerData} = useContext(MainStackContext);
-  const len = members.length;
+  const {last_members, name, join_limit, organizer, id, joined, community_id} = item;
+  const {selectedMarkerData, requestingEventDetailsInProcess} = useContext(MainStackContext);
+  const {userToken, LoggedIn} = useContext(TapMatchContext);
+  const {focusMapToLatLng} = useContext(HomeScreenContext);
+  // if (name === '$$$') {
+  //   console.log(join_limit, joined, '*&*&*&*&*&*&*');
+  // }
+  const len = last_members.length;
   const positionArr = [//5
     {position: {left: 28, top: 70}, style: 0},// 0
     {position: {right: 32, top: 70}, style: 0},// 1
@@ -49,35 +57,25 @@ const PeopleMarker = ({
     },
   ];
 
-  const renderImages = (members: any, organizerId: number) => {
+  const renderImages = (last_members: any) => {
     const images: any = [];
-    let hasEncounteredOrganizeer = false;
-    for (let ind = 0; ind < members.length; ind++) {
-      if (ind <= 4) {
-        if (members[ind].id !== organizerId) {
-          const styleIndex = hasEncounteredOrganizeer ? ind - 1 : ind;
-          const img = <FastImage
-            key={members[ind].avatar}
-            style={[
-              _s.placeholderImg,
-              _s.memberAvatarContainer,
-              _s.shadow,
-              layers[positionArr[styleIndex].style],
-              positionArr[styleIndex].position,
-            ]}
-            source={{
-              cache: FastImage.cacheControl.web,
-              uri: members[ind].avatar
-            }}
-          />;
-          images.push(img);
-        } else {
-          hasEncounteredOrganizeer = true;
-          continue;
-        }
-      } else {
-        continue;
-      }
+
+    for (let ind = 0; ind < last_members.length; ind++) {
+      const img = <FastImage
+        key={last_members[ind].avatar}
+        style={[
+          _s.placeholderImg,
+          _s.memberAvatarContainer,
+          _s.shadow,
+          layers[positionArr[ind].style],
+          positionArr[ind].position,
+        ]}
+        source={{
+          cache: FastImage.cacheControl.web,
+          uri: last_members[ind].avatar
+        }}
+      />;
+      images.push(img);
     }
     return images;
   };
@@ -85,26 +83,45 @@ const PeopleMarker = ({
   return (
     <Marker
       onPress={() => {
-        eventDetailsModalVisible[1](true);
-        selectedMarkerData[1](item);
+        focusMapToLatLng(item.coordinates);
+        if (selectedMarkerData[0].id !== id) {
+          getEventById({
+            event_id: id,
+            community_id,
+            userToken,
+            selectedMarkerData,
+            eventDetailsModalVisible,
+            requestingEventDetailsInProcess,
+            LoggedIn
+          });
+        } else {
+          eventDetailsModalVisible[1](true);
+        }
+        // selectedMarkerData[1](item);
       }}
       tracksViewChanges={true}
       zIndex={+id}
       coordinate={coordinate}>
       <View style={_s.container}>
         <View style={_s.topTxtContainer}>
-          {join_limit - members.length < join_limit * 0.7 && members.length !== join_limit && <Fragment>
-            <Text numberOfLines={1} style={_s.topTxt}>
-              🔥
-          </Text>
-            <Text numberOfLines={1} style={_s.topTxt}>
-              Almost Full
-          </Text>
-          </Fragment>}
+          {
+            joined >= join_limit * 0.7
+            &&
+            +joined !== +join_limit
+            &&
+            <Fragment>
+              <Text numberOfLines={1} style={_s.topTxt}>
+                🔥
+              </Text>
+              <Text numberOfLines={1} style={_s.topTxt}>
+                Almost Full
+              </Text>
+            </Fragment>
+          }
         </View>
 
         <View style={_s.main}>
-          {renderImages(members, +organizer.id)}
+          {renderImages(last_members)}
           <View style={[_s.avatarContainer, _s.shadow]}>
             <FastImage
               style={_s.avatar}
@@ -114,7 +131,7 @@ const PeopleMarker = ({
             />
           </View>
 
-          {members.length > 0 && <View style={_s.oval} />}
+          {last_members.length > 0 && <View style={_s.oval} />}
           <View style={_s.labelContainer}>
             <View style={[_s.whiteBox, _s.shadow]}>
               <Text numberOfLines={1} style={_s.whiteBoxTxt}>{name}</Text>
@@ -177,7 +194,7 @@ const _s = StyleSheet.create({
     alignItems: 'center',
   },
   topTxt: {
-    opacity: 0,
+    opacity: 1,
     fontFamily: _f.regularAlt,
     color: _c.black,
     fontSize: 16,
@@ -186,7 +203,7 @@ const _s = StyleSheet.create({
   },
   topTxtContainer: {
     height: 47,
-    justifyContent: 'center',
+    justifyContent: 'flex-end',
     alignItems: 'center',
   },
   main: {

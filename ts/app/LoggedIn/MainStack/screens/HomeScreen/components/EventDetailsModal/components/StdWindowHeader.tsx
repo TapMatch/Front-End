@@ -8,10 +8,9 @@ import shareContent from 'ts/app/common/serveces/shareContent';
 import FastImage from 'react-native-fast-image';
 
 interface HeaderProps {
-    eventJoinState: 'join' | 'full' | 'joined';
 }
 
-const StdWindowHeader = ({eventJoinState}: HeaderProps) => {
+const StdWindowHeader = (props: HeaderProps) => {
     const {selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
     const {name} = selectedMarkerData[0];
 

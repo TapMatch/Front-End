@@ -8,7 +8,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import PeopleMarker from './components/PeopleMarker';
-import googleMapStyle from "ts/constants/googleMapStyle.json";
+import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
 
 
 interface MapDemoScreenProps {

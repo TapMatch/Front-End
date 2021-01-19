@@ -12,7 +12,7 @@ import callAlert from 'ts/utils/callAlert';
 import {vs} from 'react-native-size-matters';
 
 interface JoinSectionProps {
-    eventJoinState: 'join' | 'full' | 'joined';
+    eventJoinState: 'join' | 'full' | 'joined' | '';
 }
 
 const JoinSection = ({eventJoinState}: JoinSectionProps) => {
@@ -24,10 +24,14 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
 
     const {members} = selectedMarkerData[0];
     const defineMessage = () => {
-        if (members.length - 1) {
-            return `You and ${members.length - 1} others are going!`;
+        if (members) {
+            if (members.length - 1) {
+                return `You and ${members.length - 1} others are going!`;
+            } else {
+                return `You are going!`;
+            }
         } else {
-            return `You are going!`;
+            return '';
         }
     };
 

@@ -5,7 +5,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import MapView from "react-native-map-clustering";
 import {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
-import googleMapStyle from "ts/constants/googleMapStyle.json";
+import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
 import PeopleMarker from './components/PeopleMarker';
 import UserLocationMarker from './components/UserLocationMarker';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';

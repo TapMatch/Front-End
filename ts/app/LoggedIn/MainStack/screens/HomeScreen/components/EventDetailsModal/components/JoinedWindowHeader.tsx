@@ -6,15 +6,12 @@ import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import shareContent from 'ts/app/common/serveces/shareContent';
 import FastImage from 'react-native-fast-image';
-import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface HeaderProps {
-    // eventJoinState: 'join' | 'full' | 'joined';
 }
 
 const JoinedWindowHeader = (props: HeaderProps) => {
     const {selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
-    const {userProfile} = useContext(TapMatchContext);
     const {name} = selectedMarkerData[0];
 
     return (
@@ -41,7 +38,7 @@ export default JoinedWindowHeader;
 
 const _s = StyleSheet.create({
     container: {
-        height: '30%',
+        height: '37%',
         minWidth: '100%',
         paddingHorizontal: '5%',
         alignItems: 'center',

@@ -30,11 +30,18 @@ export async function leaveEvent({
 				'Content-Type': 'application/json',
 			},
 		};
+
 		axios
 			.request(options)
-			.then(() => {
-				eventDetailsModalVisible[1](false);
-			})
+			// .then(() => {
+			// 	const arr = selectedMarkerData[0].members.filter((el: any) => el.id !== userProfile[0].id);
+			// 	selectedMarkerData[1]({
+			// 		...selectedMarkerData[1],
+			// 		...arr
+			// 	});
+			// })
+			.then(() => selectedMarkerData[1]({}))
+			.then(() => eventDetailsModalVisible[1](false))
 			.then(() => getUserProfile({userProfile, userToken}))
 			.then(({data}: any) => getEventMarkers({userToken, id: selectedCommunityData[0].id, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null}))
 			.catch((error) => {
@@ -61,6 +68,7 @@ export async function leaveEvent({
 				}
 				// console.log(error);
 				// callAlert(undefined, `${error.toString()} ::: leaveEvent`);
+				getEventMarkers({userToken, id: selectedCommunityData[0].id, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null});
 			});
 	} catch (error) {
 		console.log(`${error} ::: leaveEvent`);

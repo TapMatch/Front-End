@@ -48,10 +48,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   const profileModalVisible = useState<boolean>(false);
   const yesNoModalVisible = useState<boolean>(false);
   const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
-  const eventJoinState = useState<'join' | 'full' | 'joined'>('join');
+  const eventJoinState = useState<'join' | 'full' | 'joined' | ''>('join');
   const mapCoordinates = useState<LatLng>(startingPoint);
   const hasJoinedCurrentSelectedEvent = useState<boolean>(false);
   const currentUserIsOrganizer = useState<boolean>(false);
+
+  useEffect(() => {
+    hasJoinedCurrentSelectedEvent[1](defindeHasJoinedCurrentEvent());
+  }, [selectedMarkerData, userProfile[0].events, eventDetailsModalVisible]);
 
   useEffect(() => {
     AppState.addEventListener("change", _handleAppStateChange);
@@ -74,11 +78,8 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   }, [selectedMarkerData]);
 
   useEffect(() => {
-    if (eventDetailsModalVisible[0]) {
-      eventJoinState[1](defineJoinState());
-    }
-
-  }, [eventDetailsModalVisible]);
+    eventJoinState[1](defineJoinState());
+  }, [selectedMarkerData, eventDetailsModalVisible]);
 
   useEffect(() => {
     if (selectedMarkerData[0].coordinates) {
@@ -111,12 +112,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   useEffect(() => {
     getMarkers();
   }, [selectedCommunityData[0].id]);
-
-  useEffect(() => {
-    const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
-    const hasJoined = ind > -1;
-    hasJoinedCurrentSelectedEvent[1](hasJoined);
-  }, [selectedMarkerData, userProfile[0].events, eventDetailsModalVisible]);
 
   const _handleAppStateChange = (appState: string) => {
     if (appState === 'background') {
@@ -156,7 +151,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   };
 
   const focusMapToLatLng = (x: LatLng) => {
-    return typeof _mapRef?.animateToRegion === 'function' ? _mapRef?.animateToRegion(x) : null;
+    if (typeof _mapRef?.animateToRegion === 'function') {
+      return _mapRef?.animateToRegion(x);
+    }
+  };
+
+  const defindeHasJoinedCurrentEvent = () => {
+    const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
+    return ind > -1;
   };
 
   const defineYesNoModalProps = () => {
@@ -241,10 +243,14 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
       if (join_limit === members.length) {
         return 'full';
       } else {
-        return hasJoinedCurrentSelectedEvent[0] ? 'joined' : 'join';
+        if (defindeHasJoinedCurrentEvent()) {
+          return 'joined';
+        } else {
+          return 'join';
+        }
       }
     } else {
-      return 'join';
+      return '';
     }
   };
 
@@ -256,6 +262,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           currentUserIsOrganizer,
           eventDetailsModalVisible,
           mapCoordinates,
+          focusMapToLatLng,
           communitiesModalVisible
         }}>
         <View style={[_s.container]}>
@@ -266,6 +273,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
           />
           {!yesNoModalVisible[0] && renderHeader()}
           {!yesNoModalVisible[0] && renderCommandsAndReminders()}
+
           <TapMatchMap
             eventMarkers={eventMarkers}
             mapCoordinates={mapCoordinates}

@@ -52,7 +52,6 @@ export default DoneBtn;
 const _s = StyleSheet.create({
   container: {
     backgroundColor: _c.transparentBtn,
-    // backgroundColor: 'red',
     minWidth: '100%',
     height: vs(60),
     justifyContent: 'center',
