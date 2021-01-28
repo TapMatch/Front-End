@@ -15,6 +15,7 @@ export async function getEventMarkers({
   eventMarkers,
   selectedMarkerData
 }: IgetEventMarkers) {
+
   try {
     const options: AxiosRequestConfig = {
       method: 'GET',
@@ -33,7 +34,6 @@ export async function getEventMarkers({
         //   const id = selectedMarkerData[0].id;
         //   const element = eventMarkers[0].find((el: any) => el.id === id);
         //   if (element) {
-        //     console.log('WAWWAWAWAWAWAWAWAWAWAWAWAWAWAWAWA');
         //     selectedMarkerData[1](element);
         //   } else {
         //     console.log('CAN NOT RELOAD SELECTED MARKER DATA');

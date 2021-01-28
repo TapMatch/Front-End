@@ -1,5 +1,5 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, Modal} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
@@ -8,14 +8,12 @@ import RequestCommunityBtn from './components/RequestCommunityBtn';
 import FeedbackBtn from './components/FeedbackBtn';
 import {useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
-import Modal from 'react-native-modal';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
 import ListItemLocked from './components/ListItemLocked';
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
-import {vs} from 'react-native-size-matters';
 
 interface CommunitiesModalProps {
   selectedCommunityData: any;
@@ -54,12 +52,11 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
 
       myCommunities[1]([...userProfile[0].communities[0], ...open_communities, ...closed_communities]);
     });
-
   }, [communitiesModalVisible[0], userProfile[0].communities[0]]);
 
   const renderContent = () => {
     if (communityCodeInputVisible[0]) {
-      return <CommunityCodeInput communityItem={communitySelectedForJoin} codeInputVisible={communityCodeInputVisible} />;
+      return <CommunityCodeInput communitiesModalVisible={communitiesModalVisible} communityItem={communitySelectedForJoin} codeInputVisible={communityCodeInputVisible} />;
     } else {
       return (<Fragment>
         <TitleAndReturn modalVisible={communitiesModalVisible} />
@@ -112,12 +109,8 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
   };
   return (
     <Modal
-      animationIn={'fadeIn'}
-      animationInTiming={600}
-      animationOut={'fadeOut'}
-      // hasBackdrop={false}
-      animationOutTiming={600}
-      isVisible={communitiesModalVisible[0]}
+      transparent={true}
+      visible={communitiesModalVisible[0]}
       style={_s.modal}>
       <View style={[_s.container]}>
         <View style={[_s.content, {paddingTop: 30 + top}]}>
@@ -133,6 +126,7 @@ export default CommunitiesModal;
 const _s = StyleSheet.create({
   modal: {margin: 0},
   container: {
+    backgroundColor: _c.modalbackground,
     position: 'relative',
     flex: 1
   },
@@ -152,7 +146,6 @@ const _s = StyleSheet.create({
   },
   content: {
     position: 'absolute',
-    backgroundColor: _c.modalbackground,
     left: 0,
     bottom: 0,
     zIndex: 100,

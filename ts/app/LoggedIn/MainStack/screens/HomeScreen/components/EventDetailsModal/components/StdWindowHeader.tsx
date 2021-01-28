@@ -68,7 +68,7 @@ const _s = StyleSheet.create({
     },
     title: {
         fontSize: _fs.x3l,
-        fontFamily: _f.eRegular,
+        fontFamily: _f.regularAlt,
         lineHeight: _fs.xxl * 1.3,
         textAlign: 'center',
         textAlignVertical: 'center',
@@ -80,7 +80,7 @@ const _s = StyleSheet.create({
             width: 0,
             height: 2,
         },
-        shadowOpacity: 0.1,
+        shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
     },

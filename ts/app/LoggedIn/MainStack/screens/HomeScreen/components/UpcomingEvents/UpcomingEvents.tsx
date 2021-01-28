@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
 import RefreshCircleRed from 'assets/svg/refresh-circle-red.svg';
@@ -12,19 +12,35 @@ import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
+import {check, PERMISSIONS, request} from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service';
 
 interface UpcomingEventsProps {
-  resetMap: () => void;
+  closeAllWhiteModalWindows: any;
+  getMarkers: any;
   focusMapToLatLng: any;
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
+  startingPoint: any;
 }
 
 const iconSize = '75%';
 
-const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: UpcomingEventsProps) => {
+const UpcomingEvents = ({
+  closeAllWhiteModalWindows,
+  eventDetailsModalVisible,
+  focusMapToLatLng,
+  startingPoint,
+  getMarkers
+}: UpcomingEventsProps) => {
+
+  const locationPermission =
+    Platform.OS === 'ios'
+      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
   const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers, selectedMarkerData, allCommunities} = useContext(MainStackContext);
-  const {userToken} = useContext(TapMatchContext);
-  const txt = useLocalizedTxt();
+  const {userToken, userLocation} = useContext(TapMatchContext);
+  // const txt = useLocalizedTxt();
   const renderList = () => {
     if (upcomingEventsListIsOpen[0]) {
       return (
@@ -39,7 +55,8 @@ const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: 
                 eventDetailsModalVisible[1](true);
                 upcomingEventsListIsOpen[1](false);
                 if (selectedMarkerData[0].coordinates) {
-                  focusMapToLatLng(selectedMarkerData[0].coordinates);
+                  const {longitude, latitude} = selectedMarkerData[0].coordinates;
+                  focusMapToLatLng({longitude, latitude});
                 }
               }}
               item={el}
@@ -65,9 +82,52 @@ const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: 
     });
   }, [selectedCommunityData[0].id]);
 
+
+  const setUserLocation = (x: string) => {
+    if (x === 'granted') {
+      handleGeolocation();
+    } else {
+      request(locationPermission).then((x) => {
+        if (x === 'granted') {
+          // startModalVisible[1](true);
+          handleGeolocation();
+        }
+      });
+    }
+  };
+
+  const handleGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      ({coords}) => {
+        const {latitude, longitude} = coords;
+        userLocation[1]({latitude, longitude});
+      },
+      (error) => {
+        console.log(error.code, error.message);
+      },
+      {
+        forceRequestLocation: true,
+        showLocationDialog: true,
+        enableHighAccuracy: false,
+        timeout: 150000,
+      },
+    );
+  };
+
+
+  const switchToUserLocation = () => {
+    closeAllWhiteModalWindows();
+    getMarkers();
+    focusMapToLatLng(userLocation[0]);
+
+    check(locationPermission).then((x) => {
+      setUserLocation(x);
+    });
+  };
+
   return (
     <View pointerEvents={'box-none'} style={_s.container}>
-      <TouchableOpacity onPress={resetMap} style={_s.side}>
+      <TouchableOpacity onPress={switchToUserLocation} style={_s.side}>
         <TargetWhite
           height={iconSize}
           width={iconSize}
@@ -79,7 +139,7 @@ const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: 
             onPress={() => upcomingEvents[0].length ? upcomingEventsListIsOpen[1](!upcomingEventsListIsOpen[0]) : null}
             activeOpacity={1}
             style={[_s.eventListOpener, borderState]}>
-            <Text style={_s.txt}>{`${upcomingEvents[0].length} ${txt.upcomingEvents}`}</Text>
+            <Text style={_s.txt}>{`${upcomingEvents[0].length} ${upcomingEvents[0].length === 1 ? 'upcoming Event' : 'upcoming Events'}`}</Text>
           </TouchableOpacity>
           {renderList()}
         </View>}
@@ -91,6 +151,7 @@ const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: 
             userToken: userToken[0],
             upcomingEvents
           });
+          selectedMarkerData[1]({});
           getEventMarkers({
             id: selectedCommunityData[0].id,
             userToken: userToken[0],
@@ -100,7 +161,6 @@ const UpcomingEvents = ({resetMap, eventDetailsModalVisible, focusMapToLatLng}: 
           <RefreshCircleRed
             height={'100%'}
             width={'100%'}
-
           />
         </TouchableOpacity>
       </View>
@@ -186,4 +246,4 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   }
-});
+});;

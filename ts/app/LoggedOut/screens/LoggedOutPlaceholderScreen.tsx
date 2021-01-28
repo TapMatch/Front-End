@@ -23,7 +23,6 @@ import YesNoModal from '../../common/components/YesNoModal';
 const LoggedOutPlaceholderScreen = ({navigation}: any) => {
   const {LoggedIn} = useContext(TapMatchContext);
   const modalVisible = useState<boolean>(false);
-  console.log(getUniqueId(), 'JJJJJJJJJJJJJJJJJ');
   const onShare = async () => {
     try {
       const result = await Share.share({

@@ -48,7 +48,7 @@ const shareContent = async (data: any, selectedCommunityData: any) => {
 
 function generateMsg(url: string, code: string) {
     if (code) {
-        return `Join our event!\nAn access code to enter the community is ${code} \n ${url}`;
+        return `Join our event!\nThe access code to enter the community is ${code} \n ${url}`;
     } else {
         return `Join our event!\nIt's an open invitation\n ${url}`;
     }

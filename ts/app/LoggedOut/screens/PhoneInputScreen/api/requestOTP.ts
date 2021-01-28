@@ -1,6 +1,7 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
+import logAxiosError from 'ts/utils/logAxiosError';
 
 interface IrequestOTP {
   callingCode: string;
@@ -30,7 +31,7 @@ export async function requestOTP({
         PHPSESSID[1](data.Cookie);
       })
       .catch((error) => {
-        console.log(error);
+        logAxiosError(error, 'requestOTP');
         callAlert(undefined, `${error.toString()} ::: requestOTP`);
       });
   } catch (error) {

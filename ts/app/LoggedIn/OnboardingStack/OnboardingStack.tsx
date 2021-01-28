@@ -1,7 +1,7 @@
-import React from 'react';
-import { createStackNavigator, TransitionPresets } from '@react-navigation/stack';
-import { Platform } from 'react-native';
-import { _c } from 'ts/UIConfig/colors';
+import React, {useContext, useEffect} from 'react';
+import {createStackNavigator, TransitionPresets} from '@react-navigation/stack';
+import {Platform} from 'react-native';
+import {_c} from 'ts/UIConfig/colors';
 import NameInputScreen from './screens/NameInputScreen/NameInputScreen';
 import AvatarCameraScreen from './screens/AvatarCameraScreen/AvatarCameraScreen';
 import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
@@ -9,15 +9,26 @@ import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
 import SecretScreen from '../MainStack/screens/SecretScreen';
+import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 export default function OnboardingStack() {
+
+  const {userToken} = useContext(TapMatchContext);
   const Stack = createStackNavigator();
-  const { Navigator, Screen } = Stack;
+  const {Navigator, Screen} = Stack;
   const transitions =
     Platform.OS === 'ios'
       ? TransitionPresets.DefaultTransition
       : TransitionPresets.FadeFromBottomAndroid;
-  const insets = Platform.OS === 'ios' ? {} : { safeAreaInsets: { top: 0 } };
+  const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
+
+  useEffect(() => {
+    patchUserTimeZone({
+      userToken
+    });
+  }, []);
+
   return (
     <Navigator
       screenOptions={{
@@ -105,7 +116,7 @@ export default function OnboardingStack() {
 
       <Screen
         name="SecretScreen"
-        options={{ title: 'SecretScreen' }}
+        options={{title: 'SecretScreen'}}
         component={SecretScreen}
       />
     </Navigator>

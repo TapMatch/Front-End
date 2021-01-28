@@ -47,23 +47,26 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   }, []);
 
   return (
-    <TouchableOpacity
-      onPress={moveOn}
-      style={[_s.container, {maxHeight: height * 0.52}]}>
-      <CheckCircleRed height={circleCheckRedSize} width={circleCheckRedSize} />
-      <Text style={[_s.txt, _s.msg]}>{txt.youAreNowAPartOf}</Text>
-      <View style={_s.txtContainer}>
-        <Text style={[_s.txt, _s.title]}>{name}</Text>
-        <Text style={[_s.txt, _s.city]}>{city}</Text>
+    <TouchableOpacity style={_s.btn} onPress={moveOn} activeOpacity={1}>
+      <View
+        style={[_s.container, {maxHeight: height * 0.52}]}>
+        <CheckCircleRed height={circleCheckRedSize} width={circleCheckRedSize} />
+        <Text style={[_s.txt, _s.msg]}>{txt.youAreNowAPartOf}</Text>
+        <View style={_s.txtContainer}>
+          <Text style={[_s.txt, _s.title]}>{name}</Text>
+          <Text style={[_s.txt, _s.city]}>{city}</Text>
+        </View>
+        <LockOpenWhite height={lockOpenWhiteSize} width={lockOpenWhiteSize} />
       </View>
-      <LockOpenWhite height={lockOpenWhiteSize} width={lockOpenWhiteSize} />
     </TouchableOpacity>
+
   );
 };
 
 export default CodeInputWindow;
 
 const _s = StyleSheet.create({
+  btn: {flex: 1},
   container: {
     paddingVertical: vs(40),
     paddingHorizontal: _fs.xs,

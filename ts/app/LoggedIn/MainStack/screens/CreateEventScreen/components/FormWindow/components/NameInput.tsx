@@ -32,7 +32,8 @@ const NameInput = ({eventName}: NameInputProps) => {
           numberOfLines={1}
           contextMenuHidden={true}
           onChangeText={(txt) => eventName[1](capitalizeString(txt))}
-          maxLength={12}
+          onEndEditing={() => eventName[1](eventName[0].trim())}
+          maxLength={15}
           multiline={false}
           style={[_s.txt, _s.title, _s.input]}
         />);

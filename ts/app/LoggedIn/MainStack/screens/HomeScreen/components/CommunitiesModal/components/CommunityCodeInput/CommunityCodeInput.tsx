@@ -10,11 +10,13 @@ import {joinCommunity} from 'ts/app/common/api/joinCommunity';
 interface CommunitiesScreenProps {
   communityItem: any;
   codeInputVisible: [boolean, (x: boolean) => void];
+  communitiesModalVisible: [boolean, (x: boolean) => void];
 }
 
 const CommunityCodeInput = ({
   communityItem,
-  codeInputVisible
+  codeInputVisible,
+  communitiesModalVisible
 }: CommunitiesScreenProps) => {
   const windowState = useState<boolean>(!communityItem[0].is_open);
   const {userProfile, userToken} = useContext(TapMatchContext);
@@ -36,7 +38,7 @@ const CommunityCodeInput = ({
     return windowState[0] ? (
       <CodeInputWindow community={communityItem[0]} />
     ) : (
-        <SuccessMsgWindow codeInputVisible={codeInputVisible} community={communityItem[0]} />
+        <SuccessMsgWindow communitiesModalVisible={communitiesModalVisible} codeInputVisible={codeInputVisible} community={communityItem[0]} />
       );
   };
   return (

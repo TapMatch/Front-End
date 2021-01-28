@@ -30,9 +30,6 @@ const PeopleMarker = ({
   const {selectedMarkerData, requestingEventDetailsInProcess} = useContext(MainStackContext);
   const {userToken, LoggedIn} = useContext(TapMatchContext);
   const {focusMapToLatLng} = useContext(HomeScreenContext);
-  // if (name === '$$$') {
-  //   console.log(join_limit, joined, '*&*&*&*&*&*&*');
-  // }
   const len = last_members.length;
   const positionArr = [//5
     {position: {left: 28, top: 70}, style: 0},// 0
@@ -59,7 +56,6 @@ const PeopleMarker = ({
 
   const renderImages = (last_members: any) => {
     const images: any = [];
-
     for (let ind = 0; ind < last_members.length; ind++) {
       const img = <FastImage
         key={last_members[ind].avatar}
@@ -79,7 +75,20 @@ const PeopleMarker = ({
     }
     return images;
   };
-
+  const renderLabel = () => {
+    if (selectedMarkerData[0].id === id && eventDetailsModalVisible[0]) {
+      return null;
+    } else {
+      return (
+        <View style={_s.labelContainer}>
+          <View style={[_s.whiteBox, _s.shadow]}>
+            <Text numberOfLines={1} style={_s.whiteBoxTxt}>{name}</Text>
+          </View>
+          <View style={_s.triangle} />
+        </View>
+      );
+    }
+  };
   return (
     <Marker
       onPress={() => {
@@ -132,12 +141,7 @@ const PeopleMarker = ({
           </View>
 
           {last_members.length > 0 && <View style={_s.oval} />}
-          <View style={_s.labelContainer}>
-            <View style={[_s.whiteBox, _s.shadow]}>
-              <Text numberOfLines={1} style={_s.whiteBoxTxt}>{name}</Text>
-            </View>
-            <View style={_s.triangle} />
-          </View>
+          {renderLabel()}
         </View>
       </View>
     </Marker>

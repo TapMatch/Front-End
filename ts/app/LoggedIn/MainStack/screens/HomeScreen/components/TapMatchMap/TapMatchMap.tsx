@@ -1,4 +1,4 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
@@ -21,10 +21,17 @@ interface TapMatchMapProps {
 
 const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
     const {userLocation, userToken} = useContext(TapMatchContext);
-    const {selectedCommunityData} = useContext(MainStackContext);
+    const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
+    // const mapKey = useState<number>(0);
     let _mapRef = useRef<any>(null);
+
+    // useEffect(() => {
+    //     mapKey[1](mapKey[0] + 1);
+    // }, [selectedMarkerData[0]]);
+
     return (
         <MapView
+            // key={mapKey[0]}
             mapRef={(x) => {
                 set_mapRef(x);
                 _mapRef = x;
@@ -37,19 +44,13 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
                     eventMarkers
                 });
             }}
-            // onClusterPress={() => set_mapRef(_mapRef)}
-            // clusterFontFamily={_f.eRegular}
-            // clusterColor={_c.linkBlue}
-            // onRegionChangeComplete={({latitude, longitude}) => mapCoordinates[1]({latitude, longitude})}
-            // onMapReady={() => {
-            //     console.log('09090909090900');
-            // }}
             onPress={() => {
                 if (eventDetailsModalVisible[0]) {
                     eventDetailsModalVisible[1](false);
                 }
             }}
             provider={PROVIDER_GOOGLE}
+            maxZoom={12}
             customMapStyle={googleMapStyle}
             zoomEnabled={true}
             style={_s.map}
@@ -61,13 +62,14 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
                 latitudeDelta: 0.015,
                 longitudeDelta: 0.0121,
             }}>
-            {eventMarkers[0].map((el: any) =>
-                <PeopleMarker
-                    key={`PeopleMarker-${el.id}-${el.name}`}
+            {eventMarkers[0].map((el: any) => {
+                return <PeopleMarker
+                    key={`PeopleMarker-${el.id}-${el.name}-${el.joined}`}
                     item={el}
                     coordinate={el.coordinates}
                     eventDetailsModalVisible={eventDetailsModalVisible}
-                />)}
+                />;
+            })}
             <UserLocationMarker coordinate={userLocation[0]} />
         </MapView>
 

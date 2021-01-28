@@ -28,7 +28,7 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
           onBlur={() => inputOnScreen[1](false)}
           textContentType={'none'}
           importantForAutofill={'no'}
-          autoCapitalize={'none'}
+          autoCapitalize={'sentences'}
           autoCompleteType={'off'}
           keyboardType={Platform.OS === 'android' ? "visible-password" : 'default'}
           autoCorrect={false}
@@ -36,6 +36,7 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
           maxLength={30}
           contextMenuHidden={true}
           onChangeText={(txt) => description[1](capitalizeString(txt))}
+          onEndEditing={() => description[1](description[0].trim())}
           multiline={true}
           style={_s.input}
         />);

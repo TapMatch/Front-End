@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
@@ -9,9 +9,10 @@ import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackReque
 import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
+import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
 
 export default function MainStack() {
-  const {userProfile} = useContext(TapMatchContext);
+  const {userProfile, userToken} = useContext(TapMatchContext);
   const selectedCommunityData = useState<any>(userProfile[0].communities[0][0]);
   // const selectedCommunityData = useState<any>({
   //   id: 0,
@@ -39,6 +40,14 @@ export default function MainStack() {
   const {Navigator, Screen} = Stack;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
 
+
+  useEffect(() => {
+    patchUserTimeZone({
+      userToken
+    });
+  }, []);
+
+
   return (
     <MainStackContext.Provider value={{
       selectedCommunityData,
@@ -59,6 +68,7 @@ export default function MainStack() {
           headerTitleAllowFontScaling: false,
           headerBackAllowFontScaling: false,
           headerTitleAlign: 'center',
+          // gestureEnabled: false,
           headerStyle: {
             elevation: 0,
             backgroundColor: _c.white,

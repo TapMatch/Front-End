@@ -1,16 +1,17 @@
-import React, { Fragment, useState } from 'react';
-import { Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native';
-import { _c } from 'ts/UIConfig/colors';
-import { _fs } from 'ts/UIConfig/fontSizes';
-import { _f } from 'ts/UIConfig/fonts';
-import { vs } from 'react-native-size-matters';
+import React, {Fragment, useState} from 'react';
+import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {_c} from 'ts/UIConfig/colors';
+import {_fs} from 'ts/UIConfig/fontSizes';
+import {_f} from 'ts/UIConfig/fonts';
+import {vs} from 'react-native-size-matters';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
 interface DateTimeInputProps {
   dateTime: [Date, (x: Date) => void];
 }
 
-const DateTimeInput = ({ dateTime }: DateTimeInputProps) => {
+const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
+  const minDate = moment().add(1, 'hour').toDate();
   const dateTimePickerModalVisible = useState<boolean>(false);
   return (
     <Fragment>
@@ -32,8 +33,10 @@ const DateTimeInput = ({ dateTime }: DateTimeInputProps) => {
         </View>
       </TouchableOpacity>
       <DateTimePickerModal
+        customCancelButtonIOS={({onPress}) => <CustomPickerButton txt={'Cancel'} onPress={onPress} />}
+        customConfirmButtonIOS={({onPress}) => <CustomPickerButton txt={'Confirm'} onPress={onPress} />}
         isDarkModeEnabled={false}
-        minimumDate={new Date()}
+        minimumDate={minDate}
         isVisible={dateTimePickerModalVisible[0]}
         mode="datetime"
         onConfirm={(val) => {
@@ -49,6 +52,33 @@ const DateTimeInput = ({ dateTime }: DateTimeInputProps) => {
 };
 
 export default DateTimeInput;
+
+const CustomPickerButton = ({onPress, txt}: any) => {
+  const notCancel = txt !== 'Cancel';
+  const br = 14;
+
+  return (
+    <TouchableOpacity style={{
+      borderTopWidth: notCancel ? StyleSheet.hairlineWidth : 0,
+      borderColor: _c.greyLight,
+      backgroundColor: _c.white,
+      height: 57,
+      minWidth: '100%',
+      borderBottomRightRadius: br,
+      borderBottomLeftRadius: br,
+      borderTopRightRadius: notCancel ? 0 : br,
+      borderTopLeftRadius: notCancel ? 0 : br,
+      justifyContent: 'center',
+      alignItems: 'center',
+    }} onPress={onPress}>
+      <Text style={{
+        color: '#007AFF',
+        fontFamily: 'System',
+        fontWeight: notCancel ? '600' : 'normal',
+        fontSize: _fs.xl
+      }}>{txt}</Text>
+    </TouchableOpacity>);
+};
 
 const _s = StyleSheet.create({
   container: {

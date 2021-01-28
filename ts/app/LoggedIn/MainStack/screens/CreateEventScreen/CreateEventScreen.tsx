@@ -14,6 +14,7 @@ import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import YesNoModal from 'ts/app/common/components/YesNoModal';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
 import LocationPickerMode from './components/LocationPickerMode/LocationPickerMode';
+import moment from 'moment';
 
 interface CreateEventScreenProps {
   navigation: any;
@@ -21,6 +22,7 @@ interface CreateEventScreenProps {
 }
 
 const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
+  const minDate = moment().add(1, 'hour').toDate();
   const isFocused = useIsFocused();
   const {
     selectedCommunityData, eventMarkers, upcomingEvents,
@@ -31,7 +33,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const description = useState<string>('');
   const eventName = useState<string>('');
   const joinLimit = useState<number>(1);
-  const dateTime = useState<Date>(new Date());
+  const dateTime = useState<Date>(minDate);
   const yesNoModalVisible = useState<boolean>(false);
 
   const addingLocationOn = useState<boolean>(false);
@@ -54,7 +56,6 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
           <FormWindow />
           <CreateBtn disabled={eventName[0].length === 0 || address[0].length === 0 || description[0].length === 0}
             onPress={() => {
-              navigation.goBack();
               createEvent({
                 eventMarkers,
                 upcomingEvents,
@@ -67,7 +68,8 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
                 description: description[0],
                 join_limit: joinLimit[0],
                 date: dateTime[0],
-                name: eventName[0]
+                name: eventName[0],
+                goBack: () => navigation.goBack()
               });
             }} />
           <MapView

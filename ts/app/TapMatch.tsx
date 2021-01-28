@@ -147,15 +147,13 @@ const TapMatch = () => {
   const createRootNavigation = () => {
     if (LoggedIn[0]) {
       if (userProfile[0] !== null) {
-        // console.log('🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥', userProfile[0].id, '🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥');
-        // console.log('💧💧💧💧💧💧💧💧💧💧', userToken[0], '💧💧💧💧💧💧💧💧💧💧💧💧');
         if (user_has_passed_onboarding[0]) {
           return <MainStack />;
         } else {
           return <OnboardingStack />;
         }
       } else {
-        <PlaceholderStack />;
+        return <PlaceholderStack />;
       }
     } else {
       return <LoggedOutStack />;

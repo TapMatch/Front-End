@@ -22,6 +22,7 @@ import {leaveEvent} from './api/leaveEvent';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
 import cities from 'ts/constants/cities';
+import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 
 interface HomeScreenProps {
   navigation: any;
@@ -113,17 +114,21 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     getMarkers();
   }, [selectedCommunityData[0].id]);
 
-  const _handleAppStateChange = (appState: string) => {
-    if (appState === 'background') {
-      getUpcomingEvents({
+  const _handleAppStateChange = async (appState: string) => {
+    if (appState === 'active') {
+      await getUpcomingEvents({
         communityId: selectedCommunityData[0].id,
         userToken: userToken[0],
         upcomingEvents
       });
-      getEventMarkers({
-        id: selectedCommunityData[0].id,
+      // await getEventMarkers({
+      //   id: selectedCommunityData[0].id,
+      //   userToken: userToken[0],
+      //   eventMarkers
+      // });
+      await getUserProfile({
+        userProfile,
         userToken: userToken[0],
-        eventMarkers
       });
     }
   };
@@ -140,11 +145,13 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     } else {
       return (
         <Fragment>
-          <UpcomingEvents focusMapToLatLng={focusMapToLatLng} eventDetailsModalVisible={eventDetailsModalVisible} resetMap={() => {
-            closeAllWhiteModalWindows();
-            getMarkers();
-            focusMapToLatLng(startingPoint);
-          }} />
+          <UpcomingEvents
+            eventDetailsModalVisible={eventDetailsModalVisible}
+            closeAllWhiteModalWindows={closeAllWhiteModalWindows}
+            focusMapToLatLng={focusMapToLatLng}
+            getMarkers={getMarkers}
+            startingPoint={startingPoint}
+          />
           { /* <EventReminder /> */}
         </Fragment>);
     }
@@ -152,7 +159,11 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
   const focusMapToLatLng = (x: LatLng) => {
     if (typeof _mapRef?.animateToRegion === 'function') {
-      return _mapRef?.animateToRegion(x);
+      return _mapRef?.animateToRegion({
+        ...x,
+        latitudeDelta: 0.015,
+        longitudeDelta: 0.0121,
+      });
     }
   };
 
@@ -238,12 +249,12 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   });
 
   const defineJoinState = () => {
-    const {join_limit, members} = selectedMarkerData[0];
-    if (members) {
-      if (join_limit === members.length) {
+    const {join_limit, joined, organizer} = selectedMarkerData[0];
+    if (join_limit) {
+      if (join_limit === joined) {
         return 'full';
       } else {
-        if (defindeHasJoinedCurrentEvent()) {
+        if (defindeHasJoinedCurrentEvent() || organizer.id === userProfile[0].id) {
           return 'joined';
         } else {
           return 'join';

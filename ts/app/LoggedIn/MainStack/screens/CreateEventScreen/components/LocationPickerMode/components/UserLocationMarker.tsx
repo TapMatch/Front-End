@@ -10,6 +10,11 @@ interface UserLocationMarkerProps {
 const UserLocationMarker = ({coordinate}: UserLocationMarkerProps) => {
     return (
         <Marker
+
+            // Disabling ts check here on purpose for the clustering library to not 
+            // eslint-disable-next-line @typescript-eslint/ban-ts-ignore 
+            // @ts-ignore
+            cluster={false}
             zIndex={-1000}
             coordinate={coordinate}>
             <View style={_s.container} />

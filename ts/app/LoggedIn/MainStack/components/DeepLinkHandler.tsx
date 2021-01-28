@@ -29,8 +29,8 @@ const DeepLinkHandler = ({
 
     const processDeepLink = async () => {
         let lastParams = await branch.getLatestReferringParams();
-        if (route.name === 'Home') {
-            if (typeof lastParams.tapmatch_event_data === 'string') {
+        if (typeof lastParams?.tapmatch_event_data === 'string') {
+            if (route.name === 'Home') {
                 const dlUserCommunity = userProfile[0].communities[0].find((el: any) => +el.id === +lastParams.tapmatch_community_id);
                 if (dlUserCommunity) {
                     if (selectedCommunityData[0].id !== dlUserCommunity.id) {
@@ -48,9 +48,10 @@ const DeepLinkHandler = ({
                 }
                 selectedMarkerData[1](JSON.parse(lastParams.tapmatch_event_data));
                 eventDetailsModalVisible[1](true);
+
+            } else {
+                navigation.navigate('Home');
             }
-        } else {
-            navigation.navigate('Home');
         }
 
     };

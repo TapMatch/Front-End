@@ -22,11 +22,11 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
 
     const joinRequestInprogress = useState<boolean>(false);
 
-    const {members} = selectedMarkerData[0];
+    const {joined} = selectedMarkerData[0];
     const defineMessage = () => {
-        if (members) {
-            if (members.length - 1) {
-                return `You and ${members.length - 1} others are going!`;
+        if (joined) {
+            if (joined) {
+                return `You and ${joined} others are going!`;
             } else {
                 return `You are going!`;
             }

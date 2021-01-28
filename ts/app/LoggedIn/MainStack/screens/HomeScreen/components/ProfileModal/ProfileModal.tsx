@@ -1,6 +1,5 @@
 import React from 'react';
-import {View, StyleSheet, TouchableOpacity} from 'react-native';
-import Modal from 'react-native-modal';
+import {View, StyleSheet, TouchableOpacity, Modal} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -14,11 +13,8 @@ interface ProfileModalProps {
 const ProfileModal = ({modalVisible}: ProfileModalProps) => {
   return (
     <Modal
-      animationIn={'fadeIn'}
-      animationInTiming={500}
-      animationOut={'fadeOut'}
-      animationOutTiming={500}
-      isVisible={modalVisible[0]}
+      visible={modalVisible[0]}
+      transparent={true}
       style={_s.modal}>
       <View style={_s.container}>
         <ModalHeader />
@@ -36,8 +32,9 @@ const ProfileModal = ({modalVisible}: ProfileModalProps) => {
 export default ProfileModal;
 
 const _s = StyleSheet.create({
-  modal: {margin: 0, backgroundColor: _c.modalbackground},
+  modal: {margin: 0},
   container: {
+    backgroundColor: _c.modalbackground,
     flex: 1,
     alignItems: 'stretch',
     position: 'relative',

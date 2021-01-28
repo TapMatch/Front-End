@@ -5,6 +5,7 @@ import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import moment from 'moment';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
+import logAxiosError from 'ts/utils/logAxiosError';
 
 interface IcreateEvent {
     userToken: string;
@@ -19,6 +20,7 @@ interface IcreateEvent {
     join_limit: number;
     selectedMarkerData: any;
     eventDetailsModalVisible: any;
+    goBack: any;
 }
 
 export async function createEvent({
@@ -33,7 +35,8 @@ export async function createEvent({
     coordinates,
     join_limit,
     upcomingEvents,
-    selectedMarkerData
+    selectedMarkerData,
+    goBack
 }: IcreateEvent) {
     try {
         const options: AxiosRequestConfig = {
@@ -49,9 +52,10 @@ export async function createEvent({
                 date: moment(date).format('YYYY-DD-MM HH:mm'),
                 coordinates: coordinates,
                 address,
-                join_limit
+                join_limit: join_limit + 1
             }
         };
+        goBack();
 
         return axios
             .request(options)
@@ -65,8 +69,12 @@ export async function createEvent({
                 eventDetailsModalVisible[1](true);
             })
             .catch((error) => {
-                console.log(error);
-                // callAlert(undefined, `${error.toString()} ::: createEvent`);
+                const err = logAxiosError(error, 'createEvent');
+
+                if (err.hasOwnProperty('error_data')) {
+                    callAlert('Event Time', err.error_data.error.date);
+                }
+
             });
     } catch (error) {
         console.log(`${error} ::: createEvent`);

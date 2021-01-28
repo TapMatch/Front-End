@@ -86,6 +86,7 @@ export async function joinEvent({
                     eventMarkers,
                     selectedMarkerData: selectedMarkerData ? selectedMarkerData : null
                 })
+                    .then(() => getUserProfile({userProfile, userToken}))
                     .then(() => joinRequestInprogress[1](false));
             });
     } catch (error) {

@@ -1,5 +1,4 @@
-export default function capitalizeString(s: string) {
-    const str = s.trim();
+export default function capitalizeString(str: string) {
     if (typeof str !== 'string') return '';
     return str.charAt(0).toUpperCase() + str.slice(1);
 }
