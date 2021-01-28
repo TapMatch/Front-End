@@ -1,5 +1,5 @@
 import React, {useContext, useState} from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
+import {View, StyleSheet, StatusBar, Platform} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
@@ -15,6 +15,7 @@ import YesNoModal from 'ts/app/common/components/YesNoModal';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
 import LocationPickerMode from './components/LocationPickerMode/LocationPickerMode';
 import moment from 'moment';
+import callAlert from 'ts/utils/callAlert';
 
 interface CreateEventScreenProps {
   navigation: any;
@@ -54,8 +55,23 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
         <View style={[_s.container]}>
           <Header />
           <FormWindow />
-          <CreateBtn disabled={eventName[0].length === 0 || address[0].length === 0 || description[0].length === 0}
+          <CreateBtn disabled={
+            eventName[0].length === 0 ||
+            address[0].length === 0 ||
+            description[0].length === 0
+          }
             onPress={() => {
+
+              if (Platform.OS === 'android') {
+                const createBtnPressMoment = moment();
+                const setTime = moment(dateTime[0]);
+                const diff = setTime.diff(createBtnPressMoment, 'minutes');
+                if (diff < 59) {
+                  callAlert(undefined, `${setTime.format('DD-MM-YYYY HH:mm A')} is not a valis date!`);
+                  return;
+                }
+              }
+
               createEvent({
                 eventMarkers,
                 upcomingEvents,

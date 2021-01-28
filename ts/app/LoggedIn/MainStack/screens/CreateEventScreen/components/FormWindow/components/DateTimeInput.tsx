@@ -1,5 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
+import {Text, View, StyleSheet, TouchableOpacity, Image, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
@@ -17,16 +17,16 @@ const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
 
 
   useEffect(() => {
-    // if (dateTimePickerModalVisible[0]) {
-    const modalCallTimeMoment = moment().add(1, 'hour');
-    const modalCallTime = modalCallTimeMoment.toDate();
-    minDate[1](modalCallTime);
+    const condition = Platform.OS === 'ios' ? true : dateTimePickerModalVisible[0];
+    if (condition) {
+      const modalCallTimeMoment = moment().add(1, 'hour');
+      const modalCallTime = modalCallTimeMoment.toDate();
+      minDate[1](modalCallTime);
 
-    if (modalCallTimeMoment > moment(dateTime[0])) {
-      dateTime[1](modalCallTime);
+      if (modalCallTimeMoment > moment(dateTime[0])) {
+        dateTime[1](modalCallTime);
+      }
     }
-
-    // }
   }, [dateTimePickerModalVisible[0]]);
 
 
