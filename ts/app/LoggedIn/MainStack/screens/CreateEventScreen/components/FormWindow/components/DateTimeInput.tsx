@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Image} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -11,8 +11,25 @@ interface DateTimeInputProps {
 }
 
 const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
-  const minDate = moment().add(1, 'hour').toDate();
+  const md = moment().add(1, 'hour').toDate();
+  const minDate = useState<Date>(md);
   const dateTimePickerModalVisible = useState<boolean>(false);
+
+
+  useEffect(() => {
+    // if (dateTimePickerModalVisible[0]) {
+    const modalCallTimeMoment = moment().add(1, 'hour');
+    const modalCallTime = modalCallTimeMoment.toDate();
+    minDate[1](modalCallTime);
+
+    if (modalCallTimeMoment > moment(dateTime[0])) {
+      dateTime[1](modalCallTime);
+    }
+
+    // }
+  }, [dateTimePickerModalVisible[0]]);
+
+
   return (
     <Fragment>
       <TouchableOpacity
@@ -36,14 +53,17 @@ const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
         customCancelButtonIOS={({onPress}) => <CustomPickerButton txt={'Cancel'} onPress={onPress} />}
         customConfirmButtonIOS={({onPress}) => <CustomPickerButton txt={'Confirm'} onPress={onPress} />}
         isDarkModeEnabled={false}
-        minimumDate={minDate}
+        date={dateTime[0]}
+        minimumDate={minDate[0]}
         isVisible={dateTimePickerModalVisible[0]}
         mode="datetime"
         onConfirm={(val) => {
+          minDate[1](moment().add(1, 'hour').toDate());
           dateTimePickerModalVisible[1](false);
           dateTime[1](val);
         }}
-        onCancel={() => {
+        onCancel={(val) => {
+          // minDate[1](moment().add(1, 'hour').toDate());
           dateTimePickerModalVisible[1](false);
         }}
       />

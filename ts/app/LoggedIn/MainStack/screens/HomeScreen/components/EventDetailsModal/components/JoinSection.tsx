@@ -25,8 +25,9 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
     const {joined} = selectedMarkerData[0];
     const defineMessage = () => {
         if (joined) {
-            if (joined) {
-                return `You and ${joined} others are going!`;
+            const numberWithoutOrganizer = joined - 1;
+            if (numberWithoutOrganizer >= 1) {
+                return `You and ${numberWithoutOrganizer} ${numberWithoutOrganizer === 1 ? 'other' : 'others'} are going!`;
             } else {
                 return `You are going!`;
             }
