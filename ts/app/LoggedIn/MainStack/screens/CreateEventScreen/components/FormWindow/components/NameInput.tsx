@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {Text, View, StyleSheet, TextInput, Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -14,11 +14,12 @@ interface NameInputProps {
 
 const NameInput = ({eventName}: NameInputProps) => {
   const inputOnScreen = useState<boolean>(false);
-
+  const nameInputRef = useRef(null);
   const renderInput = () => {
     if (inputOnScreen[0]) {
       return (
         <TextInput
+          ref={nameInputRef}
           value={eventName[0]}
           onBlur={() => inputOnScreen[1](false)}
           textContentType={'none'}
@@ -47,11 +48,16 @@ const NameInput = ({eventName}: NameInputProps) => {
     }
   };
   return (
-    <View style={[_s.container]}>
+    <TouchableOpacity style={[_s.container]} activeOpacity={1} onPress={() => {
+      if (nameInputRef.current) {
+        nameInputRef.current.focus();
+      }
+      inputOnScreen[1](true);
+    }}>
       <View style={_s.txtContainer}>
         {renderInput()}
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

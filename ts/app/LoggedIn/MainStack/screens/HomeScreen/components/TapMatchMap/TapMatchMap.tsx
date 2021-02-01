@@ -24,10 +24,20 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
     const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
     // const mapKey = useState<number>(0);
     let _mapRef = useRef<any>(null);
+    const hideUserLocation = useState<boolean>(false);
 
     // useEffect(() => {
     //     mapKey[1](mapKey[0] + 1);
     // }, [selectedMarkerData[0]]);
+
+    const setUserLocationVisibility = async () => {
+        const {zoom} = await _mapRef.getCamera();
+        if (zoom < 14) {
+            hideUserLocation[1](false);
+        } else {
+            hideUserLocation[1](true);
+        }
+    };
 
     return (
         <MapView
@@ -43,12 +53,14 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
                     userToken: userToken[0],
                     eventMarkers
                 });
+                setUserLocationVisibility();
             }}
             onPress={() => {
                 if (eventDetailsModalVisible[0]) {
                     eventDetailsModalVisible[1](false);
                 }
             }}
+            onRegionChangeComplete={setUserLocationVisibility}
             provider={PROVIDER_GOOGLE}
             maxZoom={12}
             customMapStyle={googleMapStyle}
@@ -57,6 +69,7 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
             pitchEnabled={true}
             rotateEnabled={true}
             scrollEnabled={true}
+            minPoints={1}
             initialRegion={{
                 ...mapCoordinates[0],
                 latitudeDelta: 0.015,
@@ -70,7 +83,7 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
                     eventDetailsModalVisible={eventDetailsModalVisible}
                 />;
             })}
-            <UserLocationMarker coordinate={userLocation[0]} />
+            {hideUserLocation[0] && <UserLocationMarker coordinate={userLocation[0]} />}
         </MapView>
 
     );

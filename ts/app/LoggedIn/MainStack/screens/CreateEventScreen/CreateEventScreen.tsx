@@ -30,7 +30,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
     selectedMarkerData, eventDetailsModalVisible
   } = useContext(MainStackContext);
 
-  const {userLocation, userToken} = useContext(TapMatchContext);
+  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
   const description = useState<string>('');
   const eventName = useState<string>('');
   const joinLimit = useState<number>(1);
@@ -73,6 +73,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
               }
 
               createEvent({
+                userProfile,
                 eventMarkers,
                 upcomingEvents,
                 selectedMarkerData,
@@ -101,7 +102,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
           <YesNoModal
             onYesPress={navigation.goBack}
             modalVisible={yesNoModalVisible}
-            subtitle={'Note that If you quit,\nno draft Will be saved'}
+            subtitle={'Note that if you quit,\nno draft Will be saved'}
             title={'Are you sure\nYou want to\nleave create?'}
           />
         </View>

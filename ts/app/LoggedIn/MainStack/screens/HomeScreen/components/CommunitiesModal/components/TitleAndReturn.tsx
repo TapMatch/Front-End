@@ -15,14 +15,14 @@ const TitleAndReturn = ({modalVisible}: TitleAndReturnProps) => {
   const txt = useLocalizedTxt();
 
   return (
-    <View style={_s.container}>
-      <TouchableOpacity onPress={() => modalVisible[1](false)} style={_s.btn}>
+    <TouchableOpacity onPress={() => modalVisible[1](false)} style={_s.container}>
+      <View style={_s.btn}>
         <ChevronWhite height={_fs.x9l} width={_fs.x9l} />
-      </TouchableOpacity>
+      </View>
       <Text numberOfLines={1} style={_s.txt}>
         {txt.communities}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 

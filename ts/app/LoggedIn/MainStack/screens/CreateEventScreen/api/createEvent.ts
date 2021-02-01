@@ -6,6 +6,7 @@ import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import moment from 'moment';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import logAxiosError from 'ts/utils/logAxiosError';
+import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 
 interface IcreateEvent {
     userToken: string;
@@ -21,6 +22,7 @@ interface IcreateEvent {
     selectedMarkerData: any;
     eventDetailsModalVisible: any;
     goBack: any;
+    userProfile: [any, (x: any) => void];
 }
 
 export async function createEvent({
@@ -36,7 +38,8 @@ export async function createEvent({
     join_limit,
     upcomingEvents,
     selectedMarkerData,
-    goBack
+    goBack,
+    userProfile
 }: IcreateEvent) {
     try {
         const options: AxiosRequestConfig = {
@@ -61,6 +64,7 @@ export async function createEvent({
             .request(options)
             .then(({data}: any) => {
                 getEventMarkers({userToken, id: communityId, eventMarkers});
+                getUserProfile({userToken, userProfile});
                 getUpcomingEvents({userToken, communityId, upcomingEvents});
                 return data;
             })

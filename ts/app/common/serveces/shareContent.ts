@@ -5,6 +5,11 @@ import {constants} from "ts/constants/constants";
 
 const shareContent = async (data: any, selectedCommunityData: any) => {
     try {
+        const {
+            access: communityAccessCode,
+            name: communityName
+        } = selectedCommunityData[0];
+
         let branchUniversalObject = await branch.createBranchUniversalObject(`event-${data.name}-${data.id}`, {
             locallyIndex: true,
             title: 'TabMatch',
@@ -28,7 +33,7 @@ const shareContent = async (data: any, selectedCommunityData: any) => {
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
 
         const result = await Share.share({
-            message: generateMsg(url, selectedCommunityData[0].access),
+            message: generateMsg(url, communityAccessCode, communityName),
         });
         if (result.action === Share.sharedAction) {
             if (result.activityType) {
@@ -46,11 +51,11 @@ const shareContent = async (data: any, selectedCommunityData: any) => {
 };
 
 
-function generateMsg(url: string, code: string) {
+function generateMsg(url: string, code: string, name: string) {
     if (code) {
-        return `Join our event!\nThe access code to enter the community is ${code} \n ${url}`;
+        return `${name}\nJoin our event!\nThe access code to enter the community is ${code} \n ${url}`;
     } else {
-        return `Join our event!\nIt's an open invitation\n ${url}`;
+        return `${name}\nJoin our event!\nIt's an open invitation\n ${url}`;
     }
 }
 

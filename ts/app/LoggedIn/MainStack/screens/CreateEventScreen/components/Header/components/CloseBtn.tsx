@@ -3,13 +3,29 @@ import {StyleSheet, TouchableOpacity} from 'react-native';
 import CloseBlack from 'assets/svg/close-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
+import {useNavigation} from '@react-navigation/native';
 
-interface CloseBtnProps { }
+interface CloseBtnProps {}
 
 const CloseBtn = (props: CloseBtnProps) => {
-  const {yesNoModalVisible} = useContext(CreateEventScreenContext);
+  const {yesNoModalVisible,
+    //  dateTime, coordinates,
+    eventName, joinLimit, description, address} = useContext(CreateEventScreenContext);
+
+  const {goBack} = useNavigation();
   return (
-    <TouchableOpacity onPress={() => yesNoModalVisible[1](true)} style={_s.container} >
+    <TouchableOpacity onPress={() => {
+      const condition =
+        joinLimit[0] === 1
+        && description[0] === ''
+        && address[0] === ''
+        && eventName[0] === '';
+      if (condition) {
+        goBack();
+      } else {
+        yesNoModalVisible[1](true);
+      }
+    }} style={_s.container} >
       <CloseBlack height={_fs.xxl} width={_fs.xxl} />
     </TouchableOpacity >
   );

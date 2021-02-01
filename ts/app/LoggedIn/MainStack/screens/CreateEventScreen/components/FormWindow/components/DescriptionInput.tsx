@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   StyleSheet,
@@ -19,11 +19,14 @@ interface DescriptionInputProps {
 
 const DescriptionInput = ({description}: DescriptionInputProps) => {
   const inputOnScreen = useState<boolean>(false);
+  const descriptionInputRef = useRef();
 
   const renderInput = () => {
     if (inputOnScreen[0]) {
       return (
         <TextInput
+          ref={descriptionInputRef}
+
           value={description[0]}
           onBlur={() => inputOnScreen[1](false)}
           textContentType={'none'}
@@ -42,7 +45,12 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
         />);
     } else {
       return (
-        <TouchableOpacity activeOpacity={1} onPress={() => inputOnScreen[1](true)}>
+        <TouchableOpacity activeOpacity={1} onPress={() => {
+          if (descriptionInputRef.current) {
+            descriptionInputRef.current.focus();
+          }
+          inputOnScreen[1](true);
+        }}>
           <Text style={_s.input}>
             {description[0].length ? description[0] : 'Description'}
           </Text>
@@ -50,9 +58,9 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
     }
   };
   return (
-    <View style={[_s.container]}>
+    <TouchableOpacity activeOpacity={1} onPress={() => inputOnScreen[1](true)} style={[_s.container]}>
       {renderInput()}
-    </View>
+    </TouchableOpacity>
   );
 };
 
