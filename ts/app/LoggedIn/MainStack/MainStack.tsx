@@ -10,6 +10,8 @@ import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
+import * as RNLocalize from "react-native-localize";
+import Geocoder from 'react-native-geocoding';
 
 export default function MainStack() {
   const {userProfile, userToken} = useContext(TapMatchContext);
@@ -40,6 +42,8 @@ export default function MainStack() {
   const {Navigator, Screen} = Stack;
   const insets = Platform.OS === 'ios' ? {} : {safeAreaInsets: {top: 0}};
 
+  const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
+
 
   useEffect(() => {
     patchUserTimeZone({
@@ -47,6 +51,9 @@ export default function MainStack() {
     });
   }, []);
 
+  useEffect(() => {
+    Geocoder.init('AIzaSyBI-erIASkJmmIjkNGN0_EIsgBVPCSIxng', {language});
+  }, []);
 
   return (
     <MainStackContext.Provider value={{

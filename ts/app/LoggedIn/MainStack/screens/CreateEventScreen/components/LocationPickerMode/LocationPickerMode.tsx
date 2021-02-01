@@ -13,7 +13,6 @@ import TargetWhite from 'assets/svg/target-white.svg';
 import {vs} from 'react-native-size-matters';
 import UserLocationMarker from './components/UserLocationMarker';
 import Geocoder from 'react-native-geocoding';
-import * as RNLocalize from "react-native-localize";
 
 interface LocationPickerModeProps {
 }
@@ -22,11 +21,7 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
   const {coordinates, address, gpaRefState} = useContext(CreateEventScreenContext);
-  const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
 
-  useEffect(() => {
-    Geocoder.init('AIzaSyBI-erIASkJmmIjkNGN0_EIsgBVPCSIxng', {language});
-  }, []);
 
   const setPressedCoordinates = (c: LatLng) => {
     Geocoder.from(c,

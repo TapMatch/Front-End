@@ -107,7 +107,7 @@ const _s = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     width: '100%',
-    height: vs(120),
+    height: vs(100),
   },
   img: {
     height: _fs.xl,

@@ -1,6 +1,6 @@
-import React, {useContext, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {View, StyleSheet, StatusBar, Platform} from 'react-native';
-import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
+import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
@@ -16,6 +16,7 @@ import DeepLinkHandler from '../../components/DeepLinkHandler';
 import LocationPickerMode from './components/LocationPickerMode/LocationPickerMode';
 import moment from 'moment';
 import callAlert from 'ts/utils/callAlert';
+import Geocoder from 'react-native-geocoding';
 
 interface CreateEventScreenProps {
   navigation: any;
@@ -46,6 +47,27 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
     longitudeDelta: 0.0121,
   });
   const address = useState<string>('');
+
+  const setPressedCoordinates = (c: LatLng) => {
+    Geocoder.from(c,
+    ).then(json => {
+      const addressComponent = json.results[0].formatted_address;
+      address[1](addressComponent);
+      // if (Platform.OS === 'ios') {
+      //   gpaRefState[0].current.setAddressText(addressComponent);
+      // }
+    })
+      .catch(error => console.log(error));
+    coordinates[1]({
+      ...c,
+      latitudeDelta: 0.015,
+      longitudeDelta: 0.0121,
+    });
+  };
+
+  useEffect(() => {
+    setPressedCoordinates(userLocation[0]);
+  }, []);
 
   const renderContent = () => {
     if (addingLocationOn[0]) {

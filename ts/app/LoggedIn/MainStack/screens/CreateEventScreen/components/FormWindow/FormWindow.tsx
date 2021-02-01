@@ -46,11 +46,12 @@ const FormWindow = (props: FormWindowProps) => {
 };
 function definePaddingBottom({keyboardHeight, keyboardShown}: any) {
   if (Platform.OS === 'ios') {
-    if (keyboardShown) {
-      return 0;
-    } else {
-      return 50;
-    }
+    // if (keyboardShown) {
+    //   return 0;
+    // } else {
+    //   return 50;
+    // }
+    return 0;
   } else {
     return keyboardHeight;
   }
