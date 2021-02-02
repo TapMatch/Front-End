@@ -75,7 +75,7 @@ export default function MainStack() {
           headerTitleAllowFontScaling: false,
           headerBackAllowFontScaling: false,
           headerTitleAlign: 'center',
-          // gestureEnabled: false,
+          gestureEnabled: false,
           headerStyle: {
             elevation: 0,
             backgroundColor: _c.white,

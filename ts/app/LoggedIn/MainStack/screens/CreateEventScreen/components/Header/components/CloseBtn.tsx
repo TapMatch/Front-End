@@ -9,8 +9,8 @@ interface CloseBtnProps {}
 
 const CloseBtn = (props: CloseBtnProps) => {
   const {yesNoModalVisible,
-    //  dateTime, coordinates,
-    eventName, joinLimit, description, address} = useContext(CreateEventScreenContext);
+    //  dateTime, coordinates, address
+    eventName, joinLimit, description} = useContext(CreateEventScreenContext);
 
   const {goBack} = useNavigation();
   return (
@@ -18,7 +18,6 @@ const CloseBtn = (props: CloseBtnProps) => {
       const condition =
         joinLimit[0] === 1
         && description[0] === ''
-        && address[0] === ''
         && eventName[0] === '';
       if (condition) {
         goBack();

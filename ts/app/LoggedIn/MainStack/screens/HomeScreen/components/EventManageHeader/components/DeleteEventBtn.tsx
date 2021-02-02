@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, TouchableOpacity, Image} from 'react-native';
+import FastImage from 'react-native-fast-image';
 import {_fs} from 'ts/UIConfig/fontSizes';
 
 interface DeleteEventBtnProps {
@@ -11,7 +12,11 @@ const DeleteEventBtn = ({setupDeleteEventUI}: DeleteEventBtnProps) => {
     <TouchableOpacity
       onPress={() => setupDeleteEventUI()}
       style={_s.container}>
-      <Image source={require('assets/png/bin-black.png')} style={_s.img} />
+      <FastImage
+        resizeMode={FastImage.resizeMode.cover}
+        style={_s.img}
+        source={require('assets/png/bin-black.png')}
+      />
     </TouchableOpacity>
   );
 };

@@ -77,6 +77,7 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
             ]}
             source={require('assets/png/PlaceholderPeopleImages/1.png')}
           />
+
           <FastImage
             resizeMode={FastImage.resizeMode.stretch}
             style={[

@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {Text, View, StyleSheet, TouchableOpacity, Platform} from 'react-native';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -40,7 +40,9 @@ const UpcomingEvents = ({
 
   const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers, selectedMarkerData, allCommunities} = useContext(MainStackContext);
   const {userToken, userLocation} = useContext(TapMatchContext);
+  const locationFocusTrigger = useState<boolean>(false);
   // const txt = useLocalizedTxt();
+
   const renderList = () => {
     if (upcomingEventsListIsOpen[0]) {
       return (
@@ -89,7 +91,6 @@ const UpcomingEvents = ({
     } else {
       request(locationPermission).then((x) => {
         if (x === 'granted') {
-          // startModalVisible[1](true);
           handleGeolocation();
         }
       });
@@ -100,7 +101,8 @@ const UpcomingEvents = ({
     Geolocation.getCurrentPosition(
       ({coords}) => {
         const {latitude, longitude} = coords;
-        userLocation[1]({latitude, longitude});
+        // userLocation[1]({latitude, longitude});
+        focusMapToLatLng({latitude, longitude});
       },
       (error) => {
         console.log(error.code, error.message);
@@ -119,11 +121,19 @@ const UpcomingEvents = ({
     closeAllWhiteModalWindows();
     getMarkers();
     focusMapToLatLng(userLocation[0]);
-
     check(locationPermission).then((x) => {
       setUserLocation(x);
     });
   };
+
+  // useEffect(() => {
+  //   if (locationFocusTrigger[0]) {
+  //     focusMapToLatLng(userLocation[0]);
+  //     locationFocusTrigger[1](false);
+  //   } else {
+  //     locationFocusTrigger[1](false);
+  //   }
+  // }, [locationFocusTrigger[0]]);
 
   return (
     <View pointerEvents={'box-none'} style={_s.container}>
@@ -134,15 +144,16 @@ const UpcomingEvents = ({
         />
       </TouchableOpacity>
       <View style={[_s.middle, {height: upcomingEventsListIsOpen[0] ? 'auto' : vs(60)}]}>
-        {upcomingEvents[0].length > 0 && <View style={_s.shadow}>
-          <TouchableOpacity
-            onPress={() => upcomingEvents[0].length ? upcomingEventsListIsOpen[1](!upcomingEventsListIsOpen[0]) : null}
-            activeOpacity={1}
-            style={[_s.eventListOpener, borderState]}>
-            <Text style={_s.txt}>{`${upcomingEvents[0].length} ${upcomingEvents[0].length === 1 ? 'upcoming Event' : 'upcoming Events'}`}</Text>
-          </TouchableOpacity>
-          {renderList()}
-        </View>}
+        {upcomingEvents[0].length > 0 &&
+          <View style={_s.shadow}>
+            <TouchableOpacity
+              onPress={() => upcomingEvents[0].length ? upcomingEventsListIsOpen[1](!upcomingEventsListIsOpen[0]) : null}
+              activeOpacity={1}
+              style={[_s.eventListOpener, borderState]}>
+              <Text style={_s.txt}>{`${upcomingEvents[0].length} ${upcomingEvents[0].length === 1 ? 'upcoming Event' : 'upcoming Events'}`}</Text>
+            </TouchableOpacity>
+            {renderList()}
+          </View>}
       </View>
       <View pointerEvents={'box-none'} style={_s.side}>
         <TouchableOpacity style={_s.resetBtn} onPress={() => {

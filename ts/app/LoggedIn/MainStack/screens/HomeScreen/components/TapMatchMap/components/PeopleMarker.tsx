@@ -1,4 +1,4 @@
-import React, {Fragment, useContext} from 'react';
+import React, {Fragment, useContext, useState} from 'react';
 import {View, StyleSheet, Text} from 'react-native';
 import {Marker, LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
@@ -18,18 +18,20 @@ interface PeopleMarkerProps {
   coordinate: LatLng;
   eventDetailsModalVisible: [boolean, (x: boolean) => void];
   item: any;
+  mapReady: [boolean, (x: boolean) => void];
 }
 
 const PeopleMarker = ({
   item,
   coordinate,
   eventDetailsModalVisible,
+  mapReady
 }: PeopleMarkerProps) => {
 
   const {last_members, name, join_limit, organizer, id, joined, community_id} = item;
   const {selectedMarkerData, requestingEventDetailsInProcess} = useContext(MainStackContext);
   const {userToken, LoggedIn} = useContext(TapMatchContext);
-  const {focusMapToLatLng} = useContext(HomeScreenContext);
+  const {focusMapToLatLng, yesNoModalVisible} = useContext(HomeScreenContext);
   const len = last_members.length;
   const positionArr = [//5
     {position: {left: 28, top: 70}, style: 0},// 0
@@ -89,63 +91,68 @@ const PeopleMarker = ({
       );
     }
   };
-  return (
-    <Marker
-      onPress={() => {
-        focusMapToLatLng(item.coordinates);
-        if (selectedMarkerData[0].id !== id) {
-          getEventById({
-            event_id: id,
-            community_id,
-            userToken,
-            selectedMarkerData,
-            eventDetailsModalVisible,
-            requestingEventDetailsInProcess,
-            LoggedIn
-          });
-        } else {
-          eventDetailsModalVisible[1](true);
-        }
-        // selectedMarkerData[1](item);
-      }}
-      tracksViewChanges={true}
-      zIndex={+id}
-      coordinate={coordinate}>
-      <View style={_s.container}>
-        <View style={_s.topTxtContainer}>
-          {
-            joined >= join_limit * 0.7
-            &&
-            +joined !== +join_limit
-            &&
-            <Fragment>
-              <Text numberOfLines={1} style={_s.topTxt}>
-                🔥
-              </Text>
-              <Text numberOfLines={1} style={_s.topTxt}>
-                Almost Full
-              </Text>
-            </Fragment>
+  if (selectedMarkerData[0].id === id && yesNoModalVisible[0]) {
+    return null;
+  } else {
+    return (
+      <Marker
+        tracksViewChanges={!mapReady[0]}
+        onPress={() => {
+          focusMapToLatLng(item.coordinates);
+          if (selectedMarkerData[0].id !== id) {
+            getEventById({
+              event_id: id,
+              community_id,
+              userToken,
+              selectedMarkerData,
+              eventDetailsModalVisible,
+              requestingEventDetailsInProcess,
+              LoggedIn
+            });
+          } else {
+            eventDetailsModalVisible[1](true);
           }
-        </View>
-
-        <View style={_s.main}>
-          {renderImages(last_members)}
-          <View style={[_s.avatarContainer, _s.shadow]}>
-            <FastImage
-              style={_s.avatar}
-              source={{
-                uri: organizer.avatar
-              }}
-            />
+          // selectedMarkerData[1](item);
+        }}
+        tracksViewChanges={true}
+        zIndex={+id}
+        coordinate={coordinate}>
+        <View style={_s.container}>
+          <View style={_s.topTxtContainer}>
+            {
+              joined >= join_limit * 0.7
+              &&
+              +joined !== +join_limit
+              &&
+              <Fragment>
+                <Text numberOfLines={1} style={_s.topTxt}>
+                  🔥
+                </Text>
+                <Text numberOfLines={1} style={_s.topTxt}>
+                  Almost Full
+                </Text>
+              </Fragment>
+            }
           </View>
 
-          {last_members.length > 0 && <View style={_s.oval} />}
-          {renderLabel()}
+          <View style={_s.main}>
+            {renderImages(last_members)}
+            <View style={[_s.avatarContainer, _s.shadow]}>
+              <FastImage
+                style={_s.avatar}
+                source={{
+                  uri: organizer.avatar
+                }}
+              />
+            </View>
+
+            {last_members.length > 0 && <View style={_s.oval} />}
+            {renderLabel()}
+          </View>
         </View>
-      </View>
-    </Marker>
-  );
+      </Marker>
+    );
+  }
 };
 
 export default PeopleMarker;

@@ -53,9 +53,6 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
     ).then(json => {
       const addressComponent = json.results[0].formatted_address;
       address[1](addressComponent);
-      // if (Platform.OS === 'ios') {
-      //   gpaRefState[0].current.setAddressText(addressComponent);
-      // }
     })
       .catch(error => console.log(error));
     coordinates[1]({

@@ -6,6 +6,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import {vs} from 'react-native-size-matters';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment';
+import FastImage from 'react-native-fast-image';
 interface DateTimeInputProps {
   dateTime: [Date, (x: Date) => void];
 }
@@ -42,9 +43,9 @@ const DateTimeInput = ({dateTime}: DateTimeInputProps) => {
           <Text style={[_s.txt, _s.time]}>
             {moment(dateTime[0]).format('DD-MM-YYYY HH:mm')}
           </Text>
-          <Image
+          <FastImage
+            resizeMode={FastImage.resizeMode.contain}
             style={_s.img}
-            resizeMode={'contain'}
             source={require('assets/png/up-and-down-arrows.png')}
           />
         </View>

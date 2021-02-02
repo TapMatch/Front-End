@@ -29,7 +29,8 @@ interface HomeScreenProps {
   route: any;
 }
 
-const HomeScreen = ({navigation, route}: HomeScreenProps) => {
+const HomeScreen = (props: HomeScreenProps) => {
+  const {navigation, route} = props;
   let _mapRef = useRef<any>(null);
   const set_mapRef = (x: any) => _mapRef = x;
 
@@ -82,11 +83,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     eventJoinState[1](defineJoinState());
   }, [selectedMarkerData, eventDetailsModalVisible]);
 
-  useEffect(() => {
-    if (selectedMarkerData[0].coordinates) {
-      focusMapToLatLng(selectedMarkerData[0].coordinates);
-    }
-  }, [selectedMarkerData[0].id]);
+
 
   useEffect(() => {
     if (selectedCommunityData[0].name) {
@@ -113,6 +110,12 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
   useEffect(() => {
     getMarkers();
   }, [selectedCommunityData[0].id]);
+
+  useEffect(() => {
+    if (selectedMarkerData[0].id) {
+      focusMapToLatLng(selectedMarkerData[0].coordinates);
+    }
+  }, [selectedMarkerData[0].id]);
 
   const _handleAppStateChange = async (appState: string) => {
     if (appState === 'active') {
@@ -159,11 +162,19 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
 
   const focusMapToLatLng = (x: LatLng) => {
     if (typeof _mapRef?.animateToRegion === 'function') {
-      return _mapRef?.animateToRegion({
+
+      _mapRef?.animateToRegion({
         ...x,
         latitudeDelta: 0.015,
         longitudeDelta: 0.0121,
       });
+      // _mapRef?.animateCamera({
+      //   center: x,
+      //   pitch: 0,
+      //   heading: 0,
+      //   // Only when using Google Maps.
+      //   zoom: 16
+      // });
     }
   };
 
@@ -269,6 +280,7 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
     return (
       <HomeScreenContext.Provider
         value={{
+          yesNoModalVisible,
           profileModalVisible,
           currentUserIsOrganizer,
           eventDetailsModalVisible,
@@ -304,7 +316,6 @@ const HomeScreen = ({navigation, route}: HomeScreenProps) => {
             {...defineYesNoModalProps()}
           />
           <DeepLinkHandler
-            focusMapToLatLng={focusMapToLatLng}
             eventDetailsModalVisible={eventDetailsModalVisible}
             navigation={navigation}
             route={route}

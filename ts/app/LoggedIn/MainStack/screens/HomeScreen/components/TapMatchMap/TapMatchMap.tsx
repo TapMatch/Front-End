@@ -23,6 +23,8 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
     const {userLocation, userToken} = useContext(TapMatchContext);
     const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
     // const mapKey = useState<number>(0);
+    const mapReady = useState<boolean>(false);
+
     let _mapRef = useRef<any>(null);
     const hideUserLocation = useState<boolean>(false);
 
@@ -54,6 +56,7 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
                     eventMarkers
                 });
                 setUserLocationVisibility();
+                setTimeout(() => mapReady[1](true), 100);
             }}
             onPress={() => {
                 if (eventDetailsModalVisible[0]) {
@@ -77,6 +80,7 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
             }}>
             {eventMarkers[0].map((el: any) => {
                 return <PeopleMarker
+                    mapReady={mapReady}
                     key={`PeopleMarker-${el.id}-${el.name}-${el.joined}`}
                     item={el}
                     coordinate={el.coordinates}

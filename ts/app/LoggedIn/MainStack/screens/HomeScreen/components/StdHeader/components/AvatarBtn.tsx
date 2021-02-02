@@ -3,6 +3,7 @@ import {View, StyleSheet, Image, TouchableOpacity, Platform} from 'react-native'
 import {_c} from 'ts/UIConfig/colors';
 import {HomeScreenContext} from 'ts/app/contexts/HomeScreenContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import FastImage from 'react-native-fast-image';
 
 interface AvatarBtnProps {}
 
@@ -15,14 +16,13 @@ const AvatarBtn = (props: AvatarBtnProps) => {
         activeOpacity={0.9}
         onPress={() => profileModalVisible[1](!profileModalVisible[0])}
         style={_s.btn}>
-        <Image
-          resizeMode={'cover'}
+        <FastImage
+          resizeMode={FastImage.resizeMode.cover}
           style={_s.avatar}
           source={{
             uri:
               `${userProfile[0].avatar}`,
-          }}
-        />
+          }} />
       </TouchableOpacity>
     </View>
   );
