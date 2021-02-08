@@ -48,7 +48,6 @@ const DeepLinkHandler = ({
                 }
                 selectedMarkerData[1](JSON.parse(lastParams.tapmatch_event_data));
                 eventDetailsModalVisible[1](true);
-
             } else {
                 navigation.navigate('Home');
             }

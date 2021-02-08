@@ -13,8 +13,11 @@ interface LimitSliderProps {
 const LimitSlider = ({joinLimit}: LimitSliderProps) => {
   const extraProps = Platform.OS === 'ios' ? {} : {thumbTintColor: _c.main_red};
   return (
-    <View style={[_s.container]}>
-      <Text style={[_s.txt, {alignSelf: 'flex-start'}]}>Set Join Limit - {joinLimit[0]}</Text>
+    <View style={_s.container}>
+      <View style={_s.titleContainer}>
+        <Text style={[_s.txt, {alignSelf: 'flex-start'}]}>Set Join Limit - </Text>
+        <Text style={[_s.txt, _s.number]}>{joinLimit[0]}</Text>
+      </View>
       <Slider
         {...extraProps}
         onValueChange={joinLimit[1]}
@@ -39,7 +42,7 @@ const _s = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     width: '100%',
-    height: vs(100),
+    height: vs(85),
     borderBottomColor: _c.grey,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
@@ -55,4 +58,14 @@ const _s = StyleSheet.create({
     fontSize: _fs.m,
     color: _c.black,
   },
+  titleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+    width: '100%'
+  },
+  number: {
+    color: _c.main_red,
+    fontFamily: _f.bold
+  }
 });

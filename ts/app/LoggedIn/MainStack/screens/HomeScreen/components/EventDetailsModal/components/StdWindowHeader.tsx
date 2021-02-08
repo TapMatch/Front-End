@@ -6,13 +6,15 @@ import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import shareContent from 'ts/app/common/serveces/shareContent';
 import FastImage from 'react-native-fast-image';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface HeaderProps {
 }
 
 const StdWindowHeader = (props: HeaderProps) => {
-    const {selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
+    const {selectedMarkerData} = useContext(MainStackContext);
     const {name} = selectedMarkerData[0];
+    const {userProfile} = useContext(TapMatchContext);
 
     return (
         <View style={_s.container}>
@@ -21,7 +23,7 @@ const StdWindowHeader = (props: HeaderProps) => {
                 <Text numberOfLines={1} style={_s.title}>{name}</Text>
             </View>
             <View style={[_s.side, _s.center, _s.right]}>
-                <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0], selectedCommunityData)} style={[_s.btn, _s.shadow, _s.center]}>
+                <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0], userProfile)} style={[_s.btn, _s.shadow, _s.center]}>
                     <FastImage
                         style={_s.img}
                         resizeMode={FastImage.resizeMode.contain}

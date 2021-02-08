@@ -20,7 +20,7 @@ const LocationPickerBtn = (props: LocationPickerBtnProps) => {
       style={[_s.container]}>
       <Text style={[_s.txt, _s.title]}>Place</Text>
       <View style={_s.bottom}>
-        <Text style={[_s.txt, _s.address]}>{address[0]}</Text>
+        <Text numberOfLines={2} style={[_s.txt, _s.address]}>{address[0]}</Text>
         <PenBlue height={_fs.x3l} width={_fs.x3l} />
       </View>
     </TouchableOpacity>
@@ -36,7 +36,8 @@ const _s = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'flex-start',
     width: '100%',
-    minHeight: vs(90),
+    height: vs(85),
+    overflow: 'hidden',
     borderBottomColor: _c.grey,
     borderBottomWidth: StyleSheet.hairlineWidth,
   },

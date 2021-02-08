@@ -23,6 +23,7 @@ const FormWindow = (props: FormWindowProps) => {
 
   const k = useKeyboard();
   const pb = definePaddingBottom(k);
+  const extraHeight = Platform.OS === 'ios' ? {extraScrollHeight: -vs(100)} : {};
 
   return (
     <View style={_s.container}>
@@ -30,6 +31,7 @@ const FormWindow = (props: FormWindowProps) => {
         <KeyboardAwareScrollView
           keyboardShouldPersistTaps={'always'}
           showsVerticalScrollIndicator={false}
+          {...extraHeight}
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{paddingBottom: pb}}>
           <View style={_s.content}>

@@ -3,13 +3,8 @@ import callAlert from "ts/utils/callAlert";
 import branch from 'react-native-branch';
 import {constants} from "ts/constants/constants";
 
-const shareContent = async (data: any, selectedCommunityData: any) => {
+const shareContent = async (data: any, userProfile: any) => {
     try {
-        const {
-            access: communityAccessCode,
-            name: communityName
-        } = selectedCommunityData[0];
-
         let branchUniversalObject = await branch.createBranchUniversalObject(`event-${data.name}-${data.id}`, {
             locallyIndex: true,
             title: 'TabMatch',
@@ -32,17 +27,25 @@ const shareContent = async (data: any, selectedCommunityData: any) => {
         };
         let {url} = await branchUniversalObject.generateShortUrl(linkProperties, controlParams);
 
-        const result = await Share.share({
-            message: generateMsg(url, communityAccessCode, communityName),
-        });
-        if (result.action === Share.sharedAction) {
-            if (result.activityType) {
-                console.log(result, 'result-on');
-            } else {
-                console.log(result, 'result-off');
+        const community = userProfile[0].communities[0].find((el: any) => el.id === data.community_id);
+
+        if (community) {
+            const {
+                access: communityAccessCode,
+                name: communityName
+            } = community;
+            const result = await Share.share({
+                message: generateMsg(url, communityAccessCode, communityName),
+            });
+            if (result.action === Share.sharedAction) {
+                if (result.activityType) {
+                    console.log(result, 'result-on');
+                } else {
+                    console.log(result, 'result-off');
+                }
+            } else if (result.action === Share.dismissedAction) {
+                console.log('dismissedAction');
             }
-        } else if (result.action === Share.dismissedAction) {
-            console.log('dismissedAction');
         }
     } catch (error) {
         console.log(error, '::: shareContent');

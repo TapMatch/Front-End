@@ -65,7 +65,6 @@ const TapMatch = () => {
 
   useEffect(() => {
     if (userProfile[0] !== null) {
-      // if (userProfile[0].hasOwnProperty('uuid')) {
       if (userProfile[0].uuid !== userOneSignalId[0]) {
         updateUserProfile({
           userToken: userToken[0],
@@ -76,7 +75,6 @@ const TapMatch = () => {
         });
       }
     }
-    // }
   }, [userProfile[0]]);
 
   useEffect(() => {
@@ -140,6 +138,7 @@ const TapMatch = () => {
         showLocationDialog: true,
         enableHighAccuracy: false,
         timeout: 150000,
+        maximumAge: 10000
       },
     );
   };
@@ -147,6 +146,7 @@ const TapMatch = () => {
   const createRootNavigation = () => {
     if (LoggedIn[0]) {
       if (userProfile[0] !== null) {
+        console.log('☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️', userProfile[0].communities[0].length, '☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️');
         if (user_has_passed_onboarding[0]) {
           return <MainStack />;
         } else {

@@ -6,17 +6,19 @@ import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import shareContent from 'ts/app/common/serveces/shareContent';
 import FastImage from 'react-native-fast-image';
+import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 interface HeaderProps {
 }
 
 const JoinedWindowHeader = (props: HeaderProps) => {
-    const {selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
+    const {selectedMarkerData} = useContext(MainStackContext);
+    const {userProfile} = useContext(TapMatchContext);
     const {name} = selectedMarkerData[0];
 
     return (
         <View style={_s.container}>
-            <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0], selectedCommunityData)} style={_s.btn}>
+            <TouchableOpacity onPress={() => shareContent(selectedMarkerData[0], userProfile)} style={_s.btn}>
                 <View style={[_s.side]} />
                 <View style={[_s.middle, _s.center]}>
                     <Text numberOfLines={1} style={[_s.title, _s.share]}>Share</Text>

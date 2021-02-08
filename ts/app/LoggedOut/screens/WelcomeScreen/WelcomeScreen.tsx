@@ -69,6 +69,7 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         showLocationDialog: true,
         enableHighAccuracy: false,
         timeout: 150000,
+        maximumAge: 10000
       },
     );
   };

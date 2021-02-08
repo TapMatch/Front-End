@@ -71,7 +71,7 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '100%',
-    minHeight: vs(100),
+    minHeight: vs(85),
     height: 'auto',
     borderBottomColor: _c.grey,
     borderBottomWidth: StyleSheet.hairlineWidth,

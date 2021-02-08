@@ -163,18 +163,18 @@ const HomeScreen = (props: HomeScreenProps) => {
   const focusMapToLatLng = (x: LatLng) => {
     if (typeof _mapRef?.animateToRegion === 'function') {
 
-      _mapRef?.animateToRegion({
-        ...x,
-        latitudeDelta: 0.015,
-        longitudeDelta: 0.0121,
-      });
-      // _mapRef?.animateCamera({
-      //   center: x,
-      //   pitch: 0,
-      //   heading: 0,
-      //   // Only when using Google Maps.
-      //   zoom: 16
+      // _mapRef?.animateToRegion({
+      //   ...x,
+      //   latitudeDelta: 0.015,
+      //   longitudeDelta: 0.0121,
       // });
+      _mapRef?.animateCamera({
+        center: x,
+        pitch: 0,
+        heading: 0,
+        // Only when using Google Maps.
+        zoom: 16
+      });
     }
   };
 
