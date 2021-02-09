@@ -7,5 +7,4 @@ export const constants = {
   feedbackURL: 'https://www.tapmatchapp.com/support'
 };
 
-// export const tapMatchServerUrl = DEV_MODE ? 'http://194.147.32.47/' : '';
-export const tapMatchServerUrl = 'http://194.147.32.47/';
+export const tapMatchServerUrl = DEV_MODE ? 'http://194.147.32.47/' : 'http://159.65.199.71/';

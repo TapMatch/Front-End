@@ -146,7 +146,6 @@ const TapMatch = () => {
   const createRootNavigation = () => {
     if (LoggedIn[0]) {
       if (userProfile[0] !== null) {
-        console.log('☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️', userProfile[0].communities[0].length, '☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️☘️');
         if (user_has_passed_onboarding[0]) {
           return <MainStack />;
         } else {
