@@ -3,6 +3,8 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
+import logUserOut from 'ts/app/common/services/logUserOut';
 
 interface IjoinEvent {
     userToken: string;
@@ -12,6 +14,9 @@ interface IjoinEvent {
     userProfile: any;
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
     joinRequestInprogress: [boolean, (x: boolean) => void];
+    LoggedIn?: [boolean, (x: boolean) => void];
+    user_has_passed_onboarding?: [boolean, (x: boolean) => void];
+
 }
 
 export async function joinEvent({
@@ -21,7 +26,10 @@ export async function joinEvent({
     selectedMarkerData,
     userProfile,
     eventDetailsModalVisible,
-    joinRequestInprogress
+    joinRequestInprogress,
+    LoggedIn,
+    user_has_passed_onboarding
+
 }: IjoinEvent) {
     try {
         joinRequestInprogress[1](true);
@@ -79,8 +87,16 @@ export async function joinEvent({
                         }
                     }
                 }
-                console.log(error);
-                // callAlert(undefined, `${error.toString()} ::: joinEvent`);
+                if (DEV_MODE) {
+                    console.log(`${error} ::: joinEvent`);
+
+                    callAlert(undefined, `${error.toString()} ::: joinEvent`);
+                }
+
+                if (LoggedIn && userProfile && user_has_passed_onboarding) {
+                    logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+                }
+
                 getEventMarkers({
                     userToken, id: communityId,
                     eventMarkers,
@@ -91,6 +107,9 @@ export async function joinEvent({
             });
     } catch (error) {
         console.log(`${error} ::: joinEvent`);
-        callAlert(undefined, `${error.toString()} ::: joinEvent`);
+
+        if (DEV_MODE) {
+            callAlert(undefined, `${error.toString()} ::: joinEvent`);
+        }
     }
 }

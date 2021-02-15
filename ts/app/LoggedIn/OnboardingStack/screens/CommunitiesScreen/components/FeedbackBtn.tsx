@@ -20,7 +20,7 @@ const FeedbackBtn = (props: FeedbackBtnProps) => {
   return (
     <TouchableOpacity
       // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
-      onLongPress={() => props.testingMode[1](!props.testingMode[0])}
+      // onLongPress={() => props.testingMode[1](!props.testingMode[0])}
 
       onPress={() => navigate('WebScreen', {url: constants.feedbackURL})}
       style={_s.container}>

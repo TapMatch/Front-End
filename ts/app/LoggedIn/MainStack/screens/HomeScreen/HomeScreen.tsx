@@ -34,7 +34,7 @@ const HomeScreen = (props: HomeScreenProps) => {
   let _mapRef = useRef<any>(null);
   const set_mapRef = (x: any) => _mapRef = x;
 
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const {userLocation, userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const {
     selectedCommunityData, eventDetailsModalVisible,
     eventMarkers, selectedMarkerData, upcomingEvents,
@@ -122,7 +122,10 @@ const HomeScreen = (props: HomeScreenProps) => {
       await getUpcomingEvents({
         communityId: selectedCommunityData[0].id,
         userToken: userToken[0],
-        upcomingEvents
+        upcomingEvents,
+        LoggedIn,
+        userProfile,
+        user_has_passed_onboarding
       });
       // await getEventMarkers({
       //   id: selectedCommunityData[0].id,
@@ -132,6 +135,8 @@ const HomeScreen = (props: HomeScreenProps) => {
       await getUserProfile({
         userProfile,
         userToken: userToken[0],
+        LoggedIn,
+        user_has_passed_onboarding,
       });
     }
   };
@@ -195,7 +200,9 @@ const HomeScreen = (props: HomeScreenProps) => {
             userToken: userToken[0],
             selectedMarkerData,
             eventMarkers,
-            userProfile
+            userProfile,
+            LoggedIn,
+            user_has_passed_onboarding
           }),
           title: 'Are you sure\nYou want to\nDelete this event?',
           modalVisible: yesNoModalVisible
@@ -209,7 +216,9 @@ const HomeScreen = (props: HomeScreenProps) => {
               selectedCommunityData: selectedCommunityData,
               userToken: userToken[0],
               selectedMarkerData,
-              eventMarkers
+              eventMarkers,
+              LoggedIn,
+              user_has_passed_onboarding
             }),
           title: 'Are you sure\nYou want to\nleave this event?',
           modalVisible: yesNoModalVisible
@@ -256,7 +265,10 @@ const HomeScreen = (props: HomeScreenProps) => {
   const getMarkers = () => getEventMarkers({
     userToken: userToken[0],
     id: selectedCommunityData[0].id,
-    eventMarkers
+    eventMarkers,
+    LoggedIn,
+    userProfile,
+    user_has_passed_onboarding
   });
 
   const defineJoinState = () => {

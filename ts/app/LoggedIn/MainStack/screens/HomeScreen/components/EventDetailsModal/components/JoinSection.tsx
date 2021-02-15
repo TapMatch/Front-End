@@ -18,7 +18,7 @@ interface JoinSectionProps {
 const JoinSection = ({eventJoinState}: JoinSectionProps) => {
     const {eventMarkers, selectedMarkerData, selectedCommunityData} = useContext(MainStackContext);
     const {currentUserIsOrganizer, eventDetailsModalVisible} = useContext(HomeScreenContext);
-    const {userToken, userProfile} = useContext(TapMatchContext);
+    const {userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
 
     const joinRequestInprogress = useState<boolean>(false);
 
@@ -56,7 +56,9 @@ const JoinSection = ({eventJoinState}: JoinSectionProps) => {
                                         userToken: userToken[0],
                                         eventMarkers,
                                         selectedMarkerData,
-                                        userProfile
+                                        userProfile,
+                                        LoggedIn,
+                                        user_has_passed_onboarding
                                     });
                                 } else {
                                     callAlert(undefined, 'You can join up to 5 events at a time.');

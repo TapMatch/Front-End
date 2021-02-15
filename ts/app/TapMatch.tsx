@@ -15,6 +15,7 @@ import {getUserProfile} from './common/api/getUserProfile';
 import PlaceholderStack from './LoggedIn/PlaceholderStack/PlaceholderStack';
 import OneSignal from 'react-native-onesignal';
 import {updateUserProfile} from './common/api/updateUserProfile';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
@@ -40,16 +41,6 @@ const TapMatch = () => {
       OneSignal.init("b6013fa6-1fc9-4afa-8236-4dd009fd798d", {kOSSettingsKeyAutoPrompt: false, kOSSettingsKeyInAppLaunchURL: false, kOSSettingsKeyInFocusDisplayOption: 2});
       OneSignal.inFocusDisplaying(2);
       OneSignal.promptForPushNotificationsWithUserResponse((permission: any) => console.log(permission));
-
-      //  OneSignal.addEventListener('received', this.onReceived);
-      //  OneSignal.addEventListener('opened', this.onOpened);
-      //  OneSignal.addEventListener('ids', this.onIds);
-
-      // return()=> {
-      //   OneSignal.removeEventListener('received', this.onReceived);
-      //   OneSignal.removeEventListener('opened', this.onOpened);
-      //   OneSignal.removeEventListener('ids', this.onIds);
-      // }
     }
   }, [LoggedIn[0]]);
 
@@ -71,7 +62,9 @@ const TapMatch = () => {
           userProfile,
           data: {
             uuid: userOneSignalId[0]
-          }
+          },
+          LoggedIn,
+          user_has_passed_onboarding
         });
       }
     }
@@ -83,7 +76,12 @@ const TapMatch = () => {
         if (typeof value === 'string') {
           LoggedIn[1](true);
           userToken[1](value);
-          getUserProfile({userProfile, userToken: value});
+          getUserProfile({
+            userProfile,
+            userToken: value,
+            LoggedIn,
+            user_has_passed_onboarding,
+          });
         }
       })
       .catch((error) => {

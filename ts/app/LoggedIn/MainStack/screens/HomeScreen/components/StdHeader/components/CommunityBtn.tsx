@@ -19,7 +19,7 @@ const CommunityBtn = (props: CommunityBtnProps) => {
     <TouchableOpacity
 
       // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
-      onLongPress={() => navigate('SecretScreen')}
+      // onLongPress={() => navigate('SecretScreen')}
 
       //
       onPress={() => communitiesModalVisible[1](true)}

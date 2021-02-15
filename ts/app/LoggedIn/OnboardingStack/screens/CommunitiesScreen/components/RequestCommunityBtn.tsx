@@ -16,7 +16,7 @@ const RequestCommunityBtn = (props: RequestCommunityBtnProps) => {
   return (
     <TouchableOpacity
       // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
-      onLongPress={() => navigate('SecretScreen')}
+      // onLongPress={() => navigate('SecretScreen')}
 
       //
       onPress={() => navigate('WebScreen', {url: constants.requestCommunityURL})}

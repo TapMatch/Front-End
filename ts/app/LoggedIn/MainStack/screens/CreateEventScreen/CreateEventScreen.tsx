@@ -31,7 +31,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
     selectedMarkerData, eventDetailsModalVisible
   } = useContext(MainStackContext);
 
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const {userLocation, userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const description = useState<string>('');
   const eventName = useState<string>('');
   const joinLimit = useState<number>(1);
@@ -105,7 +105,9 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
                 join_limit: joinLimit[0],
                 date: dateTime[0],
                 name: eventName[0],
-                goBack: () => navigation.goBack()
+                goBack: () => navigation.goBack(),
+                LoggedIn,
+                user_has_passed_onboarding
               });
             }} />
           <MapView

@@ -1,19 +1,27 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 import callAlert from 'ts/utils/callAlert';
+import logUserOut from '../services/logUserOut';
 
 interface IgetEventMarkers {
   userToken: string;
   id: string;
   eventMarkers: any;
   selectedMarkerData?: any;
+  LoggedIn?: [boolean, (x: boolean) => void];
+  userProfile?: [any, (x: any) => void];
+  user_has_passed_onboarding?: [boolean, (x: boolean) => void];
 }
 
 export async function getEventMarkers({
   id,
   userToken,
   eventMarkers,
-  selectedMarkerData
+  selectedMarkerData,
+  LoggedIn,
+  userProfile,
+  user_has_passed_onboarding
 }: IgetEventMarkers) {
 
   try {
@@ -41,11 +49,23 @@ export async function getEventMarkers({
         // }
       })
       .catch((error) => {
-        console.log(error);
-        // callAlert(undefined, `${error.toString()} ::: getEventMarkers`);
+
+        if (DEV_MODE) {
+          console.log(error, '::: getEventMarkers');
+          callAlert(undefined, `${error.toString()} ::: getEventMarkers`);
+        }
+
+        if (LoggedIn && userProfile && user_has_passed_onboarding) {
+          logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+        }
+
       });
   } catch (error) {
-    console.log(`${error} ::: getEventMarkers`);
-    callAlert(undefined, `${error.toString()} ::: getEventMarkers`);
+
+    if (DEV_MODE) {
+      console.log(`${error} ::: getEventMarkers`);
+
+      callAlert(undefined, `${error.toString()} ::: getEventMarkers`);
+    }
   }
 }

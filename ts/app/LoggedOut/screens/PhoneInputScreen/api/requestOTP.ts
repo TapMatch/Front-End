@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 import callAlert from 'ts/utils/callAlert';
 import logAxiosError from 'ts/utils/logAxiosError';
 
@@ -32,10 +33,14 @@ export async function requestOTP({
       })
       .catch((error) => {
         logAxiosError(error, 'requestOTP');
-        callAlert(undefined, `${error.toString()} ::: requestOTP`);
+        if (DEV_MODE) {
+          callAlert(undefined, `${error.toString()} ::: requestOTP`);
+        }
       });
   } catch (error) {
     console.log(`${error} ::: requestOTP`);
-    callAlert(undefined, `${error.toString()} ::: requestOTP`);
+    if (DEV_MODE) {
+      callAlert(undefined, `${error.toString()} ::: requestOTP`);
+    }
   }
 }

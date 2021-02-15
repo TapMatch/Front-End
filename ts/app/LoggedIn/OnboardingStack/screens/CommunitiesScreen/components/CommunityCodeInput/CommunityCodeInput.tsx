@@ -17,7 +17,7 @@ const CommunityCodeInput = ({
   modalVisible
 }: CommunitiesScreenProps) => {
   const windowState = useState<boolean>(!communityItem[0].is_open);
-  const {userProfile, userToken} = useContext(TapMatchContext);
+  const {userProfile, userToken, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
 
   useEffect(() => {
     if (modalVisible[0]) {
@@ -27,6 +27,8 @@ const CommunityCodeInput = ({
           communityId: communityItem[0].id,
           userToken: userToken[0],
           windowState,
+          LoggedIn,
+          user_has_passed_onboarding
         });
       }
     }

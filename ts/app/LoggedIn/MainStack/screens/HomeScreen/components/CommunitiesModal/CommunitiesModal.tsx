@@ -22,7 +22,7 @@ interface CommunitiesModalProps {
 const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
-  const {userToken, userProfile} = useContext(TapMatchContext);
+  const {userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const myCommunities = useState<any>([]);
 
   const {upcomingEvents, eventMarkers, upcomingEventsListIsOpen, communitySelectedForJoin, allCommunities, communitiesModalVisible, communityCodeInputVisible} = useContext(MainStackContext);
@@ -42,6 +42,9 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
     getAllCommunities({
       userToken: userToken[0],
       communities: allCommunities,
+      LoggedIn,
+      userProfile,
+      user_has_passed_onboarding
     }).then(() => {
       const cleanCommunitiesList = allCommunities[0].filter((el: any) => {
         const ind = userProfile[0].communities[0].findIndex((item: any) => item.id === el.id);
@@ -78,12 +81,18 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
                   getUpcomingEvents({
                     communityId: item.id,
                     userToken: userToken[0],
-                    upcomingEvents
+                    upcomingEvents,
+                    LoggedIn,
+                    userProfile,
+                    user_has_passed_onboarding,
                   });
                   getEventMarkers({
                     id: item.id,
                     userToken: userToken[0],
-                    eventMarkers
+                    eventMarkers,
+                    LoggedIn,
+                    userProfile,
+                    user_has_passed_onboarding
                   });
                   communitiesModalVisible[1](false);
                 }} item={{...item, access: c.access}} />

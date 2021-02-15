@@ -4,7 +4,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
-import shareContent from 'ts/app/common/serveces/shareContent';
+import shareContent from 'ts/app/common/services/shareContent';
 import FastImage from 'react-native-fast-image';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 

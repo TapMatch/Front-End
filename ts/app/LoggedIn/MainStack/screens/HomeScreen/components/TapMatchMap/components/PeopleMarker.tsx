@@ -30,7 +30,7 @@ const PeopleMarker = ({
 
   const {last_members, name, join_limit, organizer, id, joined, community_id} = item;
   const {selectedMarkerData, requestingEventDetailsInProcess} = useContext(MainStackContext);
-  const {userToken, LoggedIn} = useContext(TapMatchContext);
+  const {userToken, LoggedIn, userProfile, user_has_passed_onboarding} = useContext(TapMatchContext);
   const {focusMapToLatLng, yesNoModalVisible} = useContext(HomeScreenContext);
   const len = last_members.length;
   const positionArr = [//5
@@ -96,7 +96,7 @@ const PeopleMarker = ({
   } else {
     return (
       <Marker
-        tracksViewChanges={!mapReady[0]}
+        // tracksViewChanges={!mapReady[0]}
         onPress={() => {
           focusMapToLatLng(item.coordinates);
           if (selectedMarkerData[0].id !== id) {
@@ -107,7 +107,9 @@ const PeopleMarker = ({
               selectedMarkerData,
               eventDetailsModalVisible,
               requestingEventDetailsInProcess,
-              LoggedIn
+              LoggedIn,
+              userProfile,
+              user_has_passed_onboarding
             });
           } else {
             eventDetailsModalVisible[1](true);

@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Platform} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {_c} from 'ts/UIConfig/colors';
@@ -13,6 +13,7 @@ const AvatarImg = (props: AvatarImgProps) => {
     <View style={_s.container}>
       <FastImage
         style={_s.avatar}
+        resizeMode={FastImage.resizeMode.cover}
         source={{
           uri:
             `${userProfile[0].avatar}`,
@@ -38,7 +39,7 @@ const _s = StyleSheet.create({
   },
   avatar: {
     borderRadius: 300,
-    height: 50,
-    width: 50,
+    height: '100%',
+    width: '100%',
   },
 });

@@ -20,7 +20,7 @@ interface TapMatchMapProps {
 }
 
 const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModalVisible}: TapMatchMapProps) => {
-    const {userLocation, userToken} = useContext(TapMatchContext);
+    const {userLocation, userToken, LoggedIn, userProfile, user_has_passed_onboarding} = useContext(TapMatchContext);
     const {selectedCommunityData, selectedMarkerData} = useContext(MainStackContext);
     // const mapKey = useState<number>(0);
     const mapReady = useState<boolean>(false);
@@ -53,7 +53,10 @@ const TapMatchMap = ({eventMarkers, set_mapRef, mapCoordinates, eventDetailsModa
                 getEventMarkers({
                     id: selectedCommunityData[0].id,
                     userToken: userToken[0],
-                    eventMarkers
+                    eventMarkers,
+                    LoggedIn,
+                    userProfile,
+                    user_has_passed_onboarding
                 });
                 setUserLocationVisibility();
                 setTimeout(() => mapReady[1](true), 100);

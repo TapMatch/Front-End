@@ -14,7 +14,12 @@ import * as RNLocalize from "react-native-localize";
 import Geocoder from 'react-native-geocoding';
 
 export default function MainStack() {
-  const {userProfile, userToken} = useContext(TapMatchContext);
+  const {
+    LoggedIn,
+    userProfile,
+    user_has_passed_onboarding,
+    userToken
+  } = useContext(TapMatchContext);
   const selectedCommunityData = useState<any>(userProfile[0].communities[0][0]);
   // const selectedCommunityData = useState<any>({
   //   id: 0,
@@ -47,7 +52,10 @@ export default function MainStack() {
 
   useEffect(() => {
     patchUserTimeZone({
-      userToken
+      userToken,
+      LoggedIn,
+      userProfile,
+      user_has_passed_onboarding
     });
   }, []);
 

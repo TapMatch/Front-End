@@ -14,7 +14,12 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 export default function OnboardingStack() {
 
-  const {userToken} = useContext(TapMatchContext);
+  const {
+    userToken,
+    LoggedIn,
+    userProfile,
+    user_has_passed_onboarding
+  } = useContext(TapMatchContext);
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
   const transitions =
@@ -25,7 +30,10 @@ export default function OnboardingStack() {
 
   useEffect(() => {
     patchUserTimeZone({
-      userToken
+      userToken,
+      LoggedIn,
+      userProfile,
+      user_has_passed_onboarding
     });
   }, []);
 

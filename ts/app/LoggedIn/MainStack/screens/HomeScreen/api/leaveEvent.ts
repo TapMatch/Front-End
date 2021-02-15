@@ -3,6 +3,8 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
+import logUserOut from 'ts/app/common/services/logUserOut';
 
 interface IleaveEvent {
 	userToken: string;
@@ -11,6 +13,9 @@ interface IleaveEvent {
 	selectedMarkerData?: any;
 	userProfile: any;
 	eventDetailsModalVisible: [boolean, (x: boolean) => void];
+	LoggedIn?: [boolean, (x: boolean) => void];
+	user_has_passed_onboarding?: [boolean, (x: boolean) => void];
+
 }
 
 export async function leaveEvent({
@@ -19,7 +24,10 @@ export async function leaveEvent({
 	eventMarkers,
 	selectedMarkerData,
 	userProfile,
-	eventDetailsModalVisible
+	eventDetailsModalVisible,
+	LoggedIn,
+	user_has_passed_onboarding
+
 }: IleaveEvent) {
 	try {
 		const options: AxiosRequestConfig = {
@@ -66,12 +74,22 @@ export async function leaveEvent({
 						}
 					}
 				}
-				// console.log(error);
-				// callAlert(undefined, `${error.toString()} ::: leaveEvent`);
+
+				if (LoggedIn && userProfile && user_has_passed_onboarding) {
+					logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+				}
+
+				if (DEV_MODE) {
+					console.log(error, '::: leaveEvent');
+					callAlert(undefined, `${error.toString()} ::: leaveEvent`);
+				}
 				getEventMarkers({userToken, id: selectedCommunityData[0].id, eventMarkers, selectedMarkerData: selectedMarkerData ? selectedMarkerData : null});
 			});
 	} catch (error) {
 		console.log(`${error} ::: leaveEvent`);
-		callAlert(undefined, `${error.toString()} ::: leaveEvent`);
+
+		if (DEV_MODE) {
+			callAlert(undefined, `${error.toString()} ::: leaveEvent`);
+		}
 	}
 }

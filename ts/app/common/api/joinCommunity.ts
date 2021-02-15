@@ -1,7 +1,9 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 import {tapMatchServerUrl} from 'ts/constants/constants';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 import callAlert from 'ts/utils/callAlert';
+import logUserOut from '../services/logUserOut';
 
 interface IjoinCommunity {
   userProfile: [any, (x: any) => void];
@@ -10,6 +12,8 @@ interface IjoinCommunity {
   code?: string;
   windowState: [boolean, (x: boolean) => void];
   errorState?: [boolean, (x: boolean) => void];
+  LoggedIn?: [boolean, (x: boolean) => void];
+  user_has_passed_onboarding?: [boolean, (x: boolean) => void];
 }
 
 export async function joinCommunity({
@@ -19,6 +23,8 @@ export async function joinCommunity({
   userToken,
   communityId,
   code,
+  LoggedIn,
+  user_has_passed_onboarding
 }: IjoinCommunity) {
   try {
     const options: AxiosRequestConfig = {
@@ -66,11 +72,19 @@ export async function joinCommunity({
             errorState[1](true);
           }
         } else {
-          callAlert(undefined, `${error.toString()} ::: joinCommunity1`);
+          if (DEV_MODE) {
+            callAlert(undefined, `${error.toString()} ::: joinCommunity`);
+          }
+        }
+
+        if (LoggedIn && userProfile && user_has_passed_onboarding) {
+          logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
         }
       });
   } catch (error) {
     console.log(`${error} ::: joinCommunity2`);
-    callAlert(undefined, `${error.toString()} ::: joinCommunity`);
+    if (DEV_MODE) {
+      callAlert(undefined, `${error.toString()} ::: joinCommunity`);
+    }
   }
 }

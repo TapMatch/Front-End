@@ -16,7 +16,7 @@ interface CodeInputProps {
 }
 
 const CodeInput = ({code, communityId, errorState}: CodeInputProps) => {
-  const {userProfile, userToken} = useContext(TapMatchContext);
+  const {userProfile, userToken, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const {windowState} = useContext(CommunityCodeInputContext);
 
   return (
@@ -43,6 +43,8 @@ const CodeInput = ({code, communityId, errorState}: CodeInputProps) => {
               communityId,
               userToken: userToken[0],
               windowState,
+              LoggedIn,
+              user_has_passed_onboarding
             });
           }}
         />

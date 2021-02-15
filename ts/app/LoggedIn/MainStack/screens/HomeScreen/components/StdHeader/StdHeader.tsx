@@ -8,7 +8,7 @@ import CommunityBtn from './components/CommunityBtn';
 import AddEventBtn from './components/AddEventBtn';
 import BlackGradient from 'ts/app/common/components/BlackGradient';
 
-interface StdHeaderProps { }
+interface StdHeaderProps {}
 
 const StdHeader = (props: StdHeaderProps) => {
   const {top} = useSafeAreaInsets();

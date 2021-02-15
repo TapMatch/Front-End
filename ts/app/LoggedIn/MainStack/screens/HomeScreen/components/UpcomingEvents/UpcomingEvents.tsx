@@ -39,7 +39,7 @@ const UpcomingEvents = ({
       : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
   const {upcomingEvents, selectedCommunityData, upcomingEventsListIsOpen, eventMarkers, selectedMarkerData, allCommunities} = useContext(MainStackContext);
-  const {userToken, userLocation} = useContext(TapMatchContext);
+  const {userToken, userLocation, LoggedIn, user_has_passed_onboarding, userProfile} = useContext(TapMatchContext);
   const locationFocusTrigger = useState<boolean>(false);
   // const txt = useLocalizedTxt();
 
@@ -80,7 +80,10 @@ const UpcomingEvents = ({
     getUpcomingEvents({
       communityId: selectedCommunityData[0].id,
       userToken: userToken[0],
-      upcomingEvents
+      upcomingEvents,
+      LoggedIn,
+      userProfile,
+      user_has_passed_onboarding
     });
   }, [selectedCommunityData[0].id]);
 
@@ -161,13 +164,19 @@ const UpcomingEvents = ({
           getUpcomingEvents({
             communityId: selectedCommunityData[0].id,
             userToken: userToken[0],
-            upcomingEvents
+            upcomingEvents,
+            LoggedIn,
+            userProfile,
+            user_has_passed_onboarding
           });
           selectedMarkerData[1]({});
           getEventMarkers({
             id: selectedCommunityData[0].id,
             userToken: userToken[0],
-            eventMarkers
+            eventMarkers,
+            LoggedIn,
+            userProfile,
+            user_has_passed_onboarding
           });
         }}>
           <RefreshCircleRed

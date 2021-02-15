@@ -25,7 +25,7 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
   const lockOpenWhiteSize = vs(55);
   const {height} = useDimensions().screen;
   const {name, city} = community;
-  const {user_has_passed_onboarding, userProfile, userToken, PHPSESSID} = useContext(TapMatchContext);
+  const {user_has_passed_onboarding, userProfile, userToken, PHPSESSID, LoggedIn} = useContext(TapMatchContext);
 
   const moveOn = () => {
     user_has_passed_onboarding[1](true);
@@ -33,6 +33,8 @@ const CodeInputWindow = ({community}: CodeInputWindowProps) => {
     postUserFinishedOnboarding({
       userProfile,
       userToken: userToken[0],
+      LoggedIn,
+      user_has_passed_onboarding
     });
     windowState[1](false);
   };

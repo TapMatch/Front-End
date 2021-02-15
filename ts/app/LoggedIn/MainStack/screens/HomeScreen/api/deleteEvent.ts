@@ -3,6 +3,8 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import {getEventMarkers} from 'ts/app/common/api/getEventMarkers';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
+import logUserOut from 'ts/app/common/services/logUserOut';
 
 interface IdeleteEvent {
     userToken: string;
@@ -12,6 +14,9 @@ interface IdeleteEvent {
     currentUserIsOrganizer: boolean;
     eventDetailsModalVisible: [boolean, (x: boolean) => void];
     userProfile: any;
+    LoggedIn?: [boolean, (x: boolean) => void];
+    user_has_passed_onboarding?: [boolean, (x: boolean) => void];
+
 }
 
 export async function deleteEvent({
@@ -21,7 +26,10 @@ export async function deleteEvent({
     eventDetailsModalVisible,
     selectedMarkerData,
     currentUserIsOrganizer,
-    userProfile
+    userProfile,
+    LoggedIn,
+    user_has_passed_onboarding
+
 }: IdeleteEvent) {
 
     try {
@@ -69,14 +77,22 @@ export async function deleteEvent({
                             }
                         }
                     }
-                    console.log(error);
-                    // callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+                    if (DEV_MODE) {
+                        console.log(error, '::: deleteEvent');
+                        callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+                    }
+                    if (LoggedIn && userProfile && user_has_passed_onboarding) {
+                        logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+                    }
                 });
         } else {
             console.log('ONLY ORGANIZER CAN DELETE EVENT');
         }
     } catch (error) {
         console.log(`${error} ::: deleteEvent`);
-        callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+
+        if (DEV_MODE) {
+            callAlert(undefined, `${error.toString()} ::: deleteEvent`);
+        }
     }
 }

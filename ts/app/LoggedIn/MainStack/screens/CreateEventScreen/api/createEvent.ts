@@ -7,6 +7,8 @@ import moment from 'moment';
 import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import logAxiosError from 'ts/utils/logAxiosError';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
+import logUserOut from 'ts/app/common/services/logUserOut';
 
 interface IcreateEvent {
     userToken: string;
@@ -23,6 +25,9 @@ interface IcreateEvent {
     eventDetailsModalVisible: any;
     goBack: any;
     userProfile: [any, (x: any) => void];
+    LoggedIn?: [boolean, (x: boolean) => void];
+    user_has_passed_onboarding?: [boolean, (x: boolean) => void];
+
 }
 
 export async function createEvent({
@@ -39,7 +44,9 @@ export async function createEvent({
     upcomingEvents,
     selectedMarkerData,
     goBack,
-    userProfile
+    userProfile,
+    LoggedIn,
+    user_has_passed_onboarding
 }: IcreateEvent) {
     try {
         const options: AxiosRequestConfig = {
@@ -79,10 +86,17 @@ export async function createEvent({
                     callAlert('Event Time', err.error_data.error.date);
                 }
 
+                if (LoggedIn && userProfile && user_has_passed_onboarding) {
+                    logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+                }
+
             });
     } catch (error) {
         console.log(`${error} ::: createEvent`);
-        callAlert(undefined, `${error.toString()} ::: createEvent`);
+
+        if (DEV_MODE) {
+            callAlert(undefined, `${error.toString()} ::: createEvent`);
+        }
         return;
     }
 }

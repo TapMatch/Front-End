@@ -4,6 +4,7 @@ import callAlert from 'ts/utils/callAlert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 import * as RNLocalize from "react-native-localize";
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 
 interface IverifyOTPAndLogIn {
   PHPSESSID: [string, (x: string) => void];
@@ -62,11 +63,17 @@ export async function verifyOTPAndLogIn({
           callAlert(undefined, `Code is invalid.`);
         } else {
           console.log(error.toString(), '::: verifyOTPAndLogIn');
-          callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
+
+          if (DEV_MODE) {
+            callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
+          }
         }
       });
   } catch (error) {
     console.log(`${error} ::: verifyOTPAndLogIn`);
-    callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
+
+    if (DEV_MODE) {
+      callAlert(undefined, `${error.toString()} ::: verifyOTPAndLogIn`);
+    }
   }
 }

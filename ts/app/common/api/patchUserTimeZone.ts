@@ -2,15 +2,21 @@ import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import * as RNLocalize from "react-native-localize";
 import logAxiosError from 'ts/utils/logAxiosError';
+import logUserOut from '../services/logUserOut';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 
 interface IpatchUserTimeZone {
-    //   LoggedIn: [boolean, (x: boolean) => void];
     userToken: [string, (x: string) => void];
+    LoggedIn?: [boolean, (x: boolean) => void];
+    userProfile?: [any, (x: any) => void];
+    user_has_passed_onboarding?: [boolean, (x: boolean) => void];
 }
 
 export async function patchUserTimeZone({
-    //   LoggedIn,
     userToken,
+    LoggedIn,
+    userProfile,
+    user_has_passed_onboarding
 }: IpatchUserTimeZone) {
     try {
         const options: AxiosRequestConfig = {
@@ -32,8 +38,15 @@ export async function patchUserTimeZone({
             })
             .catch((error) => {
                 logAxiosError(error, 'patchUserTimeZone');
+
+                if (LoggedIn && userProfile && user_has_passed_onboarding) {
+                    logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+                }
             });
     } catch (error) {
-        console.log(`${error} ::: patchUserTimeZone`);
+
+        if (DEV_MODE) {
+            console.log(`${error} ::: patchUserTimeZone`);
+        }
     }
 }

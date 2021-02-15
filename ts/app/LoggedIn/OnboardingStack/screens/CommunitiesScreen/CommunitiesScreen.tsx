@@ -23,7 +23,7 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const isFocused = useIsFocused();
-  const {userLocation, userToken, userProfile} = useContext(TapMatchContext);
+  const {userLocation, userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const communities = useState<any>([]);
   const codeInputVisible = useState<boolean>(false);
   const selectedCommunity = useState<any>({});
@@ -45,6 +45,9 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
     getAllCommunities({
       userToken: userToken[0],
       communities,
+      LoggedIn,
+      userProfile,
+      user_has_passed_onboarding
     });
   }, []);
 
@@ -56,6 +59,9 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
       getAllCommunities({
         userToken: userToken[0],
         communities,
+        LoggedIn,
+        userProfile,
+        user_has_passed_onboarding
       });
     });
     return unsubscribe;

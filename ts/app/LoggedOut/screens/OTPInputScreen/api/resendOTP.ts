@@ -1,5 +1,6 @@
 import axios, {AxiosRequestConfig} from 'axios';
 import {tapMatchServerUrl} from 'ts/constants/constants';
+import {DEV_MODE} from 'ts/tools/devModeTrigger';
 import callAlert from 'ts/utils/callAlert';
 
 interface IresendOTP {
@@ -25,10 +26,16 @@ export async function resendOTP({PHPSESSID}: IresendOTP) {
       })
       .catch((error) => {
         console.log(error);
-        callAlert(undefined, `${error.toString()} ::: resendOTP`);
+
+        if (DEV_MODE) {
+          callAlert(undefined, `${error.toString()} ::: resendOTP`);
+        }
       });
   } catch (error) {
     console.log(`${error} ::: resendOTP`);
-    callAlert(undefined, `${error.toString()} ::: resendOTP`);
+
+    if (DEV_MODE) {
+      callAlert(undefined, `${error.toString()} ::: resendOTP`);
+    }
   }
 }
