@@ -1,10 +1,11 @@
 import React, {useContext, useEffect} from 'react';
+import {useNavigation} from '@react-navigation/native';
 import branch from 'react-native-branch';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
 const DeepLinkHandler = ({
-    children, navigation, route,
+    children, route,
     eventDetailsModalVisible
 }: any) => {
     const {
@@ -16,6 +17,7 @@ const DeepLinkHandler = ({
         communityCodeInputVisible
     } = useContext(MainStackContext);
     const {userProfile} = useContext(TapMatchContext);
+    const {navigate} = useNavigation();
 
     useEffect(() => {
         branch.subscribe(({error, params, uri}: any) => {
@@ -25,7 +27,7 @@ const DeepLinkHandler = ({
             }
             return processDeepLink();
         });
-    });
+    }, []);
 
     const processDeepLink = async () => {
         let lastParams = await branch.getLatestReferringParams();
@@ -47,9 +49,11 @@ const DeepLinkHandler = ({
                     }
                 }
                 selectedMarkerData[1](JSON.parse(lastParams.tapmatch_event_data));
-                eventDetailsModalVisible[1](true);
+                if (eventDetailsModalVisible) {
+                    eventDetailsModalVisible[1](true);
+                }
             } else {
-                navigation.navigate('Home');
+                navigate('Home');
             }
         }
 

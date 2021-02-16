@@ -17,6 +17,7 @@ import LocationPickerMode from './components/LocationPickerMode/LocationPickerMo
 import moment from 'moment';
 import callAlert from 'ts/utils/callAlert';
 import Geocoder from 'react-native-geocoding';
+import NotificationHandler from '../../components/NotificationHandler';
 
 interface CreateEventScreenProps {
   navigation: any;
@@ -136,13 +137,16 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
         description, joinLimit, dateTime, addingLocationOn, gpaRefState,
         eventName, address, coordinates, yesNoModalVisible
       }}>
-        <DeepLinkHandler navigation={navigation} route={route}>
+        <DeepLinkHandler route={route}>
           <StatusBar
             animated={true}
             backgroundColor={_c.smoke}
             barStyle={'dark-content'}
           />
           {renderContent()}
+          <NotificationHandler
+            route={route}
+          />
         </DeepLinkHandler>
       </CreateEventScreenContext.Provider>
     );

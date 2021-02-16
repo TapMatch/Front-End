@@ -13,20 +13,20 @@ import MsgParagraph from './components/MsgParagraph';
 import {useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
+import NotificationHandler from '../../components/NotificationHandler';
 
 interface FeedbackRequestScreenProps {
-  navigation: any;
   route: any;
 }
 
-const FeedbackRequestScreen = ({navigation, route}: FeedbackRequestScreenProps) => {
+const FeedbackRequestScreen = ({route}: FeedbackRequestScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
   const {goBack} = useNavigation();
   const logoSize = width * 0.6;
 
   return (
-    <DeepLinkHandler navigation={navigation} route={route}>
+    <DeepLinkHandler route={route}>
       <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
         <View style={_s.container}>
           <StatusBar
@@ -41,8 +41,10 @@ const FeedbackRequestScreen = ({navigation, route}: FeedbackRequestScreenProps) 
           <FeedBackBtn />
         </View>
       </View>
+      <NotificationHandler
+        route={route}
+      />
     </DeepLinkHandler>
-
   );
 };
 

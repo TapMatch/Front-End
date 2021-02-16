@@ -5,6 +5,7 @@ import WebView from 'react-native-webview';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
+import NotificationHandler from '../../components/NotificationHandler';
 import CloseButton from './components/CloseButton';
 import WebLoader from './components/WebLoader';
 
@@ -13,7 +14,7 @@ const WebScreen = ({navigation, route}: any) => {
   const loadComplete = useState<boolean>(false);
 
   return (
-    <DeepLinkHandler navigation={navigation} route={route}>
+    <DeepLinkHandler route={route}>
       <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
         {loadComplete[0] && <CloseButton onPress={() => navigation.goBack()} />}
         <StatusBar
@@ -31,6 +32,9 @@ const WebScreen = ({navigation, route}: any) => {
           style={_s.webView}
         />
       </View>
+      <NotificationHandler
+        route={route}
+      />
     </DeepLinkHandler>
 
   );

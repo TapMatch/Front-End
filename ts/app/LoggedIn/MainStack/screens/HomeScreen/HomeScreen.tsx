@@ -23,6 +23,7 @@ import {getUpcomingEvents} from 'ts/app/common/api/getUpcomingEvents';
 import DeepLinkHandler from '../../components/DeepLinkHandler';
 import cities from 'ts/constants/cities';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
+import NotificationHandler from '../../components/NotificationHandler';
 
 interface HomeScreenProps {
   navigation: any;
@@ -329,7 +330,10 @@ const HomeScreen = (props: HomeScreenProps) => {
           />
           <DeepLinkHandler
             eventDetailsModalVisible={eventDetailsModalVisible}
-            navigation={navigation}
+            route={route}
+          />
+          <NotificationHandler
+            eventDetailsModalVisible={eventDetailsModalVisible}
             route={route}
           />
         </View>
