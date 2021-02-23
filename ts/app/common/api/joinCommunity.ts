@@ -3,6 +3,7 @@ import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 import {tapMatchServerUrl} from 'ts/constants/constants';
 import {DEV_MODE} from 'ts/tools/devModeTrigger';
 import callAlert from 'ts/utils/callAlert';
+import logAxiosError from 'ts/utils/logAxiosError';
 import logUserOut from '../services/logUserOut';
 
 interface IjoinCommunity {
@@ -24,7 +25,7 @@ export async function joinCommunity({
   communityId,
   code,
   LoggedIn,
-  user_has_passed_onboarding
+  user_has_passed_onboarding,
 }: IjoinCommunity) {
   try {
     const options: AxiosRequestConfig = {
@@ -66,7 +67,7 @@ export async function joinCommunity({
         return data;
       })
       .catch((error) => {
-        console.log(error.toString(), '::: joinCommunity10');
+        logAxiosError(error, 'joinCommunity');
         if (error.toString() === 'Error: Request failed with status code 422') {
           if (errorState) {
             errorState[1](true);
@@ -82,8 +83,8 @@ export async function joinCommunity({
         }
       });
   } catch (error) {
-    console.log(`${error} ::: joinCommunity2`);
     if (DEV_MODE) {
+      console.log(`${error} ::: joinCommunity2`);
       callAlert(undefined, `${error.toString()} ::: joinCommunity`);
     }
   }

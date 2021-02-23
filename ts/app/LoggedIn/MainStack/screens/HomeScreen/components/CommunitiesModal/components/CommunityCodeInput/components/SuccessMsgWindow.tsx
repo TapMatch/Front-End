@@ -22,7 +22,12 @@ interface CodeInputWindowProps {
 const SuccessMsgWindow = ({community, codeInputVisible, communitiesModalVisible}: CodeInputWindowProps) => {
   const txt = useLocalizedTxt();
   const {windowState} = useContext(CommunityCodeInputContext);
-  const {selectedCommunityData} = useContext(MainStackContext);
+  const {
+    selectedCommunityData,
+    eventToGoToAfterDeeplinkCommunityJoin,
+    selectedMarkerData,
+    eventDetailsModalVisible
+  } = useContext(MainStackContext);
   const {userProfile} = useContext(TapMatchContext);
 
   const circleCheckRedSize = vs(70);
@@ -38,6 +43,15 @@ const SuccessMsgWindow = ({community, codeInputVisible, communitiesModalVisible}
       const new_community = userProfile[0].communities[0].find((el: any) => el.id === community.id);
       if (new_community) {
         selectedCommunityData[1](new_community);
+
+        if (Object.keys(eventToGoToAfterDeeplinkCommunityJoin[0])) {
+          selectedMarkerData[1](eventToGoToAfterDeeplinkCommunityJoin[0]);
+          eventToGoToAfterDeeplinkCommunityJoin[1]({});
+          if (eventDetailsModalVisible) {
+            eventDetailsModalVisible[1](true);
+          }
+        }
+
       }
     }
     codeInputVisible[1](false);

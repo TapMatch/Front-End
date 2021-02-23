@@ -25,7 +25,15 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
   const {userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const myCommunities = useState<any>([]);
 
-  const {upcomingEvents, eventMarkers, upcomingEventsListIsOpen, communitySelectedForJoin, allCommunities, communitiesModalVisible, communityCodeInputVisible} = useContext(MainStackContext);
+  const {upcomingEvents,
+    eventMarkers,
+    upcomingEventsListIsOpen,
+    communitySelectedForJoin,
+    allCommunities,
+    communitiesModalVisible,
+    communityCodeInputVisible,
+    selectedMarkerData
+  } = useContext(MainStackContext);
 
   const selectItem = (item: any) => {
     communitySelectedForJoin[1](item);
@@ -33,8 +41,9 @@ const CommunitiesModal = ({selectedCommunityData}: CommunitiesModalProps) => {
   };
 
   useEffect(() => {
-    if (!communitiesModalVisible[0]) {
+    if (communitiesModalVisible[0] === false) {
       communitySelectedForJoin[1]({});
+      // selectedMarkerData[1]({});
     }
   }, [communitiesModalVisible[0]]);
 

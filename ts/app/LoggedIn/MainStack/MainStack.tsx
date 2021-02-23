@@ -38,6 +38,7 @@ export default function MainStack() {
   const communitiesModalVisible = useState<boolean>(false);
   const communityCodeInputVisible = useState<boolean>(false);
   const communitySelectedForJoin = useState<any>({});
+  const eventToGoToAfterDeeplinkCommunityJoin = useState<any>({});
 
 
   const requestingEventDetailsInProcess = useState<boolean>(false);
@@ -75,7 +76,8 @@ export default function MainStack() {
       eventDetailsModalVisible,
       communitiesModalVisible,
       allCommunities,
-      communityCodeInputVisible
+      communityCodeInputVisible,
+      eventToGoToAfterDeeplinkCommunityJoin
     }}>
       <Navigator
         mode={'modal'}

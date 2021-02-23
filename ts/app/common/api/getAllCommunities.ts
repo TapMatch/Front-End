@@ -28,9 +28,12 @@ export async function getAllCommunities({
         'Content-Type': 'application/json',
       },
     };
-    axios
+    return axios
       .request(options)
-      .then(({data}: any) => communities[1](data))
+      .then(({data}: any) => {
+        communities[1](data);
+        return data;
+      })
       .catch((error) => {
         if (DEV_MODE) {
           console.log(error);

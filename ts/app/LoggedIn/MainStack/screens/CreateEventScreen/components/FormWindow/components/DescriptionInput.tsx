@@ -26,7 +26,6 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
       return (
         <TextInput
           ref={descriptionInputRef}
-
           value={description[0]}
           onBlur={() => inputOnScreen[1](false)}
           textContentType={'none'}
@@ -40,7 +39,7 @@ const DescriptionInput = ({description}: DescriptionInputProps) => {
           contextMenuHidden={true}
           onChangeText={(txt) => description[1](capitalizeString(txt))}
           onEndEditing={() => description[1](description[0].trim())}
-          multiline={true}
+          multiline={false}
           style={_s.input}
         />);
     } else {
