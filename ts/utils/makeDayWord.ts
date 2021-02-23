@@ -13,5 +13,5 @@ export default function makeDayWord(d: Date) {
         return 'Today';
     }
 
-    return date.format('MM.DD.YY');
+    return date.format('DD.MM.YY');
 } 

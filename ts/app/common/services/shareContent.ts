@@ -7,8 +7,8 @@ const shareContent = async (data: any, userProfile: any) => {
     try {
         let branchUniversalObject = await branch.createBranchUniversalObject(`event-${data.name}-${data.id}`, {
             locallyIndex: true,
-            title: 'TabMatch',
-            contentDescription: 'TabMatch',
+            title: 'TapMatch',
+            contentDescription: 'TapMatch',
             contentMetadata: {
                 customMetadata: {
                     tapmatch_community_id: `${data.community_id}`,
@@ -18,7 +18,7 @@ const shareContent = async (data: any, userProfile: any) => {
         });
         let linkProperties = {
             feature: 'share',
-            channel: `TabMatch ${Platform.OS} app`
+            channel: `TapMatch ${Platform.OS} app`
         };
         let controlParams = {
             $url_redirect_mode: 2,

@@ -184,7 +184,7 @@ const _s = StyleSheet.create({
     borderRadius: 300,
     borderWidth: 5,
     borderColor: _c.main_red,
-    zIndex: 100,
+    zIndex: 800,
     height: 50,
     width: 50,
     overflow: 'hidden',

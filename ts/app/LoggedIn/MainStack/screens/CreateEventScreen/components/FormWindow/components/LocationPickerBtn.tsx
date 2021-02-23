@@ -20,7 +20,7 @@ const LocationPickerBtn = (props: LocationPickerBtnProps) => {
       style={[_s.container]}>
       <Text style={[_s.txt, _s.title]}>Place</Text>
       <View style={_s.bottom}>
-        <Text numberOfLines={2} style={[_s.txt, _s.address]}>{address[0]}</Text>
+        <Text numberOfLines={2} style={[_s.txt, _s.address]}>{address[0].trim()}</Text>
         <PenBlue height={_fs.x3l} width={_fs.x3l} />
       </View>
     </TouchableOpacity>

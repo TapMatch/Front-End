@@ -26,7 +26,7 @@ const LoggedOutPlaceholderScreen = ({navigation}: any) => {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'TabMatch is a cool app!',
+        message: 'TapMatch is a cool app!',
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {

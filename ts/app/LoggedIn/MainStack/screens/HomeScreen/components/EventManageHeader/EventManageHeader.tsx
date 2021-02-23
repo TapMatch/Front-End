@@ -32,7 +32,7 @@ const EventManageHeader = ({eventDetailsModalVisible, setupDeleteEventUI}: Event
         <View style={_s.middle}>
           <View style={_s.middleTop}>
             <Text style={_s.topMiddleTxt}>Manage</Text>
-            <Text style={_s.topMiddleTxt}>{name}.</Text>
+            <Text style={_s.topMiddleTxt}>{name}</Text>
           </View>
           <View style={_s.middleBottom}>
             <Text style={_s.bottomMiddleTxt}>{`${makeDayWord(datetime.date)} ${moment(datetime.date).format('HH:mm a')}`}</Text>
