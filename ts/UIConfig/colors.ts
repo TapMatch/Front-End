@@ -8,7 +8,7 @@ export const _c = {
   whiteLight: 'rgba(255,255,255,0.3)',
   grey: 'rgba(0,0,0,0.4)',
   modalbackground: 'rgba(112, 112, 112, 0.8)',
-  yesNoModalbackground: 'rgb(90, 90, 90)',
+  yesNoModalbackground: 'rgb(5, 5, 5)',
   noBtnBackground: 'rgba(220, 220, 220, 0.32)',
   transparentBtn: 'rgba(159, 159, 159, 0.04)',
   invisible: 'rgba(0, 0, 0, 0)',

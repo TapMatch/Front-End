@@ -50,7 +50,7 @@ const YesNoModal = ({
       animationIn={'fadeIn'}
       animationInTiming={600}
       backdropColor={_c.yesNoModalbackground}
-      backdropOpacity={0.75}
+      backdropOpacity={0.83}
       animationOut={'fadeOut'}
       animationOutTiming={600}
       isVisible={modalVisible[0]}
@@ -63,13 +63,19 @@ const YesNoModal = ({
           {renderSubtitle()}
         </View>
         <View style={_s.bottom}>
-          <TouchableOpacity activeOpacity={1} onPress={handleYes} style={[_s.btn, _s.yesBtn]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleYes}
+            style={[_s.btn, _s.yesBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.yesBtnTxt]}>
               {/* {txt.yes} */}
               Yes
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity activeOpacity={1} onPress={handleNo} style={[_s.btn, _s.noBtn]}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={handleNo}
+            style={[_s.btn, _s.noBtn]}>
             <Text numberOfLines={1} style={[_s.btnTxt, _s.noBtnTxt]}>
               {txt.noStay}
             </Text>
