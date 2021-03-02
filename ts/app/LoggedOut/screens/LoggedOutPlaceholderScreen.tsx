@@ -48,7 +48,7 @@ const LoggedOutPlaceholderScreen = ({navigation}: any) => {
         onYesPress={() => console.log('onYesPress----onYesPress')}
         onNoPress={() => console.log('onNoPress-------onNoPress')}
         modalVisible={modalVisible}
-        subtitle={'Note that if you quit,\nno draft Will be saved'}
+        subtitle={'Note that if you quit,\nno draft will be saved'}
         title={'Are you sure\nYou want to\nleave create?'}
       />
       <StatusBar

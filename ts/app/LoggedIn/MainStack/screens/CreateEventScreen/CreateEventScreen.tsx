@@ -124,7 +124,7 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
           <YesNoModal
             onYesPress={navigation.goBack}
             modalVisible={yesNoModalVisible}
-            subtitle={'Note that if you quit,\nno draft Will be saved'}
+            subtitle={'Note that if you quit,\nno draft will be saved'}
             title={'Are you sure\nYou want to\nleave create?'}
           />
         </View>

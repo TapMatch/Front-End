@@ -29,8 +29,6 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   const selectedCommunity = useState<any>({});
   const coordinates = userLocation[0];
 
-  // FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION
-  const testingMode = useState<boolean>(false);
 
   useBackHandler(() => false);
 
@@ -89,10 +87,8 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
               const c = userProfile[0].communities[0].find((el: any) => {
                 return el.id === item.id;
               });
-              {/* FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION */}
-              const cond = testingMode[0] ? false : c;
-              {/**/}
-              return cond ? (
+              
+              return c ? (
                 <ListItemUnlocked item={{...item, access: c.access}} />
               ) : (
                   <ListItemLocked selectItem={selectItem} item={item} />
@@ -109,9 +105,7 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
             },
           ]}>
           <RequestCommunityBtn />
-          {/* <FeedbackBtn /> */}
-          {/* FOR TESTING PURPOSES ONLY REMOVE IN PRODUCTION */}
-          <FeedbackBtn testingMode={testingMode} />
+          <FeedbackBtn />
         </View>
       </Fragment>;
     }

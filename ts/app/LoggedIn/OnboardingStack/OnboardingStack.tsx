@@ -8,7 +8,6 @@ import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
 import MapDemoScreen from './screens/MapDemoScreen/MapDemoScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
-import SecretScreen from '../MainStack/screens/SecretScreen';
 import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 
@@ -122,11 +121,6 @@ export default function OnboardingStack() {
         }}
       />
 
-      <Screen
-        name="SecretScreen"
-        options={{title: 'SecretScreen'}}
-        component={SecretScreen}
-      />
     </Navigator>
   );
 }

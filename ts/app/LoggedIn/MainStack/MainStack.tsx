@@ -2,7 +2,6 @@ import React, {useContext, useEffect, useState} from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import {Platform} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
-import SecretScreen from './screens/SecretScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import HomeScreen from './screens/HomeScreen/HomeScreen';
 import FeedbackRequestScreen from './screens/FeedbackRequestScreen/FeedbackRequestScreen';
@@ -136,12 +135,6 @@ export default function MainStack() {
               headerShown: false,
             };
           }}
-        />
-
-        <Screen
-          name="SecretScreen"
-          component={SecretScreen}
-          options={{title: 'SecretScreen'}}
         />
 
       </Navigator>

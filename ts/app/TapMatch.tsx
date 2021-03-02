@@ -24,9 +24,13 @@ const TapMatch = () => {
   const userToken = useState<string>('');
   const PHPSESSID = useState<string>('');
   const userOneSignalId = useState<string>('');
+  // const userLocation = useState<LatLng>({
+  //   latitude: 37.78825,
+  //   longitude: -122.4324,
+  // });
   const userLocation = useState<LatLng>({
-    latitude: 37.78825,
-    longitude: -122.4324,
+    latitude: 52.3676,
+    longitude: 4.9041,
   });
 
   const locationPermission =
@@ -34,13 +38,17 @@ const TapMatch = () => {
       ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
       : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
 
-
-
   useEffect(() => {
     if (LoggedIn[0]) {
-      OneSignal.init("b6013fa6-1fc9-4afa-8236-4dd009fd798d", {kOSSettingsKeyAutoPrompt: false, kOSSettingsKeyInAppLaunchURL: false, kOSSettingsKeyInFocusDisplayOption: 2});
+      OneSignal.init('b6013fa6-1fc9-4afa-8236-4dd009fd798d', {
+        kOSSettingsKeyAutoPrompt: false,
+        kOSSettingsKeyInAppLaunchURL: false,
+        kOSSettingsKeyInFocusDisplayOption: 2,
+      });
       OneSignal.inFocusDisplaying(2);
-      OneSignal.promptForPushNotificationsWithUserResponse((permission: any) => console.log(permission));
+      OneSignal.promptForPushNotificationsWithUserResponse((permission: any) =>
+        console.log(permission),
+      );
     }
   }, [LoggedIn[0]]);
 
@@ -61,10 +69,10 @@ const TapMatch = () => {
           userToken: userToken[0],
           userProfile,
           data: {
-            uuid: userOneSignalId[0]
+            uuid: userOneSignalId[0],
           },
           LoggedIn,
-          user_has_passed_onboarding
+          user_has_passed_onboarding,
         });
       }
     }
@@ -136,7 +144,7 @@ const TapMatch = () => {
         showLocationDialog: true,
         enableHighAccuracy: false,
         timeout: 150000,
-        maximumAge: 10000
+        maximumAge: 10000,
       },
     );
   };
@@ -168,9 +176,7 @@ const TapMatch = () => {
         user_has_passed_onboarding,
       }}>
       <NoNetworkModal />
-      <NavigationContainer
-        children={createRootNavigation()}
-      />
+      <NavigationContainer children={createRootNavigation()} />
     </TapMatchContext.Provider>
   );
 };
