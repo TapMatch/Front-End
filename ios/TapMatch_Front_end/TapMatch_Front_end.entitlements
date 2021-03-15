@@ -6,10 +6,10 @@
 	<string>development</string>
 	<key>com.apple.developer.associated-domains</key>
 	<array>
-		<string>vwutp.test-app.link</string>
-		<string>vwutp-alternate.test-app.link</string>
-		<string>vwutp.app.link</string>
-		<string>vwutp-alternate.app.link</string>
+		<string>tapmatchapp.app.link</string>
+		<string>tapmatchapp-alternate.app.link</string>
+		<string>tapmatchapp.test-app.link</string>
+		<string>tapmatchapp-alternate.test-app.link</string>
 	</array>
 	<key>com.apple.security.application-groups</key>
 	<array>

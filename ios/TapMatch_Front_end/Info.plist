@@ -51,11 +51,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>TapMatch needs access to your camera to take a photo for your profile picture.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>FOR MAP ( REPLACE LATER)</string>
+	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>FOR MAP ( REPLACE LATER)</string>
+	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>FOR MAP ( REPLACE LATER)</string>
+	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>D-DIN-Bold.otf</string>
@@ -90,8 +90,8 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 	<key>branch_app_domain</key>
-	<string>vwutp.test-app.link</string>
+	<string>tapmatchapp.app.link</string>
 	<key>branch_key</key>
-	<string>key_test_kd9eeRrw7eTBOng6YDrEtbcnxsbO4zDu</string>
+	<string>key_live_be7geGDA3aVtIhm78qtCrbajCrlK5Cvf</string>
 </dict>
 </plist>
