@@ -14,7 +14,9 @@ const CommunityBtn = (props: CommunityBtnProps) => {
   const {navigate} = useNavigation();
   const {communitiesModalVisible} = useContext(HomeScreenContext);
   const {selectedCommunityData} = useContext(MainStackContext);
-  const {name, id, city, access, count} = selectedCommunityData[0];
+  const {name, id, city, access, count, members} = selectedCommunityData[0];
+  console.log(count, 'count')
+  console.log(selectedCommunityData[0], 'selectedCommunityData')
   return (
     <TouchableOpacity
       onPress={() => communitiesModalVisible[1](true)}
@@ -24,7 +26,7 @@ const CommunityBtn = (props: CommunityBtnProps) => {
           <Text style={[_s.txt, _s.title]}>{name}</Text>
           <ChevronDownRed height={_fs.xl} width={_fs.xl} />
         </View>
-        <Text style={[_s.txt, _s.usersNum]}>{count} Members</Text>
+        <Text style={[_s.txt, _s.usersNum]}>{ members ? members.length : count} Members</Text>
       </View>
     </TouchableOpacity>
   );

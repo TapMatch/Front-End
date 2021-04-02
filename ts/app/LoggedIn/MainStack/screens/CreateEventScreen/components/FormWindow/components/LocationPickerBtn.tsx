@@ -42,7 +42,6 @@ const _s = StyleSheet.create({
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   txt: {
-    textAlign: 'center',
     textAlignVertical: 'center',
     fontFamily: _f.regular,
     color: _c.black,
