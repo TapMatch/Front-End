@@ -26,7 +26,7 @@ const People = (props: PeopleProps) => {
                         data={members}
                         renderItem={({item}: any) => {
                             const {id, name, avatar} = item;
-                            if (id !== organizer.id) {
+                            if (id && name && avatar) {
                                 return (
                                     <View
                                         pointerEvents={'none'}
