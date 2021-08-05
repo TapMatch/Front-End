@@ -5,6 +5,7 @@ import {Text, View} from 'react-native';
 import extendDevSettingsAndMenu from 'ts/tools/DevSettings';
 import {DEV_MODE} from 'ts/tools/devModeTrigger';
 
+
 if (DEV_MODE) {
   extendDevSettingsAndMenu();
 }

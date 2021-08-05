@@ -12,7 +12,9 @@ const Paragraph = (props: ParagraphProps) => {
     const {description} = selectedMarkerData[0];
     return (
         <View style={_s.container}>
-            <Text numberOfLines={2} style={_s.txt}>{description.trim()}</Text>
+            {/* <Text numberOfLines={2} style={_s.txt}>{description.trim()}</Text> */}
+                <Text style={_s.txt}>A marathon free for anyone to join.Charity run for xyz school.</Text>
+                <Text style={[_s.txt, _s.mt_2]}>Invite your friends and bring your energy !</Text>
         </View>
     );
 };
@@ -21,22 +23,27 @@ export default Paragraph;
 
 const _s = StyleSheet.create({
     container: {
-        height: _fs.l * 2,
         width: '100%',
-        paddingHorizontal: '5%',
+        paddingVertical: '5%',
+        paddingHorizontal: 12,
         marginTop: 8,
         marginBottom: 5,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor: _c.greyLight,
+        borderRadius: 12
     },
 
     txt: {
         maxWidth: '100%',
-        fontSize: _fs.l,
+        fontSize: _fs.m,
         lineHeight: _fs.l,
         fontFamily: _f.regularAlt,
         textAlign: 'center',
         textAlignVertical: 'center',
-        color: _c.grey,
+        color: _c.black,
     },
+    mt_2: {
+        marginTop: 10
+    }
 });

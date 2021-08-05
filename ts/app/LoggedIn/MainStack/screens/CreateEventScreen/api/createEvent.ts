@@ -76,6 +76,7 @@ export async function createEvent({
                 return data;
             })
             .then((data) => {
+                console.log("New Data", data)
                 selectedMarkerData[1](data);
                 eventDetailsModalVisible[1](true);
             })
