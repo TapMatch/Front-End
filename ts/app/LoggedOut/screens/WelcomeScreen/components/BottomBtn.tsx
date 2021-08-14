@@ -7,7 +7,6 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-
 interface BottomBtnProps {
   getUserLocation: any;
 }
@@ -30,6 +29,8 @@ export default BottomBtn;
 
 const _s = StyleSheet.create({
   container: {
+    position: 'absolute',
+    bottom: 0,
     backgroundColor: _c.transparentBtn,
     minWidth: '100%',
     height: vs(60),

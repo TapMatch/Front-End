@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import BottomBtn from './components/BottomBtn';
 import TermsAndConditionsParagraph from './components/TermsAndConditionsParagraph';
@@ -35,13 +31,12 @@ const StartModal = ({modalVisible}: StartModalProps) => {
       isVisible={modalVisible[0]}
       style={_s.modal}>
       <View style={[_s.container, {paddingTop: top + headerHeight}]}>
-        <View
-          style={_s.container}
-        >
+        <View style={_s.container}>
           <TouchableOpacity
             activeOpacity={1}
             onPress={moveOn}
-            style={_s.middle} />
+            style={_s.middle}
+          />
           <TermsAndConditionsParagraph modalVisible={modalVisible} />
           <BottomBtn moveOn={moveOn} />
         </View>

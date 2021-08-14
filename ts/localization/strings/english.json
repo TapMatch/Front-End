@@ -2,6 +2,10 @@
     "tapToContinue": "Tap to Continue",
     "pleaseWait": "Please wait...",
     "atTapMatchOurMain": "At TapMatch our main",
+    "acceptTermsAndPolicy": "By continuing you agree to TapMatch :terms and confirm you read our :policy.",
+    "slogan": "At TapMatch our main focus is bringing people :together",
+    "termsOfUse": "Terms of Use",
+    "privacyPolicy": "Privacy Policy",
     "focusIsBringingPeople": "focus is bringing people",
     "together": "together",
     "communities": "Communities",
@@ -40,7 +44,5 @@
     "enterYourPhoneNumber": "Enter your phone number",
     "toVerifyYourIdentity": "To verify your identity",
     "termsAndConditionsParagraph1": "By continuing you agree to TapMatch\n",
-    "termsOfUse": "Terms of Use",
     "termsAndConditionsParagraph2": "and confirm that you\nHave read our",
-    "privacyPolicy": "Privacy Policy"
 }

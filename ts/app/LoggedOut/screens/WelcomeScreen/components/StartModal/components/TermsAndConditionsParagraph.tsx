@@ -1,20 +1,23 @@
 import React from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import Hyperlink from 'react-native-hyperlink';
-import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import useLocalizedTxt, {
+  formatLocalizedTxt,
+} from 'ts/localization/useLocalizedTxt';
 import {constants} from 'ts/constants/constants';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import {formatWidth} from '../../../../../../../utils/format-size';
 
 interface TermsAndConditionsParagraphProps {
   modalVisible: [boolean, (x: boolean) => void];
 }
 
-const TermsAndConditionsParagraph = (
-  {modalVisible}: TermsAndConditionsParagraphProps,
-) => {
+const TermsAndConditionsParagraph = ({
+  modalVisible,
+}: TermsAndConditionsParagraphProps) => {
   const txt = useLocalizedTxt();
   const {navigate} = useNavigation();
   const isFocused = useIsFocused();
@@ -38,14 +41,23 @@ const TermsAndConditionsParagraph = (
           navigate('WebScreen', {url});
         }}
         linkText={(url) => formatLinks(url)}>
-        <Text
-          numberOfLines={3}
-          style={
-            _s.paragraphTxt
-          }>
-          {
-            `${txt.termsAndConditionsParagraph1}${` ${constants.termsOfUseUrl_EN} `}${txt.termsAndConditionsParagraph2}${` ${constants.privacyPolicy_EN} `}`
-          }
+        <Text style={_s.paragraphTxt}>
+          {formatLocalizedTxt(txt.acceptTermsAndPolicy, {
+            terms: (key: string) => (
+              <Text
+                key={key}
+                style={
+                  _s.linkStyle
+                }>{`${` ${constants.termsOfUseUrl_EN} `}`}</Text>
+            ),
+            policy: (key: string) => (
+              <Text
+                key={key}
+                style={
+                  _s.linkStyle
+                }>{`${` ${constants.privacyPolicy_EN} `}`}</Text>
+            ),
+          })}
         </Text>
       </Hyperlink>
     </View>
@@ -67,7 +79,7 @@ const _s = StyleSheet.create({
   },
   paragraphTxt: {
     height: 'auto',
-    width: '75%',
+    width: 240,
     color: _c.black,
     fontFamily: _f.regular,
     fontSize: _fs.l,

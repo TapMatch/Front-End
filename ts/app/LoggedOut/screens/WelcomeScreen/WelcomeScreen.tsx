@@ -8,8 +8,9 @@ import {
   useWindowDimensions,
   ImageBackground,
 } from 'react-native';
-import TapMatchBetaLogo from 'assets/svg/TapMatchBetaLogo-red.svg';
+import TapMatchLogo from 'assets/svg/TapMatchLogo.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {useHeaderHeight} from '@react-navigation/stack';
 import BottomBtn from './components/BottomBtn';
 import SloganParagraph from './components/SloganParagraph';
 import {_c} from 'ts/UIConfig/colors';
@@ -17,6 +18,7 @@ import StartModal from './components/StartModal/StartModal';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS, check} from 'react-native-permissions';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {formatCoverSize, formatWidth} from '../../../../utils/format-size';
 
 interface WelcomeScreenProps {}
 
@@ -29,9 +31,9 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
   const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
   const startModalVisible = useState<boolean>(false);
-  const logoSize = width * 0.6;
+  const logoSize = formatWidth(175);
   const {userLocation} = useContext(TapMatchContext);
-
+  const headerHeight = useHeaderHeight();
 
   const getUserLocation = () => {
     check(locationPermission).then((x) => {
@@ -39,19 +41,19 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
     });
   };
 
-
   const setUserLocation = (x: string) => {
     if (x === 'granted') {
       startModalVisible[1](true);
       handleGeolocation();
     } else {
-      request(locationPermission).then((x) => {
-        if (x === 'granted') {
-          // startModalVisible[1](true);
-          handleGeolocation();
-        }
-      })
-        .then(() => startModalVisible[1](true));;
+      request(locationPermission)
+        .then((x) => {
+          if (x === 'granted') {
+            // startModalVisible[1](true);
+            handleGeolocation();
+          }
+        })
+        .then(() => startModalVisible[1](true));
     }
   };
 
@@ -69,18 +71,17 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         showLocationDialog: true,
         enableHighAccuracy: false,
         timeout: 150000,
-        maximumAge: 10000
+        maximumAge: 10000,
       },
     );
   };
-
 
   return (
     <View style={[_s.container, {paddingTop: top}]}>
       <ImageBackground
         resizeMode={'cover'}
-        style={_s.container}
-        source={require('assets/png/holding-hands2.png')}>
+        style={_s.imageBackground}
+        source={require('assets/png/launch.png')}>
         <StatusBar
           animated={true}
           backgroundColor={'transparent'}
@@ -89,8 +90,14 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         <TouchableOpacity
           activeOpacity={1}
           onPress={getUserLocation}
-          style={_s.middle}>
-          <TapMatchBetaLogo height={logoSize} width={logoSize} />
+          style={[
+            _s.middle,
+            {
+              marginTop:
+                formatCoverSize(355) - StatusBar.currentHeight - headerHeight,
+            },
+          ]}>
+          <TapMatchLogo height={logoSize} width={logoSize} />
         </TouchableOpacity>
         <SloganParagraph startModalVisible={startModalVisible} />
         <BottomBtn getUserLocation={getUserLocation} />
@@ -105,19 +112,15 @@ export default WelcomeScreen;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: _c.white,
+    backgroundColor: _c.greyLight,
   },
   imageBackground: {
     flex: 1,
-    backgroundColor: _c.white,
+    alignItems: 'center',
+    backgroundColor: _c.greyLight,
   },
   middle: {
-    width: '100%',
-    flex: 0.7,
-    justifyContent: 'flex-end',
+    width: formatWidth(175),
     alignItems: 'center',
-    paddingBottom: '5%',
   },
 });
