@@ -24,8 +24,8 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
     return true;
   });
   const doneBtnDisabled =
-    !validatePhoneNumber(`${callingCode[0]}${phoneNumber[0]}`) ||
-    phoneNumber[0].length === 0;
+    phoneNumber[0].length < 6 ||
+    !validatePhoneNumber(`${phoneNumber[0]}`, countryCode[0]);
   return (
     <View style={_s.container}>
       <View style={_s.content}>
@@ -40,6 +40,7 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
       <DoneBtn
         disabled={doneBtnDisabled}
         callingCode={callingCode}
+        countryCode={countryCode}
         phoneNumber={phoneNumber}
       />
     </View>
