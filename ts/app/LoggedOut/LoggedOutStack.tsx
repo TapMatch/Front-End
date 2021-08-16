@@ -6,6 +6,7 @@ import PhoneInputScreen from './screens/PhoneInputScreen/PhoneInputScreen';
 import OTPInputScreen from './screens/OTPInputScreen/OTPInputScreen';
 import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
+import TutorialScreen from './screens/TutorialScreen/TutorialScreen';
 
 export default function LoggedOutStack() {
   const Stack = createStackNavigator();
@@ -56,6 +57,15 @@ export default function LoggedOutStack() {
           };
         }}
         component={WebScreen}
+      />
+      <Screen
+        name="TutorialScreen"
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+        component={TutorialScreen}
       />
       <Screen
         name="PhoneInput"

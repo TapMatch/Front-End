@@ -7,6 +7,8 @@ import NoNetworkModal from './common/NoNetworkModal';
 import Geolocation from 'react-native-geolocation-service';
 import {PERMISSIONS, check} from 'react-native-permissions';
 import {AppState, Platform} from 'react-native';
+import {Provider} from 'react-redux';
+import {PersistGate} from 'redux-persist/integration/react';
 import {LatLng} from 'react-native-maps';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import callAlert from 'ts/utils/callAlert';
@@ -16,6 +18,7 @@ import PlaceholderStack from './LoggedIn/PlaceholderStack/PlaceholderStack';
 import OneSignal from 'react-native-onesignal';
 import {updateUserProfile} from './common/api/updateUserProfile';
 import {DEV_MODE} from 'ts/tools/devModeTrigger';
+import {persistor, store} from '../store/store';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
@@ -166,18 +169,22 @@ const TapMatch = () => {
   };
 
   return (
-    <TapMatchContext.Provider
-      value={{
-        LoggedIn,
-        userLocation,
-        PHPSESSID,
-        userProfile,
-        userToken,
-        user_has_passed_onboarding,
-      }}>
-      <NoNetworkModal />
-      <NavigationContainer children={createRootNavigation()} />
-    </TapMatchContext.Provider>
+    <Provider store={store}>
+      <PersistGate persistor={persistor} loading={null}>
+        <TapMatchContext.Provider
+          value={{
+            LoggedIn,
+            userLocation,
+            PHPSESSID,
+            userProfile,
+            userToken,
+            user_has_passed_onboarding,
+          }}>
+          <NoNetworkModal />
+          <NavigationContainer children={createRootNavigation()} />
+        </TapMatchContext.Provider>
+      </PersistGate>
+    </Provider>
   );
 };
 

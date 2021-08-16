@@ -3,15 +3,19 @@ import {Text, View, StyleSheet} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {isDefined} from 'ts/utils/is-defined';
 
-interface WebLoaderProps {}
+interface WebLoaderProps {
+  message?: string;
+}
 
 const WebLoader = (props: WebLoaderProps) => {
   const txt = useLocalizedTxt();
+  const message = isDefined(props.message) ? props.message : txt.pleaseWait;
   return (
     <View
       style={_s.loader}
-      children={<Text style={_s.txt} children={txt.pleaseWait} />}
+      children={<Text style={_s.txt} children={message} />}
     />
   );
 };

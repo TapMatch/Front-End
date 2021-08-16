@@ -7,6 +7,9 @@ import {useNavigation} from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import {_c} from 'ts/UIConfig/colors';
 import {useHeaderHeight} from '@react-navigation/stack';
+import LoggedOutScrees from 'ts/constants/screens';
+import {getStorageData, setStorageData} from 'ts/utils/asyncStorage';
+import StorageKeys from 'ts/constants/storage';
 
 interface StartModalProps {
   modalVisible: [boolean, (x: boolean) => void];
@@ -16,9 +19,14 @@ const StartModal = ({modalVisible}: StartModalProps) => {
   const {top} = useSafeAreaInsets();
   const {navigate} = useNavigation();
   const headerHeight = useHeaderHeight();
-  const moveOn = () => {
+  const moveOn = async () => {
     modalVisible[1](false);
-    navigate('PhoneInput');
+    const passedTutorial = await getStorageData(StorageKeys.PassedTutorial);
+    if (passedTutorial === '1') {
+      navigate(LoggedOutScrees.PhoneInput);
+    } else {
+      navigate(LoggedOutScrees.TutorialScreen);
+    }
   };
   return (
     <Modal

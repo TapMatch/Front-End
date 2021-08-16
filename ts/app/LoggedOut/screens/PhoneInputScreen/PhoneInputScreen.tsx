@@ -8,6 +8,9 @@ import DoneBtn from './components/DoneBtn';
 import PhoneInput from './components/PhoneInput';
 import Subtitle from './components/Subtitle';
 import Title from './components/Title';
+import {useBackHandler} from '@react-native-community/hooks';
+import {useNavigation} from '@react-navigation/native';
+import LoggedOutScrees from 'ts/constants/screens';
 
 interface PhoneInputScreenProps {}
 
@@ -15,6 +18,11 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
   const callingCode = useState<string>('376');
   const countryCode = useState<CountryCode>('AD');
   const phoneNumber = useState<string>('');
+  const {navigate} = useNavigation();
+  useBackHandler(() => {
+    navigate(LoggedOutScrees.Welcome);
+    return true;
+  });
   const doneBtnDisabled =
     !validatePhoneNumber(`${callingCode[0]}${phoneNumber[0]}`) ||
     phoneNumber[0].length === 0;

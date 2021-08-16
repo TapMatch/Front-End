@@ -12,7 +12,7 @@ import {useBackHandler, useDimensions} from '@react-native-community/hooks';
 import ListItemUnlocked from './components/ListItemUnlocked';
 import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
-import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
+import googleMapStyle from 'ts/constants/googleMaps/googleMapsStyle2.json';
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
 
 interface CommunitiesScreenProps {
@@ -23,12 +23,17 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const isFocused = useIsFocused();
-  const {userLocation, userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
+  const {
+    userLocation,
+    userToken,
+    userProfile,
+    LoggedIn,
+    user_has_passed_onboarding,
+  } = useContext(TapMatchContext);
   const communities = useState<any>([]);
   const codeInputVisible = useState<boolean>(false);
   const selectedCommunity = useState<any>({});
   const coordinates = userLocation[0];
-
 
   useBackHandler(() => false);
 
@@ -45,12 +50,9 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
       communities,
       LoggedIn,
       userProfile,
-      user_has_passed_onboarding
+      user_has_passed_onboarding,
     });
   }, []);
-
-
-
 
   useEffect(() => {
     const unsubscribe = navigation.addListener('focus', () => {
@@ -59,12 +61,11 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
         communities,
         LoggedIn,
         userProfile,
-        user_has_passed_onboarding
+        user_has_passed_onboarding,
       });
     });
     return unsubscribe;
   }, []);
-
 
   const selectItem = (item: any) => {
     selectedCommunity[1](item);
@@ -72,51 +73,60 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   };
   const renderContent = () => {
     if (codeInputVisible[0]) {
-      return <CommunityCodeInput communityItem={selectedCommunity} modalVisible={codeInputVisible} />;
+      return (
+        <CommunityCodeInput
+          communityItem={selectedCommunity}
+          modalVisible={codeInputVisible}
+        />
+      );
     } else {
-      return <Fragment>
-        <Title />
-        <View style={_s.middle}>
-          <FlatList
-            contentContainerStyle={{paddingHorizontal: '7%'}}
-            showsHorizontalScrollIndicator={false}
-            showsVerticalScrollIndicator={false}
-            keyExtractor={(item) => `${item.id}`}
-            data={communities[0]}
-            renderItem={({item}) => {
-              const c = userProfile[0].communities[0].find((el: any) => {
-                return el.id === item.id;
-              });
-              
-              return c ? (
-                <ListItemUnlocked item={{...item, access: c.access}} />
-              ) : (
+      return (
+        <Fragment>
+          <Title />
+          <View style={_s.middle}>
+            <FlatList
+              contentContainerStyle={{paddingHorizontal: '7%'}}
+              showsHorizontalScrollIndicator={false}
+              showsVerticalScrollIndicator={false}
+              keyExtractor={(item) => `${item.id}`}
+              data={communities[0]}
+              renderItem={({item}) => {
+                const c = userProfile[0].communities[0].find((el: any) => {
+                  return el.id === item.id;
+                });
+
+                return c ? (
+                  <ListItemUnlocked item={{...item, access: c.access}} />
+                ) : (
                   <ListItemLocked selectItem={selectItem} item={item} />
                 );
-            }}
-          />
-        </View>
-        <View
-          style={[
-            _s.bottom,
-            {
-              paddingTop: height * 0.02,
-              paddingBottom: height * 0.02 + bottom,
-            },
-          ]}>
-          <RequestCommunityBtn />
-          <FeedbackBtn />
-        </View>
-      </Fragment>;
+              }}
+            />
+          </View>
+          <View
+            style={[
+              _s.bottom,
+              {
+                paddingTop: height * 0.02,
+                paddingBottom: height * 0.02 + bottom,
+              },
+            ]}>
+            <RequestCommunityBtn />
+            <FeedbackBtn />
+          </View>
+        </Fragment>
+      );
     }
   };
 
   if (isFocused) {
     return (
       <View style={[_s.container]}>
-        { <View style={[_s.content, {paddingTop: 30 + top}]}>
-          {renderContent()}
-        </View>}
+        {
+          <View style={[_s.content, {paddingTop: 30 + top}]}>
+            {renderContent()}
+          </View>
+        }
         <MapView
           provider={PROVIDER_GOOGLE}
           customMapStyle={googleMapStyle}
