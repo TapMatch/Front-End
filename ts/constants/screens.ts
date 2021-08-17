@@ -1,4 +1,4 @@
-const LoggedOutScrees = {
+export const LoggedOutScreens = {
   Welcome: 'Welcome',
   WebScreen: 'WebScreen',
   TutorialScreen: 'TutorialScreen',
@@ -6,4 +6,11 @@ const LoggedOutScrees = {
   OTPInput: 'OTPInput',
 };
 
-export default LoggedOutScrees;
+export const OnBoardingScreens = {
+  NameInput: 'NameInput',
+  AvatarCamera: 'AvatarCamera',
+  MapDemo: 'MapDemo',
+  AllSet: 'AllSet',
+  WebScreen: 'WebScreen',
+  Communities: 'Communities',
+};

@@ -7,6 +7,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_c} from 'ts/UIConfig/colors';
 import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {OnBoardingScreens} from 'ts/constants/screens';
 
 interface ContinueBtnProps {}
 
@@ -18,7 +19,7 @@ const ContinueBtn = (props: ContinueBtnProps) => {
   return (
     <TouchableOpacity
       activeOpacity={1}
-      onPress={() => navigate('AllSet')}
+      onPress={() => navigate(OnBoardingScreens.AvatarCamera)}
       style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
       <Text style={_s.txt}>{txt.tapToContinue}</Text>
     </TouchableOpacity>

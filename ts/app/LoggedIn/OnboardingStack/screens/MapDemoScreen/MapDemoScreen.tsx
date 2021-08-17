@@ -8,8 +8,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import PeopleMarker from './components/PeopleMarker';
-import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
-
+import googleMapStyle from 'ts/constants/googleMaps/googleMapsStyle2.json';
 
 interface MapDemoScreenProps {
   navigation: any;
@@ -17,7 +16,7 @@ interface MapDemoScreenProps {
 }
 
 const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
-  const {base64} = route.params;
+  // const {base64} = route.params;
   const {top, bottom} = useSafeAreaInsets();
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
@@ -40,7 +39,7 @@ const MapDemoScreen = ({navigation, route}: MapDemoScreenProps) => {
             latitudeDelta: 0.015,
             longitudeDelta: 0.0121,
           }}>
-          <PeopleMarker coordinate={coordinates} base64={base64} />
+          <PeopleMarker coordinate={coordinates} />
         </MapView>
         <ContinueBtn />
       </View>

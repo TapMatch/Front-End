@@ -15,6 +15,7 @@ import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
 import {postAvatar} from '../../api/postAvatar';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {OnBoardingScreens} from 'ts/constants/screens';
 
 interface CameraProps {}
 
@@ -24,7 +25,12 @@ const Camera = (props: CameraProps) => {
   const uploadToServerTrigger = useState<boolean>(false);
   const pictureURI = useState<string>('');
   const {navigate} = useNavigation();
-  const {userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
+  const {
+    userToken,
+    userProfile,
+    LoggedIn,
+    user_has_passed_onboarding,
+  } = useContext(TapMatchContext);
 
   let RNCameraRef = useRef<RNCamera | null>(null);
 
@@ -50,8 +56,14 @@ const Camera = (props: CameraProps) => {
   useEffect(() => {
     (async () => {
       const base64 = await getBase64(pictureURI[0]);
-      postAvatar({userToken: userToken[0], pictureURI: pictureURI[0], userProfile, LoggedIn, user_has_passed_onboarding});
-      await navigate('MapDemo', {base64});
+      postAvatar({
+        userToken: userToken[0],
+        pictureURI: pictureURI[0],
+        userProfile,
+        LoggedIn,
+        user_has_passed_onboarding,
+      });
+      await navigate(OnBoardingScreens.AllSet);
     })();
   }, [uploadToServerTrigger[0]]);
 

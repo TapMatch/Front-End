@@ -14,10 +14,10 @@ import FastImage from 'react-native-fast-image';
 
 interface PeopleMarkerProps {
   coordinate: LatLng;
-  base64: string;
+  // base64: string;
 }
 
-const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
+const PeopleMarker = ({coordinate}: PeopleMarkerProps) => {
   const txt = useLocalizedTxt();
   return (
     <Marker coordinate={coordinate}>
@@ -92,9 +92,7 @@ const PeopleMarker = ({coordinate, base64}: PeopleMarkerProps) => {
           <View style={[_s.avatarContainer, , _s.shadow]}>
             <FastImage
               style={_s.avatar}
-              source={{
-                uri: base64,
-              }}
+              source={require('assets/png/demo-avatar.png')}
             />
           </View>
 
@@ -129,7 +127,7 @@ const _s = StyleSheet.create({
     borderBottomRightRadius: 1,
     borderColor: 'transparent',
     borderBottomColor: _c.white,
-    transform: [{rotate: `180deg`}],
+    transform: [{rotate: '180deg'}],
   },
   avatarContainer: {
     top: 72,

@@ -15,6 +15,7 @@ import {useNavigation} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {postUserName} from '../api/postUserName';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {OnBoardingScreens} from 'ts/constants/screens';
 
 interface DoneBtnProps {
   disabled: boolean;
@@ -27,7 +28,12 @@ const DoneBtn = ({disabled, name}: DoneBtnProps) => {
   const KAVBehaviorObj = Platform.OS === 'ios' ? 'position' : undefined;
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
   const {bottom} = useSafeAreaInsets();
-  const {userProfile, userToken, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
+  const {
+    userProfile,
+    userToken,
+    LoggedIn,
+    user_has_passed_onboarding,
+  } = useContext(TapMatchContext);
 
   return (
     <KeyboardAvoidingView
@@ -37,8 +43,14 @@ const DoneBtn = ({disabled, name}: DoneBtnProps) => {
         disabled={disabled}
         activeOpacity={1}
         onPress={() => {
-          postUserName({name, userProfile, userToken: userToken[0], LoggedIn, user_has_passed_onboarding});
-          navigate('AvatarCamera');
+          postUserName({
+            name,
+            userProfile,
+            userToken: userToken[0],
+            LoggedIn,
+            user_has_passed_onboarding,
+          });
+          navigate(OnBoardingScreens.MapDemo);
         }}
         style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
         <Text style={[_s.txt, {color: doneTxtColor}]}>{txt.done}</Text>

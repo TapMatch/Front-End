@@ -7,7 +7,7 @@ import {useNavigation} from '@react-navigation/native';
 import Modal from 'react-native-modal';
 import {_c} from 'ts/UIConfig/colors';
 import {useHeaderHeight} from '@react-navigation/stack';
-import LoggedOutScrees from 'ts/constants/screens';
+import {LoggedOutScreens} from 'ts/constants/screens';
 import {getStorageData, setStorageData} from 'ts/utils/asyncStorage';
 import StorageKeys from 'ts/constants/storage';
 
@@ -23,9 +23,9 @@ const StartModal = ({modalVisible}: StartModalProps) => {
     modalVisible[1](false);
     const passedTutorial = await getStorageData(StorageKeys.PassedTutorial);
     if (passedTutorial === '1') {
-      navigate(LoggedOutScrees.PhoneInput);
+      navigate(LoggedOutScreens.PhoneInput);
     } else {
-      navigate(LoggedOutScrees.TutorialScreen);
+      navigate(LoggedOutScreens.TutorialScreen);
     }
   };
   return (

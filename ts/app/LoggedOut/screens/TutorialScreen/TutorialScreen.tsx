@@ -7,7 +7,7 @@ import CloseButton from './components/CloseButton';
 import TutorialVideo from 'assets/video/tutorial.mp4';
 import WebLoader from './components/WebLoader';
 import {useNavigation} from '@react-navigation/native';
-import LoggedOutScrees from 'ts/constants/screens';
+import {LoggedOutScreens} from 'ts/constants/screens';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {setStorageData} from 'ts/utils/asyncStorage';
 import StorageKeys from 'ts/constants/storage';
@@ -20,13 +20,13 @@ const TutorialScreen = ({navigation, route}: any) => {
 
   const onTutorialEnd = async () => {
     await setStorageData(StorageKeys.PassedTutorial, '1');
-    navigate(LoggedOutScrees.PhoneInput);
+    navigate(LoggedOutScreens.PhoneInput);
   };
 
   return (
     <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
       {/*{loadComplete[0] && (*/}
-      {/*  <CloseButton onPress={() => navigate(LoggedOutScrees.PhoneInput)} />*/}
+      {/*  <CloseButton onPress={() => navigate(LoggedOutScreens.PhoneInput)} />*/}
       {/*)}*/}
       <StatusBar
         animated={true}

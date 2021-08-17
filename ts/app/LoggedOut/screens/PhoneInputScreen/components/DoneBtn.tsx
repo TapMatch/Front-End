@@ -39,10 +39,10 @@ const DoneBtn = ({
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
   const {bottom} = useSafeAreaInsets();
   const phoneUtil = LibPhoneNumber.PhoneNumberUtil.getInstance();
-  const number = phoneUtil.parse(phoneNumber[0], countryCode[0]);
 
   const handleSubmit = () => {
     navigate('OTPInput');
+    const number = phoneUtil.parse(phoneNumber[0], countryCode[0]);
     requestOTP({
       callingCode: callingCode[0],
       phoneNumber: number.getNationalNumber(),

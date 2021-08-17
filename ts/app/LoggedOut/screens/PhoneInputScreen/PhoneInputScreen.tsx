@@ -10,7 +10,7 @@ import Subtitle from './components/Subtitle';
 import Title from './components/Title';
 import {useBackHandler} from '@react-native-community/hooks';
 import {useNavigation} from '@react-navigation/native';
-import LoggedOutScrees from 'ts/constants/screens';
+import {LoggedOutScreens} from 'ts/constants/screens';
 
 interface PhoneInputScreenProps {}
 
@@ -20,7 +20,7 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
   const phoneNumber = useState<string>('');
   const {navigate} = useNavigation();
   useBackHandler(() => {
-    navigate(LoggedOutScrees.Welcome);
+    navigate(LoggedOutScreens.Welcome);
     return true;
   });
   const doneBtnDisabled =
