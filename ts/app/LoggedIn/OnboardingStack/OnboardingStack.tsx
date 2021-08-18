@@ -10,14 +10,14 @@ import WebScreen from './screens/WebScreen/WebScreen';
 import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
 import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import CameraSettingScreen from './screens/CameraSettingScreen/CameraSettingScreen';
 
 export default function OnboardingStack() {
-
   const {
     userToken,
     LoggedIn,
     userProfile,
-    user_has_passed_onboarding
+    user_has_passed_onboarding,
   } = useContext(TapMatchContext);
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
@@ -32,7 +32,7 @@ export default function OnboardingStack() {
       userToken,
       LoggedIn,
       userProfile,
-      user_has_passed_onboarding
+      user_has_passed_onboarding,
     });
   }, []);
 
@@ -81,6 +81,15 @@ export default function OnboardingStack() {
         }}
       />
       <Screen
+        name="CameraSetting"
+        component={CameraSettingScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+      <Screen
         name="MapDemo"
         component={MapDemoScreen}
         options={() => {
@@ -120,7 +129,6 @@ export default function OnboardingStack() {
           };
         }}
       />
-
     </Navigator>
   );
 }

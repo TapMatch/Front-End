@@ -18,7 +18,7 @@ import StartModal from './components/StartModal/StartModal';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS, check} from 'react-native-permissions';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {formatCoverSize, formatWidth} from '../../../../utils/format-size';
+import {formatCoverSize, formatWidth} from 'ts/utils/format-size';
 
 interface WelcomeScreenProps {}
 
@@ -112,12 +112,12 @@ export default WelcomeScreen;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: _c.greyLight,
+    backgroundColor: _c.white,
   },
   imageBackground: {
     flex: 1,
     alignItems: 'center',
-    backgroundColor: _c.greyLight,
+    backgroundColor: _c.white,
   },
   middle: {
     width: formatWidth(175),

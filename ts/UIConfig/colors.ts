@@ -5,6 +5,7 @@ export const _c = {
   white: '#fff',
   linkBlue: '#4E88F5',
   greyLight: 'rgba(0,0,0,0.1)',
+  secondaryText: '#707070',
   whiteLight: 'rgba(255,255,255,0.3)',
   grey: 'rgba(0,0,0,0.4)',
   modalbackground: 'rgba(112, 112, 112, 0.8)',

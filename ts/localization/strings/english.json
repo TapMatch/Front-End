@@ -46,4 +46,9 @@
     "toVerifyYourIdentity": "To verify your identity",
     "termsAndConditionsParagraph1": "By continuing you agree to TapMatch\n",
     "termsAndConditionsParagraph2": "and confirm that you\nHave read our",
+    "takeMeToSettings": "Take me to Settings.",
+    "allowAccessToCamera": "Please allow access to your camera so you can show your real you. \nThis is what TapMatch is about. ",
+    "goToSetting": "1. Go to Settings.",
+    "findTapMatch": "2. Find TapMatch",
+    "enableCamera": "3. Enable Camera"
 }

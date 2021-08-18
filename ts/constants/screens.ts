@@ -8,8 +8,9 @@ export const LoggedOutScreens = {
 
 export const OnBoardingScreens = {
   NameInput: 'NameInput',
-  AvatarCamera: 'AvatarCamera',
   MapDemo: 'MapDemo',
+  AvatarCamera: 'AvatarCamera',
+  CameraSetting: 'CameraSetting',
   AllSet: 'AllSet',
   WebScreen: 'WebScreen',
   Communities: 'Communities',

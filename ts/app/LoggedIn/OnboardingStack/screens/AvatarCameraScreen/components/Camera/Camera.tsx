@@ -5,6 +5,7 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  Text,
 } from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {RNCamera} from 'react-native-camera';
@@ -107,8 +108,16 @@ const Camera = (props: CameraProps) => {
               message: 'We need your permission to use your camera',
               buttonPositive: 'Ok',
               buttonNegative: 'Cancel',
+            }}>
+            {({camera, status, recordAudioPermissionStatus}) => {
+              console.log('Camera status', status);
+              if (status === 'NOT_AUTHORIZED') {
+                navigate(OnBoardingScreens.CameraSetting);
+                return null;
+              }
+              return null;
             }}
-          />
+          </RNCamera>
         </Fragment>
       );
     }
