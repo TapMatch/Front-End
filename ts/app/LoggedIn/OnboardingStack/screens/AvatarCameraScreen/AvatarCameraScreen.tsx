@@ -7,6 +7,7 @@ import Subtitle from './components/Subtitle';
 import Camera from './components/Camera/Camera';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {formatHeight, formatWidth} from 'ts/utils/format-size';
 
 interface AvatarCameraScreenProps {
   navigation: any;
@@ -38,10 +39,10 @@ export default AvatarCameraScreen;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: _c.white,
+    backgroundColor: _c.grey,
   },
   top: {
-    width: '100%',
-    height: '25%',
+    paddingBottom: formatWidth(25),
+    backgroundColor: _c.white,
   },
 });

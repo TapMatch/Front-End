@@ -1,65 +1,100 @@
 import React from 'react';
-import {Text, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, Text, View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import {formatHeight, formatWidth} from 'ts/utils/format-size';
+import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 
 interface ShutterProps {
-  onPress: any;
   uploadToServer: () => void;
+  onCapture: () => void;
+  onBackRecapture: () => void;
   pictureURI: [string, (x: string) => void];
+  cameraShutterState: boolean;
+  facesDetected: boolean;
 }
 
-const Shutter = ({onPress, pictureURI, uploadToServer}: ShutterProps) => {
-  if (pictureURI[0].length) {
-    return (
-      <View style={_s.container}>
-        <TouchableOpacity onPress={() => pictureURI[1]('')} style={_s.btn}>
-          <Text style={_s.btnTxt}>Retake</Text>
+const Shutter = ({
+  pictureURI,
+  uploadToServer,
+  onCapture,
+  onBackRecapture,
+  cameraShutterState,
+  facesDetected,
+}: ShutterProps) => {
+  const txt = useLocalizedTxt();
+  return (
+    <View
+      style={[
+        _s.container,
+        cameraShutterState ? _s.justifyBetween : _s.justifyCenter,
+      ]}>
+      {cameraShutterState && (
+        <TouchableOpacity onPress={onBackRecapture} style={_s.facePreview}>
+          <Image
+            resizeMode={'cover'}
+            style={_s.faceDemo}
+            source={
+              cameraShutterState
+                ? {uri: pictureURI[0]}
+                : require('assets/png/face-demo.png')
+            }
+          />
         </TouchableOpacity>
-        <TouchableOpacity onPress={uploadToServer} style={_s.btn}>
-          <Text style={_s.btnTxt}>Use Photo</Text>
-        </TouchableOpacity>
-      </View>
-    );
-  } else {
-    return (
-      <View style={_s.container}>
-        <TouchableOpacity onPress={onPress} style={[_s.shutterBtn, _s.shadow]}>
+      )}
+      {!cameraShutterState && (
+        <TouchableOpacity
+          onPress={onCapture}
+          disabled={!facesDetected}
+          style={[_s.shutterBtn, _s.shadow]}>
           <View style={_s.redCircle} />
         </TouchableOpacity>
-      </View>
-    );
-  }
+      )}
+      {cameraShutterState && (
+        <TouchableOpacity onPress={uploadToServer} style={_s.btnNext}>
+          <Text style={_s.btnTxt}>{txt.next}</Text>
+        </TouchableOpacity>
+      )}
+    </View>
+  );
 };
 
 export default Shutter;
 
 const _s = StyleSheet.create({
   container: {
-    flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
-    backgroundColor: _c.white,
+    zIndex: 300,
+    position: 'absolute',
     alignItems: 'center',
+    bottom: formatHeight(30),
+    flexDirection: 'row',
+    width: '100%',
+    paddingLeft: formatWidth(58),
+    paddingRight: formatWidth(71),
+  },
+  justifyBetween: {
+    justifyContent: 'space-between',
+  },
+  justifyCenter: {
+    justifyContent: 'center',
   },
   shutterBtn: {
     backgroundColor: _c.white,
-    borderRadius: 120,
-    height: 80,
-    width: 80,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 5,
+    borderRadius: formatWidth(49),
+    height: formatWidth(98),
+    width: formatWidth(98),
+    padding: formatWidth(4),
   },
-  btn: {
-    height: '50%',
-    flex: 0.5,
-    justifyContent: 'center',
-    alignItems: 'center',
+  faceDemo: {
+    width: formatWidth(58),
+    height: formatWidth(55),
+    borderRadius: formatWidth(10),
   },
+  facePreview: {},
+  btnNext: {},
   btnTxt: {
-    color: _c.black,
+    color: _c.white,
     textAlign: 'center',
     textAlignVertical: 'center',
     fontFamily: _f.regular,
@@ -68,7 +103,7 @@ const _s = StyleSheet.create({
   redCircle: {
     height: '100%',
     width: '100%',
-    borderRadius: 120,
+    borderRadius: formatWidth(47),
     backgroundColor: _c.main_red,
   },
   shadow: {

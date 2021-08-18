@@ -50,5 +50,10 @@
     "allowAccessToCamera": "Please allow access to your camera so you can show your real you. \nThis is what TapMatch is about. ",
     "goToSetting": "1. Go to Settings.",
     "findTapMatch": "2. Find TapMatch",
-    "enableCamera": "3. Enable Camera"
+    "enableCamera": "3. Enable Camera",
+    "takeQuickPicture": "Take a quick picture",
+    "youCanRetakeThisAnytime": "You can re-take this anytime!",
+    "faceDetected": "Face Detected",
+    "faceNotDetected": "Face not Detected",
+    "next": "Next"
 }

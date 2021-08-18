@@ -7,6 +7,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {useNavigation} from '@react-navigation/native';
+import {formatHeight} from 'ts/utils/format-size';
 
 interface SwipeBackGuideProps {}
 
@@ -33,11 +34,10 @@ export default SwipeBackGuide;
 
 const _s = StyleSheet.create({
   container: {
-    height: vs(55),
+    height: formatHeight(62),
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row',
-    paddingHorizontal: '5%',
   },
   txtContainer: {
     paddingRight: iconSize,

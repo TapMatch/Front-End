@@ -1,6 +1,8 @@
 export const _c = {
   //colors
   main_red: '#EA5734',
+  redDark: '#FF0000',
+  greenDark: '#12DB00',
   black: '#000',
   white: '#fff',
   linkBlue: '#4E88F5',

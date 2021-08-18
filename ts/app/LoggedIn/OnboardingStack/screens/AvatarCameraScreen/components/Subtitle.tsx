@@ -4,17 +4,18 @@ import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {formatHeight, formatWidth} from 'ts/utils/format-size';
 
 interface SubtitleProps {}
 
 const Subtitle = (props: SubtitleProps) => {
   const txt = useLocalizedTxt();
   return (
-    <View style={_s.container}>
+    <>
       <Text numberOfLines={1} style={_s.txt}>
-        {txt.thisWillBeYourProfilePicture}
+        {txt.youCanRetakeThisAnytime}
       </Text>
-    </View>
+    </>
   );
 };
 
@@ -27,9 +28,9 @@ const _s = StyleSheet.create({
   },
   txt: {
     textAlign: 'center',
-    textAlignVertical: 'center',
     color: _c.main_red,
     fontFamily: _f.regularAlt,
     fontSize: _fs.l,
+    marginTop: formatHeight(3),
   },
 });
