@@ -19,8 +19,8 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {OnBoardingScreens} from 'ts/constants/screens';
 import {formatHeight, formatWidth} from 'ts/utils/format-size';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
-import {_f} from '../../../../../../../UIConfig/fonts';
-import {_fs} from '../../../../../../../UIConfig/fontSizes';
+import {_f} from 'ts/UIConfig/fonts';
+import {_fs} from 'ts/UIConfig/fontSizes';
 
 interface CameraProps {}
 
@@ -29,6 +29,7 @@ const Camera = (props: CameraProps) => {
   const cameraShutterState = useState<boolean>(false);
   const uploadToServerTrigger = useState<boolean>(false);
   const facesDetected = useState<boolean>(false);
+  const [faces, setFaces] = useState<any>([]);
   const pictureURI = useState<string>('');
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
@@ -77,8 +78,11 @@ const Camera = (props: CameraProps) => {
     return `data:image/jpeg;base64,${imageUriBase64}`;
   };
 
-  const onFacesDetected = () => {
+  // @ts-ignore
+  const onFacesDetected = ({faces}) => {
+    // console.log('faces', faces[0].bounds.origin, faces[0].bounds.size);
     facesDetected[1](true);
+    setFaces(faces);
   };
   const onFaceDetectionError = () => {
     facesDetected[1](false);
@@ -90,7 +94,33 @@ const Camera = (props: CameraProps) => {
     pictureURI[1]('');
   };
 
+  const onSwitchCameraType = () => {
+    cameraTypeBool[1](!cameraTypeBool[0]);
+    facesDetected[1](false);
+  };
+
   const renderCamera = () => {
+    let faceMastStyle =
+      faces.length > 0 && facesDetected[1]
+        ? {
+            position: 'absolute',
+            top: faces[0].bounds.origin.y,
+            borderRadius:
+              Math.max(
+                faces[0].bounds.size.width,
+                faces[0].bounds.size.height,
+              ) / 2,
+            width: faces[0].bounds.size.width,
+            height: faces[0].bounds.size.height,
+          }
+        : _s.circle;
+    if (faces.length > 0 && facesDetected[1]) {
+      if (cameraTypeBool[0]) {
+        faceMastStyle.left = faces[0].bounds.origin.x;
+      } else {
+        faceMastStyle.right = faces[0].bounds.origin.x;
+      }
+    }
     if (pictureURI[0].length) {
       return (
         <Image
@@ -104,13 +134,11 @@ const Camera = (props: CameraProps) => {
     } else {
       return (
         <>
-          <TouchableOpacity
-            onPress={() => cameraTypeBool[1](!cameraTypeBool[0])}
-            style={_s.switchBtn}>
+          <TouchableOpacity onPress={onSwitchCameraType} style={_s.switchBtn}>
             <SwitchCameraWhileAlpha height={vs(30)} width={vs(30)} />
           </TouchableOpacity>
           <View style={_s.cameraMask}>
-            <View style={_s.circle} />
+            <View style={[_s.circle, faceMastStyle]} />
           </View>
           <View
             style={[
@@ -132,6 +160,9 @@ const Camera = (props: CameraProps) => {
             faceDetectionLandmarks={
               RNCamera.Constants.FaceDetection.Landmarks.all
             }
+            onLayout={({nativeEvent}) => {
+              console.log('nativeEvent', nativeEvent);
+            }}
             onFacesDetected={onFacesDetected}
             onFaceDetectionError={onFaceDetectionError}
             androidCameraPermissionOptions={{
@@ -223,7 +254,7 @@ const _s = StyleSheet.create({
   circle: {
     borderWidth: 1,
     borderColor: _c.white,
-    borderRadius: 400,
+    borderRadius: circleRadius / 2,
     width: circleRadius,
     height: circleRadius,
   },
