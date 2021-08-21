@@ -6283,6 +6283,18 @@ react-native-device-info@^7.1.0:
   resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-7.1.0.tgz"
   integrity sha512-H0fQ9fi6DNq85SUmJK8Opo8twHKXKp86FI4jL1Abg2tH6CjVbQ871QibD12ZMjKLMy4kKHL7BRxNEPUcI79JNg==
 
+react-native-document-picker@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-6.0.3.tgz#a58f16ef27e3d476fc7ffaef75bca461945aff18"
+  integrity sha512-PHO7HbWJyZy8medcvo37tdw656sFsHIcu6rCMLxBJhJ2IV/uMCYIahaO3A/fydyZ1Si2fnGE6Lef168xSEnjdQ==
+  dependencies:
+    invariant "^2.2.4"
+
+react-native-face-detection@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/react-native-face-detection/-/react-native-face-detection-0.1.1.tgz#626b1804e0d5b718313fc0486d333167e4df3396"
+  integrity sha512-OceKwx+0eqEJXRkv5RlULEo766bd2MGPf0MAIwytUdeIIqDuPwGxF8ZqOg4FgzvIvYylIp5S8oMspWOYVdcc9w==
+
 react-native-fast-image@^8.3.4:
   version "8.3.4"
   resolved "https://registry.npmjs.org/react-native-fast-image/-/react-native-fast-image-8.3.4.tgz"
@@ -6338,6 +6350,11 @@ react-native-hyperlink@0.0.19:
   dependencies:
     linkify-it "^2.2.0"
     mdurl "^1.0.0"
+
+react-native-image-picker@^4.0.6:
+  version "4.0.6"
+  resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-4.0.6.tgz#0dfa5bb83bcf6ff58635ebb9201a185c2271e8cc"
+  integrity sha512-Pp3UWKUADuMG1mz12m6dSO/R2KnvXVEd77bldrfTMFpz4PFc4iVKo+bHeS79It0mUBezfzDMgfesg/OPLSugvQ==
 
 react-native-image-resizer@^1.4.2:
   version "1.4.2"

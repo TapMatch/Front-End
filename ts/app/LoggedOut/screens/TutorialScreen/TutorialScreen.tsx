@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {View, StyleSheet, StatusBar} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+// @ts-ignore
 import Video from 'react-native-video';
 import {_c} from 'ts/UIConfig/colors';
-import CloseButton from './components/CloseButton';
-import TutorialVideo from 'assets/video/tutorial.mp4';
+import SkipButton from './components/SkipButton';
+import TutorialVideo from 'assets/video/mov_bbb.mp4';
 import WebLoader from './components/WebLoader';
 import {useNavigation} from '@react-navigation/native';
 import {LoggedOutScreens} from 'ts/constants/screens';
@@ -19,26 +20,24 @@ const TutorialScreen = ({navigation, route}: any) => {
   const txt = useLocalizedTxt();
 
   const onTutorialEnd = async () => {
-    await setStorageData(StorageKeys.PassedTutorial, '1');
+    // await setStorageData(StorageKeys.PassedTutorial, '1');
     navigate(LoggedOutScreens.PhoneInput);
   };
 
   return (
     <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
-      {/*{loadComplete[0] && (*/}
-      {/*  <CloseButton onPress={() => navigate(LoggedOutScreens.PhoneInput)} />*/}
-      {/*)}*/}
       <StatusBar
         animated={true}
         backgroundColor={_c.white}
         barStyle={'dark-content'}
       />
+      {loadComplete[0] && <SkipButton onPress={onTutorialEnd} />}
       {!loadComplete[0] && <WebLoader message={txt.startTutorial} />}
       <Video
         source={TutorialVideo}
         style={_s.video}
         onEnd={onTutorialEnd}
-        resizeMode={'contain'}
+        resizeMode={'stretch'}
         onReadyForDisplay={() => loadComplete[1](true)}
       />
     </View>

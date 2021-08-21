@@ -1,39 +1,22 @@
-import {useIsFocused} from '@react-navigation/native';
 import React from 'react';
-import {Text, View, StyleSheet} from 'react-native';
-import useLocalizedTxt, {
-  formatLocalizedTxt,
-} from 'ts/localization/useLocalizedTxt';
+import {StyleSheet, Text, View} from 'react-native';
+import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {formatWidth} from '../../../../../utils/format-size';
+import {useHeaderHeight} from '@react-navigation/stack';
 
 interface SloganParagraphProps {
   startModalVisible: [boolean, (x: boolean) => void];
 }
 
-const SloganParagraph = ({startModalVisible}: SloganParagraphProps) => {
+const SloganParagraph = () => {
   const txt = useLocalizedTxt();
-  const isFocused = useIsFocused();
+  const headerHeight = useHeaderHeight();
 
   return (
-    <View
-      style={[
-        _s.container,
-        {
-          opacity: startModalVisible[0] || !isFocused ? 0 : 1,
-        },
-      ]}>
-      <Text style={_s.paragraphTxt}>
-        {formatLocalizedTxt(txt.slogan, {
-          together: (key: string) => (
-            <Text key={key} style={_s.linkStyle}>
-              {txt.together}
-            </Text>
-          ),
-        })}
-      </Text>
+    <View style={_s.container}>
+      <Text style={_s.paragraphTxt}>{txt.welcomeToTapMatch}</Text>
     </View>
   );
 };
@@ -41,19 +24,10 @@ const SloganParagraph = ({startModalVisible}: SloganParagraphProps) => {
 export default SloganParagraph;
 
 const _s = StyleSheet.create({
-  container: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: formatWidth(37),
-  },
-  linkStyle: {
-    textDecorationLine: 'underline',
-  },
+  container: {},
   paragraphTxt: {
-    width: 180,
-    color: _c.black,
-    fontFamily: _f.regular,
-    fontSize: _fs.l,
-    textAlign: 'center',
+    color: _c.white,
+    fontFamily: _f.regularAlt,
+    fontSize: _fs.x4l,
   },
 });

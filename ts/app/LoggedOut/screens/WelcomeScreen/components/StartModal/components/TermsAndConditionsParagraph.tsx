@@ -9,15 +9,12 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {formatWidth} from '../../../../../../../utils/format-size';
 
 interface TermsAndConditionsParagraphProps {
   modalVisible: [boolean, (x: boolean) => void];
 }
 
-const TermsAndConditionsParagraph = ({
-  modalVisible,
-}: TermsAndConditionsParagraphProps) => {
+const TermsAndConditionsParagraph = () => {
   const txt = useLocalizedTxt();
   const {navigate} = useNavigation();
   const isFocused = useIsFocused();
@@ -37,7 +34,6 @@ const TermsAndConditionsParagraph = ({
       <Hyperlink
         linkStyle={_s.linkStyle}
         onPress={(url) => {
-          modalVisible[1](false);
           navigate('WebScreen', {url});
         }}
         linkText={(url) => formatLinks(url)}>
@@ -67,24 +63,15 @@ const TermsAndConditionsParagraph = ({
 export default TermsAndConditionsParagraph;
 
 const _s = StyleSheet.create({
-  container: {
-    paddingVertical: '10%',
-    width: '100%',
-    flex: 0.3,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
+  container: {},
   linkStyle: {
     textDecorationLine: 'underline',
   },
   paragraphTxt: {
-    height: 'auto',
-    width: 240,
-    color: _c.black,
+    width: 267,
+    color: _c.white,
     fontFamily: _f.regular,
     fontSize: _fs.l,
     textAlign: 'center',
-    textAlignVertical: 'center',
-    paddingBottom: '5%',
   },
 });

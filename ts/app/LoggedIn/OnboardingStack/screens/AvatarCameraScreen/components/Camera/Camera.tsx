@@ -14,6 +14,13 @@ import {vs} from 'react-native-size-matters';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
+import DocumentPicker from 'react-native-document-picker';
+import FaceDetection, {
+  FaceDetectorContourMode,
+  FaceDetectorLandmarkMode,
+  FaceContourType,
+  FaceLandmarkType,
+} from 'react-native-face-detection';
 import {postAvatar} from '../../api/postAvatar';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {OnBoardingScreens} from 'ts/constants/screens';
@@ -30,6 +37,7 @@ const Camera = (props: CameraProps) => {
   const uploadToServerTrigger = useState<boolean>(false);
   const facesDetected = useState<boolean>(false);
   const [faces, setFaces] = useState<any>([]);
+  const [imageFaces, setImageFaces] = useState<any>([]);
   const pictureURI = useState<string>('');
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
@@ -99,28 +107,44 @@ const Camera = (props: CameraProps) => {
     facesDetected[1](false);
   };
 
-  const renderCamera = () => {
-    let faceMastStyle =
-      faces.length > 0 && facesDetected[1]
-        ? {
-            position: 'absolute',
-            top: faces[0].bounds.origin.y,
-            borderRadius:
-              Math.max(
-                faces[0].bounds.size.width,
-                faces[0].bounds.size.height,
-              ) / 2,
-            width: faces[0].bounds.size.width,
-            height: faces[0].bounds.size.height,
-          }
-        : _s.circle;
-    if (faces.length > 0 && facesDetected[1]) {
-      if (cameraTypeBool[0]) {
-        faceMastStyle.left = faces[0].bounds.origin.x;
+  const processFaces = async (imagePath: string) => {
+    const options = {
+      landmarkMode: FaceDetectorLandmarkMode.ALL,
+      contourMode: FaceDetectorContourMode.ALL,
+    };
+
+    try {
+      const faces = await FaceDetection.processImage(imagePath, options);
+      if (faces.length > 0) {
+        facesDetected[1](true);
+        setImageFaces(faces);
+      }
+    } catch (e) {
+      facesDetected[1](false);
+    }
+  };
+
+  const onPickImage = async () => {
+    try {
+      const {uri, size} = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.images],
+      });
+      await pictureURI[1](uri);
+      cameraShutterState[1](true);
+      facesDetected[1](false);
+      console.log('size', size);
+      await processFaces(uri);
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('DocumentPicker.isCancel err', err);
+        // User cancelled the picker, exit any dialogs or menus and move on
       } else {
-        faceMastStyle.right = faces[0].bounds.origin.x;
+        throw err;
       }
     }
+  };
+
+  const renderCamera = () => {
     if (pictureURI[0].length) {
       return (
         <Image
@@ -137,18 +161,6 @@ const Camera = (props: CameraProps) => {
           <TouchableOpacity onPress={onSwitchCameraType} style={_s.switchBtn}>
             <SwitchCameraWhileAlpha height={vs(30)} width={vs(30)} />
           </TouchableOpacity>
-          <View style={_s.cameraMask}>
-            <View style={[_s.circle, faceMastStyle]} />
-          </View>
-          <View
-            style={[
-              _s.facesDetected,
-              facesDetected[0] ? _s.greenBackground : _s.redBackground,
-            ]}>
-            <Text style={_s.facesDetectedTxt}>
-              {facesDetected[0] ? txt.faceDetected : txt.faceNotDetected}
-            </Text>
-          </View>
           <RNCamera
             zoom={0.000005}
             ref={RNCameraRef}
@@ -160,9 +172,7 @@ const Camera = (props: CameraProps) => {
             faceDetectionLandmarks={
               RNCamera.Constants.FaceDetection.Landmarks.all
             }
-            onLayout={({nativeEvent}) => {
-              console.log('nativeEvent', nativeEvent);
-            }}
+            onLayout={({nativeEvent}) => {}}
             onFacesDetected={onFacesDetected}
             onFaceDetectionError={onFaceDetectionError}
             androidCameraPermissionOptions={{
@@ -184,13 +194,62 @@ const Camera = (props: CameraProps) => {
       );
     }
   };
+
+  let faceMastStyle =
+    faces.length > 0 && facesDetected[1]
+      ? {
+          position: 'absolute',
+          top: faces[0].bounds.origin.y,
+          borderRadius:
+            Math.max(faces[0].bounds.size.width, faces[0].bounds.size.height) /
+            2,
+          width: faces[0].bounds.size.width,
+          height: faces[0].bounds.size.height,
+        }
+      : _s.circle;
+  if (faces.length > 0 && facesDetected[1]) {
+    if (cameraTypeBool[0]) {
+      faceMastStyle.left = faces[0].bounds.origin.x;
+    } else {
+      faceMastStyle.right = faces[0].bounds.origin.x;
+    }
+  }
+
+  if (imageFaces.length > 0 && facesDetected[1]) {
+    // @ts-ignore
+    faceMastStyle = {
+      position: 'absolute',
+      top: imageFaces[0].boundingBox[0],
+      borderRadius:
+        Math.max(imageFaces[0].boundingBox[2], imageFaces[0].boundingBox[3]) /
+        2,
+      left: imageFaces[0].boundingBox[1],
+      width: imageFaces[0].boundingBox[2],
+      height: imageFaces[0].boundingBox[3],
+    };
+  }
+
   return (
     <View style={_s.container}>
+      <View style={_s.cameraMask}>
+        <View
+          style={facesDetected[1] ? [_s.circle, faceMastStyle] : [_s.circle]}
+        />
+      </View>
+      <View
+        style={[
+          _s.facesDetected,
+          facesDetected[0] ? _s.greenBackground : _s.redBackground,
+        ]}>
+        <Text style={_s.facesDetectedTxt}>
+          {facesDetected[0] ? txt.faceDetected : txt.faceNotDetected}
+        </Text>
+      </View>
       {renderCamera()}
       <Shutter
         facesDetected={facesDetected[0]}
         pictureURI={pictureURI}
-        onBackRecapture={onBackRecapture}
+        onPickImage={onPickImage}
         cameraShutterState={cameraShutterState[0]}
         uploadToServer={onUploadToServer}
         onCapture={onCapture}

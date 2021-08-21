@@ -50,7 +50,7 @@ const DoneBtn = ({disabled, name}: DoneBtnProps) => {
             LoggedIn,
             user_has_passed_onboarding,
           });
-          navigate(OnBoardingScreens.MapDemo);
+          navigate(OnBoardingScreens.AvatarCamera);
         }}
         style={[_s.container, {height: vs(60) + bottom * 0.5}]}>
         <Text style={[_s.txt, {color: doneTxtColor}]}>{txt.done}</Text>

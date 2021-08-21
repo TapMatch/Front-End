@@ -9,7 +9,7 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 interface ShutterProps {
   uploadToServer: () => void;
   onCapture: () => void;
-  onBackRecapture: () => void;
+  onPickImage: () => void;
   pictureURI: [string, (x: string) => void];
   cameraShutterState: boolean;
   facesDetected: boolean;
@@ -19,43 +19,33 @@ const Shutter = ({
   pictureURI,
   uploadToServer,
   onCapture,
-  onBackRecapture,
+  onPickImage,
   cameraShutterState,
   facesDetected,
 }: ShutterProps) => {
   const txt = useLocalizedTxt();
   return (
-    <View
-      style={[
-        _s.container,
-        cameraShutterState ? _s.justifyBetween : _s.justifyCenter,
-      ]}>
-      {cameraShutterState && (
-        <TouchableOpacity onPress={onBackRecapture} style={_s.facePreview}>
-          <Image
-            resizeMode={'cover'}
-            style={_s.faceDemo}
-            source={
-              cameraShutterState
-                ? {uri: pictureURI[0]}
-                : require('assets/png/face-demo.png')
-            }
-          />
-        </TouchableOpacity>
-      )}
-      {!cameraShutterState && (
-        <TouchableOpacity
-          onPress={onCapture}
-          disabled={!facesDetected}
-          style={[_s.shutterBtn, _s.shadow]}>
-          <View style={_s.redCircle} />
-        </TouchableOpacity>
-      )}
-      {cameraShutterState && (
-        <TouchableOpacity onPress={uploadToServer} style={_s.btnNext}>
-          <Text style={_s.btnTxt}>{txt.next}</Text>
-        </TouchableOpacity>
-      )}
+    <View style={[_s.container, _s.justifyCenter]}>
+      <TouchableOpacity onPress={onPickImage} style={_s.facePreview}>
+        <Image
+          resizeMode={'cover'}
+          style={_s.faceDemo}
+          source={
+            cameraShutterState
+              ? {uri: pictureURI[0]}
+              : require('assets/png/face-demo.png')
+          }
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={onCapture}
+        disabled={!facesDetected}
+        style={[_s.shutterBtn, _s.shadow]}>
+        <View style={_s.redCircle} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={uploadToServer} style={_s.btnNext}>
+        <Text style={_s.btnTxt}>{txt.next}</Text>
+      </TouchableOpacity>
     </View>
   );
 };
@@ -85,6 +75,8 @@ const _s = StyleSheet.create({
     height: formatWidth(98),
     width: formatWidth(98),
     padding: formatWidth(4),
+    marginLeft: formatWidth(38),
+    marginRight: formatWidth(49),
   },
   faceDemo: {
     width: formatWidth(58),

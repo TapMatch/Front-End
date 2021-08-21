@@ -24,11 +24,11 @@ export default WebLoader;
 
 const _s = StyleSheet.create({
   txt: {
-    color: _c.main_red,
+    color: _c.white,
     fontSize: _fs.l,
   },
   loader: {
-    backgroundColor: _c.white,
+    backgroundColor: _c.black,
     height: '100%',
     width: '100%',
     alignItems: 'center',

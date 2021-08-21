@@ -43,9 +43,7 @@ export default function LoggedOutStack() {
         component={WelcomeScreen}
         options={() => {
           return {
-            headerTitle: '',
-            headerLeft: () => null,
-            headerRight: () => null,
+            headerShown: false,
           };
         }}
       />

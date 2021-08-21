@@ -9,7 +9,7 @@ import CreateEventScreen from './screens/CreateEventScreen/CreateEventScreen';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
-import * as RNLocalize from "react-native-localize";
+import * as RNLocalize from 'react-native-localize';
 import Geocoder from 'react-native-geocoding';
 
 export default function MainStack() {
@@ -17,7 +17,7 @@ export default function MainStack() {
     LoggedIn,
     userProfile,
     user_has_passed_onboarding,
-    userToken
+    userToken,
   } = useContext(TapMatchContext);
   const selectedCommunityData = useState<any>(userProfile[0].communities[0][0]);
   // const selectedCommunityData = useState<any>({
@@ -30,7 +30,6 @@ export default function MainStack() {
   const upcomingEventsListIsOpen = useState<boolean>(false);
   const eventDetailsModalVisible = useState<boolean>(false);
 
-
   const allCommunities = useState<any>([]);
 
   // for community modal
@@ -39,9 +38,7 @@ export default function MainStack() {
   const communitySelectedForJoin = useState<any>({});
   const eventToGoToAfterDeeplinkCommunityJoin = useState<any>({});
 
-
   const requestingEventDetailsInProcess = useState<boolean>(false);
-
 
   const Stack = createStackNavigator();
   const {Navigator, Screen} = Stack;
@@ -49,13 +46,12 @@ export default function MainStack() {
 
   const language = useState<string>(RNLocalize.getLocales()[0].languageCode);
 
-
   useEffect(() => {
     patchUserTimeZone({
       userToken,
       LoggedIn,
       userProfile,
-      user_has_passed_onboarding
+      user_has_passed_onboarding,
     });
   }, []);
 
@@ -64,20 +60,21 @@ export default function MainStack() {
   }, []);
 
   return (
-    <MainStackContext.Provider value={{
-      selectedCommunityData,
-      upcomingEvents,
-      requestingEventDetailsInProcess,
-      communitySelectedForJoin,
-      upcomingEventsListIsOpen,
-      eventMarkers,
-      selectedMarkerData,
-      eventDetailsModalVisible,
-      communitiesModalVisible,
-      allCommunities,
-      communityCodeInputVisible,
-      eventToGoToAfterDeeplinkCommunityJoin
-    }}>
+    <MainStackContext.Provider
+      value={{
+        selectedCommunityData,
+        upcomingEvents,
+        requestingEventDetailsInProcess,
+        communitySelectedForJoin,
+        upcomingEventsListIsOpen,
+        eventMarkers,
+        selectedMarkerData,
+        eventDetailsModalVisible,
+        communitiesModalVisible,
+        allCommunities,
+        communityCodeInputVisible,
+        eventToGoToAfterDeeplinkCommunityJoin,
+      }}>
       <Navigator
         mode={'modal'}
         screenOptions={{
@@ -136,7 +133,6 @@ export default function MainStack() {
             };
           }}
         />
-
       </Navigator>
     </MainStackContext.Provider>
   );

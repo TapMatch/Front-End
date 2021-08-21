@@ -18,7 +18,12 @@ import StartModal from './components/StartModal/StartModal';
 import Geolocation from 'react-native-geolocation-service';
 import {request, PERMISSIONS, check} from 'react-native-permissions';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {formatCoverSize, formatWidth} from 'ts/utils/format-size';
+import {formatCoverSize, formatHeight, formatWidth} from 'ts/utils/format-size';
+import {getStorageData} from 'ts/utils/asyncStorage';
+import StorageKeys from 'ts/constants/storage';
+import {LoggedOutScreens} from 'ts/constants/screens';
+import {useNavigation} from '@react-navigation/native';
+import TermsAndConditionsParagraph from './components/StartModal/components/TermsAndConditionsParagraph';
 
 interface WelcomeScreenProps {}
 
@@ -30,10 +35,10 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
 
   const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
-  const startModalVisible = useState<boolean>(false);
   const logoSize = formatWidth(175);
   const {userLocation} = useContext(TapMatchContext);
   const headerHeight = useHeaderHeight();
+  const {navigate} = useNavigation();
 
   const getUserLocation = () => {
     check(locationPermission).then((x) => {
@@ -41,19 +46,18 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
     });
   };
 
-  const setUserLocation = (x: string) => {
+  const setUserLocation = async (x: string) => {
     if (x === 'granted') {
-      startModalVisible[1](true);
+      await handleNextScreen();
       handleGeolocation();
     } else {
       request(locationPermission)
         .then((x) => {
           if (x === 'granted') {
-            // startModalVisible[1](true);
             handleGeolocation();
           }
         })
-        .then(() => startModalVisible[1](true));
+        .then(async () => await handleNextScreen());
     }
   };
 
@@ -76,6 +80,15 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
     );
   };
 
+  const handleNextScreen = async () => {
+    const passedTutorial = await getStorageData(StorageKeys.PassedTutorial);
+    if (passedTutorial === '1') {
+      navigate(LoggedOutScreens.PhoneInput);
+    } else {
+      navigate(LoggedOutScreens.TutorialScreen);
+    }
+  };
+
   return (
     <View style={[_s.container, {paddingTop: top}]}>
       <ImageBackground
@@ -87,22 +100,16 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
           backgroundColor={'transparent'}
           barStyle={'dark-content'}
         />
+        <SloganParagraph />
         <TouchableOpacity
           activeOpacity={1}
           onPress={getUserLocation}
-          style={[
-            _s.middle,
-            {
-              marginTop:
-                formatCoverSize(355) - StatusBar.currentHeight - headerHeight,
-            },
-          ]}>
+          style={_s.middle}>
           <TapMatchLogo height={logoSize} width={logoSize} />
         </TouchableOpacity>
-        <SloganParagraph startModalVisible={startModalVisible} />
+        <TermsAndConditionsParagraph />
         <BottomBtn getUserLocation={getUserLocation} />
       </ImageBackground>
-      <StartModal modalVisible={startModalVisible} />
     </View>
   );
 };
@@ -112,15 +119,19 @@ export default WelcomeScreen;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: _c.white,
+    backgroundColor: _c.black,
   },
   imageBackground: {
     flex: 1,
+    backgroundColor: _c.black,
     alignItems: 'center',
-    backgroundColor: _c.white,
+    // justifyContent: 'center',
+    justifyContent: 'space-around',
+    paddingTop: formatHeight(15),
+    paddingBottom: formatHeight(75),
   },
   middle: {
-    width: formatWidth(175),
+    width: formatWidth(185),
     alignItems: 'center',
   },
 });

@@ -25,7 +25,6 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
         barStyle={'dark-content'}
       />
       <View style={_s.top}>
-        <SwipeBackGuide />
         <Title />
         <Subtitle />
       </View>

@@ -1,11 +1,11 @@
 {
-    "tapToContinue": "Tap to Continue",
+    "tapToContinue": "Tap to continue",
     "pleaseWait": "Please wait...",
     "atTapMatchOurMain": "At TapMatch our main",
-    "acceptTermsAndPolicy": "By continuing you agree to TapMatch :terms and confirm you read our :policy.",
+    "acceptTermsAndPolicy": "By continuing you agree to tapmatch :terms and confirm you have read our :policy",
     "slogan": "At TapMatch our main focus is bringing people :together",
-    "termsOfUse": "Terms of Use",
-    "privacyPolicy": "Privacy Policy",
+    "termsOfUse": "terms of use",
+    "privacyPolicy": "privacy policy",
     "focusIsBringingPeople": "focus is bringing people",
     "together": "together",
     "startTutorial": "Starting short tutorial...",
@@ -55,5 +55,6 @@
     "youCanRetakeThisAnytime": "You can re-take this anytime!",
     "faceDetected": "Face Detected",
     "faceNotDetected": "Face not Detected",
-    "next": "Next"
+    "next": "Next",
+    "skip": "Skip"
 }
