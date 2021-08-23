@@ -5,7 +5,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import Video from 'react-native-video';
 import {_c} from 'ts/UIConfig/colors';
 import SkipButton from './components/SkipButton';
-import TutorialVideo from 'assets/video/mov_bbb.mp4';
+import TutorialVideo from 'assets/video/tutorial.mp4';
 import WebLoader from './components/WebLoader';
 import {useNavigation} from '@react-navigation/native';
 import {LoggedOutScreens} from 'ts/constants/screens';

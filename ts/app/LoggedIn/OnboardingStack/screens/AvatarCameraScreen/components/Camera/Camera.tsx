@@ -1,11 +1,11 @@
-import React, {Fragment, useState, useRef, useEffect, useContext} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {
-  View,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
   Dimensions,
+  Image,
+  StyleSheet,
   Text,
+  TouchableOpacity,
+  View,
 } from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {RNCamera} from 'react-native-camera';
@@ -18,8 +18,6 @@ import DocumentPicker from 'react-native-document-picker';
 import FaceDetection, {
   FaceDetectorContourMode,
   FaceDetectorLandmarkMode,
-  FaceContourType,
-  FaceLandmarkType,
 } from 'react-native-face-detection';
 import {postAvatar} from '../../api/postAvatar';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
@@ -29,7 +27,11 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 
-interface CameraProps {}
+interface CameraProps {
+  pictureURI: [string, (x: string) => void];
+  facesDetected: [boolean, (x: boolean) => void];
+  cameraShutterState: [boolean, (x: boolean) => void];
+}
 
 type BoundingBoxType = [number, number, number, number];
 
@@ -49,14 +51,12 @@ type FaceRectType = {
 
 const Camera = (props: CameraProps) => {
   const cameraTypeBool = useState<boolean>(false);
-  const cameraShutterState = useState<boolean>(false);
   const uploadToServerTrigger = useState<boolean>(false);
-  const facesDetected = useState<boolean>(false);
   const [faces, setFaces] = useState<any>([]);
   const [imageFaces, setImageFaces] = useState<any>([]);
   const [faceRect, setFaceRect] = useState<FaceRectType | undefined>();
-  const pictureURI = useState<string>('');
   const {navigate} = useNavigation();
+  const {facesDetected, pictureURI, cameraShutterState} = props;
   const txt = useLocalizedTxt();
 
   const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
@@ -101,6 +101,8 @@ const Camera = (props: CameraProps) => {
     uploadToServerTrigger[1](true);
     await navigate(OnBoardingScreens.AllSet);
   };
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const getBase64 = async (imageUri: string) => {
     const filepath = imageUri.split('//')[1];
     const imageUriBase64 = await RNFS.readFile(filepath, 'base64');
@@ -118,6 +120,7 @@ const Camera = (props: CameraProps) => {
     facesDetected[1](false);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onBackRecapture = () => {
     facesDetected[1](false);
     cameraShutterState[1](false);
@@ -212,12 +215,12 @@ const Camera = (props: CameraProps) => {
           await processFaces(uri, imageWidth, imageHeight);
         },
         (error) => {
-          // console.log('error', error.message);
+          console.log('Error:', error.message);
         },
       );
     } catch (err) {
       if (DocumentPicker.isCancel(err)) {
-        console.log('DocumentPicker isCancel', err);
+        console.log('Error:', err.message);
       }
     }
   };
@@ -237,9 +240,6 @@ const Camera = (props: CameraProps) => {
     } else {
       return (
         <>
-          <TouchableOpacity onPress={onSwitchCameraType} style={_s.switchBtn}>
-            <SwitchCameraWhileAlpha height={vs(30)} width={vs(30)} />
-          </TouchableOpacity>
           <RNCamera
             zoom={0.000005}
             ref={RNCameraRef}
@@ -251,7 +251,6 @@ const Camera = (props: CameraProps) => {
             faceDetectionLandmarks={
               RNCamera.Constants.FaceDetection.Landmarks.all
             }
-            onLayout={({nativeEvent}) => {}}
             onFacesDetected={onFacesDetected}
             onFaceDetectionError={onFaceDetectionError}
             androidCameraPermissionOptions={{
@@ -260,6 +259,7 @@ const Camera = (props: CameraProps) => {
               buttonPositive: 'Ok',
               buttonNegative: 'Cancel',
             }}>
+            {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
             {({camera, status, recordAudioPermissionStatus}) => {
               // console.log('Camera status', status);
               if (status === 'NOT_AUTHORIZED') {
@@ -277,22 +277,27 @@ const Camera = (props: CameraProps) => {
   let faceMastStyle = _s.circle;
   if (faces.length > 0 && facesDetected[1]) {
     faceMastStyle = {
+      // @ts-ignore
       position: 'absolute',
       top: faces[0].bounds.origin.y,
       borderRadius:
         Math.max(faces[0].bounds.size.width, faces[0].bounds.size.height) / 2,
       width: faces[0].bounds.size.width,
       height: faces[0].bounds.size.height,
+      left: faces[0].bounds.origin.x,
     };
-    if (cameraTypeBool[0]) {
-      faceMastStyle.left = faces[0].bounds.origin.x;
-    } else {
-      faceMastStyle.right = faces[0].bounds.origin.x;
-    }
+    // if (cameraTypeBool[0]) {
+    //   // @ts-ignore
+    //   faceMastStyle.left = faces[0].bounds.origin.x;
+    // } else {
+    //   // @ts-ignore
+    //   faceMastStyle.right = faces[0].bounds.origin.x;
+    // }
   }
 
   if (faceRect && imageFaces.length > 0 && facesDetected[1]) {
     faceMastStyle = {
+      // @ts-ignore
       position: 'absolute',
       top: faceRect.y,
       borderRadius: Math.max(faceRect.width, faceRect.height) / 2,
