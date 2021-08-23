@@ -32,7 +32,7 @@ const _s = StyleSheet.create({
   container: {
     position: 'absolute',
     bottom: formatHeight(33),
-    backgroundColor: _c.transparentBtn,
+    backgroundColor: _c.black,
   },
   txt: {
     fontFamily: _f.regularAlt,

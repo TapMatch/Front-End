@@ -7,6 +7,7 @@ import {
   Platform,
   useWindowDimensions,
   ImageBackground,
+  Image,
 } from 'react-native';
 import TapMatchLogo from 'assets/svg/TapMatchLogo.svg';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -105,7 +106,10 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
           activeOpacity={1}
           onPress={getUserLocation}
           style={_s.middle}>
-          <TapMatchLogo height={logoSize} width={logoSize} />
+          <Image
+            source={require('assets/png/TapMatchLogo.png')}
+            style={_s.logo}
+          />
         </TouchableOpacity>
         <TermsAndConditionsParagraph />
         <BottomBtn getUserLocation={getUserLocation} />
@@ -129,6 +133,10 @@ const _s = StyleSheet.create({
     justifyContent: 'space-around',
     paddingTop: formatHeight(15),
     paddingBottom: formatHeight(75),
+  },
+  logo: {
+    width: formatWidth(185),
+    height: formatWidth(182),
   },
   middle: {
     width: formatWidth(185),

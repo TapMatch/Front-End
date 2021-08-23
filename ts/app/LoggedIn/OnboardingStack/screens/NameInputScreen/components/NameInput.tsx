@@ -11,14 +11,17 @@ interface NameInputProps {
 }
 
 const NameInput = ({name}: NameInputProps) => {
-  let nameInputRef = useRef();
+  let nameInputRef = useRef(null);
   return (
     <View style={_s.container}>
-      <TouchableOpacity onPress={() => {
-        if (typeof nameInputRef.current.focus === 'function') {
-          nameInputRef.current.focus();
-        }
-      }} activeOpacity={1} style={_s.inputContainer}>
+      <TouchableOpacity
+        onPress={() => {
+          if (typeof nameInputRef.current.focus === 'function') {
+            nameInputRef.current.focus();
+          }
+        }}
+        activeOpacity={1}
+        style={_s.inputContainer}>
         <TextInput
           ref={nameInputRef}
           autoCompleteType={'off'}
