@@ -14,11 +14,7 @@ import {vs} from 'react-native-size-matters';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
-import {
-  launchImageLibrary,
-  ImagePickerResponse,
-  Asset,
-} from 'react-native-image-picker';
+import DocumentPicker from 'react-native-document-picker';
 import FaceDetection, {
   FaceDetectorContourMode,
   FaceDetectorLandmarkMode,
@@ -229,24 +225,27 @@ const Camera = (props: CameraProps) => {
 
   const onPickImage = async () => {
     try {
-      launchImageLibrary(
-        {
-          mediaType: 'photo',
-        },
-        (response: ImagePickerResponse) => {
-          if (response.didCancel) {
-            return;
-          }
-
-          const {uri, width, height} = response.assets[0];
-          console.log('========================', width, height);
-          pictureURI[1](uri as string);
+      const {uri} = await DocumentPicker.pickSingle({
+        type: [DocumentPicker.types.images],
+      });
+      Image.getSize(
+        uri,
+        async (imageWidth, imageHeight) => {
+          console.log('========================', imageHeight, imageWidth);
+          await pictureURI[1](uri);
           cameraShutterState[1](true);
           facesDetected[1](false);
-          processFaces(uri as string, width as number, height as number);
+          await processFaces(uri, imageWidth, imageHeight);
+        },
+        (error) => {
+          // console.log('error', error.message);
         },
       );
-    } catch (err) {}
+    } catch (err) {
+      if (DocumentPicker.isCancel(err)) {
+        console.log('DocumentPicker isCancel', err);
+      }
+    }
   };
 
   const renderCamera = () => {
