@@ -14,7 +14,11 @@ import {vs} from 'react-native-size-matters';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
-import DocumentPicker from 'react-native-document-picker';
+import {
+  launchImageLibrary,
+  ImagePickerResponse,
+  Asset,
+} from 'react-native-image-picker';
 import FaceDetection, {
   FaceDetectorContourMode,
   FaceDetectorLandmarkMode,
@@ -31,6 +35,22 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 
 interface CameraProps {}
 
+type BoundingBoxType = [number, number, number, number];
+
+type ImageSizeType = {
+  width?: number;
+  height?: number;
+  originalWidth: number;
+  originalHeight: number;
+};
+
+type FaceRectType = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
 const Camera = (props: CameraProps) => {
   const cameraTypeBool = useState<boolean>(false);
   const cameraShutterState = useState<boolean>(false);
@@ -38,9 +58,13 @@ const Camera = (props: CameraProps) => {
   const facesDetected = useState<boolean>(false);
   const [faces, setFaces] = useState<any>([]);
   const [imageFaces, setImageFaces] = useState<any>([]);
+  const [faceRect, setFaceRect] = useState<FaceRectType | undefined>();
   const pictureURI = useState<string>('');
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
+
+  const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
+
   const {
     userToken,
     userProfile,
@@ -49,6 +73,7 @@ const Camera = (props: CameraProps) => {
   } = useContext(TapMatchContext);
 
   let RNCameraRef = useRef<RNCamera | null>(null);
+  let imageRef = useRef<Image | null>(null);
 
   const onCapture = async () => {
     try {
@@ -107,7 +132,81 @@ const Camera = (props: CameraProps) => {
     facesDetected[1](false);
   };
 
-  const processFaces = async (imagePath: string) => {
+  const calculateFaceRectInsideImage = (
+    boundingBox: BoundingBoxType,
+    imageSize: ImageSizeType,
+  ) => {
+    imageRef.current?.measure((width, height, px, py, fx, fy) => {
+      const imageRatio = imageSize.originalHeight / imageSize.originalWidth;
+      const screenRatio = (screenHeight - fy) / screenWidth;
+      if (screenRatio - imageRatio >= 0) {
+        imageSize.height = screenHeight - fy;
+        imageSize.width = imageSize.height / imageRatio;
+        const hRatio = imageSize.originalHeight / imageSize.height;
+        const faceX =
+          boundingBox[0] / hRatio - (imageSize.width - screenWidth) / 2;
+        const faceY = boundingBox[1] / hRatio;
+        const faceWidth = (boundingBox[2] - boundingBox[0]) / hRatio;
+        const faceHeight = (boundingBox[3] - boundingBox[1]) / hRatio;
+        console.log(
+          '====== boundingBox',
+          '====hRatio',
+          screenWidth,
+          boundingBox,
+          hRatio,
+        );
+        console.log('====== imageSize', imageSize, {
+          x: faceX,
+          y: faceY,
+          width: Math.ceil(faceWidth),
+          height: Math.ceil(faceHeight),
+        });
+        setFaceRect({
+          x: faceX,
+          y: faceY,
+          width: Math.ceil(faceWidth),
+          height: Math.ceil(faceHeight),
+        });
+      } else {
+        imageSize.width = screenWidth;
+        imageSize.height = imageSize.width * imageRatio;
+        const wRatio = imageSize.originalWidth / imageSize.width;
+
+        const faceX = boundingBox[0] / wRatio;
+        const faceY =
+          boundingBox[1] / wRatio -
+          (imageSize.height - (screenHeight - fy)) / 2;
+
+        const faceWidth = (boundingBox[2] - boundingBox[0]) / wRatio;
+        const faceHeight = (boundingBox[3] - boundingBox[1]) / wRatio;
+        console.log(
+          '====== boundingBox',
+          '====wRatio',
+          screenWidth,
+          boundingBox,
+          wRatio,
+        );
+        console.log('====== imageSize', imageSize, {
+          x: faceX,
+          y: faceY,
+          width: Math.ceil(faceWidth),
+          height: Math.ceil(faceHeight),
+        });
+        setFaceRect({
+          x: faceX,
+          y: faceY,
+          width: Math.ceil(faceWidth),
+          height: Math.ceil(faceHeight),
+        });
+      }
+    });
+  };
+
+  const processFaces = async (
+    imagePath: string,
+    imageWidth: number,
+    imageHeight: number,
+  ) => {
     const options = {
       landmarkMode: FaceDetectorLandmarkMode.ALL,
       contourMode: FaceDetectorContourMode.ALL,
@@ -118,6 +217,10 @@ const Camera = (props: CameraProps) => {
       if (faces.length > 0) {
         facesDetected[1](true);
         setImageFaces(faces);
+        calculateFaceRectInsideImage(faces[0].boundingBox, {
+          originalWidth: imageWidth,
+          originalHeight: imageHeight,
+        });
       }
     } catch (e) {
       facesDetected[1](false);
@@ -126,29 +229,32 @@ const Camera = (props: CameraProps) => {
 
   const onPickImage = async () => {
     try {
-      const {uri, size} = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.images],
-      });
-      await pictureURI[1](uri);
-      cameraShutterState[1](true);
-      facesDetected[1](false);
-      console.log('size', size);
-      await processFaces(uri);
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('DocumentPicker.isCancel err', err);
-        // User cancelled the picker, exit any dialogs or menus and move on
-      } else {
-        throw err;
-      }
-    }
+      launchImageLibrary(
+        {
+          mediaType: 'photo',
+        },
+        (response: ImagePickerResponse) => {
+          if (response.didCancel) {
+            return;
+          }
+
+          const {uri, width, height} = response.assets[0];
+          console.log('========================', width, height);
+          pictureURI[1](uri as string);
+          cameraShutterState[1](true);
+          facesDetected[1](false);
+          processFaces(uri as string, width as number, height as number);
+        },
+      );
+    } catch (err) {}
   };
 
   const renderCamera = () => {
     if (pictureURI[0].length) {
       return (
         <Image
-          resizeMode={'contain'}
+          ref={imageRef}
+          resizeMode={'cover'}
           style={_s.camera}
           source={{
             uri: pictureURI[0],
@@ -164,7 +270,7 @@ const Camera = (props: CameraProps) => {
           <RNCamera
             zoom={0.000005}
             ref={RNCameraRef}
-            style={_s.camera}
+            style={[_s.camera]}
             type={RNCamera.Constants.Type[cameraTypeBool[0] ? 'back' : 'front']}
             captureAudio={false} // no permissions added for this in recat-native-camera package setup
             flashMode={RNCamera.Constants.FlashMode.off}
@@ -195,19 +301,16 @@ const Camera = (props: CameraProps) => {
     }
   };
 
-  let faceMastStyle =
-    faces.length > 0 && facesDetected[1]
-      ? {
-          position: 'absolute',
-          top: faces[0].bounds.origin.y,
-          borderRadius:
-            Math.max(faces[0].bounds.size.width, faces[0].bounds.size.height) /
-            2,
-          width: faces[0].bounds.size.width,
-          height: faces[0].bounds.size.height,
-        }
-      : _s.circle;
+  let faceMastStyle = _s.circle;
   if (faces.length > 0 && facesDetected[1]) {
+    faceMastStyle = {
+      position: 'absolute',
+      top: faces[0].bounds.origin.y,
+      borderRadius:
+        Math.max(faces[0].bounds.size.width, faces[0].bounds.size.height) / 2,
+      width: faces[0].bounds.size.width,
+      height: faces[0].bounds.size.height,
+    };
     if (cameraTypeBool[0]) {
       faceMastStyle.left = faces[0].bounds.origin.x;
     } else {
@@ -215,17 +318,14 @@ const Camera = (props: CameraProps) => {
     }
   }
 
-  if (imageFaces.length > 0 && facesDetected[1]) {
-    // @ts-ignore
+  if (faceRect && imageFaces.length > 0 && facesDetected[1]) {
     faceMastStyle = {
       position: 'absolute',
-      top: imageFaces[0].boundingBox[0],
-      borderRadius:
-        Math.max(imageFaces[0].boundingBox[2], imageFaces[0].boundingBox[3]) /
-        2,
-      left: imageFaces[0].boundingBox[1],
-      width: imageFaces[0].boundingBox[2],
-      height: imageFaces[0].boundingBox[3],
+      top: faceRect.y,
+      borderRadius: Math.max(faceRect.width, faceRect.height) / 2,
+      left: faceRect.x,
+      width: faceRect.width,
+      height: faceRect.height,
     };
   }
 

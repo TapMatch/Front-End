@@ -41,7 +41,8 @@ const _s = StyleSheet.create({
     backgroundColor: _c.grey,
   },
   top: {
-    paddingBottom: formatWidth(25),
+    paddingTop: formatHeight(62),
+    paddingBottom: formatHeight(25),
     backgroundColor: _c.white,
   },
 });

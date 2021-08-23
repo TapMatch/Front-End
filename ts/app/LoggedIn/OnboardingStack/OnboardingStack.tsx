@@ -74,9 +74,7 @@ export default function OnboardingStack() {
         component={AvatarCameraScreen}
         options={() => {
           return {
-            headerTitle: '',
-            headerLeft: () => null,
-            headerRight: () => null,
+            headerShown: false,
           };
         }}
       />
