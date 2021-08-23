@@ -9,7 +9,7 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {formatHeight, formatWidth} from 'ts/utils/format-size';
 import ChevronLeftBlack from 'assets/svg/chevron-left-black.svg';
 import {_fs} from 'ts/UIConfig/fontSizes';
-import {isString} from '../../../../../utils/is-string';
+import {isString} from 'ts/utils/is-string';
 
 interface AvatarCameraScreenProps {
   navigation: any;
