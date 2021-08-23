@@ -25,7 +25,11 @@ const Shutter = ({
 }: ShutterProps) => {
   const txt = useLocalizedTxt();
   return (
-    <View style={[_s.container, _s.justifyCenter]}>
+    <View
+      style={[
+        _s.container,
+        cameraShutterState ? _s.justifyBetween : _s.justifyCenter,
+      ]}>
       <TouchableOpacity onPress={onPickImage} style={_s.facePreview}>
         <Image
           resizeMode={'cover'}
@@ -37,13 +41,18 @@ const Shutter = ({
           }
         />
       </TouchableOpacity>
+      {!cameraShutterState && (
+        <TouchableOpacity
+          onPress={onCapture}
+          disabled={!facesDetected}
+          style={[_s.shutterBtn, _s.shadow]}>
+          <View style={_s.redCircle} />
+        </TouchableOpacity>
+      )}
       <TouchableOpacity
-        onPress={onCapture}
-        disabled={!facesDetected}
-        style={[_s.shutterBtn, _s.shadow]}>
-        <View style={_s.redCircle} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={uploadToServer} style={_s.btnNext}>
+        onPress={uploadToServer}
+        style={_s.btnNext}
+        disabled={!facesDetected}>
         <Text style={_s.btnTxt}>{txt.next}</Text>
       </TouchableOpacity>
     </View>

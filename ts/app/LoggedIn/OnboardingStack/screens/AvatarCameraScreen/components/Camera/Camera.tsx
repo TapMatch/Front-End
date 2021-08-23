@@ -113,6 +113,7 @@ const Camera = (props: CameraProps) => {
     facesDetected[1](true);
     setFaces(faces);
   };
+
   const onFaceDetectionError = () => {
     facesDetected[1](false);
   };
@@ -144,19 +145,6 @@ const Camera = (props: CameraProps) => {
         const faceY = boundingBox[1] / hRatio;
         const faceWidth = (boundingBox[2] - boundingBox[0]) / hRatio;
         const faceHeight = (boundingBox[3] - boundingBox[1]) / hRatio;
-        console.log(
-          '====== boundingBox',
-          '====hRatio',
-          screenWidth,
-          boundingBox,
-          hRatio,
-        );
-        console.log('====== imageSize', imageSize, {
-          x: faceX,
-          y: faceY,
-          width: Math.ceil(faceWidth),
-          height: Math.ceil(faceHeight),
-        });
         setFaceRect({
           x: faceX,
           y: faceY,
@@ -175,19 +163,6 @@ const Camera = (props: CameraProps) => {
 
         const faceWidth = (boundingBox[2] - boundingBox[0]) / wRatio;
         const faceHeight = (boundingBox[3] - boundingBox[1]) / wRatio;
-        console.log(
-          '====== boundingBox',
-          '====wRatio',
-          screenWidth,
-          boundingBox,
-          wRatio,
-        );
-        console.log('====== imageSize', imageSize, {
-          x: faceX,
-          y: faceY,
-          width: Math.ceil(faceWidth),
-          height: Math.ceil(faceHeight),
-        });
         setFaceRect({
           x: faceX,
           y: faceY,
@@ -231,7 +206,6 @@ const Camera = (props: CameraProps) => {
       Image.getSize(
         uri,
         async (imageWidth, imageHeight) => {
-          console.log('========================', imageHeight, imageWidth);
           await pictureURI[1](uri);
           cameraShutterState[1](true);
           facesDetected[1](false);
