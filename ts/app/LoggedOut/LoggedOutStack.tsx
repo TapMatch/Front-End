@@ -7,6 +7,8 @@ import OTPInputScreen from './screens/OTPInputScreen/OTPInputScreen';
 import WelcomeScreen from './screens/WelcomeScreen/WelcomeScreen';
 import WebScreen from './screens/WebScreen/WebScreen';
 import TutorialScreen from './screens/TutorialScreen/TutorialScreen';
+import AllSetScreen from './screens/AllSetScreen/AllSetScreen';
+import {LoggedOutScreens} from '../../constants/screens';
 
 export default function LoggedOutStack() {
   const Stack = createStackNavigator();
@@ -39,7 +41,7 @@ export default function LoggedOutStack() {
         ...insets,
       }}>
       <Screen
-        name="Welcome"
+        name={LoggedOutScreens.Welcome}
         component={WelcomeScreen}
         options={() => {
           return {
@@ -48,7 +50,7 @@ export default function LoggedOutStack() {
         }}
       />
       <Screen
-        name="WebScreen"
+        name={LoggedOutScreens.WebScreen}
         options={() => {
           return {
             headerShown: false,
@@ -57,7 +59,7 @@ export default function LoggedOutStack() {
         component={WebScreen}
       />
       <Screen
-        name="TutorialScreen"
+        name={LoggedOutScreens.TutorialScreen}
         options={() => {
           return {
             headerShown: false,
@@ -66,7 +68,7 @@ export default function LoggedOutStack() {
         component={TutorialScreen}
       />
       <Screen
-        name="PhoneInput"
+        name={LoggedOutScreens.PhoneInput}
         component={PhoneInputScreen}
         options={() => {
           return {
@@ -78,8 +80,19 @@ export default function LoggedOutStack() {
         }}
       />
       <Screen
-        name="OTPInput"
+        name={LoggedOutScreens.OTPInput}
         component={OTPInputScreen}
+        options={() => {
+          return {
+            headerTitle: '',
+            headerLeft: () => null,
+            headerRight: () => null,
+          };
+        }}
+      />
+      <Screen
+        name={LoggedOutScreens.AllSet}
+        component={AllSetScreen}
         options={() => {
           return {
             headerTitle: '',

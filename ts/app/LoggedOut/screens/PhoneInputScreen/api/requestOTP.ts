@@ -33,8 +33,11 @@ export async function requestOTP({
       })
       .catch((error) => {
         logAxiosError(error, 'requestOTP');
+        const {data} = error.response;
         if (DEV_MODE) {
           callAlert(undefined, `${error.toString()} ::: requestOTP`);
+        } else {
+          callAlert(undefined, data);
         }
       });
   } catch (error) {

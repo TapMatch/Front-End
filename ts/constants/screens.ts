@@ -4,6 +4,7 @@ export const LoggedOutScreens = {
   TutorialScreen: 'TutorialScreen',
   PhoneInput: 'PhoneInput',
   OTPInput: 'OTPInput',
+  AllSet: 'AllSet',
 };
 
 export const OnBoardingScreens = {

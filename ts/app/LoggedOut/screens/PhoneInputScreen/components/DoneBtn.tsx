@@ -41,13 +41,14 @@ const DoneBtn = ({
   const phoneUtil = LibPhoneNumber.PhoneNumberUtil.getInstance();
 
   const handleSubmit = () => {
-    navigate('OTPInput');
     const number = phoneUtil.parse(phoneNumber[0], countryCode[0]);
     requestOTP({
       callingCode: callingCode[0],
       phoneNumber: number.getNationalNumber(),
       PHPSESSID,
     });
+    console.log('========== number', number.getNationalNumber());
+    navigate('OTPInput');
   };
 
   return (

@@ -9,5 +9,5 @@ export const constants = {
 };
 
 export const tapMatchServerUrl = DEV_MODE
-  ? 'http://194.147.32.47/' // development server
+  ? 'http://192.168.108.131:8000/' // development server
   : 'http://159.65.199.71/'; // production server
