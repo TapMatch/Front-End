@@ -29,21 +29,17 @@ const FeedbackRequestScreen = ({route}: FeedbackRequestScreenProps) => {
     <DeepLinkHandler route={route}>
       <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
         <View style={_s.container}>
-          <StatusBar
-            animated={true}
-            backgroundColor={'transparent'}
-            barStyle={'dark-content'}
-          />
-          <TouchableOpacity activeOpacity={1} onPress={goBack} style={_s.middle}>
+          <TouchableOpacity
+            activeOpacity={1}
+            onPress={goBack}
+            style={_s.middle}>
             <TapMatchBetaLogo height={logoSize} width={logoSize} />
           </TouchableOpacity>
           <MsgParagraph />
           <FeedBackBtn />
         </View>
       </View>
-      <NotificationHandler
-        route={route}
-      />
+      <NotificationHandler route={route} />
     </DeepLinkHandler>
   );
 };

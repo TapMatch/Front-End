@@ -12,10 +12,12 @@ interface CloseButtonProps {
 }
 // fs * 1.3;
 const SkipButton = ({onPress}: CloseButtonProps) => {
-  const {bottom} = useSafeAreaInsets();
+  const {top} = useSafeAreaInsets();
   const txt = useLocalizedTxt();
   return (
-    <TouchableOpacity onPress={onPress} style={_s.iconBtnStyle}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={[_s.iconBtnStyle, {top: formatHeight(19) + top}]}>
       <Text style={_s.txt}>{txt.skip}</Text>
     </TouchableOpacity>
   );
@@ -32,7 +34,6 @@ const _s = StyleSheet.create({
     paddingTop: formatWidth(5),
     paddingBottom: formatWidth(5),
     right: formatWidth(16),
-    top: formatHeight(19),
     zIndex: 8,
     backgroundColor: _c.black,
     justifyContent: 'center',

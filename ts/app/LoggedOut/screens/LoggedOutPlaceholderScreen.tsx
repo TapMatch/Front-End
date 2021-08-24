@@ -51,11 +51,6 @@ const LoggedOutPlaceholderScreen = ({navigation}: any) => {
         subtitle={'Note that if you quit,\nno draft will be saved'}
         title={'Are you sure\nYou want to\nleave create?'}
       />
-      <StatusBar
-        animated={true}
-        backgroundColor={'transparent'}
-        barStyle={'light-content'}
-      />
       <ScrollView contentContainerStyle={{paddingBottom: '5%'}}>
         <View>
           <Text style={_s.txt}>LoggedOutPlaceholderScreen</Text>

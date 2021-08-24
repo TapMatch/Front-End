@@ -56,5 +56,6 @@
     "faceDetected": "Face Detected",
     "faceNotDetected": "Face not Detected",
     "next": "Next",
-    "skip": "Skip"
+    "skip": "Skip",
+    "continue": "Continue"
 }

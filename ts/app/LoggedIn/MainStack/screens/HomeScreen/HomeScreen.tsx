@@ -33,13 +33,22 @@ interface HomeScreenProps {
 const HomeScreen = (props: HomeScreenProps) => {
   const {navigation, route} = props;
   let _mapRef = useRef<any>(null);
-  const set_mapRef = (x: any) => _mapRef = x;
+  const set_mapRef = (x: any) => (_mapRef = x);
 
-  const {userLocation, userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
   const {
-    selectedCommunityData, eventDetailsModalVisible,
-    eventMarkers, selectedMarkerData, upcomingEvents,
-    communitiesModalVisible
+    userLocation,
+    userToken,
+    userProfile,
+    LoggedIn,
+    user_has_passed_onboarding,
+  } = useContext(TapMatchContext);
+  const {
+    selectedCommunityData,
+    eventDetailsModalVisible,
+    eventMarkers,
+    selectedMarkerData,
+    upcomingEvents,
+    communitiesModalVisible,
   } = useContext(MainStackContext);
 
   const startingPoint: LatLng = {
@@ -50,7 +59,9 @@ const HomeScreen = (props: HomeScreenProps) => {
   const isFocused = useIsFocused();
   const profileModalVisible = useState<boolean>(false);
   const yesNoModalVisible = useState<boolean>(false);
-  const yesNoModalMode = useState<'delete_event' | 'leave_event'>('leave_event');
+  const yesNoModalMode = useState<'delete_event' | 'leave_event'>(
+    'leave_event',
+  );
   const eventJoinState = useState<'join' | 'full' | 'joined' | ''>('join');
   const mapCoordinates = useState<LatLng>(startingPoint);
   const hasJoinedCurrentSelectedEvent = useState<boolean>(false);
@@ -61,10 +72,10 @@ const HomeScreen = (props: HomeScreenProps) => {
   }, [selectedMarkerData, userProfile[0].events, eventDetailsModalVisible]);
 
   useEffect(() => {
-    AppState.addEventListener("change", _handleAppStateChange);
+    AppState.addEventListener('change', _handleAppStateChange);
 
     return () => {
-      AppState.removeEventListener("change", _handleAppStateChange);
+      AppState.removeEventListener('change', _handleAppStateChange);
     };
   }, []);
 
@@ -76,7 +87,9 @@ const HomeScreen = (props: HomeScreenProps) => {
 
   useEffect(() => {
     if (Object.keys(selectedMarkerData[0]).length) {
-      currentUserIsOrganizer[1](userProfile[0].id === selectedMarkerData[0].organizer.id);
+      currentUserIsOrganizer[1](
+        userProfile[0].id === selectedMarkerData[0].organizer.id,
+      );
     }
   }, [selectedMarkerData]);
 
@@ -84,26 +97,25 @@ const HomeScreen = (props: HomeScreenProps) => {
     eventJoinState[1](defineJoinState());
   }, [selectedMarkerData, eventDetailsModalVisible]);
 
-
-
   useEffect(() => {
     if (selectedCommunityData[0].name) {
       if (selectedCommunityData[0].name === 'Open World') {
         focusMapToLatLng({
           ...userLocation[0],
-          latitudeDelta: 0.100,
+          latitudeDelta: 0.1,
           longitudeDelta: 0.0121,
         });
       } else {
-        const city: any = cities.find((el: any) => el.name === selectedCommunityData[0].city);
+        const city: any = cities.find(
+          (el: any) => el.name === selectedCommunityData[0].city,
+        );
         if (city) {
           focusMapToLatLng({
             ...city.latlng,
-            latitudeDelta: 0.100,
+            latitudeDelta: 0.1,
             longitudeDelta: 0.0121,
           });
         }
-
       }
     }
   }, [selectedCommunityData[0].id]);
@@ -126,7 +138,7 @@ const HomeScreen = (props: HomeScreenProps) => {
         upcomingEvents,
         LoggedIn,
         userProfile,
-        user_has_passed_onboarding
+        user_has_passed_onboarding,
       });
       // await getEventMarkers({
       //   id: selectedCommunityData[0].id,
@@ -161,14 +173,14 @@ const HomeScreen = (props: HomeScreenProps) => {
             getMarkers={getMarkers}
             startingPoint={startingPoint}
           />
-          { /* <EventReminder /> */}
-        </Fragment>);
+          {/* <EventReminder /> */}
+        </Fragment>
+      );
     }
   };
 
   const focusMapToLatLng = (x: LatLng) => {
     if (typeof _mapRef?.animateToRegion === 'function') {
-
       // _mapRef?.animateToRegion({
       //   ...x,
       //   latitudeDelta: 0.015,
@@ -179,37 +191,40 @@ const HomeScreen = (props: HomeScreenProps) => {
         pitch: 0,
         heading: 0,
         // Only when using Google Maps.
-        zoom: 16
+        zoom: 16,
       });
     }
   };
 
   const defindeHasJoinedCurrentEvent = () => {
-    const ind = userProfile[0].events.findIndex((el: any) => el.id === selectedMarkerData[0].id);
+    const ind = userProfile[0].events.findIndex(
+      (el: any) => el.id === selectedMarkerData[0].id,
+    );
     return ind > -1;
   };
 
   const defineYesNoModalProps = () => {
     switch (yesNoModalMode[0]) {
       case 'delete_event':
-        return ({
+        return {
           onNoPress: () => console.log('onNoPress -delete'),
-          onYesPress: () => deleteEvent({
-            eventDetailsModalVisible,
-            currentUserIsOrganizer: currentUserIsOrganizer[0],
-            selectedCommunityData: selectedCommunityData,
-            userToken: userToken[0],
-            selectedMarkerData,
-            eventMarkers,
-            userProfile,
-            LoggedIn,
-            user_has_passed_onboarding
-          }),
+          onYesPress: () =>
+            deleteEvent({
+              eventDetailsModalVisible,
+              currentUserIsOrganizer: currentUserIsOrganizer[0],
+              selectedCommunityData: selectedCommunityData,
+              userToken: userToken[0],
+              selectedMarkerData,
+              eventMarkers,
+              userProfile,
+              LoggedIn,
+              user_has_passed_onboarding,
+            }),
           title: 'Are you sure\nYou want to\nDelete this event?',
-          modalVisible: yesNoModalVisible
-        });
+          modalVisible: yesNoModalVisible,
+        };
       case 'leave_event':
-        return ({
+        return {
           onYesPress: () =>
             leaveEvent({
               userProfile,
@@ -219,17 +234,17 @@ const HomeScreen = (props: HomeScreenProps) => {
               selectedMarkerData,
               eventMarkers,
               LoggedIn,
-              user_has_passed_onboarding
+              user_has_passed_onboarding,
             }),
           title: 'Are you sure\nYou want to\nleave this event?',
-          modalVisible: yesNoModalVisible
-        });
+          modalVisible: yesNoModalVisible,
+        };
       default:
-        return ({
+        return {
           onNoPress: () => console.log('default'),
           title: 'default',
-          modalVisible: yesNoModalVisible
-        });
+          modalVisible: yesNoModalVisible,
+        };
     }
   };
 
@@ -245,12 +260,26 @@ const HomeScreen = (props: HomeScreenProps) => {
 
   const renderHeader = () => {
     if (!yesNoModalVisible[0]) {
-      if (eventDetailsModalVisible[0] && Object.keys(selectedMarkerData[0]).length) {
-        if (currentUserIsOrganizer[0]) {//am watching my event
-          return <EventManageHeader setupDeleteEventUI={() => setupDeleteEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
+      if (
+        eventDetailsModalVisible[0] &&
+        Object.keys(selectedMarkerData[0]).length
+      ) {
+        if (currentUserIsOrganizer[0]) {
+          //am watching my event
+          return (
+            <EventManageHeader
+              setupDeleteEventUI={() => setupDeleteEventUI()}
+              eventDetailsModalVisible={eventDetailsModalVisible}
+            />
+          );
         } else {
           if (hasJoinedCurrentSelectedEvent[0]) {
-            return <EventDetailsHeader setupLeaveEventUI={() => setupLeaveEventUI()} eventDetailsModalVisible={eventDetailsModalVisible} />;
+            return (
+              <EventDetailsHeader
+                setupLeaveEventUI={() => setupLeaveEventUI()}
+                eventDetailsModalVisible={eventDetailsModalVisible}
+              />
+            );
           } else {
             return <StdHeader />;
           }
@@ -263,14 +292,15 @@ const HomeScreen = (props: HomeScreenProps) => {
     }
   };
 
-  const getMarkers = () => getEventMarkers({
-    userToken: userToken[0],
-    id: selectedCommunityData[0].id,
-    eventMarkers,
-    LoggedIn,
-    userProfile,
-    user_has_passed_onboarding
-  });
+  const getMarkers = () =>
+    getEventMarkers({
+      userToken: userToken[0],
+      id: selectedCommunityData[0].id,
+      eventMarkers,
+      LoggedIn,
+      userProfile,
+      user_has_passed_onboarding,
+    });
 
   const defineJoinState = () => {
     const {join_limit, joined, organizer} = selectedMarkerData[0];
@@ -278,7 +308,10 @@ const HomeScreen = (props: HomeScreenProps) => {
       if (join_limit === joined) {
         return 'full';
       } else {
-        if (defindeHasJoinedCurrentEvent() || organizer.id === userProfile[0].id) {
+        if (
+          defindeHasJoinedCurrentEvent() ||
+          organizer.id === userProfile[0].id
+        ) {
           return 'joined';
         } else {
           return 'join';
@@ -299,14 +332,9 @@ const HomeScreen = (props: HomeScreenProps) => {
           eventDetailsModalVisible,
           mapCoordinates,
           focusMapToLatLng,
-          communitiesModalVisible
+          communitiesModalVisible,
         }}>
         <View style={[_s.container]}>
-          <StatusBar
-            animated={true}
-            backgroundColor={_c.smoke}
-            barStyle={'dark-content'}
-          />
           {!yesNoModalVisible[0] && renderHeader()}
           {!yesNoModalVisible[0] && renderCommandsAndReminders()}
 
@@ -316,7 +344,7 @@ const HomeScreen = (props: HomeScreenProps) => {
             eventDetailsModalVisible={eventDetailsModalVisible}
             set_mapRef={set_mapRef}
           />
-          {!yesNoModalVisible[0] &&
+          {!yesNoModalVisible[0] && (
             <Fragment>
               <ProfileModal modalVisible={profileModalVisible} />
               <EventDetailsModal
@@ -324,10 +352,9 @@ const HomeScreen = (props: HomeScreenProps) => {
                 modalVisible={eventDetailsModalVisible}
               />
               <CommunitiesModal selectedCommunityData={selectedCommunityData} />
-            </Fragment>}
-          <YesNoModal
-            {...defineYesNoModalProps()}
-          />
+            </Fragment>
+          )}
+          <YesNoModal {...defineYesNoModalProps()} />
           <DeepLinkHandler
             eventDetailsModalVisible={eventDetailsModalVisible}
             route={route}
@@ -365,5 +392,4 @@ const _s = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'flex-start',
   },
-
 });

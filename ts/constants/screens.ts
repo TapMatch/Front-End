@@ -11,6 +11,7 @@ export const OnBoardingScreens = {
   MapDemo: 'MapDemo',
   AvatarCamera: 'AvatarCamera',
   CameraSetting: 'CameraSetting',
+  TagsScreen: 'TagsScreen',
   AllSet: 'AllSet',
   WebScreen: 'WebScreen',
   Communities: 'Communities',

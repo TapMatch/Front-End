@@ -86,7 +86,7 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
     if (passedTutorial === '1') {
       navigate(LoggedOutScreens.PhoneInput);
     } else {
-      navigate(LoggedOutScreens.TutorialScreen);
+      navigate(LoggedOutScreens.TutorialScreen, {playVideo: true});
     }
   };
 
@@ -96,11 +96,6 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         resizeMode={'cover'}
         style={_s.imageBackground}
         source={require('assets/png/launch.png')}>
-        <StatusBar
-          animated={true}
-          backgroundColor={'transparent'}
-          barStyle={'dark-content'}
-        />
         <SloganParagraph />
         <TouchableOpacity
           activeOpacity={1}

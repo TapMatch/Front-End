@@ -17,11 +17,6 @@ const WebScreen = ({navigation, route}: any) => {
     <DeepLinkHandler route={route}>
       <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
         {loadComplete[0] && <CloseButton onPress={() => navigation.goBack()} />}
-        <StatusBar
-          animated={true}
-          backgroundColor={_c.white}
-          barStyle={'dark-content'}
-        />
         <WebView
           startInLoadingState={true}
           onLoadEnd={() => loadComplete[1](true)}
@@ -32,11 +27,8 @@ const WebScreen = ({navigation, route}: any) => {
           style={_s.webView}
         />
       </View>
-      <NotificationHandler
-        route={route}
-      />
+      <NotificationHandler route={route} />
     </DeepLinkHandler>
-
   );
 };
 

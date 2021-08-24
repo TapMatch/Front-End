@@ -11,16 +11,18 @@ import Title from './components/Title';
 import {useBackHandler} from '@react-native-community/hooks';
 import {useNavigation} from '@react-navigation/native';
 import {LoggedOutScreens} from 'ts/constants/screens';
+import SwipeBackGuide from './components/SwipeBackGuide';
 
 interface PhoneInputScreenProps {}
 
-const PhoneInputScreen = (props: PhoneInputScreenProps) => {
+const PhoneInputScreen = ({navigation, route}: any) => {
+  const {playVideo} = route.params;
   const callingCode = useState<string>('376');
   const countryCode = useState<CountryCode>('AD');
   const phoneNumber = useState<string>('');
   const {navigate} = useNavigation();
   useBackHandler(() => {
-    navigate(LoggedOutScreens.Welcome);
+    navigate(LoggedOutScreens.TutorialScreen, {playVideo: playVideo});
     return true;
   });
   const doneBtnDisabled =
@@ -28,6 +30,7 @@ const PhoneInputScreen = (props: PhoneInputScreenProps) => {
     !validatePhoneNumber(`${phoneNumber[0]}`, countryCode[0]);
   return (
     <View style={_s.container}>
+      <SwipeBackGuide playVideo={playVideo} />
       <View style={_s.content}>
         <Title />
         <Subtitle />

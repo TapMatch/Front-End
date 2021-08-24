@@ -25,8 +25,8 @@ const StartBtn = (props: StartBtnProps) => {
     <TouchableOpacity
       activeOpacity={1}
       onPress={openSetting}
-      style={[_s.container, {bottom: formatHeight(40) + bottom}]}>
-      <Text style={_s.txt}>{txt.takeMeToSettings}</Text>
+      style={[_s.container, {bottom: formatHeight(23) + bottom}]}>
+      <Text style={_s.txt}>{txt.continue}</Text>
     </TouchableOpacity>
   );
 };
@@ -37,7 +37,7 @@ const _s = StyleSheet.create({
   container: {
     position: 'absolute',
     minWidth: '100%',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
   },
   txt: {
@@ -46,6 +46,5 @@ const _s = StyleSheet.create({
     textAlign: 'center',
     color: _c.black,
     textAlignVertical: 'center',
-    textDecorationLine: 'underline',
   },
 });

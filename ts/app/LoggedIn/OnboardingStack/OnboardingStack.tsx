@@ -11,6 +11,8 @@ import CommunitiesScreen from './screens/CommunitiesScreen/CommunitiesScreen';
 import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import CameraSettingScreen from './screens/CameraSettingScreen/CameraSettingScreen';
+import TagsScreen from './screens/TagsScreen/TagsScreen';
+import {OnBoardingScreens} from 'ts/constants/screens';
 
 export default function OnboardingStack() {
   const {
@@ -59,7 +61,7 @@ export default function OnboardingStack() {
         ...insets,
       }}>
       <Screen
-        name="NameInput"
+        name={OnBoardingScreens.NameInput}
         component={NameInputScreen}
         options={() => {
           return {
@@ -70,7 +72,7 @@ export default function OnboardingStack() {
         }}
       />
       <Screen
-        name="AvatarCamera"
+        name={OnBoardingScreens.AvatarCamera}
         component={AvatarCameraScreen}
         options={() => {
           return {
@@ -79,7 +81,7 @@ export default function OnboardingStack() {
         }}
       />
       <Screen
-        name="CameraSetting"
+        name={OnBoardingScreens.CameraSetting}
         component={CameraSettingScreen}
         options={() => {
           return {
@@ -88,7 +90,16 @@ export default function OnboardingStack() {
         }}
       />
       <Screen
-        name="MapDemo"
+        name={OnBoardingScreens.TagsScreen}
+        component={TagsScreen}
+        options={() => {
+          return {
+            headerShown: false,
+          };
+        }}
+      />
+      <Screen
+        name={OnBoardingScreens.MapDemo}
         component={MapDemoScreen}
         options={() => {
           return {
@@ -116,7 +127,6 @@ export default function OnboardingStack() {
         }}
         component={WebScreen}
       />
-
       <Screen
         name="Communities"
         component={CommunitiesScreen}

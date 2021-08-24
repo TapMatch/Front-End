@@ -36,11 +36,6 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
 
   return (
     <View style={[_s.container, {paddingBottom: bottom}]}>
-      <StatusBar
-        animated={true}
-        backgroundColor={'transparent'}
-        barStyle={'dark-content'}
-      />
       <View style={_s.top}>
         <TouchableOpacity style={_s.back} onPress={onPressBack}>
           <ChevronLeftBlack height={iconSize} width={iconSize} />

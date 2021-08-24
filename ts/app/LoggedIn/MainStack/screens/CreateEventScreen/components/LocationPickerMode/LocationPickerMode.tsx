@@ -1,12 +1,18 @@
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, StatusBar, TouchableOpacity, Platform} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+  TouchableOpacity,
+  Platform,
+} from 'react-native';
 import MapView, {LatLng, PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useIsFocused} from '@react-navigation/native';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import DoneBtn from './components/DoneBtn';
-import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
+import googleMapStyle from 'ts/constants/googleMaps/googleMapsStyle2.json';
 import LocationMarker from './components/LocationMarker';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 import TargetWhite from 'assets/svg/target-white.svg';
@@ -14,25 +20,25 @@ import {vs} from 'react-native-size-matters';
 import UserLocationMarker from './components/UserLocationMarker';
 import Geocoder from 'react-native-geocoding';
 
-interface LocationPickerModeProps {
-}
+interface LocationPickerModeProps {}
 
 const LocationPickerMode = (props: LocationPickerModeProps) => {
   const isFocused = useIsFocused();
   const {userLocation} = useContext(TapMatchContext);
-  const {coordinates, address, gpaRefState} = useContext(CreateEventScreenContext);
-
+  const {coordinates, address, gpaRefState} = useContext(
+    CreateEventScreenContext,
+  );
 
   const setPressedCoordinates = (c: LatLng) => {
-    Geocoder.from(c,
-    ).then(json => {
-      const addressComponent = json.results[0].formatted_address;
-      address[1](addressComponent);
-      if (Platform.OS === 'ios') {
-        gpaRefState[0].current.setAddressText(addressComponent);
-      }
-    })
-      .catch(error => console.log(error));
+    Geocoder.from(c)
+      .then((json) => {
+        const addressComponent = json.results[0].formatted_address;
+        address[1](addressComponent);
+        if (Platform.OS === 'ios') {
+          gpaRefState[0].current.setAddressText(addressComponent);
+        }
+      })
+      .catch((error) => console.log(error));
     coordinates[1]({
       ...c,
       latitudeDelta: 0.015,
@@ -43,15 +49,12 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
   if (isFocused) {
     return (
       <View style={_s.container}>
-        <StatusBar
-          animated={true}
-          backgroundColor={_c.smoke}
-          barStyle={'dark-content'}
-        />
         <Header />
         <DoneBtn />
         <MapView
-          onPress={({nativeEvent}) => setPressedCoordinates(nativeEvent.coordinate)}
+          onPress={({nativeEvent}) =>
+            setPressedCoordinates(nativeEvent.coordinate)
+          }
           provider={PROVIDER_GOOGLE}
           customMapStyle={googleMapStyle}
           zoomEnabled={true}
@@ -59,16 +62,14 @@ const LocationPickerMode = (props: LocationPickerModeProps) => {
           pitchEnabled={true}
           rotateEnabled={true}
           scrollEnabled={true}
-          region={coordinates[0]}
-        >
+          region={coordinates[0]}>
           <UserLocationMarker coordinate={userLocation[0]} />
           <LocationMarker coordinate={coordinates[0]} />
         </MapView>
-        <TouchableOpacity onPress={() => setPressedCoordinates(userLocation[0])} style={_s.userLocatioBtn}>
-          <TargetWhite
-            height={vs(45)}
-            width={vs(45)}
-          />
+        <TouchableOpacity
+          onPress={() => setPressedCoordinates(userLocation[0])}
+          style={_s.userLocatioBtn}>
+          <TargetWhite height={vs(45)} width={vs(45)} />
         </TouchableOpacity>
       </View>
     );
@@ -94,5 +95,5 @@ const _s = StyleSheet.create({
     position: 'absolute',
     left: 10,
     top: vs(160),
-  }
+  },
 });

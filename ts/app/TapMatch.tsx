@@ -6,7 +6,7 @@ import LoggedOutStack from './LoggedOut/LoggedOutStack';
 import NoNetworkModal from './common/NoNetworkModal';
 import Geolocation from 'react-native-geolocation-service';
 import {PERMISSIONS, check} from 'react-native-permissions';
-import {AppState, Platform} from 'react-native';
+import {AppState, Platform, StatusBar} from 'react-native';
 import {Provider} from 'react-redux';
 import {PersistGate} from 'redux-persist/integration/react';
 import {LatLng} from 'react-native-maps';
@@ -19,6 +19,7 @@ import OneSignal from 'react-native-onesignal';
 import {updateUserProfile} from './common/api/updateUserProfile';
 import {DEV_MODE} from 'ts/tools/devModeTrigger';
 import {persistor, store} from '../store/store';
+import {_c} from '../UIConfig/colors';
 
 const TapMatch = () => {
   const LoggedIn = useState<boolean>(false);
@@ -180,6 +181,11 @@ const TapMatch = () => {
             userToken,
             user_has_passed_onboarding,
           }}>
+          <StatusBar
+            animated={true}
+            backgroundColor="transparent"
+            barStyle={'dark-content'}
+          />
           <NoNetworkModal />
           <NavigationContainer children={createRootNavigation()} />
         </TapMatchContext.Provider>

@@ -7,7 +7,7 @@ import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import Header from './components/Header/Header';
 import FormWindow from './components/FormWindow/FormWindow';
 import CreateBtn from './components/CreateBtn';
-import googleMapStyle from "ts/constants/googleMaps/googleMapsStyle2.json";
+import googleMapStyle from 'ts/constants/googleMaps/googleMapsStyle2.json';
 import {createEvent} from './api/createEvent';
 import {CreateEventScreenContext} from 'ts/app/contexts/CreateEventScreenContext';
 import {MainStackContext} from 'ts/app/contexts/MainStackContext';
@@ -28,11 +28,20 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const minDate = moment().add(1, 'hour').toDate();
   const isFocused = useIsFocused();
   const {
-    selectedCommunityData, eventMarkers, upcomingEvents,
-    selectedMarkerData, eventDetailsModalVisible
+    selectedCommunityData,
+    eventMarkers,
+    upcomingEvents,
+    selectedMarkerData,
+    eventDetailsModalVisible,
   } = useContext(MainStackContext);
 
-  const {userLocation, userToken, userProfile, LoggedIn, user_has_passed_onboarding} = useContext(TapMatchContext);
+  const {
+    userLocation,
+    userToken,
+    userProfile,
+    LoggedIn,
+    user_has_passed_onboarding,
+  } = useContext(TapMatchContext);
   const description = useState<string>('');
   const eventName = useState<string>('');
   const joinLimit = useState<number>(1);
@@ -44,18 +53,19 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   const gpaRefState = useState<any>();
 
   const coordinates = useState<any>({
-    ...userLocation[0], latitudeDelta: 0.015,
+    ...userLocation[0],
+    latitudeDelta: 0.015,
     longitudeDelta: 0.0121,
   });
   const address = useState<string>('');
 
   const setPressedCoordinates = (c: LatLng) => {
-    Geocoder.from(c,
-    ).then(json => {
-      const addressComponent = json.results[0].formatted_address;
-      address[1](addressComponent);
-    })
-      .catch(error => console.log(error));
+    Geocoder.from(c)
+      .then((json) => {
+        const addressComponent = json.results[0].formatted_address;
+        address[1](addressComponent);
+      })
+      .catch((error) => console.log(error));
     coordinates[1]({
       ...c,
       latitudeDelta: 0.015,
@@ -75,19 +85,24 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
         <View style={[_s.container]}>
           <Header />
           <FormWindow />
-          <CreateBtn disabled={
-            eventName[0].length === 0 ||
-            address[0].length === 0 ||
-            description[0].length === 0
-          }
+          <CreateBtn
+            disabled={
+              eventName[0].length === 0 ||
+              address[0].length === 0 ||
+              description[0].length === 0
+            }
             onPress={() => {
-
               if (Platform.OS === 'android') {
                 const createBtnPressMoment = moment();
                 const setTime = moment(dateTime[0]);
                 const diff = setTime.diff(createBtnPressMoment, 'minutes');
                 if (diff < 59) {
-                  callAlert(undefined, `${setTime.format('DD-MM-YYYY HH:mm A')} is not a valis date!`);
+                  callAlert(
+                    undefined,
+                    `${setTime.format(
+                      'DD-MM-YYYY HH:mm A',
+                    )} is not a valis date!`,
+                  );
                   return;
                 }
               }
@@ -108,9 +123,10 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
                 name: eventName[0],
                 goBack: () => navigation.goBack(),
                 LoggedIn,
-                user_has_passed_onboarding
+                user_has_passed_onboarding,
               });
-            }} />
+            }}
+          />
           <MapView
             provider={PROVIDER_GOOGLE}
             customMapStyle={googleMapStyle}
@@ -133,20 +149,21 @@ const CreateEventScreen = ({navigation, route}: CreateEventScreenProps) => {
   };
   if (isFocused) {
     return (
-      <CreateEventScreenContext.Provider value={{
-        description, joinLimit, dateTime, addingLocationOn, gpaRefState,
-        eventName, address, coordinates, yesNoModalVisible
-      }}>
+      <CreateEventScreenContext.Provider
+        value={{
+          description,
+          joinLimit,
+          dateTime,
+          addingLocationOn,
+          gpaRefState,
+          eventName,
+          address,
+          coordinates,
+          yesNoModalVisible,
+        }}>
         <DeepLinkHandler route={route}>
-          <StatusBar
-            animated={true}
-            backgroundColor={_c.smoke}
-            barStyle={'dark-content'}
-          />
           {renderContent()}
-          <NotificationHandler
-            route={route}
-          />
+          <NotificationHandler route={route} />
         </DeepLinkHandler>
       </CreateEventScreenContext.Provider>
     );

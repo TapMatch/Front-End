@@ -14,11 +14,6 @@ const WebScreen = ({navigation, route}: any) => {
   return (
     <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
       {loadComplete[0] && <CloseButton onPress={() => navigation.goBack()} />}
-      <StatusBar
-        animated={true}
-        backgroundColor={_c.white}
-        barStyle={'dark-content'}
-      />
       <WebView
         startInLoadingState={true}
         onLoadEnd={() => loadComplete[1](true)}

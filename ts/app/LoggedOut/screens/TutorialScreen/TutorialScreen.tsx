@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {View, StyleSheet, StatusBar} from 'react-native';
+import React, {useEffect, useState, useRef} from 'react';
+import {StyleSheet, View} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // @ts-ignore
 import Video from 'react-native-video';
@@ -10,34 +10,39 @@ import WebLoader from './components/WebLoader';
 import {useNavigation} from '@react-navigation/native';
 import {LoggedOutScreens} from 'ts/constants/screens';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
-import {setStorageData} from 'ts/utils/asyncStorage';
-import StorageKeys from 'ts/constants/storage';
 
 const TutorialScreen = ({navigation, route}: any) => {
+  const {playVideo} = route.params;
+  const videoRef = useRef(null);
   const {top, bottom} = useSafeAreaInsets();
   const loadComplete = useState<boolean>(false);
+  const videoPaused = useState<boolean>(false);
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
 
+  useEffect(() => {
+    videoPaused[1](false);
+  }, [playVideo]);
+
   const onTutorialEnd = async () => {
     // await setStorageData(StorageKeys.PassedTutorial, '1');
-    navigate(LoggedOutScreens.PhoneInput);
+    videoPaused[1](true);
+    videoRef.current.seek(0);
+    navigate(LoggedOutScreens.PhoneInput, {playVideo: !playVideo});
   };
 
   return (
     <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
-      <StatusBar
-        animated={true}
-        backgroundColor={_c.white}
-        barStyle={'dark-content'}
-      />
       {loadComplete[0] && <SkipButton onPress={onTutorialEnd} />}
       {!loadComplete[0] && <WebLoader message={txt.startTutorial} />}
       <Video
+        ref={videoRef}
         source={TutorialVideo}
         style={_s.video}
+        repeat={false}
         onEnd={onTutorialEnd}
         resizeMode={'stretch'}
+        paused={videoPaused[0]}
         onReadyForDisplay={() => loadComplete[1](true)}
       />
     </View>

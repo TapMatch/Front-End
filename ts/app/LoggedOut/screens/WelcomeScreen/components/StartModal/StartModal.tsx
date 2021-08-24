@@ -25,7 +25,7 @@ const StartModal = ({modalVisible}: StartModalProps) => {
     if (passedTutorial === '1') {
       navigate(LoggedOutScreens.PhoneInput);
     } else {
-      navigate(LoggedOutScreens.TutorialScreen);
+      navigate(LoggedOutScreens.TutorialScreen, {playVideo: true});
     }
   };
   return (

@@ -15,38 +15,23 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {_f} from 'ts/UIConfig/fonts';
 import {formatWidth} from 'ts/utils/format-size';
 import BackBtn from './components/BackBtn';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-interface CameraSettingScreenProps {
+interface TagsScreenProps {
   navigation: any;
 }
 
-const CameraSettingScreen = ({navigation}: CameraSettingScreenProps) => {
-  const {width} = useWindowDimensions();
-  const {top} = useSafeAreaInsets();
+const TagsScreen = ({navigation}: TagsScreenProps) => {
   const txt = useLocalizedTxt();
 
   return (
-    <View style={[_s.container, {paddingTop: top}]}>
-      {/*<BackBtn />*/}
-      <ImageBackground
-        resizeMode={'stretch'}
-        style={_s.imageBackground}
-        source={require('assets/png/access-background.png')}>
-        <View style={_s.content}>
-          <Text style={_s.txt}>{txt.allowAccessToCamera}</Text>
-          <Text style={_s.txt} />
-          <Text style={_s.txt}>{txt.goToSetting}</Text>
-          <Text style={_s.txt}>{txt.findTapMatch}</Text>
-          <Text style={_s.txt}>{txt.enableCamera}</Text>
-        </View>
-        <StartBtn />
-      </ImageBackground>
+    <View style={_s.container}>
+      <BackBtn />
+      <StartBtn />
     </View>
   );
 };
 
-export default CameraSettingScreen;
+export default TagsScreen;
 
 const _s = StyleSheet.create({
   container: {
