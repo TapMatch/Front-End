@@ -3,8 +3,11 @@ require_relative '../node_modules/@react-native-community/cli-platform-ios/nativ
 
 platform :ios, '10.0'
 
+# Override Firebase SDK Version
+$FirebaseSDKVersion = '8.5.0'
+
 target 'TapMatch_Front_end' do
-  
+
   # React Native Maps dependencies
   rn_maps_path = '../node_modules/react-native-maps'
   pod 'react-native-google-maps', :path => rn_maps_path
@@ -32,7 +35,7 @@ target 'TapMatch_Front_end' do
   # pod 'Permission-StoreKit', :path => "#{permissions_path}/StoreKit.podspec"
 
   pod 'react-native-branch', path: '../node_modules/react-native-branch'
-  
+
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])

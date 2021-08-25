@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import {View, StyleSheet} from 'react-native';
+import {useDispatch} from 'react-redux';
 import {_c} from 'ts/UIConfig/colors';
 import {vs} from 'react-native-size-matters';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -7,6 +8,7 @@ import {_f} from 'ts/UIConfig/fonts';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {verifyOTPAndLogIn} from '../api/verifyOTPAndLogIn';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
+import {confirm} from 'ts/store/auth/actions';
 
 interface OTPInputProps {
   OTP: [string, (x: string) => void];
@@ -14,6 +16,8 @@ interface OTPInputProps {
 }
 
 const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
+  const dispatch = useDispatch();
+
   const {PHPSESSID, LoggedIn, userProfile, userToken} = useContext(
     TapMatchContext,
   );
@@ -22,21 +26,22 @@ const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
       <View style={_s.inputContainer}>
         <OTPInputView
           style={_s.OTPInputView}
-          pinCount={7}
+          pinCount={6}
           code={OTP[0]}
           onCodeChanged={OTP[1]}
           autoFocusOnLoad={true}
           codeInputFieldStyle={_s.underlineStyleBase}
           codeInputHighlightStyle={_s.underlineStyleHighLighted}
           onCodeFilled={(code: string) => {
-            verifyOTPAndLogIn({
-              ReSendCodeDisabled,
-              OTP: code,
-              PHPSESSID,
-              LoggedIn,
-              userProfile,
-              userToken,
-            });
+            dispatch(confirm(code));
+            // verifyOTPAndLogIn({
+            //   ReSendCodeDisabled,
+            //   OTP: code,
+            //   PHPSESSID,
+            //   LoggedIn,
+            //   userProfile,
+            //   userToken,
+            // });
           }}
         />
       </View>

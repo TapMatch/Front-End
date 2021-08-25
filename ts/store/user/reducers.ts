@@ -1,32 +1,48 @@
-import { createReducer } from '@reduxjs/toolkit'
+import {createReducer} from '@reduxjs/toolkit';
 
 import {
-  userAuthorize,
-  getUserProfile,
-  setIsAuthorised,
+  setPHPSESSID,
   setLoading,
-  userRefresh,
-} from './actions'
-import { userInitialState } from './state'
-export const userReducers = createReducer(userInitialState, builder => {
-  builder.addCase(setIsAuthorised, (state, { payload: isAuthorised }) => ({
-    ...state,
-    isAuthorised,
-  }))
-  builder.addCase(setLoading, (state, { payload: loading }) => ({
-    ...state,
-    loading,
-  }))
-  builder.addCase(userAuthorize.fulfilled, (state, { payload }) => ({
-    ...state,
-    ...payload,
-  }))
-  builder.addCase(userRefresh.fulfilled, (state, { payload }) => ({
-    ...state,
-    ...payload,
-  }))
-  builder.addCase(getUserProfile.fulfilled, (state, { payload }) => ({
-    ...state,
-    ...payload,
-  }))
-})
+  setOneSignalId,
+  setPassOnBoarding,
+  setUserLocation,
+  setUserToken,
+  setUserProfile,
+} from './actions';
+import {userInitialState, UserState} from './state';
+export const userReducers = createReducer<UserState>(
+  userInitialState,
+  (builder) => {
+    builder.addCase(setPHPSESSID, (state, {payload: PHPSESSID}) => ({
+      ...state,
+      PHPSESSID,
+    }));
+    builder.addCase(setLoading, (state, {payload: loading}) => ({
+      ...state,
+      loading,
+    }));
+    builder.addCase(setOneSignalId, (state, {payload: oneSignalId}) => ({
+      ...state,
+      oneSignalId,
+    }));
+    builder.addCase(
+      setPassOnBoarding,
+      (state, {payload: passedOnBoarding}) => ({
+        ...state,
+        passedOnBoarding,
+      }),
+    );
+    builder.addCase(setUserLocation, (state, {payload: location}) => ({
+      ...state,
+      location,
+    }));
+    builder.addCase(setUserToken, (state, {payload: token}) => ({
+      ...state,
+      token,
+    }));
+    builder.addCase(setUserProfile, (state, {payload: profile}) => ({
+      ...state,
+      profile,
+    }));
+  },
+);

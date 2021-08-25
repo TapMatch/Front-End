@@ -1,5 +1,17 @@
-import { useEffect, useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
+import {useSelector} from 'react-redux';
+import {UserRootState} from './state';
 
-export const useIsAuthorisedSelector = () =>
-  useSelector(({ user }) => user.isAuthorised)
+export const useProfileSelector = () =>
+  useSelector<UserRootState>(({user}) => user.profile);
+
+export const useUserLocationSelector = () =>
+  useSelector<UserRootState>(({user}) => user.location);
+
+export const usePHPSESSIDSelector = () =>
+  useSelector<UserRootState>(({user}) => user.PHPSESSID);
+
+export const useUserTokenSelector = () =>
+  useSelector<UserRootState>(({user}) => user.token);
+
+export const usePassedOnBoardingSelector = () =>
+  useSelector<UserRootState>(({user}) => user.passedOnBoarding);

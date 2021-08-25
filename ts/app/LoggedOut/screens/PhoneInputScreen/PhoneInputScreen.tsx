@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {CountryCode} from 'react-native-country-picker-modal';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -21,6 +21,7 @@ const PhoneInputScreen = ({navigation, route}: any) => {
   const countryCode = useState<CountryCode>('AD');
   const phoneNumber = useState<string>('');
   const {navigate} = useNavigation();
+
   useBackHandler(() => {
     navigate(LoggedOutScreens.TutorialScreen, {playVideo: playVideo});
     return true;

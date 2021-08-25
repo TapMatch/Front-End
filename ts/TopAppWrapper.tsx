@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 import TapMatch from './app/TapMatch';
+import '@react-native-firebase/app';
+import '@react-native-firebase/auth';
 import SplashScreen from 'react-native-splash-screen';
 import {Text, View} from 'react-native';
 import extendDevSettingsAndMenu from 'ts/tools/DevSettings';
@@ -12,7 +14,9 @@ if (DEV_MODE) {
 export default function TopAppWrapper() {
   useEffect(() => SplashScreen.hide(), []);
 
+  // @ts-ignore
   Text.defaultProps = Text.defaultProps || {};
+  // @ts-ignore
   Text.defaultProps.allowFontScaling = false;
 
   // return (

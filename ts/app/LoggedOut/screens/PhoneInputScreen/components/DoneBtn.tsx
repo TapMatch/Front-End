@@ -6,6 +6,7 @@ import {
   KeyboardAvoidingView,
   Platform,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
@@ -18,6 +19,7 @@ import LibPhoneNumber from 'google-libphonenumber';
 import {requestOTP} from '../api/requestOTP';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {CountryCode} from 'react-native-country-picker-modal';
+import {signIn} from 'ts/store/auth/actions';
 
 interface DoneBtnProps {
   disabled: boolean;
@@ -39,15 +41,20 @@ const DoneBtn = ({
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
   const {bottom} = useSafeAreaInsets();
   const phoneUtil = LibPhoneNumber.PhoneNumberUtil.getInstance();
+  const dispatch = useDispatch();
 
   const handleSubmit = () => {
     const number = phoneUtil.parse(phoneNumber[0], countryCode[0]);
-    requestOTP({
-      callingCode: callingCode[0],
-      phoneNumber: number.getNationalNumber(),
-      PHPSESSID,
-    });
-    console.log('========== number', number.getNationalNumber());
+    // requestOTP({
+    //   callingCode: callingCode[0],
+    //   phoneNumber: number.getNationalNumber(),
+    //   PHPSESSID,
+    // });
+    console.log(
+      'Phone number: ===========',
+      `${callingCode[0]}${number.getNationalNumber()}`,
+    );
+    dispatch(signIn(`+${callingCode[0]}${number.getNationalNumber()}`));
     navigate('OTPInput');
   };
 

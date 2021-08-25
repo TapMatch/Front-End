@@ -1,30 +1,24 @@
 import {createAction, createAsyncThunk} from '@reduxjs/toolkit';
-import {handleAuthorize, handleRefresh, handleProfile} from '@/Services/user';
-
-export const setIsAuthorised = createAction('user/IS_AUTHORISED');
-export const setLoading = createAction('user/LOADING');
-
-export const userAuthorize = createAsyncThunk(
-  'user/AUTHORIZE',
-  async (data, {dispatch}) => {
-    dispatch(setLoading(true));
-    const response = await handleAuthorize();
-    dispatch(getUserProfile());
-    return response;
-  },
-);
-
-export const userRefresh = createAsyncThunk('user/REFRESH', async () => {
-  const response = await handleRefresh();
-  return response;
-});
+import {LatLng} from 'react-native-maps';
+import {getProfile, updateProfile} from './service';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+export const setPassOnBoarding = createAction<boolean>('user/PASS_BOARDING');
+export const setLoading = createAction<boolean>('user/LOADING');
+export const setUserLocation = createAction<LatLng>('user/LOCATION');
+export const setUserToken = createAction<string>('user/TOKEN');
+export const setPHPSESSID = createAction<string>('user/PHPSESSID');
+export const setOneSignalId = createAction<string>('user/ONESIGNALID');
+export const setUserProfile = createAction<any>('user/PROFILE');
 
 export const getUserProfile = createAsyncThunk(
-  'user/PROFILE',
-  async (data, {dispatch}) => {
-    const response = await handleProfile();
+  'auth/GET_PROFILE',
+  // @ts-ignore
+  async (data: string, {dispatch}) => {
     dispatch(setLoading(true));
-    dispatch(setIsAuthorised(true));
+    const response = await getProfile();
+    const user_profile = JSON.stringify(response);
+    await AsyncStorage.setItem('@user_profile', user_profile);
+    dispatch(setLoading(false));
     return response;
   },
 );
