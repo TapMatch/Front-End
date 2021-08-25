@@ -1,12 +1,11 @@
 import React, {useContext} from 'react';
 import {
-  Text,
-  TouchableOpacity,
-  StyleSheet,
   KeyboardAvoidingView,
   Platform,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
 } from 'react-native';
-import {useDispatch} from 'react-redux';
 import {vs} from 'react-native-size-matters';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
@@ -19,7 +18,8 @@ import LibPhoneNumber from 'google-libphonenumber';
 import {requestOTP} from '../api/requestOTP';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {CountryCode} from 'react-native-country-picker-modal';
-import {signIn} from 'ts/store/auth/actions';
+import {signInWithPhoneNumber} from 'ts/store/auth/service';
+import callAlert from 'ts/utils/callAlert';
 
 interface DoneBtnProps {
   disabled: boolean;
@@ -41,21 +41,26 @@ const DoneBtn = ({
   const doneTxtColor: string = disabled ? _c.grey : _c.main_red;
   const {bottom} = useSafeAreaInsets();
   const phoneUtil = LibPhoneNumber.PhoneNumberUtil.getInstance();
-  const dispatch = useDispatch();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const number = phoneUtil.parse(phoneNumber[0], countryCode[0]);
-    // requestOTP({
-    //   callingCode: callingCode[0],
-    //   phoneNumber: number.getNationalNumber(),
-    //   PHPSESSID,
-    // });
-    console.log(
-      'Phone number: ===========',
-      `${callingCode[0]}${number.getNationalNumber()}`,
-    );
-    dispatch(signIn(`+${callingCode[0]}${number.getNationalNumber()}`));
-    navigate('OTPInput');
+    try {
+      signInWithPhoneNumber(
+        `+${callingCode[0]}${number.getNationalNumber()}`,
+      ).then((data) => {
+        if (data) {
+          requestOTP({
+            callingCode: callingCode[0],
+            phoneNumber: number.getNationalNumber(),
+            PHPSESSID,
+          });
+        }
+      });
+
+      navigate('OTPInput');
+    } catch (error) {
+      console.log('error: =================', error.message);
+    }
   };
 
   return (

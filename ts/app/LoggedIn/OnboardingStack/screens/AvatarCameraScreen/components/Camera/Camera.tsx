@@ -99,7 +99,7 @@ const Camera = (props: CameraProps) => {
       user_has_passed_onboarding,
     });
     uploadToServerTrigger[1](true);
-    await navigate(OnBoardingScreens.TagsScreen);
+    await navigate(OnBoardingScreens.AllSet);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

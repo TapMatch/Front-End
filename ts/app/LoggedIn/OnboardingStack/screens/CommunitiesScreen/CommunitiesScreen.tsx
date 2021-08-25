@@ -1,5 +1,5 @@
 import React, {Fragment, useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, FlatList} from 'react-native';
+import {View, StyleSheet, FlatList, Platform} from 'react-native';
 import MapView, {PROVIDER_GOOGLE} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -14,12 +14,19 @@ import ListItemLocked from './components/ListItemLocked';
 import {getAllCommunities} from 'ts/app/common/api/getAllCommunities';
 import googleMapStyle from 'ts/constants/googleMaps/googleMapsStyle2.json';
 import CommunityCodeInput from './components/CommunityCodeInput/CommunityCodeInput';
+import {check, PERMISSIONS, request} from 'react-native-permissions';
+import Geolocation from 'react-native-geolocation-service';
 
 interface CommunitiesScreenProps {
   navigation: any;
 }
 
 const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
+  const locationPermission =
+    Platform.OS === 'ios'
+      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
+      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
+
   const {top, bottom} = useSafeAreaInsets();
   const {height} = useDimensions().screen;
   const isFocused = useIsFocused();
@@ -35,6 +42,43 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   const selectedCommunity = useState<any>({});
   const coordinates = userLocation[0];
 
+  const getUserLocation = () => {
+    check(locationPermission).then((x) => {
+      setUserLocation(x);
+    });
+  };
+
+  const setUserLocation = async (x: string) => {
+    if (x === 'granted') {
+      handleGeolocation();
+    } else {
+      request(locationPermission).then((x) => {
+        if (x === 'granted') {
+          handleGeolocation();
+        }
+      });
+    }
+  };
+
+  const handleGeolocation = () => {
+    Geolocation.getCurrentPosition(
+      ({coords}) => {
+        const {latitude, longitude} = coords;
+        userLocation[1]({latitude, longitude});
+      },
+      (error) => {
+        console.log(error.code, error.message);
+      },
+      {
+        forceRequestLocation: true,
+        showLocationDialog: true,
+        enableHighAccuracy: false,
+        timeout: 150000,
+        maximumAge: 10000,
+      },
+    );
+  };
+
   useBackHandler(() => false);
 
   useEffect(() => {
@@ -45,6 +89,7 @@ const CommunitiesScreen = ({navigation}: CommunitiesScreenProps) => {
   }, [navigation]);
 
   useEffect(() => {
+    getUserLocation();
     getAllCommunities({
       userToken: userToken[0],
       communities,

@@ -34,7 +34,9 @@ const OTPInputScreen = ({navigation}: OTPInputScreenProps) => {
   }, [resendTimerTrigger[0]]);
 
   useEffect(() => {
-    const unsubscribe = navigation.addListener('focus', () => {CookieManager.clearAll();});
+    const unsubscribe = navigation.addListener('focus', () => {
+      CookieManager.clearAll();
+    });
     return unsubscribe;
   }, []);
 

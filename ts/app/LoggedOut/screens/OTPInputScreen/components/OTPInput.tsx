@@ -1,6 +1,6 @@
-import React, {useContext} from 'react';
-import {View, StyleSheet} from 'react-native';
-import {useDispatch} from 'react-redux';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, View} from 'react-native';
+import auth, {FirebaseAuthTypes} from '@react-native-firebase/auth';
 import {_c} from 'ts/UIConfig/colors';
 import {vs} from 'react-native-size-matters';
 import {_fs} from 'ts/UIConfig/fontSizes';
@@ -8,7 +8,8 @@ import {_f} from 'ts/UIConfig/fonts';
 import OTPInputView from '@twotalltotems/react-native-otp-input';
 import {verifyOTPAndLogIn} from '../api/verifyOTPAndLogIn';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
-import {confirm} from 'ts/store/auth/actions';
+import {confirmCode} from 'ts/store/auth/service';
+import callAlert from 'ts/utils/callAlert';
 
 interface OTPInputProps {
   OTP: [string, (x: string) => void];
@@ -16,11 +17,47 @@ interface OTPInputProps {
 }
 
 const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
-  const dispatch = useDispatch();
+  const [code, setCode] = useState<string>('');
+
+  const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
+    console.log('PHPSESSID[0]: =======', PHPSESSID[0]);
+    if (PHPSESSID[0].length > 0 && user) {
+      callAlert(undefined, 'The phone number is verified.', [
+        {
+          text: 'Ok',
+          onPress: () => {
+            verifyOTPAndLogIn({
+              ReSendCodeDisabled,
+              OTP: code,
+              PHPSESSID,
+              LoggedIn,
+              userProfile,
+              userToken,
+            });
+          },
+        },
+      ]);
+    }
+  };
+
+  useEffect(() => {
+    const subscriber = auth().onAuthStateChanged((user) =>
+      onAuthStateChanged(user),
+    );
+    return subscriber; // unsubscribe on unmount
+  }, []);
 
   const {PHPSESSID, LoggedIn, userProfile, userToken} = useContext(
     TapMatchContext,
   );
+
+  const onConfirmCode = async (code: string) => {
+    try {
+      setCode(code);
+      await confirmCode(code);
+    } catch (error) {}
+  };
+
   return (
     <View style={_s.container}>
       <View style={_s.inputContainer}>
@@ -32,17 +69,7 @@ const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
           autoFocusOnLoad={true}
           codeInputFieldStyle={_s.underlineStyleBase}
           codeInputHighlightStyle={_s.underlineStyleHighLighted}
-          onCodeFilled={(code: string) => {
-            dispatch(confirm(code));
-            // verifyOTPAndLogIn({
-            //   ReSendCodeDisabled,
-            //   OTP: code,
-            //   PHPSESSID,
-            //   LoggedIn,
-            //   userProfile,
-            //   userToken,
-            // });
-          }}
+          onCodeFilled={onConfirmCode}
         />
       </View>
     </View>

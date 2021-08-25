@@ -37,7 +37,7 @@ export async function requestOTP({
         if (DEV_MODE) {
           callAlert(undefined, `${error.toString()} ::: requestOTP`);
         } else {
-          callAlert(undefined, data);
+          // callAlert(undefined, data);
         }
       });
   } catch (error) {

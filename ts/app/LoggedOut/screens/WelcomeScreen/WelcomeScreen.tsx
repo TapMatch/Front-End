@@ -29,57 +29,12 @@ import TermsAndConditionsParagraph from './components/StartModal/components/Term
 interface WelcomeScreenProps {}
 
 const WelcomeScreen = (props: WelcomeScreenProps) => {
-  const locationPermission =
-    Platform.OS === 'ios'
-      ? PERMISSIONS.IOS.LOCATION_WHEN_IN_USE
-      : PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION;
-
   const {top} = useSafeAreaInsets();
   const {width} = useWindowDimensions();
   const logoSize = formatWidth(175);
   const {userLocation} = useContext(TapMatchContext);
   const headerHeight = useHeaderHeight();
   const {navigate} = useNavigation();
-
-  const getUserLocation = () => {
-    check(locationPermission).then((x) => {
-      setUserLocation(x);
-    });
-  };
-
-  const setUserLocation = async (x: string) => {
-    if (x === 'granted') {
-      await handleNextScreen();
-      handleGeolocation();
-    } else {
-      request(locationPermission)
-        .then((x) => {
-          if (x === 'granted') {
-            handleGeolocation();
-          }
-        })
-        .then(async () => await handleNextScreen());
-    }
-  };
-
-  const handleGeolocation = () => {
-    Geolocation.getCurrentPosition(
-      ({coords}) => {
-        const {latitude, longitude} = coords;
-        userLocation[1]({latitude, longitude});
-      },
-      (error) => {
-        console.log(error.code, error.message);
-      },
-      {
-        forceRequestLocation: true,
-        showLocationDialog: true,
-        enableHighAccuracy: false,
-        timeout: 150000,
-        maximumAge: 10000,
-      },
-    );
-  };
 
   const handleNextScreen = async () => {
     const passedTutorial = await getStorageData(StorageKeys.PassedTutorial);
@@ -99,7 +54,7 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         <SloganParagraph />
         <TouchableOpacity
           activeOpacity={1}
-          onPress={getUserLocation}
+          onPress={handleNextScreen}
           style={_s.middle}>
           <Image
             source={require('assets/png/TapMatchLogo.png')}
@@ -107,7 +62,7 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
           />
         </TouchableOpacity>
         <TermsAndConditionsParagraph />
-        <BottomBtn getUserLocation={getUserLocation} />
+        <BottomBtn getUserLocation={handleNextScreen} />
       </ImageBackground>
     </View>
   );
