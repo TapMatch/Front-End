@@ -18,7 +18,7 @@ export const signInWithPhoneNumber = async (phoneNumber: string) => {
     } else if (error.code === 'auth/user-disabled') {
       callAlert(undefined, 'The account is disabled');
     } else {
-      callAlert(undefined, 'Please try again later');
+      callAlert(undefined, 'Invalid phone number');
     }
     return false;
   }

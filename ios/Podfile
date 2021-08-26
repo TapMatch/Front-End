@@ -1,10 +1,7 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
-platform :ios, '10.0'
-
-# Override Firebase SDK Version
-$FirebaseSDKVersion = '8.5.0'
+platform :ios, '11.0'
 
 target 'TapMatch_Front_end' do
 
@@ -54,7 +51,7 @@ target 'TapMatch_Front_end' do
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
   use_flipper!({ 'Flipper' => '0.94.1', 'Flipper-Folly' => '2.6.7', 'Flipper-RSocket' => '1.4.3'})
-  
+
   post_install do |installer|
     flipper_post_install(installer)
   end

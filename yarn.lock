@@ -1247,6 +1247,11 @@
   resolved "https://registry.npmjs.org/@react-native-community/slider/-/slider-3.0.3.tgz"
   integrity sha512-8IeHfDwJ9/CTUwFs6x90VlobV3BfuPgNLjTgC6dRZovfCWigaZwVNIFFJnHBakK3pW2xErAPwhdvNR4JeNoYbw==
 
+"@react-native-firebase/app-check@^12.7.3":
+  version "12.7.3"
+  resolved "https://registry.yarnpkg.com/@react-native-firebase/app-check/-/app-check-12.7.3.tgz#114eb364d3317eff588c6f37c1bc68b77b17c618"
+  integrity sha512-1bxflCg4ZHRkf1ZzpMeTSKsjnF8db9mu6oicFd32KcUibEboK3DRSQ919nOJDGGoQgVKIL5+GBzSZxqvBG9/pw==
+
 "@react-native-firebase/app@^12.7.3":
   version "12.7.3"
   resolved "https://registry.yarnpkg.com/@react-native-firebase/app/-/app-12.7.3.tgz#80c1519380abc26dbbf170c916529fe6689e04b4"
@@ -6410,10 +6415,10 @@ react-native-device-info@^7.1.0:
   resolved "https://registry.npmjs.org/react-native-device-info/-/react-native-device-info-7.1.0.tgz"
   integrity sha512-H0fQ9fi6DNq85SUmJK8Opo8twHKXKp86FI4jL1Abg2tH6CjVbQ871QibD12ZMjKLMy4kKHL7BRxNEPUcI79JNg==
 
-react-native-document-picker@^6.0.4:
-  version "6.0.4"
-  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-6.0.4.tgz#21cbe2b3e8a1aff4aafcb81e06f09494b45e62f8"
-  integrity sha512-qFKf76M1VyiVqZscqND8wDcALfHG0BI77mJ4CzEdANqLiJUbwie7XOKtQlw5oRSAjLPgg9NjXnjbOFY3OmkIXQ==
+react-native-document-picker@^6.0.3:
+  version "6.0.3"
+  resolved "https://registry.yarnpkg.com/react-native-document-picker/-/react-native-document-picker-6.0.3.tgz#a58f16ef27e3d476fc7ffaef75bca461945aff18"
+  integrity sha512-PHO7HbWJyZy8medcvo37tdw656sFsHIcu6rCMLxBJhJ2IV/uMCYIahaO3A/fydyZ1Si2fnGE6Lef168xSEnjdQ==
   dependencies:
     invariant "^2.2.4"
 
