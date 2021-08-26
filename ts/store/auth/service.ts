@@ -9,7 +9,7 @@ export const signInWithPhoneNumber = async (phoneNumber: string) => {
     confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     return true;
   } catch (error) {
-    console.log('error: =================', error.code);
+    console.log('error: =================', error.code, error.message);
     if (
       error.code === 'auth/invalid-phone-number' ||
       error.code === 'auth/missing-phone-number'
