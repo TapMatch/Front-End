@@ -8,14 +8,14 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:320810146229:android:48920cae560eb7eb9fe1fc",
+        "mobilesdk_app_id": "1:320810146229:android:a612a1771d7cf1f69fe1fc",
         "android_client_info": {
           "package_name": "com.tapmatch_front_end"
         }
       },
       "oauth_client": [
         {
-          "client_id": "320810146229-19s9kntafp1gpgbut9hnoc110p7gelk1.apps.googleusercontent.com",
+          "client_id": "320810146229-hol9nb87lsp2ifqdkim70ajqh0bl3dkt.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.tapmatch_front_end",
@@ -23,19 +23,11 @@
           }
         },
         {
-          "client_id": "320810146229-9v9hn50scg7j3v1uofvar1es0sepf6s9.apps.googleusercontent.com",
+          "client_id": "320810146229-rvqaor4gft5tonrnndotrjn5cb73mov0.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.tapmatch_front_end",
             "certificate_hash": "726b5ae5f9515df954a16e0c74cad387022ef16f"
-          }
-        },
-        {
-          "client_id": "320810146229-j9oh7gm211h0ku1n86jqmfqvs8gqp663.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tapmatch_front_end",
-            "certificate_hash": "3f4bbd3bd0cb63c40b047f15fb7518b52f7972f3"
           }
         },
         {

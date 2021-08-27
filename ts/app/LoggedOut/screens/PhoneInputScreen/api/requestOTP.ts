@@ -16,6 +16,7 @@ export async function requestOTP({
   PHPSESSID,
 }: IrequestOTP) {
   try {
+    console.log('tapMatchServerUrl: ================', tapMatchServerUrl);
     const options: AxiosRequestConfig = {
       method: 'POST',
       url: `${tapMatchServerUrl}login`,
@@ -29,11 +30,13 @@ export async function requestOTP({
     axios
       .request(options)
       .then(({data}) => {
+        console.log('error: on requestOTP ==========', data);
         PHPSESSID[1](data.Cookie);
       })
       .catch((error) => {
         logAxiosError(error, 'requestOTP');
         const {data} = error.response;
+        console.log('error: on requestOTP ==========', data);
         if (DEV_MODE) {
           callAlert(undefined, `${error.toString()} ::: requestOTP`);
         } else {

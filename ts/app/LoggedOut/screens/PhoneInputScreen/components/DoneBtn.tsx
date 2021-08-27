@@ -48,6 +48,7 @@ const DoneBtn = ({
       signInWithPhoneNumber(
         `+${callingCode[0]}${number.getNationalNumber()}`,
       ).then((data) => {
+        console.log('data ======', data);
         if (data) {
           requestOTP({
             callingCode: callingCode[0],
