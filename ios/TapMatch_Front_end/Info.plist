@@ -26,13 +26,14 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>tapmatch</string>
+				<string>com.googleusercontent.apps.320810146229-d0a98a7ts08e1aufgeu96vm8s5jdv33g</string>
 			</array>
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>LSApplicationCategoryType</key>
-	<string/>
+	<string></string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -51,11 +52,11 @@
 	<key>NSCameraUsageDescription</key>
 	<string>TapMatch needs access to your camera to take a photo for your profile picture.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
+	<string>TapMatch requires user&apos;s location data to move interactive map to user&apos;s current location and show nearby social events on map.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
+	<string>TapMatch requires user&apos;s location data to move interactive map to user&apos;s current location and show nearby social events on map.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
+	<string>TapMatch requires user&apos;s location data to move interactive map to user&apos;s current location and show nearby social events on map.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>D-DIN-Bold.otf</string>

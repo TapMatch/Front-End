@@ -5,7 +5,7 @@ let confirmation: FirebaseAuthTypes.ConfirmationResult;
 
 export const signInWithPhoneNumber = async (phoneNumber: string) => {
   try {
-    auth().settings.appVerificationDisabledForTesting = true;
+    auth().settings.appVerificationDisabledForTesting = false;
     confirmation = await auth().signInWithPhoneNumber(phoneNumber);
     return true;
   } catch (error) {

@@ -247,9 +247,9 @@ const Camera = (props: CameraProps) => {
             type={RNCamera.Constants.Type[cameraTypeBool[0] ? 'back' : 'front']}
             captureAudio={false} // no permissions added for this in recat-native-camera package setup
             flashMode={RNCamera.Constants.FlashMode.off}
-            faceDetectionMode={RNCamera.Constants.FaceDetection.Mode.accurate}
+            faceDetectionMode={RNCamera.Constants.FaceDetection?.Mode?.accurate}
             faceDetectionLandmarks={
-              RNCamera.Constants.FaceDetection.Landmarks.all
+              RNCamera.Constants.FaceDetection?.Landmarks?.all 
             }
             onFacesDetected={onFacesDetected}
             onFaceDetectionError={onFaceDetectionError}
