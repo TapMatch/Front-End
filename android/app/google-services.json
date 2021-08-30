@@ -51,7 +51,8 @@
               "client_id": "320810146229-d0a98a7ts08e1aufgeu96vm8s5jdv33g.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.reactjs.native.TapMatchApp"
+                "bundle_id": "com.reactjs.native.TapMatchApp",
+                "app_store_id": "1547574677"
               }
             }
           ]

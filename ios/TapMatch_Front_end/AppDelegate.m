@@ -7,7 +7,7 @@
 #import <Firebase.h>
 #import "RNSplashScreen.h"
 
-#ifdef FB_SONARKIT_ENABLED
+#ifdef FB_SONA/Users/home/Documents/Front-End/ios/PodfileRKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
 #import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
