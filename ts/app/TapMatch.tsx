@@ -186,7 +186,7 @@ const TapMatch = () => {
             backgroundColor="transparent"
             barStyle={'dark-content'}
           />
-          {/*<NoNetworkModal />*/}
+          <NoNetworkModal />
           <NavigationContainer children={createRootNavigation()} />
         </TapMatchContext.Provider>
       </PersistGate>
