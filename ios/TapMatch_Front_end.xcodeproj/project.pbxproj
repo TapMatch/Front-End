@@ -696,12 +696,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TapMatch_Front_end-TapMatch_Front_endTests/Pods-TapMatch_Front_end-TapMatch_Front_endTests-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignal/OneSignal.framework/OneSignal",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OneSignal.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -738,12 +736,10 @@
 			);
 			inputPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-TapMatch_Front_end/Pods-TapMatch_Front_end-frameworks.sh",
-				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OneSignal/OneSignal.framework/OneSignal",
 				"${PODS_XCFRAMEWORKS_BUILD_DIR}/OpenSSL/OpenSSL.framework/OpenSSL",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OneSignal.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/OpenSSL.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -911,7 +907,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapMatch_Front_end/TapMatch_Front_end.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Oscar Widl (CAVPB8JT36)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = CAVPB8JT36;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = TapMatch_Front_end/Info.plist;
@@ -943,7 +939,7 @@
 				CODE_SIGN_ENTITLEMENTS = TapMatch_Front_end/TapMatch_Front_end.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Oscar Widl (CAVPB8JT36)";
 				CODE_SIGN_STYLE = Manual;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEVELOPMENT_TEAM = CAVPB8JT36;
 				INFOPLIST_FILE = TapMatch_Front_end/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -1087,7 +1083,7 @@
 				CODE_SIGN_ENTITLEMENTS = OneSignalNotificationServiceExtension/OneSignalNotificationServiceExtension.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Oscar Widl (CAVPB8JT36)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = CAVPB8JT36;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -1123,7 +1119,7 @@
 				CODE_SIGN_IDENTITY = "iPhone Distribution: Oscar Widl (CAVPB8JT36)";
 				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 44;
+				CURRENT_PROJECT_VERSION = 45;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = CAVPB8JT36;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

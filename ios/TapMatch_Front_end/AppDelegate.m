@@ -7,23 +7,16 @@
 #import <Firebase.h>
 #import "RNSplashScreen.h"
 
-#ifdef FB_SONA/Users/home/Documents/Front-End/ios/PodfileRKIT_ENABLED
+#if DEBUG
+#ifdef FB_SONARKIT_ENABLED
 #import <FlipperKit/FlipperClient.h>
 #import <FlipperKitLayoutPlugin/FlipperKitLayoutPlugin.h>
-#import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
+#import <FlipperKitLayoutPlugin/SKDescriptorMapper.h>
 #import <FlipperKitNetworkPlugin/FlipperKitNetworkPlugin.h>
-#import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
 #import <FlipperKitReactPlugin/FlipperKitReactPlugin.h>
-
-static void InitializeFlipper(UIApplication *application) {
-  FlipperClient *client = [FlipperClient sharedClient];
-  SKDescriptorMapper *layoutDescriptorMapper = [[SKDescriptorMapper alloc] initWithDefaults];
-  [client addPlugin:[[FlipperKitLayoutPlugin alloc] initWithRootNode:application withDescriptorMapper:layoutDescriptorMapper]];
-  [client addPlugin:[[FKUserDefaultsPlugin alloc] initWithSuiteName:nil]];
-  [client addPlugin:[FlipperKitReactPlugin new]];
-  [client addPlugin:[[FlipperKitNetworkPlugin alloc] initWithNetworkAdapter:[SKIOSNetworkAdapter new]]];
-  [client start];
-}
+#import <FlipperKitUserDefaultsPlugin/FKUserDefaultsPlugin.h>
+#import <SKIOSNetworkPlugin/SKIOSNetworkAdapter.h>
+#endif
 #endif
 
 @implementation AppDelegate
@@ -36,9 +29,8 @@ static void InitializeFlipper(UIApplication *application) {
   if ([FIRApp defaultApp] == nil) {
       [FIRApp configure];
   }
-#ifdef FB_SONARKIT_ENABLED
-  InitializeFlipper(application);
-#endif
+  
+  [self initializeFlipper:application];
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
@@ -57,6 +49,20 @@ static void InitializeFlipper(UIApplication *application) {
   [RNBranch initSessionWithLaunchOptions:launchOptions isReferrable:YES];
 
   return YES;
+}
+
+- (void) initializeFlipper:(UIApplication *)application {
+  #if DEBUG
+  #ifdef FB_SONARKIT_ENABLED
+    FlipperClient *client = [FlipperClient sharedClient];
+    SKDescriptorMapper *layoutDescriptorMapper = [[SKDescriptorMapper alloc] initWithDefaults];
+    [client addPlugin: [[FlipperKitLayoutPlugin alloc] initWithRootNode: application withDescriptorMapper: layoutDescriptorMapper]];
+    [client addPlugin: [[FKUserDefaultsPlugin alloc] initWithSuiteName:nil]];
+    [client addPlugin: [FlipperKitReactPlugin new]];
+    [client addPlugin: [[FlipperKitNetworkPlugin alloc] initWithNetworkAdapter:[SKIOSNetworkAdapter new]]];
+    [client start];
+  #endif
+  #endif
 }
 
 - (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options
