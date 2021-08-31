@@ -58,7 +58,7 @@ target 'TapMatch_Front_end' do
 end
 
 target 'OneSignalNotificationServiceExtension' do
-  pod 'OneSignal', '>= 3.0', '< 4.0'
+  pod 'OneSignal', '>= 2.9.3', '< 3.0'
 end
 
 target 'TapMatch_Front_end-tvOS' do
