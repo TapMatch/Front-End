@@ -19,8 +19,11 @@ interface OTPInputProps {
 const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
   const [code, setCode] = useState<string>('');
 
+  const {PHPSESSID, LoggedIn, userProfile, userToken} =
+    useContext(TapMatchContext);
+
   const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
-    console.log('PHPSESSID[0]: =======', PHPSESSID[0]);
+    console.log('PHPSESSID[0]: ===========', PHPSESSID[0]);
     if (PHPSESSID[0].length > 0 && user) {
       callAlert(undefined, 'The phone number is verified.', [
         {
@@ -41,15 +44,13 @@ const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
   };
 
   useEffect(() => {
-    const subscriber = auth().onAuthStateChanged((user) =>
-      onAuthStateChanged(user),
-    );
-    return subscriber; // unsubscribe on unmount
-  }, []);
-
-  const {PHPSESSID, LoggedIn, userProfile, userToken} = useContext(
-    TapMatchContext,
-  );
+    if (PHPSESSID[0].length > 0) {
+      const subscriber = auth().onAuthStateChanged((user) =>
+        onAuthStateChanged(user),
+      );
+      return subscriber; // unsubscribe on unmount
+    }
+  }, [PHPSESSID[0]]);
 
   const onConfirmCode = async (code: string) => {
     try {

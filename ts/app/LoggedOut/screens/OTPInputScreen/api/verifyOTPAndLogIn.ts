@@ -3,7 +3,7 @@ import {tapMatchServerUrl} from 'ts/constants/constants';
 import callAlert from 'ts/utils/callAlert';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
-import * as RNLocalize from "react-native-localize";
+import * as RNLocalize from 'react-native-localize';
 import {DEV_MODE} from 'ts/tools/devModeTrigger';
 
 interface IverifyOTPAndLogIn {
@@ -35,7 +35,7 @@ export async function verifyOTPAndLogIn({
         timezone: RNLocalize.getTimeZone(),
         verify_code: OTP,
       },
-      withCredentials: false
+      withCredentials: false,
     };
     axios
       .request(options)
@@ -60,7 +60,7 @@ export async function verifyOTPAndLogIn({
         if (error.toString().includes('Token is invalid')) {
           ReSendCodeDisabled[1](false);
           console.log(error);
-          callAlert(undefined, `Code is invalid.`);
+          callAlert(undefined, 'Code is invalid.');
         } else {
           console.log(error.toString(), '::: verifyOTPAndLogIn');
 

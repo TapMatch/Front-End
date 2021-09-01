@@ -1,5 +1,6 @@
 import React, {useEffect, useState, useRef} from 'react';
 import {StyleSheet, View} from 'react-native';
+import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // @ts-ignore
 import Video from 'react-native-video';
@@ -10,6 +11,7 @@ import WebLoader from './components/WebLoader';
 import {useNavigation} from '@react-navigation/native';
 import {LoggedOutScreens} from 'ts/constants/screens';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {SystemRootState} from 'ts/store/system/state';
 
 const TutorialScreen = ({navigation, route}: any) => {
   const {playVideo} = route.params;
@@ -19,15 +21,16 @@ const TutorialScreen = ({navigation, route}: any) => {
   const videoPaused = useState<boolean>(false);
   const {navigate} = useNavigation();
   const txt = useLocalizedTxt();
+  const {muteTutorial} = useSelector<SystemRootState>(({system}) => system);
 
   useEffect(() => {
+    videoRef.current.seek(0);
     videoPaused[1](false);
   }, [playVideo]);
 
   const onTutorialEnd = async () => {
     // await setStorageData(StorageKeys.PassedTutorial, '1');
-    videoPaused[1](true);
-    videoRef.current.seek(0);
+    // videoPaused[1](true);
     navigate(LoggedOutScreens.PhoneInput, {playVideo: !playVideo});
   };
 
@@ -39,7 +42,8 @@ const TutorialScreen = ({navigation, route}: any) => {
         ref={videoRef}
         source={TutorialVideo}
         style={_s.video}
-        repeat={false}
+        repeat={true}
+        muted={muteTutorial}
         onEnd={onTutorialEnd}
         resizeMode={'stretch'}
         paused={videoPaused[0]}

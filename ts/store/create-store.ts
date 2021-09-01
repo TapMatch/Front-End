@@ -16,11 +16,18 @@ import {
 
 import {displaySettingsReducers} from './display-settings/display-settings-reducers';
 import {DisplaySettingsRootState} from './display-settings/display-settings-state';
+import {systemReducers} from './system/reducers';
+import {SystemRootState} from './system/state';
 import {authReducers} from './auth/reducers';
 import {AuthRootState} from './auth/state';
+import {userReducers} from './user/reducers';
+import {UserRootState} from './user/state';
 import {rootStateReducer} from './root-state.reducers';
 
-type RootState = DisplaySettingsRootState & AuthRootState;
+type RootState = DisplaySettingsRootState &
+  AuthRootState &
+  UserRootState &
+  SystemRootState;
 
 const middlewares: Array<Middleware<{}, RootState>> = [];
 
@@ -37,6 +44,8 @@ const persistConfig = {
 const rootReducer = rootStateReducer<RootState>({
   displaySettings: displaySettingsReducers,
   auth: authReducers,
+  user: userReducers,
+  system: systemReducers,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
