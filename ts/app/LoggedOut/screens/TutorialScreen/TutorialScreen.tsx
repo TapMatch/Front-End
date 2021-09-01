@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {Platform, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // @ts-ignore
@@ -24,7 +24,13 @@ const TutorialScreen = ({navigation, route}: any) => {
   const {muteTutorial} = useSelector<SystemRootState>(({system}) => system);
 
   useEffect(() => {
-    videoRef.current.seek(0);
+    if (Platform.OS === 'ios') {
+      videoRef?.current?.presentFullscreenPlayer();
+    }
+  }, []);
+
+  useEffect(() => {
+    videoRef?.current?.seek(0);
     videoPaused[1](false);
   }, [playVideo]);
 
