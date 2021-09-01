@@ -30,7 +30,7 @@ interface WelcomeScreenProps {}
 
 const WelcomeScreen = (props: WelcomeScreenProps) => {
   const {top} = useSafeAreaInsets();
-  const {width} = useWindowDimensions();
+  const {width, height} = useWindowDimensions();
   const logoSize = formatWidth(175);
   const {userLocation} = useContext(TapMatchContext);
   const headerHeight = useHeaderHeight();
@@ -47,19 +47,22 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
 
   return (
     <View style={[_s.container, {paddingTop: top}]}>
+      <StatusBar
+        animated={true}
+        hidden={false}
+        backgroundColor="transparent"
+        barStyle={'dark-content'}
+      />
       <ImageBackground
         resizeMode={'cover'}
-        style={_s.imageBackground}
+        style={[_s.imageBackground, {width, height}]}
         source={require('assets/png/launch.png')}>
         <SloganParagraph />
         <TouchableOpacity
           activeOpacity={1}
           onPress={handleNextScreen}
           style={_s.middle}>
-          <Image
-            source={require('assets/png/TapMatchLogo.png')}
-            style={_s.logo}
-          />
+          <View style={_s.logo} />
         </TouchableOpacity>
         <TermsAndConditionsParagraph />
         <BottomBtn getUserLocation={handleNextScreen} />
@@ -73,11 +76,9 @@ export default WelcomeScreen;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: _c.black,
   },
   imageBackground: {
     flex: 1,
-    backgroundColor: _c.black,
     alignItems: 'center',
     // justifyContent: 'center',
     justifyContent: 'space-around',
@@ -90,6 +91,7 @@ const _s = StyleSheet.create({
   },
   middle: {
     width: formatWidth(185),
+    height: formatWidth(185),
     alignItems: 'center',
   },
 });

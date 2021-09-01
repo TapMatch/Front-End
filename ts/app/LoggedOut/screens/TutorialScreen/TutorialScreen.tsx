@@ -39,7 +39,7 @@ const TutorialScreen = ({navigation, route}: any) => {
 
   const onTutorialEnd = async () => {
     // await setStorageData(StorageKeys.PassedTutorial, '1');
-    // videoPaused[1](true);
+    videoPaused[1](true);
     navigate(LoggedOutScreens.PhoneInput, {playVideo: !playVideo});
   };
 
@@ -51,9 +51,9 @@ const TutorialScreen = ({navigation, route}: any) => {
         ref={videoRef}
         source={TutorialVideo}
         style={_s.video}
-        repeat={true}
+        repeat={false}
         fullscreen={true}
-        muted={muteTutorial}
+        muted={videoPaused[0]}
         onEnd={onTutorialEnd}
         resizeMode={'stretch'}
         paused={videoPaused[0]}

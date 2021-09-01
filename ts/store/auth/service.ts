@@ -14,11 +14,11 @@ export const signInWithPhoneNumber = async (phoneNumber: string) => {
       error.code === 'auth/invalid-phone-number' ||
       error.code === 'auth/missing-phone-number'
     ) {
-      callAlert(undefined, 'Invalid phone number');
+      // callAlert(undefined, 'Invalid phone number');
     } else if (error.code === 'auth/user-disabled') {
-      callAlert(undefined, 'The account is disabled');
+      // callAlert(undefined, 'The account is disabled');
     } else {
-      callAlert(undefined, 'Invalid phone number');
+      // callAlert(undefined, 'Invalid phone number');
     }
     return false;
   }
@@ -30,7 +30,7 @@ export const confirmCode = async (code: string) => {
     return true;
   } catch (error) {
     console.log('Error: ======= ', error.code);
-    callAlert(undefined, 'Invalid verification code');
+    // callAlert(undefined, 'Invalid verification code');
     return false;
   }
 };
