@@ -62,7 +62,7 @@ function generateMsg(url: string, code: string, name: string) {
   if (code) {
     return `${name}\nJoin our event!\nThe access code to enter the community is ${code} \n ${url}`;
   } else {
-    return `${name}\nJoin our event!\nIt's an open invitation\n ${url}`;
+    return `Lets go to ${name}:\n${url}\nThe Access Code to ${name} is ${code}\n`;
   }
 }
 
