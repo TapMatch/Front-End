@@ -31,7 +31,7 @@ const PhoneInputScreen = ({navigation, route}: any) => {
     !validatePhoneNumber(`${phoneNumber[0]}`, countryCode[0]);
   return (
     <View style={_s.container}>
-      <SwipeBackGuide playVideo={playVideo} />
+      {/* <SwipeBackGuide playVideo={playVideo} /> */}
       <View style={_s.content}>
         <Title />
         <Subtitle />

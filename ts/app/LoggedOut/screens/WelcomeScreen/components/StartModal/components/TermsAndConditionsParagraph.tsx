@@ -68,7 +68,6 @@ const _s = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   paragraphTxt: {
-    width: 267,
     color: _c.white,
     fontFamily: _f.regular,
     fontSize: _fs.l,
