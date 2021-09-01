@@ -9,6 +9,7 @@ import {useIsFocused, useNavigation} from '@react-navigation/native';
 import {_c} from 'ts/UIConfig/colors';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import {formatWidth} from '../../../../../../../utils/format-size';
 
 interface TermsAndConditionsParagraphProps {
   modalVisible: [boolean, (x: boolean) => void];

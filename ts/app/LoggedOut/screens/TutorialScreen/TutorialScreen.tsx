@@ -43,6 +43,7 @@ const TutorialScreen = ({navigation, route}: any) => {
         source={TutorialVideo}
         style={_s.video}
         repeat={true}
+        fullscreen={true}
         muted={muteTutorial}
         onEnd={onTutorialEnd}
         resizeMode={'stretch'}

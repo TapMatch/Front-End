@@ -1,20 +1,15 @@
 import React, {useContext, useRef, useState} from 'react';
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import {RNCamera} from 'react-native-camera';
-import SwitchCameraWhileAlpha from 'assets/svg/switch-camera-white-alpha.svg';
-import {vs} from 'react-native-size-matters';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
-import DocumentPicker from 'react-native-document-picker';
+import {
+  launchImageLibrary,
+  ImagePickerResponse,
+  Asset,
+} from 'react-native-image-picker';
 import FaceDetection, {
   FaceDetectorContourMode,
   FaceDetectorLandmarkMode,
@@ -27,10 +22,25 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 
+export type FaceRectType = {
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
 interface CameraProps {
   pictureURI: [string, (x: string) => void];
   facesDetected: [boolean, (x: boolean) => void];
   cameraShutterState: [boolean, (x: boolean) => void];
+  faces: any;
+  imageFaces: any;
+  faceRect: FaceRectType | undefined | null;
+  setFaces: (x: any) => void;
+  setImageFaces: (x: any) => void;
+  setFaceRect: (x: FaceRectType) => void;
+  resetCamera: () => void;
+  resetFaceDetection: () => void;
 }
 
 type BoundingBoxType = [number, number, number, number];
@@ -42,31 +52,29 @@ type ImageSizeType = {
   originalHeight: number;
 };
 
-type FaceRectType = {
-  x: number;
-  y: number;
-  width: number;
-  height: number;
-};
-
 const Camera = (props: CameraProps) => {
   const cameraTypeBool = useState<boolean>(false);
   const uploadToServerTrigger = useState<boolean>(false);
-  const [faces, setFaces] = useState<any>([]);
-  const [imageFaces, setImageFaces] = useState<any>([]);
-  const [faceRect, setFaceRect] = useState<FaceRectType | undefined>();
   const {navigate} = useNavigation();
-  const {facesDetected, pictureURI, cameraShutterState} = props;
+  const {
+    facesDetected,
+    pictureURI,
+    cameraShutterState,
+    setFaces,
+    faceRect,
+    setFaceRect,
+    setImageFaces,
+    imageFaces,
+    faces,
+    resetCamera,
+    resetFaceDetection,
+  } = props;
   const txt = useLocalizedTxt();
 
   const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
-  const {
-    userToken,
-    userProfile,
-    LoggedIn,
-    user_has_passed_onboarding,
-  } = useContext(TapMatchContext);
+  const {userToken, userProfile, LoggedIn, user_has_passed_onboarding} =
+    useContext(TapMatchContext);
 
   let RNCameraRef = useRef<RNCamera | null>(null);
   let imageRef = useRef<Image | null>(null);
@@ -111,25 +119,22 @@ const Camera = (props: CameraProps) => {
 
   // @ts-ignore
   const onFacesDetected = ({faces}) => {
-    // console.log('faces', faces[0].bounds.origin, faces[0].bounds.size);
     facesDetected[1](true);
     setFaces(faces);
   };
 
   const onFaceDetectionError = () => {
-    facesDetected[1](false);
+    resetCamera();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onBackRecapture = () => {
-    facesDetected[1](false);
-    cameraShutterState[1](false);
-    pictureURI[1]('');
+    resetFaceDetection();
   };
 
   const onSwitchCameraType = () => {
     cameraTypeBool[1](!cameraTypeBool[0]);
-    facesDetected[1](false);
+    resetFaceDetection();
   };
 
   const calculateFaceRectInsideImage = (
@@ -197,32 +202,37 @@ const Camera = (props: CameraProps) => {
         });
       }
     } catch (e) {
-      facesDetected[1](false);
+      resetFaceDetection();
     }
   };
 
   const onPickImage = async () => {
     try {
-      const {uri} = await DocumentPicker.pickSingle({
-        type: [DocumentPicker.types.images],
-      });
-      Image.getSize(
-        uri,
-        async (imageWidth, imageHeight) => {
-          await pictureURI[1](uri);
-          cameraShutterState[1](true);
-          facesDetected[1](false);
-          await processFaces(uri, imageWidth, imageHeight);
+      launchImageLibrary(
+        {
+          mediaType: 'photo',
         },
-        (error) => {
-          console.log('Error:', error.message);
+        (response: ImagePickerResponse) => {
+          if (response.didCancel) {
+            return;
+          }
+
+          const {uri} = response.assets[0];
+          Image.getSize(
+            uri as string,
+            async (imageWidth, imageHeight) => {
+              await pictureURI[1](uri as string);
+              cameraShutterState[1](true);
+              facesDetected[1](false);
+              await processFaces(uri as string, imageWidth, imageHeight);
+            },
+            (error) => {
+              console.log('Error:', error.message);
+            },
+          );
         },
       );
-    } catch (err) {
-      if (DocumentPicker.isCancel(err)) {
-        console.log('Error:', err.message);
-      }
-    }
+    } catch (err) {}
   };
 
   const renderCamera = () => {
@@ -249,7 +259,7 @@ const Camera = (props: CameraProps) => {
             flashMode={RNCamera.Constants.FlashMode.off}
             faceDetectionMode={RNCamera.Constants.FaceDetection?.Mode?.accurate}
             faceDetectionLandmarks={
-              RNCamera.Constants.FaceDetection?.Landmarks?.all 
+              RNCamera.Constants.FaceDetection?.Landmarks?.all
             }
             onFacesDetected={onFacesDetected}
             onFaceDetectionError={onFaceDetectionError}
@@ -274,7 +284,7 @@ const Camera = (props: CameraProps) => {
     }
   };
 
-  let faceMastStyle = _s.circle;
+  let faceMastStyle = {..._s.circle};
   if (faces.length > 0 && facesDetected[1]) {
     faceMastStyle = {
       // @ts-ignore
@@ -311,7 +321,7 @@ const Camera = (props: CameraProps) => {
     <View style={_s.container}>
       <View style={_s.cameraMask}>
         <View
-          style={facesDetected[1] ? [_s.circle, faceMastStyle] : [_s.circle]}
+          style={facesDetected[0] ? [_s.circle, faceMastStyle] : [_s.circle]}
         />
       </View>
       <View

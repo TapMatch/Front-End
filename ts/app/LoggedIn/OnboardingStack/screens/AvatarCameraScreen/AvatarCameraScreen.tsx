@@ -3,7 +3,7 @@ import {View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
-import Camera from './components/Camera/Camera';
+import Camera, {FaceRectType} from './components/Camera/Camera';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {formatHeight, formatWidth} from 'ts/utils/format-size';
@@ -23,12 +23,28 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
   const facesDetected = useState<boolean>(false);
   const pictureURI = useState<string>('');
   const cameraShutterState = useState<boolean>(false);
+  const [faces, setFaces] = useState<any>([]);
+  const [imageFaces, setImageFaces] = useState<any>([]);
+  const [faceRect, setFaceRect] = useState<FaceRectType | undefined | null>(
+    null,
+  );
+
+  const resetFaceDetection = () => {
+    facesDetected[1](false);
+    cameraShutterState[1](false);
+    setFaces([]);
+    setImageFaces([]);
+    setFaceRect(null);
+  };
+
+  const resetCamera = () => {
+    resetFaceDetection();
+    pictureURI[1]('');
+  };
 
   const onPressBack = () => {
     if (facesDetected && isString(pictureURI[0]) && cameraShutterState) {
-      facesDetected[1](false);
-      cameraShutterState[1](false);
-      pictureURI[1]('');
+      resetCamera();
     } else {
       navigation.goBack();
     }
@@ -48,6 +64,14 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
           facesDetected={facesDetected}
           pictureURI={pictureURI}
           cameraShutterState={cameraShutterState}
+          faceRect={faceRect}
+          setFaceRect={setFaceRect}
+          faces={faces}
+          setFaces={setFaces}
+          setImageFaces={setImageFaces}
+          imageFaces={imageFaces}
+          resetCamera={resetCamera}
+          resetFaceDetection={resetFaceDetection}
         />
       )}
     </View>
