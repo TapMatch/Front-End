@@ -32,6 +32,9 @@ const TutorialScreen = ({navigation, route}: any) => {
   useEffect(() => {
     videoRef?.current?.seek(0);
     videoPaused[1](false);
+    if (Platform.OS === 'ios') {
+      videoRef?.current?.presentFullscreenPlayer();
+    }
   }, [playVideo]);
 
   const onTutorialEnd = async () => {
