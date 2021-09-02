@@ -40,7 +40,12 @@ const shareContent = async (data: any, userProfile: any) => {
     if (community) {
       const {access: communityAccessCode, name: communityName} = community;
       const result = await Share.share({
-        message: generateMsg(url, communityAccessCode, communityName),
+        message: generateMsg(
+          url,
+          communityAccessCode,
+          communityName,
+          data.name,
+        ),
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -58,11 +63,16 @@ const shareContent = async (data: any, userProfile: any) => {
   }
 };
 
-function generateMsg(url: string, code: string, name: string) {
+function generateMsg(
+  url: string,
+  code: string,
+  name: string,
+  eventName: string,
+) {
   if (code) {
-    return `${name}\nJoin our event!\nThe access code to enter the community is ${code} \n ${url}`;
+    return `Lets go to ${eventName}:\n${url}\nThe Access Code to ${name} is ${code}\n`;
   } else {
-    return `Lets go to ${name}:\n${url}\nThe Access Code to ${name} is ${code}\n`;
+    return `Lets go to ${eventName}:\n${url}\n`;
   }
 }
 
