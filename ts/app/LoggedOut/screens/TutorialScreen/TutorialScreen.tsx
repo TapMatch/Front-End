@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef} from 'react';
-import {Platform, StyleSheet, View} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View} from 'react-native';
 import {useSelector} from 'react-redux';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 // @ts-ignore
@@ -37,6 +37,10 @@ const TutorialScreen = ({navigation, route}: any) => {
     }
   }, [playVideo]);
 
+  const setFullscreenPlayer = () => {
+    videoRef?.current?.presentFullscreenPlayer();
+  };
+
   const onTutorialEnd = async () => {
     // await setStorageData(StorageKeys.PassedTutorial, '1');
     videoPaused[1](true);
@@ -44,7 +48,8 @@ const TutorialScreen = ({navigation, route}: any) => {
   };
 
   return (
-    <View style={[_s.container, {paddingTop: top, paddingBottom: bottom}]}>
+    <View style={[_s.container]}>
+      <StatusBar hidden={true} />
       {loadComplete[0] && <SkipButton onPress={onTutorialEnd} />}
       {!loadComplete[0] && <WebLoader message={txt.startTutorial} />}
       <Video
@@ -54,6 +59,7 @@ const TutorialScreen = ({navigation, route}: any) => {
         repeat={false}
         fullscreen={true}
         muted={videoPaused[0]}
+        onLoad={setFullscreenPlayer}
         onEnd={onTutorialEnd}
         resizeMode={'stretch'}
         paused={videoPaused[0]}
