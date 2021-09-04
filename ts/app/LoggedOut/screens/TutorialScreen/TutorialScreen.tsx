@@ -61,7 +61,7 @@ const TutorialScreen = ({navigation, route}: any) => {
         muted={videoPaused[0]}
         onLoad={setFullscreenPlayer}
         onEnd={onTutorialEnd}
-        resizeMode={'stretch'}
+        resizeMode={'cover'}
         paused={videoPaused[0]}
         onReadyForDisplay={() => loadComplete[1](true)}
       />

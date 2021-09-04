@@ -44,7 +44,6 @@ const Shutter = ({
       {!cameraShutterState && (
         <TouchableOpacity
           onPress={onCapture}
-          disabled={!facesDetected}
           style={[_s.shutterBtn, _s.shadow]}>
           <View style={_s.redCircle} />
         </TouchableOpacity>

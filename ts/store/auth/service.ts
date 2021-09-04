@@ -30,7 +30,7 @@ export const confirmCode = async (code: string) => {
     return true;
   } catch (error) {
     console.log('Error: ======= ', error.code);
-    // callAlert(undefined, 'Invalid verification code');
+    callAlert(undefined, 'Code is invalid.');
     return false;
   }
 };

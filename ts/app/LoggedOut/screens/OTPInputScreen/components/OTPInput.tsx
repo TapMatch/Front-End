@@ -10,6 +10,7 @@ import {verifyOTPAndLogIn} from '../api/verifyOTPAndLogIn';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {confirmCode} from 'ts/store/auth/service';
 import callAlert from 'ts/utils/callAlert';
+import {isString} from 'ts/utils/is-string';
 
 interface OTPInputProps {
   OTP: [string, (x: string) => void];
@@ -23,8 +24,8 @@ const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
     useContext(TapMatchContext);
 
   const onAuthStateChanged = (user: FirebaseAuthTypes.User | null) => {
-    console.log('PHPSESSID[0]: ===========', PHPSESSID[0]);
-    if (PHPSESSID[0].length > 0 && user) {
+    // console.log('PHPSESSID[0]: ===========', PHPSESSID[0]);
+    if (PHPSESSID[0].length > 0 && user && isString(user.uid)) {
       verifyOTPAndLogIn({
         ReSendCodeDisabled,
         OTP: code,

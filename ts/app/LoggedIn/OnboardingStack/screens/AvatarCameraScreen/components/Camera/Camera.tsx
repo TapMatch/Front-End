@@ -21,6 +21,7 @@ import {formatHeight, formatWidth} from 'ts/utils/format-size';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
+import ImageZoom from './image-zoom/image-zoom.component';
 
 export type FaceRectType = {
   x: number;
@@ -119,12 +120,12 @@ const Camera = (props: CameraProps) => {
 
   // @ts-ignore
   const onFacesDetected = ({faces}) => {
-    facesDetected[1](true);
-    setFaces(faces);
+    // facesDetected[1](true);
+    // setFaces(faces);
   };
 
   const onFaceDetectionError = () => {
-    resetCamera();
+    // resetCamera();
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -223,8 +224,6 @@ const Camera = (props: CameraProps) => {
             async (imageWidth, imageHeight) => {
               await pictureURI[1](uri as string);
               cameraShutterState[1](true);
-              facesDetected[1](false);
-              await processFaces(uri as string, imageWidth, imageHeight);
             },
             (error) => {
               console.log('Error:', error.message);
@@ -319,11 +318,9 @@ const Camera = (props: CameraProps) => {
 
   return (
     <View style={_s.container}>
-      <View style={_s.cameraMask}>
-        <View
-          style={facesDetected[0] ? [_s.circle, faceMastStyle] : [_s.circle]}
-        />
-      </View>
+      {/*<View style={_s.cameraMask}>*/}
+      {/*  <View style={_s.circle} />*/}
+      {/*</View>*/}
       <View
         style={[
           _s.facesDetected,
