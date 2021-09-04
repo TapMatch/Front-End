@@ -3,7 +3,7 @@ export const _c = {
   main_red: '#EA5734',
   redDark: '#FF0000',
   greenDark: '#12DB00',
-  black: '#000',
+  black: '#000000',
   white: '#fff',
   linkBlue: '#4E88F5',
   greyLight: 'rgba(0,0,0,0.1)',

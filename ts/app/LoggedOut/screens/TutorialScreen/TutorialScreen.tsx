@@ -25,7 +25,7 @@ const TutorialScreen = ({navigation, route}: any) => {
 
   useEffect(() => {
     if (Platform.OS === 'ios') {
-      videoRef?.current?.presentFullscreenPlayer();
+      // videoRef?.current?.presentFullscreenPlayer();
     }
   }, []);
 
@@ -33,12 +33,12 @@ const TutorialScreen = ({navigation, route}: any) => {
     videoRef?.current?.seek(0);
     videoPaused[1](false);
     if (Platform.OS === 'ios') {
-      videoRef?.current?.presentFullscreenPlayer();
+      // videoRef?.current?.presentFullscreenPlayer();
     }
   }, [playVideo]);
 
   const setFullscreenPlayer = () => {
-    videoRef?.current?.presentFullscreenPlayer();
+    // videoRef?.current?.presentFullscreenPlayer();
   };
 
   const onTutorialEnd = async () => {

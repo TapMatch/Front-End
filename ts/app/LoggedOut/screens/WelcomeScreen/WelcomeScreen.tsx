@@ -51,7 +51,7 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
         animated={true}
         hidden={false}
         backgroundColor="transparent"
-        barStyle={'dark-content'}
+        barStyle={'light-content'}
       />
       <ImageBackground
         resizeMode={'cover'}
@@ -76,6 +76,7 @@ export default WelcomeScreen;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: _c.black,
   },
   imageBackground: {
     flex: 1,
