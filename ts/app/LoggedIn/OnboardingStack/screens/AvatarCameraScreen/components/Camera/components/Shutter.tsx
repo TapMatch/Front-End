@@ -5,18 +5,22 @@ import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import {formatHeight, formatWidth} from 'ts/utils/format-size';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
+import {ImageZoomSourceType} from '../Camera';
 
 interface ShutterProps {
   uploadToServer: () => void;
   onCapture: () => void;
   onPickImage: () => void;
-  pictureURI: [string, (x: string) => void];
+  imageZoomSource: [
+    ImageZoomSourceType | undefined | null,
+    (x: ImageZoomSourceType | undefined | null) => void,
+  ];
   cameraShutterState: boolean;
   facesDetected: boolean;
 }
 
 const Shutter = ({
-  pictureURI,
+  imageZoomSource,
   uploadToServer,
   onCapture,
   onPickImage,
@@ -36,7 +40,7 @@ const Shutter = ({
           style={_s.faceDemo}
           source={
             cameraShutterState
-              ? {uri: pictureURI[0]}
+              ? {uri: imageZoomSource[0]?.uri}
               : require('assets/png/face-demo.png')
           }
         />

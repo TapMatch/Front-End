@@ -3,7 +3,10 @@ import {View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
-import Camera, {FaceRectType} from './components/Camera/Camera';
+import Camera, {
+  FaceRectType,
+  ImageZoomSourceType,
+} from './components/Camera/Camera';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {formatHeight, formatWidth} from 'ts/utils/format-size';
@@ -21,11 +24,13 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
   const isFocused = useIsFocused();
   const {bottom} = useSafeAreaInsets();
   const facesDetected = useState<boolean>(false);
-  const pictureURI = useState<string>('');
   const cameraShutterState = useState<boolean>(false);
   const [faces, setFaces] = useState<any>([]);
   const [imageFaces, setImageFaces] = useState<any>([]);
   const [faceRect, setFaceRect] = useState<FaceRectType | undefined | null>(
+    null,
+  );
+  const imageZoomSource = useState<ImageZoomSourceType | undefined | null>(
     null,
   );
 
@@ -39,11 +44,15 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
 
   const resetCamera = () => {
     resetFaceDetection();
-    pictureURI[1]('');
+    imageZoomSource[1](null);
   };
 
   const onPressBack = () => {
-    if (facesDetected && isString(pictureURI[0]) && cameraShutterState) {
+    if (
+      facesDetected &&
+      isString(imageZoomSource[0]?.uri) &&
+      cameraShutterState
+    ) {
       resetCamera();
     } else {
       navigation.goBack();
@@ -62,7 +71,7 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
       {isFocused && (
         <Camera
           facesDetected={facesDetected}
-          pictureURI={pictureURI}
+          imageZoomSource={imageZoomSource}
           cameraShutterState={cameraShutterState}
           faceRect={faceRect}
           setFaceRect={setFaceRect}
