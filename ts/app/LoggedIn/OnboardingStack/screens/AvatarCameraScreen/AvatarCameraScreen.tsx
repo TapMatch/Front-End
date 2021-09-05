@@ -116,7 +116,7 @@ const _s = StyleSheet.create({
   },
   back: {
     position: 'absolute',
-    left: formatWidth(43),
+    left: formatWidth(22),
     bottom: formatHeight(32),
     zIndex: 300,
   },

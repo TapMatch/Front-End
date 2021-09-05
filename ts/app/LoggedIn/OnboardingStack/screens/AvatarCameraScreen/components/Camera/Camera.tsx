@@ -296,7 +296,7 @@ const Camera = (props: CameraProps) => {
   const onMoveImageZoom = (iOnMove: IOnMove) => {
     const {positionX, positionY, scale} = iOnMove;
     const {circleDiameter, originHeight, originWidth, uri} = imageZoomSource[0];
-    const displayDiameter = (circleDiameter * 0.75) / scale;
+    const displayDiameter = (circleDiameter * 0.65) / scale;
     const startX = (originWidth - displayDiameter) / 2;
     const startY = (originHeight - displayDiameter) / 2;
     const offsetMoveX = startX - positionX;
@@ -455,15 +455,15 @@ const Camera = (props: CameraProps) => {
         calculateCameraSize(event.nativeEvent.layout);
       }}
       style={_s.container}>
-      {isString(croppedImageURL[0]) && (
-        <Image
-          style={_s.croppedImagePreview}
-          resizeMode={'cover'}
-          source={{
-            uri: croppedImageURL[0],
-          }}
-        />
-      )}
+      {/*{isString(croppedImageURL[0]) && (*/}
+      {/*  <Image*/}
+      {/*    style={_s.croppedImagePreview}*/}
+      {/*    resizeMode={'cover'}*/}
+      {/*    source={{*/}
+      {/*      uri: croppedImageURL[0],*/}
+      {/*    }}*/}
+      {/*  />*/}
+      {/*)}*/}
       <View
         style={[
           _s.facesDetected,
