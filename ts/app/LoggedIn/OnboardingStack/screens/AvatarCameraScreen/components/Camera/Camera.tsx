@@ -114,6 +114,7 @@ const Camera = (props: CameraProps) => {
           },
         );
         setImageZoomSource(uri, width, height);
+        facesDetected[1](false);
         cameraShutterState[1](true);
       }
     } catch (error) {
@@ -244,12 +245,7 @@ const Camera = (props: CameraProps) => {
     }
   };
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const processFaces = async (
-    imagePath: string,
-    imageWidth: number,
-    imageHeight: number,
-  ) => {
+  const processFaces = async (imagePath: string) => {
     const options = {
       landmarkMode: FaceDetectorLandmarkMode.ALL,
       contourMode: FaceDetectorContourMode.ALL,
@@ -259,14 +255,12 @@ const Camera = (props: CameraProps) => {
       const faces = await FaceDetection.processImage(imagePath, options);
       if (faces.length > 0) {
         facesDetected[1](true);
-        setImageFaces(faces);
-        calculateFaceRectInsideImage(faces[0].boundingBox, {
-          originalWidth: imageWidth,
-          originalHeight: imageHeight,
-        });
+      } else {
+        facesDetected[1](false);
       }
     } catch (e) {
-      resetFaceDetection();
+      facesDetected[1](false);
+      console.log('Face detection error:', e.message);
     }
   };
 
@@ -287,6 +281,7 @@ const Camera = (props: CameraProps) => {
             uri as string,
             async (imageWidth, imageHeight) => {
               setImageZoomSource(uri as string, imageWidth, imageHeight);
+              facesDetected[1](false);
               cameraShutterState[1](true);
             },
             (error) => {
@@ -301,42 +296,96 @@ const Camera = (props: CameraProps) => {
   const onMoveImageZoom = (iOnMove: IOnMove) => {
     const {positionX, positionY, scale} = iOnMove;
     const {circleDiameter, originHeight, originWidth, uri} = imageZoomSource[0];
-    const displayDiameter = circleDiameter / scale;
-    const offsetMoveX = (originWidth - displayDiameter) / 2 - positionX;
-    const offsetMoveY = (originHeight - displayDiameter) / 2 - positionY;
+    const displayDiameter = (circleDiameter * 0.75) / scale;
+    const startX = (originWidth - displayDiameter) / 2;
+    const startY = (originHeight - displayDiameter) / 2;
+    const offsetMoveX = startX - positionX;
+    const offsetMoveY = startY - positionY;
+    const endX = originWidth - startX;
+    const endY = originHeight - startY;
+    let diffOffsetX = 0;
+    if (offsetMoveX + displayDiameter > originWidth) {
+      diffOffsetX = offsetMoveX + displayDiameter - originWidth;
+    } else if (offsetMoveX < 0) {
+      diffOffsetX = -offsetMoveX;
+    }
+    const cropSizeWidth =
+      (displayDiameter > originWidth ? originWidth : displayDiameter) -
+      diffOffsetX;
+
+    let diffOffsetY = 0;
+    if (offsetMoveY + displayDiameter > originHeight) {
+      diffOffsetY = offsetMoveY + displayDiameter - originHeight;
+    } else if (offsetMoveY < 0) {
+      diffOffsetY = -offsetMoveY;
+    }
+
+    const cropSizeHeight =
+      (displayDiameter > originHeight ? originHeight : displayDiameter) -
+      diffOffsetY;
+
+    if (
+      offsetMoveX + originWidth * 0.2 > endX ||
+      offsetMoveY + originHeight * 0.2 > endY
+    ) {
+      croppedImageURL[1]('');
+      facesDetected[1](false);
+      return false;
+    }
+    const minSize = Math.min(cropSizeWidth, cropSizeHeight);
     const cropData = {
       offset: {
         x:
-          offsetMoveX < 0
-            ? 0
-            : offsetMoveX > originWidth
-            ? originWidth
+          offsetMoveX < originWidth * 0.2
+            ? originWidth * 0.1
+            : offsetMoveX > endX
+            ? endX
             : offsetMoveX,
         y:
-          offsetMoveY < 0
-            ? 0
-            : offsetMoveY > originHeight
-            ? originHeight
+          offsetMoveY < originHeight * 0.2
+            ? originHeight * 0.1
+            : offsetMoveY > endY
+            ? endY
             : offsetMoveY,
       },
       size: {
-        width: displayDiameter > originWidth ? originWidth : displayDiameter,
-        height: displayDiameter > originHeight ? originHeight : displayDiameter,
+        width: minSize,
+        height: minSize,
       },
       displaySize: {
-        width: displayDiameter > originWidth ? originWidth : displayDiameter,
-        height: displayDiameter > originHeight ? originHeight : displayDiameter,
+        width: minSize,
+        height: minSize,
       },
       resizeMode: 'cover',
     };
-    ImageEditor.cropImage(uri as string, cropData as ImageCropData)
-      .then((url) => {
-        croppedImageURL[1](url);
-      })
-      .catch((e) => {
-        console.log('ImageEditor Error: ', e.message);
-      });
+    try {
+      ImageEditor.cropImage(uri as string, cropData as ImageCropData)
+        .then((url) => {
+          croppedImageURL[1](url);
+          processFaces(url);
+        })
+        .catch((e) => {
+          croppedImageURL[1]('');
+          facesDetected[1](false);
+          console.log('ImageEditor Error: ', e.message);
+        });
+    } catch (e) {
+      croppedImageURL[1]('');
+      facesDetected[1](false);
+      console.log('ImageEditor Error: ', e.message);
+    }
   };
+
+  // const setCroppedImageURL = (iOnMove: IOnMove) => {
+  //
+  //   ImageEditor.cropImage(uri as string, cropData as ImageCropData)
+  //       .then((url) => {
+  //         croppedImageURL[1](url);
+  //       })
+  //       .catch((e) => {
+  //         console.log('ImageEditor Error: ', e.message);
+  //       });
+  // }
 
   const renderCamera = () => {
     if (isString(imageZoomSource[0]?.uri)) {
