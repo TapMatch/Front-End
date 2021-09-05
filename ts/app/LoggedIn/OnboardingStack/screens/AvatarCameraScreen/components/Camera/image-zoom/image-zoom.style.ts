@@ -1,7 +1,8 @@
 import {Dimensions, ViewStyle} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 
-const circleRadius = Dimensions.get('screen').width * 0.65;
+export const CircleRatio = 0.86;
+const circleRadius = Dimensions.get('screen').width * CircleRatio;
 const container: ViewStyle = {
   justifyContent: 'center',
   alignItems: 'center',

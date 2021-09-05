@@ -11,10 +11,7 @@ interface ShutterProps {
   uploadToServer: () => void;
   onCapture: () => void;
   onPickImage: () => void;
-  imageZoomSource: [
-    ImageZoomSourceType | undefined | null,
-    (x: ImageZoomSourceType | undefined | null) => void,
-  ];
+  imageZoomSource: [ImageZoomSourceType, (x: ImageZoomSourceType) => void];
   cameraShutterState: boolean;
   facesDetected: boolean;
 }
@@ -66,7 +63,7 @@ export default Shutter;
 
 const _s = StyleSheet.create({
   container: {
-    zIndex: 300,
+    zIndex: 3,
     position: 'absolute',
     alignItems: 'center',
     bottom: formatHeight(30),

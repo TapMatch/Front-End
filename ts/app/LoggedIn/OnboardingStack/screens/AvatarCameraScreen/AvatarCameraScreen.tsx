@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {View, StyleSheet, StatusBar, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, TouchableOpacity} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
 import Title from './components/Title';
 import Subtitle from './components/Subtitle';
@@ -30,9 +30,18 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
   const [faceRect, setFaceRect] = useState<FaceRectType | undefined | null>(
     null,
   );
-  const imageZoomSource = useState<ImageZoomSourceType | undefined | null>(
-    null,
-  );
+  const imageZoomSource = useState<ImageZoomSourceType>({
+    imageWidth: 0,
+    imageHeight: 0,
+    cropWidth: 0,
+    cropHeight: 0,
+    originWidth: 0,
+    originHeight: 0,
+    uri: '',
+    circleDiameter: 0,
+    offsetX: 0,
+    offsetY: 0,
+  });
 
   const resetFaceDetection = () => {
     facesDetected[1](false);
@@ -44,7 +53,18 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
 
   const resetCamera = () => {
     resetFaceDetection();
-    imageZoomSource[1](null);
+    imageZoomSource[1]({
+      imageWidth: 0,
+      imageHeight: 0,
+      cropWidth: 0,
+      cropHeight: 0,
+      originWidth: 0,
+      originHeight: 0,
+      uri: '',
+      circleDiameter: 0,
+      offsetX: 0,
+      offsetY: 0,
+    });
   };
 
   const onPressBack = () => {

@@ -13,6 +13,7 @@ import FaceDetection, {
   FaceDetectorContourMode,
   FaceDetectorLandmarkMode,
 } from 'react-native-face-detection';
+import ImageEditor, {ImageCropData} from '@react-native-community/image-editor';
 import {postAvatar} from '../../api/postAvatar';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import {OnBoardingScreens} from 'ts/constants/screens';
@@ -21,6 +22,8 @@ import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {_f} from 'ts/UIConfig/fonts';
 import {_fs} from 'ts/UIConfig/fontSizes';
 import ImageZoom from './image-zoom/image-zoom.component';
+import {IOnMove} from './image-zoom/image-zoom.type';
+import {CircleRatio} from './image-zoom/image-zoom.style';
 import {isString} from 'ts/utils/is-string';
 
 export type FaceRectType = {
@@ -38,15 +41,15 @@ export type ImageZoomSourceType = {
   imageHeight: number;
   originWidth: number;
   originHeight: number;
+  circleDiameter: number;
+  offsetX: number;
+  offsetY: number;
 };
 
 interface CameraProps {
   facesDetected: [boolean, (x: boolean) => void];
   cameraShutterState: [boolean, (x: boolean) => void];
-  imageZoomSource: [
-    ImageZoomSourceType | undefined | null,
-    (x: ImageZoomSourceType | undefined | null) => void,
-  ];
+  imageZoomSource: [ImageZoomSourceType, (x: ImageZoomSourceType) => void];
   faces: any;
   imageFaces: any;
   faceRect: FaceRectType | undefined | null;
@@ -77,6 +80,7 @@ const Camera = (props: CameraProps) => {
   const cameraTypeBool = useState<boolean>(false);
   const cameraSize = useState<CameraSizeType>();
   const uploadToServerTrigger = useState<boolean>(false);
+  const croppedImageURL = useState<string>('');
   const {navigate} = useNavigation();
   const {
     facesDetected,
@@ -219,6 +223,9 @@ const Camera = (props: CameraProps) => {
           cropWidth: cameraSize[0].width,
           originWidth: imageWidth,
           originHeight: imageHeight,
+          circleDiameter: (imageHeight * CircleRatio) / screenRatio,
+          offsetX: (imageWidth - imageHeight / screenRatio) / 2,
+          offsetY: 0,
         });
       } else {
         imageZoomSource[1]({
@@ -229,6 +236,9 @@ const Camera = (props: CameraProps) => {
           cropWidth: cameraSize[0].width,
           originWidth: imageWidth,
           originHeight: imageHeight,
+          circleDiameter: imageWidth * CircleRatio,
+          offsetX: 0,
+          offsetY: (imageHeight - imageWidth * screenRatio) / 2,
         });
       }
     }
@@ -288,6 +298,47 @@ const Camera = (props: CameraProps) => {
     } catch (err) {}
   };
 
+  const onMoveImageZoom = (iOnMove: IOnMove) => {
+    const {positionX, positionY, scale} = iOnMove;
+    const {circleDiameter, originHeight, originWidth, uri} = imageZoomSource[0];
+    console.log('positionX: ', positionX, 'positionY: ', positionY);
+    const displayDiameter = circleDiameter / scale;
+    const offsetMoveX = (originWidth - displayDiameter) / 2 - positionX;
+    const offsetMoveY = (originHeight - displayDiameter) / 2 - positionY;
+    const cropData = {
+      offset: {
+        x:
+          offsetMoveX < 0
+            ? 0
+            : offsetMoveX > originWidth
+            ? originWidth
+            : offsetMoveX,
+        y:
+          offsetMoveY < 0
+            ? 0
+            : offsetMoveY > originHeight
+            ? originHeight
+            : offsetMoveY,
+      },
+      size: {
+        width: displayDiameter > originWidth ? originWidth : displayDiameter,
+        height: displayDiameter > originHeight ? originHeight : displayDiameter,
+      },
+      displaySize: {
+        width: displayDiameter > originWidth ? originWidth : displayDiameter,
+        height: displayDiameter > originHeight ? originHeight : displayDiameter,
+      },
+      resizeMode: 'cover',
+    };
+    ImageEditor.cropImage(uri as string, cropData as ImageCropData)
+      .then((url) => {
+        croppedImageURL[1](url);
+      })
+      .catch((e) => {
+        console.log('ImageEditor Error: ', e.message);
+      });
+  };
+
   const renderCamera = () => {
     if (isString(imageZoomSource[0]?.uri)) {
       return (
@@ -295,7 +346,8 @@ const Camera = (props: CameraProps) => {
           cropWidth={imageZoomSource[0]?.cropWidth}
           cropHeight={imageZoomSource[0]?.cropHeight}
           imageWidth={imageZoomSource[0]?.imageWidth}
-          imageHeight={imageZoomSource[0]?.imageHeight}>
+          imageHeight={imageZoomSource[0]?.imageHeight}
+          onMove={onMoveImageZoom}>
           <Image
             ref={imageRef}
             style={{
@@ -355,6 +407,15 @@ const Camera = (props: CameraProps) => {
         calculateCameraSize(event.nativeEvent.layout);
       }}
       style={_s.container}>
+      {isString(croppedImageURL[0]) && (
+        <Image
+          style={_s.croppedImagePreview}
+          resizeMode={'cover'}
+          source={{
+            uri: croppedImageURL[0],
+          }}
+        />
+      )}
       <View
         style={[
           _s.facesDetected,
@@ -396,7 +457,7 @@ const _s = StyleSheet.create({
     width: formatWidth(179),
     height: formatWidth(35),
     position: 'absolute',
-    zIndex: 290,
+    zIndex: 3,
     left: formatWidth(114),
     top: formatHeight(17),
     backgroundColor: _c.black,
@@ -416,9 +477,16 @@ const _s = StyleSheet.create({
     position: 'absolute',
     right: formatHeight(12),
     top: formatHeight(17),
-    zIndex: 300,
+    zIndex: 2,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  croppedImagePreview: {
+    position: 'absolute',
+    zIndex: 4,
+    width: 220,
+    height: 220,
+    borderRadius: 110,
   },
   cameraMask: {
     position: 'absolute',
