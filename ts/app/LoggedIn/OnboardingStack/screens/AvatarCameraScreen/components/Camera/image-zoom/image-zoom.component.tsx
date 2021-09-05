@@ -63,7 +63,6 @@ export default class ImageViewer extends React.Component<
     onMoveShouldSetPanResponder: this.props.onMoveShouldSetPanResponder,
 
     onPanResponderGrant: (evt) => {
-      console.log('ImageZoom onPanResponderGrant: ========');
       this.lastPositionX = null;
       this.lastPositionY = null;
       this.zoomLastDistance = null;
@@ -176,14 +175,11 @@ export default class ImageViewer extends React.Component<
       }
     },
     onPanResponderMove: (evt, gestureState) => {
-      console.log('ImageZoom : onPanResponderMove ====== 1');
       if (this.isDoubleClick) {
-        console.log('ImageZoom : onPanResponderMove ====== 2');
         return;
       }
 
       if (evt.nativeEvent.changedTouches.length <= 1) {
-        console.log('ImageZoom : onPanResponderMove ====== 3');
         let diffX = gestureState.dx - (this.lastPositionX || 0);
         if (this.lastPositionX === null) {
           diffX = 0;
@@ -209,57 +205,42 @@ export default class ImageViewer extends React.Component<
         }
 
         if (this.props.panToMove) {
-          console.log('ImageZoom : onPanResponderMove ====== 4');
           if (this.swipeDownOffset === 0) {
             if (Math.abs(diffX) > Math.abs(diffY)) {
               this.isHorizontalWrap = true;
             }
 
-            console.log('ImageZoom : onPanResponderMove ====== 5');
             if (this.horizontalWholeOuterCounter > 0) {
-              console.log('ImageZoom : onPanResponderMove ====== 6');
               if (diffX < 0) {
-                console.log('ImageZoom : onPanResponderMove ====== 7');
                 if (this.horizontalWholeOuterCounter > Math.abs(diffX)) {
-                  console.log('ImageZoom : onPanResponderMove ====== 8');
                   this.horizontalWholeOuterCounter += diffX;
                   diffX = 0;
                 } else {
-                  console.log('ImageZoom : onPanResponderMove ====== 9');
                   diffX += this.horizontalWholeOuterCounter;
                   this.horizontalWholeOuterCounter = 0;
                   if (this.props.horizontalOuterRangeOffset) {
-                    console.log('ImageZoom : onPanResponderMove ====== 9 - 1');
                     this.props.horizontalOuterRangeOffset(0);
                   }
                 }
               } else {
-                console.log('ImageZoom : onPanResponderMove ====== 10');
                 this.horizontalWholeOuterCounter += diffX;
               }
             } else if (this.horizontalWholeOuterCounter < 0) {
-              console.log('ImageZoom : onPanResponderMove ====== 11');
               if (diffX > 0) {
-                console.log('ImageZoom : onPanResponderMove ====== 12');
                 if (Math.abs(this.horizontalWholeOuterCounter) > diffX) {
-                  console.log('ImageZoom : onPanResponderMove ====== 13');
                   this.horizontalWholeOuterCounter += diffX;
                   diffX = 0;
                 } else {
-                  console.log('ImageZoom : onPanResponderMove ====== 14');
                   diffX += this.horizontalWholeOuterCounter;
                   this.horizontalWholeOuterCounter = 0;
                   if (this.props.horizontalOuterRangeOffset) {
-                    console.log('ImageZoom : onPanResponderMove ====== 15');
                     this.props.horizontalOuterRangeOffset(0);
                   }
                 }
               } else {
-                console.log('ImageZoom : onPanResponderMove ====== 16');
                 this.horizontalWholeOuterCounter += diffX;
               }
             } else {
-              console.log('ImageZoom : onPanResponderMove ====== 17');
             }
 
             this.positionX += diffX / this.scale;
@@ -269,44 +250,33 @@ export default class ImageViewer extends React.Component<
             //   2 /
             //   this.scale;
             // if (this.positionX < -horizontalMax) {
-            //   console.log('ImageZoom : onPanResponderMove ====== 18');
             //   this.positionX = -horizontalMax;
             //
             //   this.horizontalWholeOuterCounter += -1 / 1e10;
             // } else if (this.positionX > horizontalMax) {
-            //   console.log('ImageZoom : onPanResponderMove ====== 19');
             //   this.positionX = horizontalMax;
             //
             //   this.horizontalWholeOuterCounter += 1 / 1e10;
             // }
-            console.log('ImageZoom : onPanResponderMove ====== 11 - 1');
             this.animatedPositionX.setValue(this.positionX);
 
             if (this.props.imageWidth * this.scale > this.props.cropWidth) {
             } else {
-              console.log(
-                'ImageZoom : onPanResponderMove ====== 20',
-                this.horizontalWholeOuterCounter,
-              );
               // this.horizontalWholeOuterCounter += diffX;
             }
 
             if (
               this.horizontalWholeOuterCounter > (this.props.maxOverflow || 0)
             ) {
-              console.log('ImageZoom : onPanResponderMove ====== 21');
               this.horizontalWholeOuterCounter = this.props.maxOverflow || 0;
             } else if (
               this.horizontalWholeOuterCounter < -(this.props.maxOverflow || 0)
             ) {
-              console.log('ImageZoom : onPanResponderMove ====== 22');
               this.horizontalWholeOuterCounter = -(this.props.maxOverflow || 0);
             }
 
             if (this.horizontalWholeOuterCounter !== 0) {
-              console.log('ImageZoom : onPanResponderMove ====== 23');
               if (this.props.horizontalOuterRangeOffset) {
-                console.log('ImageZoom : onPanResponderMove ====== 24');
                 this.props.horizontalOuterRangeOffset(
                   this.horizontalWholeOuterCounter,
                 );
@@ -314,18 +284,14 @@ export default class ImageViewer extends React.Component<
             }
           }
 
-          console.log('ImageZoom : onPanResponderMove ====== 25');
           this.positionY += diffY / this.scale;
           this.animatedPositionY.setValue(this.positionY);
           if (this.props.imageHeight * this.scale > this.props.cropHeight) {
           } else {
-            console.log('ImageZoom : onPanResponderMove ====== 26');
             // if (this.props.enableSwipeDown && !this.isHorizontalWrap) {
-            //   console.log('ImageZoom : onPanResponderMove ====== 27');
             //   this.swipeDownOffset += diffY;
             //
             //   if (this.swipeDownOffset > 0) {
-            //     console.log('ImageZoom : onPanResponderMove ====== 28');
             //     this.positionY += diffY / this.scale;
             //     this.animatedPositionY.setValue(this.positionY);
             //
@@ -336,25 +302,20 @@ export default class ImageViewer extends React.Component<
           }
         }
       } else {
-        console.log('ImageZoom : onPanResponderMove ====== 29');
         if (this.longPressTimeout) {
-          console.log('ImageZoom : onPanResponderMove ====== 30');
           clearTimeout(this.longPressTimeout);
         }
 
         if (this.props.pinchToZoom) {
-          console.log('ImageZoom : onPanResponderMove ====== 31');
           let minX: number;
           let maxX: number;
           if (
             evt.nativeEvent.changedTouches[0].locationX >
             evt.nativeEvent.changedTouches[1].locationX
           ) {
-            console.log('ImageZoom : onPanResponderMove ====== 32');
             minX = evt.nativeEvent.changedTouches[1].pageX;
             maxX = evt.nativeEvent.changedTouches[0].pageX;
           } else {
-            console.log('ImageZoom : onPanResponderMove ====== 33');
             minX = evt.nativeEvent.changedTouches[0].pageX;
             maxX = evt.nativeEvent.changedTouches[1].pageX;
           }
@@ -365,11 +326,9 @@ export default class ImageViewer extends React.Component<
             evt.nativeEvent.changedTouches[0].locationY >
             evt.nativeEvent.changedTouches[1].locationY
           ) {
-            console.log('ImageZoom : onPanResponderMove ====== 34');
             minY = evt.nativeEvent.changedTouches[1].pageY;
             maxY = evt.nativeEvent.changedTouches[0].pageY;
           } else {
-            console.log('ImageZoom : onPanResponderMove ====== 35');
             minY = evt.nativeEvent.changedTouches[0].pageY;
             maxY = evt.nativeEvent.changedTouches[1].pageY;
           }
@@ -382,20 +341,16 @@ export default class ImageViewer extends React.Component<
           this.zoomCurrentDistance = Number(diagonalDistance.toFixed(1));
 
           if (this.zoomLastDistance !== null) {
-            console.log('ImageZoom : onPanResponderMove ====== 36');
             const distanceDiff =
               (this.zoomCurrentDistance - this.zoomLastDistance) / 200;
             let zoom = this.scale + distanceDiff;
 
             if (zoom < (this.props.minScale || 0)) {
-              console.log('ImageZoom : onPanResponderMove ====== 37');
               zoom = this.props.minScale || 0;
             }
             if (zoom > (this.props.maxScale || 0)) {
-              console.log('ImageZoom : onPanResponderMove ====== 38');
               zoom = this.props.maxScale || 0;
             }
-            console.log('ImageZoom : onPanResponderMove ====== 39');
             const beforeScale = this.scale;
 
             this.scale = zoom;
@@ -416,7 +371,6 @@ export default class ImageViewer extends React.Component<
     },
 
     onPanResponderRelease: (evt, gestureState) => {
-      console.log('ImageZoom onPanResponderRelease: ========');
       if (this.longPressTimeout) {
         clearTimeout(this.longPressTimeout);
       }
@@ -458,7 +412,6 @@ export default class ImageViewer extends React.Component<
   });
 
   public resetScale = (): void => {
-    console.log('ImageZoom resetScale: ========');
     this.positionX = 0;
     this.positionY = 0;
     this.scale = 1;
@@ -470,14 +423,12 @@ export default class ImageViewer extends React.Component<
   };
 
   public componentDidMount(): void {
-    console.log('ImageZoom componentDidMount: ========');
     if (this.props.centerOn) {
       this.centerOn(this.props.centerOn);
     }
   }
 
   public componentDidUpdate(prevProps: ImageZoomProps): void {
-    console.log('ImageZoom componentDidUpdate: ========');
     // Either centerOn has never been called, or it is a repeat and we should ignore it
     if (
       (this.props.centerOn && !prevProps.centerOn) ||
@@ -490,7 +441,6 @@ export default class ImageViewer extends React.Component<
   }
 
   public imageDidMove(type: string): void {
-    console.log('ImageZoom imageDidMove: ========', type);
     if (this.props.onMove) {
       this.props.onMove({
         type,
@@ -506,7 +456,6 @@ export default class ImageViewer extends React.Component<
     params: {x: number; y: number; scale: number; duration: number},
     paramsNext: {x: number; y: number; scale: number; duration: number},
   ): boolean {
-    console.log('ImageZoom didCenterOnChange: ========');
     return (
       params.x !== paramsNext.x ||
       params.y !== paramsNext.y ||
@@ -515,7 +464,6 @@ export default class ImageViewer extends React.Component<
   }
 
   public centerOn(params: ICenterOn): void {
-    console.log('ImageZoom centerOn: ========');
     this.positionX = params.x;
     this.positionY = params.y;
     this.scale = params.scale;
@@ -542,14 +490,12 @@ export default class ImageViewer extends React.Component<
   }
 
   public handleLayout(event: LayoutChangeEvent): void {
-    console.log('ImageZoom handleLayout: ========');
     if (this.props.layoutChange) {
       this.props.layoutChange(event);
     }
   }
 
   public reset(): void {
-    console.log('ImageZoom reset: ========');
     this.scale = 1;
     this.animatedScale.setValue(this.scale);
     this.positionX = 0;

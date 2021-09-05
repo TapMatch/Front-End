@@ -301,7 +301,6 @@ const Camera = (props: CameraProps) => {
   const onMoveImageZoom = (iOnMove: IOnMove) => {
     const {positionX, positionY, scale} = iOnMove;
     const {circleDiameter, originHeight, originWidth, uri} = imageZoomSource[0];
-    console.log('positionX: ', positionX, 'positionY: ', positionY);
     const displayDiameter = circleDiameter / scale;
     const offsetMoveX = (originWidth - displayDiameter) / 2 - positionX;
     const offsetMoveY = (originHeight - displayDiameter) / 2 - positionY;
