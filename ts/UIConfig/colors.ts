@@ -10,6 +10,7 @@ export const _c = {
   secondaryText: '#707070',
   whiteLight: 'rgba(255,255,255,0.3)',
   grey: 'rgba(0,0,0,0.4)',
+  greySecond: 'rgba(114, 114, 114, 0.6)',
   modalbackground: 'rgba(112, 112, 112, 0.8)',
   yesNoModalbackground: 'rgb(5, 5, 5)',
   noBtnBackground: 'rgba(220, 220, 220, 0.32)',
@@ -17,4 +18,6 @@ export const _c = {
   invisible: 'rgba(0, 0, 0, 0)',
   smoke: 'rgba(255,255,255,0.85)',
   unlockedCommunityBtn: 'rgba(255, 255, 255, 0.4)',
+  secondarylight: '#A7B0C0',
+  orangelight: 'rgba(255, 0, 0, 0.06)',
 };

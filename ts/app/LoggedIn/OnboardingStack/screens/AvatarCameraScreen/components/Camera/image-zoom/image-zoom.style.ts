@@ -20,6 +20,14 @@ const cameraMask: ViewStyle = {
   alignItems: 'center',
 };
 
+const handMask: ViewStyle = {
+  position: 'absolute',
+  zIndex: 1,
+  backgroundColor: '#ff0000',
+  width: 10,
+  height: 10,
+};
+
 const circle: ViewStyle = {
   borderWidth: 1,
   borderColor: _c.white,
@@ -32,4 +40,5 @@ export default {
   container,
   cameraMask,
   circle,
+  handMask,
 };

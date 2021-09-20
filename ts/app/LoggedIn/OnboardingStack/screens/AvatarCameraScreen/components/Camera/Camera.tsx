@@ -1,7 +1,7 @@
-import React, {useContext, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import {_c} from 'ts/UIConfig/colors';
-import {RNCamera} from 'react-native-camera';
+import {FaceDetector, RNCamera} from 'react-native-camera';
 import Shutter from './components/Shutter';
 import RNFS from 'react-native-fs';
 import {useNavigation} from '@react-navigation/native';
@@ -42,6 +42,7 @@ export type ImageZoomSourceType = {
   originWidth: number;
   originHeight: number;
   circleDiameter: number;
+  minScale: number;
   offsetX: number;
   offsetY: number;
 };
@@ -50,12 +51,9 @@ interface CameraProps {
   facesDetected: [boolean, (x: boolean) => void];
   cameraShutterState: [boolean, (x: boolean) => void];
   imageZoomSource: [ImageZoomSourceType, (x: ImageZoomSourceType) => void];
-  faces: any;
-  imageFaces: any;
-  faceRect: FaceRectType | undefined | null;
-  setFaces: (x: any) => void;
-  setImageFaces: (x: any) => void;
-  setFaceRect: (x: FaceRectType) => void;
+  faceRect: [FaceRectType | undefined | null, (x: FaceRectType) => void];
+  faceCircle: [CircleSizeType | undefined | null, (x: CircleSizeType) => void];
+  faceRects: [FaceRectType[], (x: FaceRectType[]) => void];
   resetCamera: () => void;
   resetFaceDetection: () => void;
 }
@@ -69,29 +67,36 @@ type ImageSizeType = {
   originalHeight: number;
 };
 
-type CameraSizeType = {
+export type CameraSizeType = {
   width: number;
   height: number;
   x: number;
   y: number;
 };
 
+export type CircleSizeType = {
+  x: number;
+  y: number;
+  radius: number;
+};
+
 const Camera = (props: CameraProps) => {
   const cameraTypeBool = useState<boolean>(false);
   const cameraSize = useState<CameraSizeType>();
-  const uploadToServerTrigger = useState<boolean>(false);
-  const croppedImageURL = useState<string>('');
+  const faceRectPreview = useState<CameraSizeType>();
   const {navigate} = useNavigation();
   const {
     facesDetected,
     cameraShutterState,
-    setFaceRect,
-    setImageFaces,
+    faceRect,
+    faceRects,
     resetFaceDetection,
     imageZoomSource,
+    faceCircle,
   } = props;
   const txt = useLocalizedTxt();
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const {width: screenWidth, height: screenHeight} = Dimensions.get('window');
 
   const {userToken, userProfile, LoggedIn, user_has_passed_onboarding} =
@@ -101,7 +106,90 @@ const Camera = (props: CameraProps) => {
   let imageRef = useRef<Image | null>(null);
   let cameraWrapperRef = useRef<View | null>(null);
 
+  const imageZoomSourceUri = imageZoomSource[0]?.uri;
+
+  // let faceDetectionInProgress = false;
+  let cameraInProgress = false;
+
+  const processFaces = async (pImageZoomSource: ImageZoomSourceType) => {
+    const {circleDiameter, originHeight, originWidth} = pImageZoomSource;
+
+    const libOptions = {
+      landmarkMode: FaceDetectorLandmarkMode.ALL,
+      contourMode: FaceDetectorContourMode.ALL,
+    };
+
+    try {
+      const libFaces = await FaceDetection.processImage(
+        pImageZoomSource.uri,
+        libOptions,
+      );
+      if (libFaces.length > 0) {
+        const tempFaceRects: FaceRectType[] = [];
+        libFaces.forEach((face) => {
+          const tempFaceRect = {
+            width: face.boundingBox[2] - face.boundingBox[0],
+            height: face.boundingBox[3] - face.boundingBox[1],
+            x: face.boundingBox[0],
+            y: face.boundingBox[1],
+          };
+          tempFaceRects.push(tempFaceRect);
+          isFaceInsideCircle(tempFaceRect, {
+            radius: circleDiameter / 2,
+            x: originWidth / 2,
+            y: originHeight / 2,
+          });
+        });
+        faceRects[1](tempFaceRects);
+        return true;
+      }
+    } catch (e) {
+      console.log('Error: FaceDetection.processImage - ', e.message);
+    }
+
+    try {
+      const cameraFaces = await FaceDetector.detectFacesAsync(
+        pImageZoomSource.uri,
+      );
+      // @ts-ignore
+      if (cameraFaces?.faces && cameraFaces.faces.length > 0) {
+        const tempFaceRects: FaceRectType[] = [];
+        // @ts-ignore
+        cameraFaces.faces.forEach((face) => {
+          const tempFaceRect = {
+            width: face.bounds.size.width,
+            height: face.bounds.size.height,
+            x: face.bounds.origin.x,
+            y: face.bounds.origin.y,
+          };
+          tempFaceRects.push(tempFaceRect);
+          isFaceInsideCircle(tempFaceRect, {
+            radius: circleDiameter / 2,
+            x: originWidth / 2,
+            y: originHeight / 2,
+          });
+        });
+        faceRects[1](tempFaceRects);
+        return true;
+      }
+    } catch (e) {
+      console.log('Error: FaceDetection.processImage - ', e.message);
+    }
+
+    resetFaceDetection();
+  };
+
+  useEffect(() => {
+    if (isString(imageZoomSourceUri)) {
+      processFaces(imageZoomSource[0]);
+    }
+  }, [imageZoomSourceUri]);
+
   const onCapture = async () => {
+    if (cameraInProgress) {
+      return false;
+    }
+    cameraInProgress = true;
     try {
       if (RNCameraRef.current) {
         const {uri, width, height} = await RNCameraRef.current.takePictureAsync(
@@ -113,26 +201,57 @@ const Camera = (props: CameraProps) => {
             orientation: RNCamera.Constants.Orientation.portrait,
           },
         );
-        setImageZoomSource(uri, width, height);
-        facesDetected[1](false);
+        cameraInProgress = false;
         cameraShutterState[1](true);
+        setImageZoomSource(uri, width, height);
       }
     } catch (error) {
       console.log(error);
+      cameraInProgress = false;
       cameraShutterState[1](false);
     }
   };
 
   const onUploadToServer = async () => {
-    postAvatar({
-      userToken: userToken[0],
-      pictureURI: imageZoomSource[0]?.uri,
-      userProfile,
-      LoggedIn,
-      user_has_passed_onboarding,
-    });
-    uploadToServerTrigger[1](true);
-    await navigate(OnBoardingScreens.AllSet);
+    if (
+      facesDetected[0] &&
+      faceCircle[0] &&
+      isString(imageZoomSource[0]?.uri)
+    ) {
+      const cropData = {
+        offset: {
+          x: faceCircle[0]?.x - faceCircle[0]?.radius,
+          y: faceCircle[0]?.y - faceCircle[0]?.radius,
+        },
+        size: {
+          width: faceCircle[0]?.radius * 2,
+          height: faceCircle[0]?.radius * 2,
+        },
+        resizeMode: 'cover',
+      };
+      try {
+        ImageEditor.cropImage(
+          imageZoomSource[0]?.uri,
+          cropData as ImageCropData,
+        )
+          .then((url) => {
+            postAvatar({
+              userToken: userToken[0],
+              pictureURI: url,
+              userProfile,
+              LoggedIn,
+              user_has_passed_onboarding,
+            });
+          })
+          .catch((e) => {
+            console.log('ImageEditor Error: ', e.message);
+          });
+      } catch (e) {
+        console.log('ImageEditor Error: ', e.message);
+      }
+    }
+
+    await navigate(OnBoardingScreens.TagsScreen);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -142,69 +261,71 @@ const Camera = (props: CameraProps) => {
     return `data:image/jpeg;base64,${imageUriBase64}`;
   };
 
+  const isFaceInsideCircle = (
+    cFaceReact: FaceRectType,
+    circle: CircleSizeType,
+  ) => {
+    const distStart1 =
+      (cFaceReact.x - circle.x) * (cFaceReact.x - circle.x) +
+      (cFaceReact.y - circle.y) * (cFaceReact.y - circle.y);
+    const distStart2 =
+      (cFaceReact.x + cFaceReact.width - circle.x) *
+        (cFaceReact.x + cFaceReact.width - circle.x) +
+      (cFaceReact.y - circle.y) * (cFaceReact.y - circle.y);
+    const distEnd1 =
+      (cFaceReact.x + cFaceReact.width - circle.x) *
+        (cFaceReact.x + cFaceReact.width - circle.x) +
+      (cFaceReact.y + cFaceReact.height - circle.y) *
+        (cFaceReact.y + cFaceReact.height - circle.y);
+    const distEnd2 =
+      (cFaceReact.x - circle.x) * (cFaceReact.x - circle.x) +
+      (cFaceReact.y + cFaceReact.height - circle.y) *
+        (cFaceReact.y + cFaceReact.height - circle.y);
+    const distRadius = circle.radius * circle.radius;
+    if (
+      distStart1 <= distRadius &&
+      distStart2 <= distRadius &&
+      distEnd1 <= distRadius &&
+      distEnd2 <= distRadius
+    ) {
+      facesDetected[1](true);
+      faceRect[1](cFaceReact);
+      faceCircle[1](circle);
+      return true;
+    }
+    resetFaceDetection();
+    return false;
+  };
+
   // @ts-ignore
-  const onFacesDetected = () => {
-    // facesDetected[1](true);
-    // setFaces(faces);
+  const onFacesDetected = ({faces}) => {
+    if (isString(imageZoomSource[0].uri)) {
+      return false;
+    }
+    // @ts-ignore
+    const {width: cameraWidth, height: cameraHeight} = cameraSize[0];
+    resetFaceDetection();
+    if (faces && faces.length > 0) {
+      faces.forEach((face: any) => {
+        isFaceInsideCircle(
+          {
+            width: face.bounds.size.width,
+            height: face.bounds.size.height,
+            x: face.bounds.origin.x,
+            y: face.bounds.origin.y,
+          },
+          {
+            radius: (cameraWidth * CircleRatio) / 2,
+            x: cameraWidth / 2,
+            y: cameraHeight / 2,
+          },
+        );
+      });
+    }
   };
 
   const onFaceDetectionError = () => {
-    // resetCamera();
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onBackRecapture = () => {
     resetFaceDetection();
-  };
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onSwitchCameraType = () => {
-    cameraTypeBool[1](!cameraTypeBool[0]);
-    resetFaceDetection();
-  };
-
-  const calculateFaceRectInsideImage = (
-    boundingBox: BoundingBoxType,
-    imageSize: ImageSizeType,
-  ) => {
-    imageRef.current?.measure((width, height, px, py, fx, fy) => {
-      const imageRatio = imageSize.originalHeight / imageSize.originalWidth;
-      const screenRatio = (screenHeight - fy) / screenWidth;
-      if (screenRatio - imageRatio >= 0) {
-        imageSize.height = screenHeight - fy;
-        imageSize.width = imageSize.height / imageRatio;
-        const hRatio = imageSize.originalHeight / imageSize.height;
-        const faceX =
-          boundingBox[0] / hRatio - (imageSize.width - screenWidth) / 2;
-        const faceY = boundingBox[1] / hRatio;
-        const faceWidth = (boundingBox[2] - boundingBox[0]) / hRatio;
-        const faceHeight = (boundingBox[3] - boundingBox[1]) / hRatio;
-        setFaceRect({
-          x: faceX,
-          y: faceY,
-          width: Math.ceil(faceWidth),
-          height: Math.ceil(faceHeight),
-        });
-      } else {
-        imageSize.width = screenWidth;
-        imageSize.height = imageSize.width * imageRatio;
-        const wRatio = imageSize.originalWidth / imageSize.width;
-
-        const faceX = boundingBox[0] / wRatio;
-        const faceY =
-          boundingBox[1] / wRatio -
-          (imageSize.height - (screenHeight - fy)) / 2;
-
-        const faceWidth = (boundingBox[2] - boundingBox[0]) / wRatio;
-        const faceHeight = (boundingBox[3] - boundingBox[1]) / wRatio;
-        setFaceRect({
-          x: faceX,
-          y: faceY,
-          width: Math.ceil(faceWidth),
-          height: Math.ceil(faceHeight),
-        });
-      }
-    });
   };
 
   const setImageZoomSource = (
@@ -225,6 +346,10 @@ const Camera = (props: CameraProps) => {
           originWidth: imageWidth,
           originHeight: imageHeight,
           circleDiameter: (imageHeight * CircleRatio) / screenRatio,
+          minScale:
+            Math.ceil(
+              (cameraSize[0].width * CircleRatio * 100) / cameraSize[0].height,
+            ) / 100,
           offsetX: (imageWidth - imageHeight / screenRatio) / 2,
           offsetY: 0,
         });
@@ -238,29 +363,11 @@ const Camera = (props: CameraProps) => {
           originWidth: imageWidth,
           originHeight: imageHeight,
           circleDiameter: imageWidth * CircleRatio,
+          minScale: CircleRatio,
           offsetX: 0,
           offsetY: (imageHeight - imageWidth * screenRatio) / 2,
         });
       }
-    }
-  };
-
-  const processFaces = async (imagePath: string) => {
-    const options = {
-      landmarkMode: FaceDetectorLandmarkMode.ALL,
-      contourMode: FaceDetectorContourMode.ALL,
-    };
-
-    try {
-      const faces = await FaceDetection.processImage(imagePath, options);
-      if (faces.length > 0) {
-        facesDetected[1](true);
-      } else {
-        facesDetected[1](false);
-      }
-    } catch (e) {
-      facesDetected[1](false);
-      console.log('Face detection error:', e.message);
     }
   };
 
@@ -274,18 +381,17 @@ const Camera = (props: CameraProps) => {
           if (response.didCancel) {
             return;
           }
-
+          resetFaceDetection();
           // @ts-ignore
           const {uri} = response.assets[0];
           Image.getSize(
             uri as string,
             async (imageWidth, imageHeight) => {
-              setImageZoomSource(uri as string, imageWidth, imageHeight);
-              facesDetected[1](false);
               cameraShutterState[1](true);
+              setImageZoomSource(uri as string, imageWidth, imageHeight);
             },
             (error) => {
-              console.log('Error:', error.message);
+              console.log('Error: Image.getSize- ', error.message);
             },
           );
         },
@@ -293,118 +399,49 @@ const Camera = (props: CameraProps) => {
     } catch (err) {}
   };
 
+  // console.log('faceRects: ==============', faceRects[0]);
+
   const onMoveImageZoom = (iOnMove: IOnMove) => {
+    // console.log('IOnMove: =====', iOnMove);
     const {positionX, positionY, scale} = iOnMove;
-    const {circleDiameter, originHeight, originWidth, uri} = imageZoomSource[0];
-    const displayDiameter = (circleDiameter * 0.65) / scale;
-    const startX = (originWidth - displayDiameter) / 2;
-    const startY = (originHeight - displayDiameter) / 2;
-    const offsetMoveX = startX - positionX;
-    const offsetMoveY = startY - positionY;
-    const endX = originWidth - startX;
-    const endY = originHeight - startY;
-    let diffOffsetX = 0;
-    if (offsetMoveX + displayDiameter > originWidth) {
-      diffOffsetX = offsetMoveX + displayDiameter - originWidth;
-    } else if (offsetMoveX < 0) {
-      diffOffsetX = -offsetMoveX;
-    }
-    const cropSizeWidth =
-      (displayDiameter > originWidth ? originWidth : displayDiameter) -
-      diffOffsetX;
-
-    let diffOffsetY = 0;
-    if (offsetMoveY + displayDiameter > originHeight) {
-      diffOffsetY = offsetMoveY + displayDiameter - originHeight;
-    } else if (offsetMoveY < 0) {
-      diffOffsetY = -offsetMoveY;
-    }
-
-    const cropSizeHeight =
-      (displayDiameter > originHeight ? originHeight : displayDiameter) -
-      diffOffsetY;
-
-    if (
-      offsetMoveX + originWidth * 0.2 > endX ||
-      offsetMoveY + originHeight * 0.2 > endY
-    ) {
-      croppedImageURL[1]('');
-      facesDetected[1](false);
-      return false;
-    }
-    const minSize = Math.min(cropSizeWidth, cropSizeHeight);
-    const cropData = {
-      offset: {
-        x:
-          offsetMoveX < originWidth * 0.2
-            ? originWidth * 0.1
-            : offsetMoveX > endX
-            ? endX
-            : offsetMoveX,
-        y:
-          offsetMoveY < originHeight * 0.2
-            ? originHeight * 0.1
-            : offsetMoveY > endY
-            ? endY
-            : offsetMoveY,
-      },
-      size: {
-        width: minSize,
-        height: minSize,
-      },
-      displaySize: {
-        width: minSize,
-        height: minSize,
-      },
-      resizeMode: 'cover',
-    };
-    try {
-      ImageEditor.cropImage(uri as string, cropData as ImageCropData)
-        .then((url) => {
-          croppedImageURL[1](url);
-          processFaces(url);
-        })
-        .catch((e) => {
-          croppedImageURL[1]('');
-          facesDetected[1](false);
-          console.log('ImageEditor Error: ', e.message);
-        });
-    } catch (e) {
-      croppedImageURL[1]('');
-      facesDetected[1](false);
-      console.log('ImageEditor Error: ', e.message);
-    }
+    const {circleDiameter, originHeight, originWidth} = imageZoomSource[0];
+    faceRects[0].forEach((tempFaceRect) => {
+      isFaceInsideCircle(tempFaceRect, {
+        radius: circleDiameter / (2 * scale),
+        x: originWidth / 2 - positionX,
+        y: originHeight / 2 - positionY,
+      });
+      // calculateFaceRectInsideImage(
+      //   {
+      //     width: tempFaceRect.width * scale,
+      //     height: tempFaceRect.height * scale,
+      //     x: tempFaceRect.x + positionX,
+      //     y: tempFaceRect.y + positionY,
+      //   },
+      //   imageZoomSource[0],
+      // );
+    });
   };
 
-  // const setCroppedImageURL = (iOnMove: IOnMove) => {
-  //
-  //   ImageEditor.cropImage(uri as string, cropData as ImageCropData)
-  //       .then((url) => {
-  //         croppedImageURL[1](url);
-  //       })
-  //       .catch((e) => {
-  //         console.log('ImageEditor Error: ', e.message);
-  //       });
-  // }
-
   const renderCamera = () => {
-    if (isString(imageZoomSource[0]?.uri)) {
+    if (isString(imageZoomSource[0].uri)) {
       return (
         <ImageZoom
-          cropWidth={imageZoomSource[0]?.cropWidth}
-          cropHeight={imageZoomSource[0]?.cropHeight}
-          imageWidth={imageZoomSource[0]?.imageWidth}
-          imageHeight={imageZoomSource[0]?.imageHeight}
+          minScale={imageZoomSource[0].minScale}
+          cropWidth={imageZoomSource[0].cropWidth}
+          cropHeight={imageZoomSource[0].cropHeight}
+          imageWidth={imageZoomSource[0].imageWidth}
+          imageHeight={imageZoomSource[0].imageHeight}
           onMove={onMoveImageZoom}>
           <Image
             ref={imageRef}
             style={{
-              width: imageZoomSource[0]?.imageWidth,
-              height: imageZoomSource[0]?.imageHeight,
+              width: imageZoomSource[0].imageWidth,
+              height: imageZoomSource[0].imageHeight,
             }}
             resizeMode={'cover'}
             source={{
-              uri: imageZoomSource[0]?.uri,
+              uri: imageZoomSource[0].uri,
             }}
           />
         </ImageZoom>
@@ -416,6 +453,7 @@ const Camera = (props: CameraProps) => {
           ref={RNCameraRef}
           style={[_s.camera]}
           type={RNCamera.Constants.Type[cameraTypeBool[0] ? 'back' : 'front']}
+          // type={RNCamera.Constants.Type.front}
           captureAudio={false} // no permissions added for this in recat-native-camera package setup
           flashMode={RNCamera.Constants.FlashMode.off}
           faceDetectionMode={RNCamera.Constants.FaceDetection?.Mode?.accurate}
@@ -448,6 +486,45 @@ const Camera = (props: CameraProps) => {
     cameraSize[1](layout);
   };
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const calculateFaceRectInsideImage = (
+    faceRect: FaceRectType,
+    imageSize: ImageZoomSourceType,
+  ) => {
+    const imageRatio = imageSize.originHeight / imageSize.originWidth;
+    const screenRatio = imageSize.cropHeight / imageSize.cropWidth;
+    if (screenRatio - imageRatio >= 0) {
+      const hRatio = imageSize.originHeight / imageSize.imageHeight;
+      const faceX =
+        faceRect.x / hRatio - (imageSize.imageWidth - imageSize.cropWidth) / 2;
+      const faceY = faceRect.y / hRatio;
+      const faceWidth = faceRect.width / hRatio;
+      const faceHeight = faceRect.height / hRatio;
+      faceRectPreview[1]({
+        x: faceX,
+        y: faceY,
+        width: Math.ceil(faceWidth),
+        height: Math.ceil(faceHeight),
+      });
+    } else {
+      const wRatio = imageSize.originWidth / imageSize.imageWidth;
+
+      const faceX = faceRect.x / wRatio;
+      const faceY =
+        faceRect.y / wRatio -
+        (imageSize.imageHeight - imageSize.cropHeight) / 2;
+
+      const faceWidth = faceRect.width / wRatio;
+      const faceHeight = faceRect.height / wRatio;
+      faceRectPreview[1]({
+        x: faceX,
+        y: faceY,
+        width: Math.ceil(faceWidth),
+        height: Math.ceil(faceHeight),
+      });
+    }
+  };
+
   return (
     <View
       ref={cameraWrapperRef}
@@ -455,6 +532,22 @@ const Camera = (props: CameraProps) => {
         calculateCameraSize(event.nativeEvent.layout);
       }}
       style={_s.container}>
+      {/*<View*/}
+      {/*  style={[*/}
+      {/*    _s.faceRectPreview,*/}
+      {/*    {*/}
+      {/*      left: faceRectPreview[0]?.x,*/}
+      {/*      top: faceRectPreview[0]?.y,*/}
+      {/*      width: faceRectPreview[0]?.width,*/}
+      {/*      height: faceRectPreview[0]?.height,*/}
+      {/*    },*/}
+      {/*  ]}*/}
+      {/*/>*/}
+      {!cameraShutterState[0] && (
+        <View style={_s.cameraMask}>
+          <View style={_s.circle} />
+        </View>
+      )}
       {/*{isString(croppedImageURL[0]) && (*/}
       {/*  <Image*/}
       {/*    style={_s.croppedImagePreview}*/}
@@ -464,13 +557,17 @@ const Camera = (props: CameraProps) => {
       {/*    }}*/}
       {/*  />*/}
       {/*)}*/}
-      <View
-        style={[
-          _s.facesDetected,
-          facesDetected[0] ? _s.greenBackground : _s.redBackground,
-        ]}>
-        <Text style={_s.facesDetectedTxt}>
-          {facesDetected[0] ? txt.faceDetected : txt.faceNotDetected}
+      <View style={[_s.facesDetected]}>
+        <Text
+          style={[
+            _s.facesDetectedTxt,
+            facesDetected[0] ? _s.greenBackground : _s.greyBackground,
+          ]}>
+          {facesDetected[0]
+            ? txt.faceDetected
+            : cameraShutterState[0]
+            ? txt.faceNotDetected
+            : txt.makeSureYourFaceIsVisible}
         </Text>
       </View>
       {renderCamera()}
@@ -488,7 +585,8 @@ const Camera = (props: CameraProps) => {
 
 export default Camera;
 
-const circleRadius = Dimensions.get('screen').width * 0.65;
+const screenWidth = Dimensions.get('screen').width;
+const circleRadius = screenWidth * CircleRatio;
 const _s = StyleSheet.create({
   container: {
     flex: 1,
@@ -499,27 +597,33 @@ const _s = StyleSheet.create({
     overflow: 'hidden',
   },
   facesDetected: {
-    borderRadius: formatWidth(9),
     justifyContent: 'center',
     alignItems: 'center',
-    width: formatWidth(179),
-    height: formatWidth(35),
     position: 'absolute',
     zIndex: 3,
-    left: formatWidth(114),
+    width: screenWidth,
     top: formatHeight(17),
-    backgroundColor: _c.black,
   },
   redBackground: {
     backgroundColor: _c.redDark,
+  },
+  greyBackground: {
+    backgroundColor: _c.greySecond,
   },
   greenBackground: {
     backgroundColor: _c.greenDark,
   },
   facesDetectedTxt: {
+    textAlign: 'center',
     color: _c.white,
     fontFamily: _f.regular,
     fontSize: _fs.m,
+    borderRadius: formatWidth(9),
+    paddingTop: formatHeight(8),
+    paddingBottom: formatHeight(8),
+    paddingLeft: formatWidth(18),
+    paddingRight: formatWidth(18),
+    minWidth: formatWidth(179),
   },
   switchBtn: {
     position: 'absolute',
@@ -536,6 +640,13 @@ const _s = StyleSheet.create({
     height: 220,
     borderRadius: 110,
   },
+  faceMask: {
+    position: 'absolute',
+    zIndex: 1,
+    backgroundColor: '#ff0000',
+    width: 10,
+    height: 10,
+  },
   cameraMask: {
     position: 'absolute',
     zIndex: 1,
@@ -551,5 +662,11 @@ const _s = StyleSheet.create({
     borderRadius: circleRadius / 2,
     width: circleRadius,
     height: circleRadius,
+  },
+  faceRectPreview: {
+    position: 'absolute',
+    zIndex: 1,
+    borderWidth: 1,
+    borderColor: _c.white,
   },
 });

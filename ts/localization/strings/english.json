@@ -54,8 +54,15 @@
     "takeQuickPicture": "Take a quick picture",
     "youCanRetakeThisAnytime": "You can re-take this anytime!",
     "faceDetected": "Face Detected",
-    "faceNotDetected": "Face not Detected",
+    "faceNotDetected": "No face detected, please try again",
+    "makeSureYourFaceIsVisible": "Make sure your face is visible",
     "next": "Next",
     "skip": "Skip",
-    "continue": "Continue"
+    "continue": "Continue",
+    "chooseYourTags": "choose your tags",
+    "willReceiveNotification": "You will receive a notification when an \n event with one of your tags is created",
+    "enableContacts": "3. Enable Contacts",
+    "allowAccessToContacts": "To continue please allow access to your contacts. \nYou will not enjoy the full experience without it.",
+    "tappers": "Tappers",
+    "chats": "Chats"
 }

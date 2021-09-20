@@ -6,7 +6,7 @@ import {
   StyleSheet,
   View,
 } from 'react-native';
-import styles from './image-zoom.style';
+import styles, {CircleRatio} from './image-zoom.style';
 import {ICenterOn, ImageZoomProps, ImageZoomState} from './image-zoom.type';
 
 export default class ImageViewer extends React.Component<
@@ -19,6 +19,10 @@ export default class ImageViewer extends React.Component<
   private lastPositionX: number | null = null;
   private positionX = 0;
   private animatedPositionX = new Animated.Value(0);
+  private hand1X = 0;
+  private hand1Y = 0;
+  private hand2X = 0;
+  private hand2Y = 0;
 
   private lastPositionY: number | null = null;
   private positionY = 0;
@@ -210,59 +214,84 @@ export default class ImageViewer extends React.Component<
               this.isHorizontalWrap = true;
             }
 
-            if (this.horizontalWholeOuterCounter > 0) {
-              if (diffX < 0) {
-                if (this.horizontalWholeOuterCounter > Math.abs(diffX)) {
-                  this.horizontalWholeOuterCounter += diffX;
-                  diffX = 0;
-                } else {
-                  diffX += this.horizontalWholeOuterCounter;
-                  this.horizontalWholeOuterCounter = 0;
-                  if (this.props.horizontalOuterRangeOffset) {
-                    this.props.horizontalOuterRangeOffset(0);
+            // diffX> 0 means that the hand slides to the right, the picture moves to the left, and vice versa
+            // horizontalWholeOuterCounter> 0 means the overflow is on the left, otherwise on the right, the larger the absolute value, the more overflow
+            if (
+              this.props.imageWidth * this.scale >=
+              this.props.cropWidth * CircleRatio
+            ) {
+              // If the width of the picture is large, the width of the picture box can be dragged horizontally
+              // There is no overflow offset or the offset is completely retracted this time before dragging
+              if (this.horizontalWholeOuterCounter > 0) {
+                // overflow on the right
+                if (diffX < 0) {
+                  // tighten from the right
+                  if (this.horizontalWholeOuterCounter > Math.abs(diffX)) {
+                    // The offset has not been used up
+                    this.horizontalWholeOuterCounter += diffX;
+                    diffX = 0;
+                  } else {
+                    // Set the overflow amount to 0, the offset minus the remaining overflow amount, and can be dragged
+                    diffX += this.horizontalWholeOuterCounter;
+                    this.horizontalWholeOuterCounter = 0;
+                    if (this.props.horizontalOuterRangeOffset) {
+                      this.props.horizontalOuterRangeOffset(0);
+                    }
                   }
+                } else {
+                  // Amplify to the right
+                  this.horizontalWholeOuterCounter += diffX;
+                }
+              } else if (this.horizontalWholeOuterCounter < 0) {
+                // overflow on the left
+                if (diffX > 0) {
+                  // tighten from the left
+                  if (Math.abs(this.horizontalWholeOuterCounter) > diffX) {
+                    // The offset has not been used up
+                    this.horizontalWholeOuterCounter += diffX;
+                    diffX = 0;
+                  } else {
+                    // The offset has not been used up
+                    diffX += this.horizontalWholeOuterCounter;
+                    this.horizontalWholeOuterCounter = 0;
+                    if (this.props.horizontalOuterRangeOffset) {
+                      this.props.horizontalOuterRangeOffset(0);
+                    }
+                  }
+                } else {
+                  // Amplify to the left
+                  this.horizontalWholeOuterCounter += diffX;
                 }
               } else {
-                this.horizontalWholeOuterCounter += diffX;
+                // Overflow offset is 0, normal movement
               }
-            } else if (this.horizontalWholeOuterCounter < 0) {
-              if (diffX > 0) {
-                if (Math.abs(this.horizontalWholeOuterCounter) > diffX) {
-                  this.horizontalWholeOuterCounter += diffX;
-                  diffX = 0;
-                } else {
-                  diffX += this.horizontalWholeOuterCounter;
-                  this.horizontalWholeOuterCounter = 0;
-                  if (this.props.horizontalOuterRangeOffset) {
-                    this.props.horizontalOuterRangeOffset(0);
-                  }
-                }
-              } else {
-                this.horizontalWholeOuterCounter += diffX;
+
+              // produce displacement
+              this.positionX += diffX / this.scale;
+
+              // But there can be no black borders horizontally
+              // Absolute value that can be tolerated horizontally
+              const horizontalMax =
+                (this.props.imageWidth * this.scale -
+                  this.props.cropWidth * CircleRatio) /
+                2 /
+                this.scale;
+              if (this.positionX < -horizontalMax) {
+                // Beyond the critical point on the left, it continues to move to the left
+                this.positionX = -horizontalMax;
+
+                // Let it produce a slight displacement and deviate from the track
+                this.horizontalWholeOuterCounter += -1 / 1e10;
+              } else if (this.positionX > horizontalMax) {
+                // Exceed the critical point on the right, and continue to move to the right
+                this.positionX = horizontalMax;
+
+                // Let it produce a slight displacement and deviate from the track
+                this.horizontalWholeOuterCounter += 1 / 1e10;
               }
+              this.animatedPositionX.setValue(this.positionX);
             } else {
-            }
-
-            this.positionX += diffX / this.scale;
-
-            // const horizontalMax =
-            //   (this.props.imageWidth * this.scale - this.props.cropWidth) /
-            //   2 /
-            //   this.scale;
-            // if (this.positionX < -horizontalMax) {
-            //   this.positionX = -horizontalMax;
-            //
-            //   this.horizontalWholeOuterCounter += -1 / 1e10;
-            // } else if (this.positionX > horizontalMax) {
-            //   this.positionX = horizontalMax;
-            //
-            //   this.horizontalWholeOuterCounter += 1 / 1e10;
-            // }
-            this.animatedPositionX.setValue(this.positionX);
-
-            if (this.props.imageWidth * this.scale > this.props.cropWidth) {
-            } else {
-              // this.horizontalWholeOuterCounter += diffX;
+              this.horizontalWholeOuterCounter += diffX;
             }
 
             if (
@@ -284,21 +313,58 @@ export default class ImageViewer extends React.Component<
             }
           }
 
-          this.positionY += diffY / this.scale;
-          this.animatedPositionY.setValue(this.positionY);
-          if (this.props.imageHeight * this.scale > this.props.cropHeight) {
-          } else {
-            // if (this.props.enableSwipeDown && !this.isHorizontalWrap) {
-            //   this.swipeDownOffset += diffY;
-            //
-            //   if (this.swipeDownOffset > 0) {
-            //     this.positionY += diffY / this.scale;
-            //     this.animatedPositionY.setValue(this.positionY);
-            //
-            //     this.scale = this.scale - diffY / 1000;
-            //     this.animatedScale.setValue(this.scale);
+          if (
+            this.props.imageHeight * this.scale >=
+            this.props.cropWidth * CircleRatio
+          ) {
+            this.positionY += diffY / this.scale;
+            const verticalMax =
+              (this.props.imageHeight * this.scale -
+                this.props.cropWidth * CircleRatio) /
+              2 /
+              this.scale;
+            if (this.positionY < -verticalMax) {
+              this.positionY = -verticalMax;
+            } else if (this.positionY > verticalMax) {
+              this.positionY = verticalMax;
+            }
+            this.animatedPositionY.setValue(this.positionY);
+
+            // If the top edge of the picture is separated from the top edge of the screen, enter the swipeDown action
+            // if (
+            //   (this.props.imageHeight / 2 - this.positionY) * this.scale <
+            //   this.props.cropHeight / 2
+            // ) {
+            //   if (this.props.enableSwipeDown) {
+            //     this.swipeDownOffset += diffY
+
+            //     // As long as the sliding overflow is not less than 0, you can drag
+            //     if (this.swipeDownOffset > 0) {
+            //       this.positionY += diffY / this.scale
+            //       this.animatedPositionY.setValue(this.positionY)
+
+            //       // The further down, the smaller the zoom
+            //       this.scale = this.scale - diffY / 1000
+            //       this.animatedScale.setValue(this.scale)
+            //     }
             //   }
             // }
+          } else {
+            // swipeDown is not allowed to trigger when there is already a horizontal offset
+            if (this.props.enableSwipeDown && !this.isHorizontalWrap) {
+              // The height of the picture is smaller than the height of the box, it can only be dragged down, and it must be a swipeDown action
+              this.swipeDownOffset += diffY;
+
+              // As long as the sliding overflow is not less than 0, you can drag
+              if (this.swipeDownOffset > 0) {
+                this.positionY += diffY / this.scale;
+                this.animatedPositionY.setValue(this.positionY);
+
+                // The further down, the smaller the zoom
+                this.scale = this.scale - diffY / 1000;
+                this.animatedScale.setValue(this.scale);
+              }
+            }
           }
         }
       } else {
@@ -333,6 +399,11 @@ export default class ImageViewer extends React.Component<
             maxY = evt.nativeEvent.changedTouches[1].pageY;
           }
 
+          // this.hand1X = evt.nativeEvent.changedTouches[0].pageX;
+          // this.hand1Y = evt.nativeEvent.changedTouches[0].pageY;
+          // this.hand2X = evt.nativeEvent.changedTouches[1].pageX;
+          // this.hand2Y = evt.nativeEvent.changedTouches[1].pageY;
+
           const widthDistance = maxX - minX;
           const heightDistance = maxY - minY;
           const diagonalDistance = Math.sqrt(
@@ -360,8 +431,8 @@ export default class ImageViewer extends React.Component<
 
             this.positionX -= (this.centerDiffX * diffScale) / this.scale;
             this.positionY -= (this.centerDiffY * diffScale) / this.scale;
-            this.animatedPositionX.setValue(this.positionX);
-            this.animatedPositionY.setValue(this.positionY);
+            // this.animatedPositionX.setValue(this.positionX);
+            // this.animatedPositionY.setValue(this.positionY);
           }
           this.zoomLastDistance = this.zoomCurrentDistance;
         }
@@ -533,6 +604,24 @@ export default class ImageViewer extends React.Component<
         <View style={styles.cameraMask}>
           <View style={styles.circle} />
         </View>
+        {/*<View*/}
+        {/*  style={[*/}
+        {/*    styles.handMask,*/}
+        {/*    {*/}
+        {/*      top: this.hand1Y,*/}
+        {/*      left: this.hand1X,*/}
+        {/*    },*/}
+        {/*  ]}*/}
+        {/*/>*/}
+        {/*<View*/}
+        {/*  style={[*/}
+        {/*    styles.handMask,*/}
+        {/*    {*/}
+        {/*      top: this.hand2Y,*/}
+        {/*      left: this.hand2X,*/}
+        {/*    },*/}
+        {/*  ]}*/}
+        {/*/>*/}
         <Animated.View
           style={animateConf}
           renderToHardwareTextureAndroid={this.props.useHardwareTextureAndroid}>

@@ -1,8 +1,16 @@
 import React, {Fragment, useContext, useEffect, useRef, useState} from 'react';
-import {View, StyleSheet, StatusBar, AppState} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  StatusBar,
+  AppState,
+  Platform,
+  TouchableOpacity,
+} from 'react-native';
 import {LatLng} from 'react-native-maps';
 import {_c} from 'ts/UIConfig/colors';
-import {useIsFocused} from '@react-navigation/native';
+import {useIsFocused, useNavigation} from '@react-navigation/native';
+import {PERMISSIONS, check, request} from 'react-native-permissions';
 import {TapMatchContext} from 'ts/app/contexts/TapMatchContext';
 import StdHeader from './components/StdHeader/StdHeader';
 import UpcomingEvents from './components/UpcomingEvents/UpcomingEvents';
@@ -24,6 +32,8 @@ import DeepLinkHandler from '../../components/DeepLinkHandler';
 import cities from 'ts/constants/cities';
 import {getUserProfile} from 'ts/app/common/api/getUserProfile';
 import NotificationHandler from '../../components/NotificationHandler';
+import {formatWidth} from 'ts/utils/format-size';
+import PaperPlanRight from 'assets/svg/paper-plane-right.svg';
 
 interface HomeScreenProps {
   navigation: any;
@@ -34,6 +44,12 @@ const HomeScreen = (props: HomeScreenProps) => {
   const {navigation, route} = props;
   let _mapRef = useRef<any>(null);
   const set_mapRef = (x: any) => (_mapRef = x);
+  const {navigate} = useNavigation();
+
+  const ContactPermission =
+    Platform.OS === 'ios'
+      ? PERMISSIONS.IOS.CONTACTS
+      : PERMISSIONS.ANDROID.READ_CONTACTS;
 
   const {
     userLocation,
@@ -66,6 +82,23 @@ const HomeScreen = (props: HomeScreenProps) => {
   const mapCoordinates = useState<LatLng>(startingPoint);
   const hasJoinedCurrentSelectedEvent = useState<boolean>(false);
   const currentUserIsOrganizer = useState<boolean>(false);
+
+  const getContactPermission = () => {
+    request(ContactPermission, {
+      title: 'Contacts',
+      message:
+        'TapMatch would like access to your contacts so you can see your friends',
+      buttonPositive: 'confim',
+      buttonNegative: 'cancel',
+    }).then((x) => {
+      console.log(x);
+    });
+  };
+
+  // useEffect(() => {
+  //   AppState.addEventListener('change', getContactPermission);
+  //   return () => AppState.removeEventListener('change', getContactPermission);
+  // }, []);
 
   useEffect(() => {
     hasJoinedCurrentSelectedEvent[1](defindeHasJoinedCurrentEvent());
@@ -322,6 +355,10 @@ const HomeScreen = (props: HomeScreenProps) => {
     }
   };
 
+  const handleOpenChat = () => {
+    navigate('ChatHistoryScreen');
+  };
+
   if (isFocused) {
     return (
       <HomeScreenContext.Provider
@@ -363,6 +400,9 @@ const HomeScreen = (props: HomeScreenProps) => {
             eventDetailsModalVisible={eventDetailsModalVisible}
             route={route}
           />
+          <TouchableOpacity onPress={handleOpenChat} style={_s.chatBtn}>
+            <PaperPlanRight style={_s.paperPlanRight} />
+          </TouchableOpacity>
         </View>
       </HomeScreenContext.Provider>
     );
@@ -391,5 +431,22 @@ const _s = StyleSheet.create({
     width: '100%',
     justifyContent: 'center',
     alignItems: 'flex-start',
+  },
+
+  chatBtn: {
+    position: 'absolute',
+    backgroundColor: _c.white,
+    zIndex: 100,
+    height: formatWidth(60),
+    width: formatWidth(60),
+    borderRadius: formatWidth(30),
+    bottom: formatWidth(28),
+    right: formatWidth(27),
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  paperPlanRight: {
+    height: formatWidth(32),
+    width: formatWidth(32),
   },
 });

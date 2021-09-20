@@ -34,6 +34,9 @@ const OTPInput = ({OTP, ReSendCodeDisabled}: OTPInputProps) => {
         userProfile,
         userToken,
       });
+      auth()
+          .signOut()
+          .then(() => console.log('User signed out!'));
     }
   };
 

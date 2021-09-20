@@ -6,6 +6,7 @@ import Subtitle from './components/Subtitle';
 import Camera, {
   FaceRectType,
   ImageZoomSourceType,
+  CircleSizeType,
 } from './components/Camera/Camera';
 import {useIsFocused} from '@react-navigation/native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
@@ -25,11 +26,9 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
   const {bottom} = useSafeAreaInsets();
   const facesDetected = useState<boolean>(false);
   const cameraShutterState = useState<boolean>(false);
-  const [faces, setFaces] = useState<any>([]);
-  const [imageFaces, setImageFaces] = useState<any>([]);
-  const [faceRect, setFaceRect] = useState<FaceRectType | undefined | null>(
-    null,
-  );
+  const faceRects = useState<FaceRectType[]>([]);
+  const faceRect = useState<FaceRectType | undefined | null>();
+  const faceCircle = useState<CircleSizeType | undefined | null>();
   const imageZoomSource = useState<ImageZoomSourceType>({
     imageWidth: 0,
     imageHeight: 0,
@@ -39,20 +38,22 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
     originHeight: 0,
     uri: '',
     circleDiameter: 0,
+    minScale: 0.6,
     offsetX: 0,
     offsetY: 0,
   });
 
   const resetFaceDetection = () => {
     facesDetected[1](false);
-    cameraShutterState[1](false);
-    setFaces([]);
-    setImageFaces([]);
-    setFaceRect(null);
+    faceRect[1](null);
+    faceCircle[1](null);
   };
 
   const resetCamera = () => {
+    console.log('Reset camera: ======= ');
     resetFaceDetection();
+    faceRects[1]([]);
+    cameraShutterState[1](false);
     imageZoomSource[1]({
       imageWidth: 0,
       imageHeight: 0,
@@ -62,17 +63,14 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
       originHeight: 0,
       uri: '',
       circleDiameter: 0,
+      minScale: 0.6,
       offsetX: 0,
       offsetY: 0,
     });
   };
 
   const onPressBack = () => {
-    if (
-      facesDetected &&
-      isString(imageZoomSource[0]?.uri) &&
-      cameraShutterState
-    ) {
+    if (isString(imageZoomSource[0]?.uri) && cameraShutterState[0]) {
       resetCamera();
     } else {
       navigation.goBack();
@@ -80,7 +78,7 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
   };
 
   return (
-    <View style={[_s.container, {paddingBottom: bottom}]}>
+    <View style={[_s.container, {paddingBottom: 0}]}>
       <View style={_s.top}>
         <TouchableOpacity style={_s.back} onPress={onPressBack}>
           <ChevronLeftBlack height={iconSize} width={iconSize} />
@@ -94,11 +92,8 @@ const AvatarCameraScreen = ({navigation}: AvatarCameraScreenProps) => {
           imageZoomSource={imageZoomSource}
           cameraShutterState={cameraShutterState}
           faceRect={faceRect}
-          setFaceRect={setFaceRect}
-          faces={faces}
-          setFaces={setFaces}
-          setImageFaces={setImageFaces}
-          imageFaces={imageFaces}
+          faceCircle={faceCircle}
+          faceRects={faceRects}
           resetCamera={resetCamera}
           resetFaceDetection={resetFaceDetection}
         />

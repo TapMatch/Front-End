@@ -11,14 +11,14 @@ import {MainStackContext} from 'ts/app/contexts/MainStackContext';
 import {patchUserTimeZone} from '../../common/api/patchUserTimeZone';
 import * as RNLocalize from 'react-native-localize';
 import Geocoder from 'react-native-geocoding';
+import ContactSettingScreen from './screens/ContactSettingScreen/ContactSettingScreen';
+import TapperScreen from './screens/TapperScreen/TapperScreen';
+import ChatHistoryScreen from './screens/ChatHistoryScreen/ChatHistoryScreen';
+import ChatScreen from './screens/ChatScreen/ChatScreen';
 
 export default function MainStack() {
-  const {
-    LoggedIn,
-    userProfile,
-    user_has_passed_onboarding,
-    userToken,
-  } = useContext(TapMatchContext);
+  const {LoggedIn, userProfile, user_has_passed_onboarding, userToken} =
+    useContext(TapMatchContext);
   const selectedCommunityData = useState<any>(userProfile[0].communities[0][0]);
   // const selectedCommunityData = useState<any>({
   //   id: 0,
@@ -127,6 +127,43 @@ export default function MainStack() {
         <Screen
           name="WebScreen"
           component={WebScreen}
+          options={() => {
+            return {
+              headerShown: false,
+            };
+          }}
+        />
+
+        <Screen
+          name="ContactSettingScreen"
+          component={ContactSettingScreen}
+          options={() => {
+            return {
+              headerShown: false,
+            };
+          }}
+        />
+        <Screen
+          name="TapperScreen"
+          component={TapperScreen}
+          options={() => {
+            return {
+              headerShown: false,
+            };
+          }}
+        />
+        <Screen
+          name="ChatHistoryScreen"
+          component={ChatHistoryScreen}
+          options={() => {
+            return {
+              headerShown: false,
+            };
+          }}
+        />
+        <Screen
+          name="ChatScreen"
+          component={ChatScreen}
           options={() => {
             return {
               headerShown: false,

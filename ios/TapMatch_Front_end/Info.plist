@@ -59,6 +59,8 @@
 	<string>TapMatch requires user's location data to move interactive map to user's current location and show nearby social events on map.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>TapMatch needs access to your photo gallery to take a photo for your profile picture.</string>
+    <key>NSContactsUsageDescription</key>
+    <string>TapMatch would like access to your contacts so you can see your friends.</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>D-DIN-Bold.otf</string>

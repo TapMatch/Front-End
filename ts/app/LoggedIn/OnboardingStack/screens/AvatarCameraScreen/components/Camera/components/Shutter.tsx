@@ -6,6 +6,7 @@ import {_fs} from 'ts/UIConfig/fontSizes';
 import {formatHeight, formatWidth} from 'ts/utils/format-size';
 import useLocalizedTxt from 'ts/localization/useLocalizedTxt';
 import {ImageZoomSourceType} from '../Camera';
+import {isString} from '../../../../../../../../utils/is-string';
 
 interface ShutterProps {
   uploadToServer: () => void;
@@ -31,17 +32,20 @@ const Shutter = ({
         _s.container,
         cameraShutterState ? _s.justifyBetween : _s.justifyCenter,
       ]}>
-      <TouchableOpacity onPress={onPickImage} style={_s.facePreview}>
-        <Image
-          resizeMode={'cover'}
-          style={_s.faceDemo}
-          source={
-            cameraShutterState
-              ? {uri: imageZoomSource[0]?.uri}
-              : require('assets/png/face-demo.png')
-          }
-        />
-      </TouchableOpacity>
+      {!cameraShutterState && (
+        <TouchableOpacity onPress={onPickImage} style={_s.facePreview}>
+          <Image
+            resizeMode={'cover'}
+            style={_s.faceDemo}
+            source={
+              cameraShutterState && isString(imageZoomSource[0].uri)
+                ? {uri: imageZoomSource[0]?.uri}
+                : require('assets/png/face-demo.png')
+            }
+          />
+        </TouchableOpacity>
+      )}
+      {cameraShutterState && <View style={_s.clipView} />}
       {!cameraShutterState && (
         <TouchableOpacity
           onPress={onCapture}
@@ -77,6 +81,10 @@ const _s = StyleSheet.create({
   },
   justifyCenter: {
     justifyContent: 'center',
+  },
+  clipView: {
+    height: formatWidth(98),
+    width: formatWidth(98),
   },
   shutterBtn: {
     backgroundColor: _c.white,

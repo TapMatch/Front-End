@@ -8,6 +8,7 @@ import {_c} from 'ts/UIConfig/colors';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useNavigation} from '@react-navigation/native';
 import {formatCoverSize, formatHeight} from 'ts/utils/format-size';
+import {OnBoardingScreens} from 'ts/constants/screens';
 
 interface StartBtnProps {}
 
@@ -18,7 +19,8 @@ const StartBtn = (props: StartBtnProps) => {
 
   const openSetting = useCallback(async () => {
     // Open the custom settings if the app has one
-    await Linking.openSettings();
+    //  await Linking.openSettings();
+    await navigate(OnBoardingScreens.AllSet);
   }, []);
 
   return (

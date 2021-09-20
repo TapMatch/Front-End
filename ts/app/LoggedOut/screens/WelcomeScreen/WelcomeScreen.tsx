@@ -38,11 +38,7 @@ const WelcomeScreen = (props: WelcomeScreenProps) => {
 
   const handleNextScreen = async () => {
     const passedTutorial = await getStorageData(StorageKeys.PassedTutorial);
-    if (passedTutorial === '1') {
-      navigate(LoggedOutScreens.PhoneInput);
-    } else {
-      navigate(LoggedOutScreens.TutorialScreen, {playVideo: true});
-    }
+    navigate(LoggedOutScreens.TutorialScreen, {playVideo: true});
   };
 
   return (

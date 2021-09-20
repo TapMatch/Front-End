@@ -13,7 +13,6 @@ interface IpostAvatar {
   LoggedIn?: [boolean, (x: boolean) => void];
   userProfile?: [any, (x: any) => void];
   user_has_passed_onboarding?: [boolean, (x: boolean) => void];
-
 }
 
 export async function postAvatar({
@@ -21,17 +20,17 @@ export async function postAvatar({
   pictureURI,
   LoggedIn,
   userProfile,
-  user_has_passed_onboarding
+  user_has_passed_onboarding,
 }: IpostAvatar) {
   try {
     const quality = Platform.OS === 'ios' ? 2 : 10;
     ImageResizer.createResizedImage(pictureURI, 300, 300, 'JPEG', quality)
-      .then(response => {
+      .then((response) => {
         const form = new FormData();
         form.append('photo', {
           uri: response.uri,
           name: `user_avatar_${userToken}.jpg`,
-          filename: `user_avatar.jpg`,
+          filename: 'user_avatar.jpg',
           type: 'image/jpg',
         });
 
@@ -41,7 +40,7 @@ export async function postAvatar({
           headers: {
             Accept: 'application/json',
             'X-Auth-Token': userToken,
-            'content-type': `multipart/form-data;`,
+            'content-type': 'multipart/form-data;',
           },
           data: form,
         };
@@ -52,16 +51,19 @@ export async function postAvatar({
             console.log('SUCCESS!!!');
           })
           .catch(function (error) {
-            logAxiosError(error, `postAvatar`);
-
+            logAxiosError(error, 'postAvatar');
 
             if (LoggedIn && userProfile && user_has_passed_onboarding) {
-              logUserOut(error, LoggedIn, userProfile, user_has_passed_onboarding);
+              logUserOut(
+                error,
+                LoggedIn,
+                userProfile,
+                user_has_passed_onboarding,
+              );
             }
           });
       })
-      .catch(error => {
-
+      .catch((error) => {
         if (DEV_MODE) {
           callAlert(undefined, `${error.toString()} ::: postAvatar`);
           console.log(error);
@@ -70,7 +72,6 @@ export async function postAvatar({
         // inspect err to get more details.
       });
   } catch (error) {
-
     if (DEV_MODE) {
       console.log(`${error} ::: postAvatar`);
       callAlert(undefined, `${error.toString()} ::: postAvatar`);
