@@ -1,6 +1,8 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
 
+$FirebaseSDKVersion = '8.5.0'
+
 platform :ios, '11.0'
 
 target 'TapMatch_Front_end' do
@@ -40,9 +42,7 @@ target 'TapMatch_Front_end' do
   config = use_native_modules!
 
   use_react_native!(:path => config["reactNativePath"])
-
-
-
+  
   pod 'RNFS', :path => '../node_modules/react-native-fs'
 
   target 'TapMatch_Front_endTests' do

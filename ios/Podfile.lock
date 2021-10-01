@@ -11,17 +11,24 @@ PODS:
     - React-Core (= 0.63.3)
     - React-jsi (= 0.63.3)
     - ReactCommon/turbomodule/core (= 0.63.3)
-  - Firebase/Auth (8.6.0):
+  - Firebase/AppCheck (8.5.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 8.6.0)
-  - Firebase/CoreOnly (8.6.0):
-    - FirebaseCore (= 8.6.0)
-  - FirebaseAuth (8.6.0):
+    - FirebaseAppCheck (~> 8.5.0-beta)
+  - Firebase/Auth (8.5.0):
+    - Firebase/CoreOnly
+    - FirebaseAuth (~> 8.5.0)
+  - Firebase/CoreOnly (8.5.0):
+    - FirebaseCore (= 8.5.0)
+  - FirebaseAppCheck (8.5.0-beta):
+    - FirebaseCore (~> 8.0)
+    - GoogleUtilities/Environment (~> 7.4)
+    - PromisesObjC (< 3.0, >= 1.2)
+  - FirebaseAuth (8.5.0):
     - FirebaseCore (~> 8.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.4)
     - GoogleUtilities/Environment (~> 7.4)
     - GTMSessionFetcher/Core (~> 1.5)
-  - FirebaseCore (8.6.0):
+  - FirebaseCore (8.5.0):
     - FirebaseCoreDiagnostics (~> 8.0)
     - GoogleUtilities/Environment (~> 7.4)
     - GoogleUtilities/Logger (~> 7.4)
@@ -376,14 +383,16 @@ PODS:
   - react-native-branch (5.0.4):
     - Branch (= 1.39.4)
     - React
-  - react-native-camera/FaceDetectorMLKit (4.1.1):
+  - react-native-camera/FaceDetectorMLKit (4.2.1):
     - GoogleMLKit/FaceDetection
     - React-Core
     - react-native-camera/RCT
     - react-native-camera/RN
-  - react-native-camera/RCT (4.1.1):
+  - react-native-camera/RCT (4.2.1):
     - React-Core
-  - react-native-camera/RN (4.1.1):
+  - react-native-camera/RN (4.2.1):
+    - React-Core
+  - react-native-contacts (7.0.2):
     - React-Core
   - react-native-cookies (5.0.1):
     - React-Core
@@ -403,7 +412,7 @@ PODS:
   - react-native-image-editor (2.3.0):
     - React
     - React-RCTImage
-  - react-native-image-picker (4.0.6):
+  - react-native-image-picker (4.1.1):
     - React-Core
   - react-native-image-resizer (1.4.5):
     - React-Core
@@ -414,7 +423,7 @@ PODS:
   - react-native-onesignal (3.9.4):
     - OneSignal (= 2.16.5)
     - React (< 1.0.0, >= 0.13.0)
-  - react-native-safe-area-context (3.3.0):
+  - react-native-safe-area-context (3.3.2):
     - React-Core
   - react-native-slider (3.0.3):
     - React
@@ -487,7 +496,7 @@ PODS:
     - React-Core (= 0.63.3)
     - React-cxxreact (= 0.63.3)
     - React-jsi (= 0.63.3)
-  - RNCAsyncStorage (1.15.7):
+  - RNCAsyncStorage (1.15.8):
     - React-Core
   - RNCClipboard (1.5.1):
     - React-Core
@@ -497,22 +506,26 @@ PODS:
     - React-Core
   - RNDeviceInfo (7.4.0):
     - React-Core
-  - RNFastImage (8.3.7):
+  - RNFastImage (8.5.11):
     - React-Core
-    - SDWebImage (~> 5.8)
-    - SDWebImageWebPCoder (~> 0.6.1)
-  - RNFBApp (12.7.5):
-    - Firebase/CoreOnly (= 8.6.0)
+    - SDWebImage (~> 5.11.1)
+    - SDWebImageWebPCoder (~> 0.8.4)
+  - RNFBApp (12.8.0):
+    - Firebase/CoreOnly (= 8.5.0)
     - React-Core
-  - RNFBAuth (12.7.5):
-    - Firebase/Auth (= 8.6.0)
+  - RNFBAppCheck (12.8.0):
+    - Firebase/AppCheck (= 8.5.0)
+    - React-Core
+    - RNFBApp
+  - RNFBAuth (12.8.0):
+    - Firebase/Auth (= 8.5.0)
     - React-Core
     - RNFBApp
   - RNFS (2.18.0):
     - React
   - RNGestureHandler (1.10.3):
     - React-Core
-  - RNLocalize (2.1.3):
+  - RNLocalize (2.1.4):
     - React-Core
   - RNPermissions (2.2.2):
     - React-Core
@@ -525,9 +538,9 @@ PODS:
   - SDWebImage (5.11.1):
     - SDWebImage/Core (= 5.11.1)
   - SDWebImage/Core (5.11.1)
-  - SDWebImageWebPCoder (0.6.1):
+  - SDWebImageWebPCoder (0.8.4):
     - libwebp (~> 1.0)
-    - SDWebImage/Core (~> 5.7)
+    - SDWebImage/Core (~> 5.10)
   - Yoga (1.14.0)
   - YogaKit (1.18.1):
     - Yoga (~> 1.14)
@@ -577,6 +590,7 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-camera/FaceDetectorMLKit (from `../node_modules/react-native-camera`)
+  - react-native-contacts (from `../node_modules/react-native-contacts`)
   - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-face-detection (from `../node_modules/react-native-face-detection`)
@@ -611,6 +625,7 @@ DEPENDENCIES:
   - RNDeviceInfo (from `../node_modules/react-native-device-info`)
   - RNFastImage (from `../node_modules/react-native-fast-image`)
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
+  - "RNFBAppCheck (from `../node_modules/@react-native-firebase/app-check`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNFS (from `../node_modules/react-native-fs`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
@@ -627,6 +642,7 @@ SPEC REPOS:
     - Branch
     - CocoaAsyncSocket
     - Firebase
+    - FirebaseAppCheck
     - FirebaseAuth
     - FirebaseCore
     - FirebaseCoreDiagnostics
@@ -703,6 +719,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-branch"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
+  react-native-contacts:
+    :path: "../node_modules/react-native-contacts"
   react-native-cookies:
     :path: "../node_modules/@react-native-community/cookies"
   react-native-document-picker:
@@ -771,6 +789,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-fast-image"
   RNFBApp:
     :path: "../node_modules/@react-native-firebase/app"
+  RNFBAppCheck:
+    :path: "../node_modules/@react-native-firebase/app-check"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
   RNFS:
@@ -797,9 +817,10 @@ SPEC CHECKSUMS:
   DoubleConversion: cde416483dac037923206447da6e1454df403714
   FBLazyVector: 878b59e31113e289e275165efbe4b54fa614d43d
   FBReactNativeSpec: 7da9338acfb98d4ef9e5536805a0704572d33c2f
-  Firebase: 21ac9f28b09a8bdfc005f34c984fca84e7e8786d
-  FirebaseAuth: 223adeeb2262b417532e89bf06a960e3a0a1e9e4
-  FirebaseCore: 620b677f70f5470a8e59cb77f3ddc666f6f09785
+  Firebase: ff8c73105b90e33e1dc6c8e5445d7adc2ccdc7c1
+  FirebaseAppCheck: 0cced04f86b12f8b72d0a6437a7a4cf76e2ecc07
+  FirebaseAuth: b152ea261b60eeb9419ae7e5bf34761382b33277
+  FirebaseCore: 1c1ca72483b59b17050f5b4cec4fb748425a3901
   FirebaseCoreDiagnostics: 3721920bde3a9a6d5aa093c1d25e9d3e47f694af
   Flipper: 7311910c1b4b66034051c0311c0489d0c9a8b0e1
   Flipper-Boost-iOSX: fd1e2b8cbef7e662a122412d7ac5f5bea715403c
@@ -845,7 +866,8 @@ SPEC CHECKSUMS:
   React-jsiexecutor: b56c03e61c0dd5f5801255f2160a815f4a53d451
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-branch: ac93090da23d4df1335764ce714310f93afdc9a3
-  react-native-camera: 85210eb59b028e9430d29fa33b0252c56113beff
+  react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
+  react-native-contacts: bc424db19c3384e44e6a9d9da9a78ee51b0aa7a1
   react-native-cookies: ce50e42ace7cf0dd47769260ca5bbe8eee607e4e
   react-native-document-picker: a7950caaee8587002c9acbc7fe497a342094d93a
   react-native-face-detection: 6818bf65356edab7609a73b93857bc5917760eb0
@@ -853,12 +875,12 @@ SPEC CHECKSUMS:
   react-native-geolocation-service: 7c9436da6dfdecd9526c62eac62ea2bc3f0cc8ea
   react-native-google-maps: 0a989abda71059db2caa98b9dacca7a8f38a47d0
   react-native-image-editor: 9361a215c3991cafbe5e7f28cbbad6e72c9c2705
-  react-native-image-picker: a6e56460d34905c849ada551db30897dc7f3d535
+  react-native-image-picker: 92f51a85a62c2d829dcbd0dda5af99e6f988a113
   react-native-image-resizer: d9fb629a867335bdc13230ac2a58702bb8c8828f
   react-native-maps: f4b89da81626ad7f151a8bfcb79733295d31ce5c
   react-native-netinfo: 30fb89fa913c342be82a887b56e96be6d71201dd
   react-native-onesignal: 5187b12401c959102a64bde48fbca39c5e3b8136
-  react-native-safe-area-context: 61c8c484a3a9e7d1fda19f7b1794b35bbfd2262a
+  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
   react-native-slider: e99fc201cefe81270fc9d81714a7a0f5e566b168
   react-native-splash-screen: 200d11d188e2e78cea3ad319964f6142b6384865
   react-native-video: 0bb76b6d6b77da3009611586c7dbf817b947f30e
@@ -873,26 +895,27 @@ SPEC CHECKSUMS:
   React-RCTText: 65a6de06a7389098ce24340d1d3556015c38f746
   React-RCTVibration: 8e9fb25724a0805107fc1acc9075e26f814df454
   ReactCommon: 4167844018c9ed375cc01a843e9ee564399e53c3
-  RNCAsyncStorage: 7102fe8985f889579a3ae148d957bbb3f308122b
+  RNCAsyncStorage: e8b8d6320a0dd90eb610fb0d0b1ef90596697c69
   RNCClipboard: 41d8d918092ae8e676f18adada19104fa3e68495
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNDateTimePicker: 7658208086d86d09e1627b5c34ba0cf237c60140
   RNDeviceInfo: 9538a884f862fe4aa0d7cead9f34e292d41ba8f6
-  RNFastImage: a7384db75df352500261e8e8f1ac2026def26102
-  RNFBApp: 46a6918f6b1bbb0b332fafb07ef1362bd96ca857
-  RNFBAuth: a63fc58edf68af3e36eea2f02cadc733226b4c61
+  RNFastImage: 1f2cab428712a4baaf78d6169eaec7f622556dd7
+  RNFBApp: cb08721545c981471c3c6a4c257649a8a9f0aef4
+  RNFBAppCheck: c31f335701addfae379fb7cd3bf75b40fe5729fc
+  RNFBAuth: 7a775c1ae7c15e24ee2b0958dec38f0b74a8fc29
   RNFS: 3ab21fa6c56d65566d1fb26c2228e2b6132e5e32
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
-  RNLocalize: 6351aa411de4283a753a2946e21a77d1b9e271e3
+  RNLocalize: 7f1e5792b65a839af55a9552d05b3558b66d017e
   RNPermissions: 5df468064df661a4c8c017e2791ce90d7695eea5
   RNReanimated: 514a11da3a2bcc6c3dfd9de32b38e2b9bf101926
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
   RNSVG: 551acb6562324b1d52a4e0758f7ca0ec234e278f
   SDWebImage: a7f831e1a65eb5e285e3fb046a23fcfbf08e696d
-  SDWebImageWebPCoder: d0dac55073088d24b2ac1b191a71a8f8d0adac21
+  SDWebImageWebPCoder: f93010f3f6c031e2f8fb3081ca4ee6966c539815
   Yoga: 7d13633d129fd179e01b8953d38d47be90db185a
   YogaKit: f782866e155069a2cca2517aafea43200b01fd5a
 
-PODFILE CHECKSUM: 80746fbf8759539ece4208839dba87cc1d1e6a39
+PODFILE CHECKSUM: f0aa80ab45b7b5c42740087cadb8253f45564d4c
 
 COCOAPODS: 1.10.2

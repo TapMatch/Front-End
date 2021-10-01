@@ -26,7 +26,7 @@ export async function verifyOTPAndLogIn({
   try {
     const options: AxiosRequestConfig = {
       method: 'POST',
-      url: `${tapMatchServerUrl}verify/code`,
+      url: `${tapMatchServerUrl}verify/firebaseCode`,
       headers: {
         Cookie: PHPSESSID[0],
         'Content-Type': 'application/json',

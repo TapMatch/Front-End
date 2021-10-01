@@ -19,7 +19,7 @@ export async function requestOTP({
     console.log('tapMatchServerUrl: ================', tapMatchServerUrl);
     const options: AxiosRequestConfig = {
       method: 'POST',
-      url: `${tapMatchServerUrl}login`,
+      url: `${tapMatchServerUrl}firebaseLogin`,
       headers: {'Content-Type': 'application/json'},
       data: {
         phone: `+${callingCode}${phoneNumber}`,

@@ -251,7 +251,7 @@ const Camera = (props: CameraProps) => {
       }
     }
 
-    await navigate(OnBoardingScreens.TagsScreen);
+    await navigate(OnBoardingScreens.AllSet);
   };
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

@@ -40,7 +40,7 @@ const Shutter = ({
             source={
               cameraShutterState && isString(imageZoomSource[0].uri)
                 ? {uri: imageZoomSource[0]?.uri}
-                : require('assets/png/face-demo.png')
+                : require('assets/png/image-placefolder.png')
             }
           />
         </TouchableOpacity>

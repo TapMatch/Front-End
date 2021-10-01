@@ -11,12 +11,12 @@ export async function resendOTP({PHPSESSID}: IresendOTP) {
   try {
     const options: AxiosRequestConfig = {
       method: 'POST',
-      url: `${tapMatchServerUrl}verify/resend`,
+      url: `${tapMatchServerUrl}verify/firebaseResend`,
       headers: {
         Cookie: PHPSESSID[0],
         'Content-Type': 'application/json',
       },
-      withCredentials: false
+      withCredentials: false,
     };
 
     axios
