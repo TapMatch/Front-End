@@ -392,8 +392,6 @@ PODS:
     - React-Core
   - react-native-camera/RN (4.2.1):
     - React-Core
-  - react-native-contacts (7.0.2):
-    - React-Core
   - react-native-cookies (5.0.1):
     - React-Core
   - react-native-document-picker (6.0.4):
@@ -590,7 +588,6 @@ DEPENDENCIES:
   - React-jsinspector (from `../node_modules/react-native/ReactCommon/jsinspector`)
   - react-native-branch (from `../node_modules/react-native-branch`)
   - react-native-camera/FaceDetectorMLKit (from `../node_modules/react-native-camera`)
-  - react-native-contacts (from `../node_modules/react-native-contacts`)
   - "react-native-cookies (from `../node_modules/@react-native-community/cookies`)"
   - react-native-document-picker (from `../node_modules/react-native-document-picker`)
   - react-native-face-detection (from `../node_modules/react-native-face-detection`)
@@ -719,8 +716,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-branch"
   react-native-camera:
     :path: "../node_modules/react-native-camera"
-  react-native-contacts:
-    :path: "../node_modules/react-native-contacts"
   react-native-cookies:
     :path: "../node_modules/@react-native-community/cookies"
   react-native-document-picker:
@@ -867,7 +862,6 @@ SPEC CHECKSUMS:
   React-jsinspector: 8e68ffbfe23880d3ee9bafa8be2777f60b25cbe2
   react-native-branch: ac93090da23d4df1335764ce714310f93afdc9a3
   react-native-camera: 3eae183c1d111103963f3dd913b65d01aef8110f
-  react-native-contacts: bc424db19c3384e44e6a9d9da9a78ee51b0aa7a1
   react-native-cookies: ce50e42ace7cf0dd47769260ca5bbe8eee607e4e
   react-native-document-picker: a7950caaee8587002c9acbc7fe497a342094d93a
   react-native-face-detection: 6818bf65356edab7609a73b93857bc5917760eb0
