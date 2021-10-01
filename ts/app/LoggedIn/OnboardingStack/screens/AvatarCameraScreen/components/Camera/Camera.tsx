@@ -315,7 +315,7 @@ const Camera = (props: CameraProps) => {
             y: face.bounds.origin.y,
           },
           {
-            radius: (cameraWidth * CircleRatio) / 2,
+            radius: cameraWidth / 2,
             x: cameraWidth / 2,
             y: cameraHeight / 2,
           },
