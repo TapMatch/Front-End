@@ -135,7 +135,7 @@ const Camera = (props: CameraProps) => {
           };
           tempFaceRects.push(tempFaceRect);
           isFaceInsideCircle(tempFaceRect, {
-            radius: circleDiameter / 2,
+            radius: circleDiameter,
             x: originWidth / 2,
             y: originHeight / 2,
           });
@@ -407,7 +407,7 @@ const Camera = (props: CameraProps) => {
     const {circleDiameter, originHeight, originWidth} = imageZoomSource[0];
     faceRects[0].forEach((tempFaceRect) => {
       isFaceInsideCircle(tempFaceRect, {
-        radius: circleDiameter / (2 * scale),
+        radius: circleDiameter / scale,
         x: originWidth / 2 - positionX,
         y: originHeight / 2 - positionY,
       });
