@@ -164,7 +164,7 @@ const Camera = (props: CameraProps) => {
           };
           tempFaceRects.push(tempFaceRect);
           isFaceInsideCircle(tempFaceRect, {
-            radius: circleDiameter / 2,
+            radius: circleDiameter,
             x: originWidth / 2,
             y: originHeight / 2,
           });
@@ -220,12 +220,12 @@ const Camera = (props: CameraProps) => {
     ) {
       const cropData = {
         offset: {
-          x: faceCircle[0]?.x - faceCircle[0]?.radius,
-          y: faceCircle[0]?.y - faceCircle[0]?.radius,
+          x: faceCircle[0]?.x - faceCircle[0]?.radius / 2,
+          y: faceCircle[0]?.y - faceCircle[0]?.radius / 2,
         },
         size: {
-          width: faceCircle[0]?.radius * 2,
-          height: faceCircle[0]?.radius * 2,
+          width: faceCircle[0]?.radius,
+          height: faceCircle[0]?.radius,
         },
         resizeMode: 'cover',
       };
