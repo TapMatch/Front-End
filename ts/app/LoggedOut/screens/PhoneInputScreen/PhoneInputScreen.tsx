@@ -1,5 +1,5 @@
-import React, {useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect, useState} from 'react';
+import {Platform, StyleSheet, View} from 'react-native';
 import {CountryCode} from 'react-native-country-picker-modal';
 import {vs} from 'react-native-size-matters';
 import {_c} from 'ts/UIConfig/colors';
@@ -11,7 +11,7 @@ import Title from './components/Title';
 import {useBackHandler} from '@react-native-community/hooks';
 import {useNavigation} from '@react-navigation/native';
 import {LoggedOutScreens} from 'ts/constants/screens';
-import SwipeBackGuide from './components/SwipeBackGuide';
+import appCheck from '@react-native-firebase/app-check';
 
 interface PhoneInputScreenProps {}
 
@@ -26,6 +26,17 @@ const PhoneInputScreen = ({navigation, route}: any) => {
     navigate(LoggedOutScreens.TutorialScreen, {playVideo: playVideo});
     return true;
   });
+
+  useEffect(() => {
+    if (Platform.OS !== 'ios') {
+      appCheck()
+        .activate('AIzaSyCOZVemK7mRw2RRtoqEFLTE4S_6BMoNjkE', true)
+        .catch((error) => {
+          console.log('appCheck: ====== error', error);
+        });
+    }
+  }, []);
+
   const doneBtnDisabled =
     phoneNumber[0].length < 6 ||
     !validatePhoneNumber(`${phoneNumber[0]}`, countryCode[0]);
